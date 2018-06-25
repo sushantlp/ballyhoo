@@ -1,0 +1,24 @@
+.HeaderContainer {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.HeaderName {
+  /* color: #a758b1 #7b53c1 #a09db9 #e2e5fa #a4aee3 #b558f4 #47d3d9; #FF8A79 #F79F6D #7a52c0 #D34349 #FE8EAD #6dc6f5 #2da7fe*/
+  color: #0fcdc4;
+  font-weight: 600;
+}
+.UnderScore {
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#0fcdc4),
+    to(#dee5ef)
+  );
+  margin-top: -5px;
+  content: "";
+  height: 4px;
+  display: block;
+  box-sizing: border-box;
+  width: 30px;
+}
