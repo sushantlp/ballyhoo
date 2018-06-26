@@ -1,4 +1,8 @@
 .Search {
   margin: auto;
-  width: 600px;
+  /* width: 600px; */
+}
+
+.HeaderContainer {
+  background-color: #6a5f9b;
 }
