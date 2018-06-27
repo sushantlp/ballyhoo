@@ -1,0 +1,46 @@
+.HeaderContainer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.HeaderName {
+  color: #7a52c0;
+  font-weight: 600;
+  font-size: 20px;
+}
+.UnderScore {
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#7a52c0),
+    to(#dee5ef)
+  );
+  margin-top: -5px;
+  content: "";
+  height: 4px;
+  display: block;
+  box-sizing: border-box;
+  width: 40px;
+}
+.CategoryHeader {
+  position: absolute;
+  bottom: 0;
+  font-weight: 600;
+  margin: 20px;
+  font-size: 16px;
+  color: white;
+  text-transform: uppercase;
+  background-color: #6d6969;
+  box-shadow: 4px 4px 10px 0;
+  padding: 2px;
+}
+.CategoryCard:hover {
+  transform: scale(1.04);
+  opacity: 1 !important;
+  cursor: pointer;
+}
+
+/* Not Use if use style tag*/
+.CategoryCard {
+  box-shadow: "4px 4px 10px 0";
+}

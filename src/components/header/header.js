@@ -14,7 +14,7 @@ class Header extends React.Component {
         <form action="javascript:void(0)" autoComplete={"off"}>
           <Menu
             style={{
-              backgroundColor: "#6a5f9b"
+              backgroundColor: "#7A52C0"
             }}
           >
             <Link to={"/"}>

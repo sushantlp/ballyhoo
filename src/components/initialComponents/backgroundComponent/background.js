@@ -6,7 +6,8 @@ import classes from "./static/css/background.css";
 
 export default class Background extends React.Component {
   render() {
-    const stateOptions = [{ key: "AL", value: "AL", text: "Alabama" }];
+    const cityOptions = [{ key: "AL", value: "AL", text: "Delhi" }];
+    const stateOptions = [{ key: "AL", value: "AL", text: "Rajiv Chowk" }];
     const friendOptions = [
       {
         text: "Happy Hours",
@@ -39,7 +40,7 @@ export default class Background extends React.Component {
           overflow: "hidden"
         }}
       >
-        <Grid divided="vertically">
+        <Grid divided="vertically" style={{ marginTop: "50px" }}>
           <Grid.Row columns={1}>
             <Grid.Column>
               <h1 className={classes.BackgroundHeading}>
@@ -52,13 +53,12 @@ export default class Background extends React.Component {
         <Grid divided="vertically">
           <Grid.Row>
             <Grid.Column width={2} />
-            <Grid.Column width={3}>
+            <Grid.Column width={3} style={{ paddingLeft: "75px" }}>
               <Dropdown
-                className={classes.DropdownCity}
                 placeholder="City"
                 search
                 selection
-                options={stateOptions}
+                options={cityOptions}
                 icon={
                   <Icon
                     position="right"
@@ -72,9 +72,8 @@ export default class Background extends React.Component {
                 }
               />
             </Grid.Column>
-            <Grid.Column width={3}>
+            <Grid.Column width={3} style={{ paddingLeft: "45px" }}>
               <Dropdown
-                className={classes.DropdownCity}
                 placeholder="State"
                 search
                 selection
@@ -94,15 +93,27 @@ export default class Background extends React.Component {
             </Grid.Column>
             <Grid.Column width={5}>
               <Dropdown
-                className={classes.DropdownOffer}
                 placeholder="Select Friend"
                 fluid
                 selection
                 options={friendOptions}
+                icon={
+                  <Icon
+                    position="right"
+                    name="search"
+                    style={{
+                      marginTop: "-13px",
+                      float: "right",
+                      color: "grey"
+                    }}
+                  />
+                }
               />
             </Grid.Column>
             <Grid.Column width={2}>
-              <Button positive>Search</Button>
+              <Button style={{ backgroundColor: "#7A52C0", color: "white" }}>
+                Search
+              </Button>
             </Grid.Column>
           </Grid.Row>
         </Grid>
