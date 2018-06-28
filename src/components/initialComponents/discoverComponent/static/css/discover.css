@@ -1,3 +1,7 @@
+.Container {
+  margin-top: 3em;
+}
+
 .HeaderContainer {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -27,7 +31,7 @@
   bottom: 0;
   font-weight: 600;
   margin: 20px;
-  font-size: 16px;
+  font-size: 14px;
   color: white;
   text-transform: uppercase;
   background-color: #6d6969;

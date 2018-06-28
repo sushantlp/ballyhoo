@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Segment, Card, Container, Grid, Image } from "semantic-ui-react";
+import { Card, Container, Image, Button } from "semantic-ui-react";
 
 import classes from "./static/css/trending.css";
 
@@ -9,12 +9,12 @@ export default class Trending extends React.Component {
     return (
       <Container>
         <div className={classes.HeaderContainer}>
-          <h4 className={classes.HeaderName}>Trending</h4>
+          <h4 className={classes.HeaderName}>TRENDING</h4>
           <div className={classes.UnderScore} />
         </div>
         <Card.Group itemsPerRow={4} doubling stackable>
-          <Card>
-            <Image src="https://res.cloudinary.com/dp67gawk6/image/upload/w_600,h_400/v1474444914/ballyhoo/VEG/26.jpg" />
+          <Card className={classes.TrendingCard} raised>
+            <Image src="https://d13genyhhfmqry.cloudfront.net/large/mc_1_2018-02-01-19-25-39-000475.jpg" />
             <Card.Content>
               <Card.Header
                 style={{
@@ -38,8 +38,8 @@ export default class Trending extends React.Component {
               </Card.Description>
             </Card.Content>
           </Card>
-          <Card>
-            <Image src="https://res.cloudinary.com/dp67gawk6/image/upload/w_600,h_400/v1474444914/ballyhoo/VEG/26.jpg" />
+          <Card className={classes.TrendingCard} raised>
+            <Image src="https://d13genyhhfmqry.cloudfront.net/large/mc_195813_2017-12-23-18-55-28-000636.jpg" />
             <Card.Content>
               <Card.Header
                 style={{
@@ -63,8 +63,8 @@ export default class Trending extends React.Component {
               </Card.Description>
             </Card.Content>
           </Card>
-          <Card>
-            <Image src="https://res.cloudinary.com/dp67gawk6/image/upload/w_600,h_400/v1474444914/ballyhoo/VEG/26.jpg" />
+          <Card className={classes.TrendingCard} raised>
+            <Image src="https://d13genyhhfmqry.cloudfront.net/large/mc_1462_2017-12-08-12-05-27-000180.jpg" />
             <Card.Content>
               <Card.Header
                 style={{
@@ -88,8 +88,8 @@ export default class Trending extends React.Component {
               </Card.Description>
             </Card.Content>
           </Card>
-          <Card>
-            <Image src="https://res.cloudinary.com/dp67gawk6/image/upload/w_600,h_400/v1474444914/ballyhoo/VEG/26.jpg" />
+          <Card className={classes.TrendingCard} raised>
+            <Image src="https://d13genyhhfmqry.cloudfront.net/large/mc_195813_2017-12-23-18-55-28-000636.jpg" />
             <Card.Content>
               <Card.Header
                 style={{
@@ -114,6 +114,21 @@ export default class Trending extends React.Component {
             </Card.Content>
           </Card>
         </Card.Group>
+
+        <Button
+          onClick={this.toggle}
+          size="large"
+          basic
+          color="violet"
+          style={{
+            marginTop: "1.5em",
+            marginBottom: "1.5em",
+            marginLeft: "45%"
+          }}
+        >
+          View More
+          {/* {viewMore ? "View Less" : "View More"} */}
+        </Button>
       </Container>
     );
   }

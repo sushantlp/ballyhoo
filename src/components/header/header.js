@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Input, Menu, Dropdown } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 
 import classes from "./static/css/header.css";
 

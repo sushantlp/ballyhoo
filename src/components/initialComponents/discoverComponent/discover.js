@@ -1,24 +1,26 @@
 import React from "react";
 
-import { Segment, Card, Container, Grid, Image } from "semantic-ui-react";
+import { Card, Container, Button } from "semantic-ui-react";
 
 import classes from "./static/css/discover.css";
 
 export default class Discover extends React.Component {
   render() {
     return (
-      <Container>
+      <Container className={classes.Container}>
         <div className={classes.HeaderContainer}>
           <h4 className={classes.HeaderName}>DISCOVER</h4>
           <div className={classes.UnderScore} />
         </div>
-        <Card.Group itemsPerRow={4} doubling stackable>
+
+        <Card.Group doubling stackable itemsPerRow={4}>
           <Card className={classes.DiscoverCard} raised>
             <div className="ui fluid image">
               <img
                 src={
                   "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474445065/ballyhoo/WALK-IN/13.jpg"
                 }
+                alt={"Ballyhoo"}
               />
               <span className={classes.DiscoverHeader}>Lunch Buffet</span>
             </div>
@@ -30,6 +32,7 @@ export default class Discover extends React.Component {
                 src={
                   "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474445065/ballyhoo/WALK-IN/13.jpg"
                 }
+                alt={"Ballyhoo"}
               />
               <span className={classes.DiscoverHeader}>Dinner Buffet</span>
             </div>
@@ -41,6 +44,7 @@ export default class Discover extends React.Component {
                 src={
                   "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474445065/ballyhoo/WALK-IN/13.jpg"
                 }
+                alt={"Ballyhoo"}
               />
               <span className={classes.DiscoverHeader}>Takeaway</span>
             </div>
@@ -52,33 +56,27 @@ export default class Discover extends React.Component {
                 src={
                   "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474445065/ballyhoo/WALK-IN/13.jpg"
                 }
+                alt={"Ballyhoo"}
               />
               <span className={classes.DiscoverHeader}>Live Performance</span>
             </div>
           </Card>
-
-          <Card className={classes.DiscoverCard} raised>
-            <div className="ui fluid image">
-              <img
-                src={
-                  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474445065/ballyhoo/WALK-IN/13.jpg"
-                }
-              />
-              <span className={classes.DiscoverHeader}>Happy Hours</span>
-            </div>
-          </Card>
-
-          <Card className={classes.DiscoverCard} raised>
-            <div className="ui fluid image">
-              <img
-                src={
-                  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474445065/ballyhoo/WALK-IN/13.jpg"
-                }
-              />
-              <span className={classes.DiscoverHeader}>Restaurant</span>
-            </div>
-          </Card>
         </Card.Group>
+
+        <Button
+          onClick={this.toggle}
+          size="large"
+          basic
+          color="violet"
+          style={{
+            marginTop: "1.5em",
+            marginBottom: "1.5em",
+            marginLeft: "45%"
+          }}
+        >
+          View More
+          {/* {viewMore ? "View Less" : "View More"} */}
+        </Button>
       </Container>
     );
   }
