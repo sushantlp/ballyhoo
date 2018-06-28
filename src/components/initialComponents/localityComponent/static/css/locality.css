@@ -26,3 +26,8 @@
   box-sizing: border-box;
   width: 40px;
 }
+.Label:hover {
+  transform: scale(1.07);
+  opacity: 1 !important;
+  cursor: pointer;
+}

@@ -13,7 +13,7 @@ export default class Discover extends React.Component {
           <div className={classes.UnderScore} />
         </div>
         <Segment raised>
-          <Grid columns={9}>
+          <Grid doubling stackable columns={9}>
             <Grid.Row>
               <Grid.Column
                 style={{
@@ -25,6 +25,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -39,6 +40,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Whitefield
                 </Label>
@@ -53,6 +55,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   JP Nagar
                 </Label>
@@ -67,6 +70,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Koramangala
                 </Label>
@@ -81,6 +85,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -95,6 +100,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -109,6 +115,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -123,6 +130,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -137,6 +145,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -151,6 +160,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -165,6 +175,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -179,6 +190,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -193,6 +205,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -207,6 +220,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -221,6 +235,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -235,6 +250,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -249,6 +265,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -263,6 +280,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -277,6 +295,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -291,6 +310,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -305,6 +325,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -319,6 +340,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
@@ -333,6 +355,7 @@ export default class Discover extends React.Component {
                   as="a"
                   basic
                   style={{ color: "rgba(101, 96, 96, 0.87)" }}
+                  className={classes.Label}
                 >
                   Austin Town
                 </Label>
