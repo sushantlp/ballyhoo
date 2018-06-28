@@ -7,7 +7,7 @@ import classes from "./static/css/discover.css";
 export default class Discover extends React.Component {
   render() {
     return (
-      <Container className={classes.Container}>
+      <Container className={classes.DiscoverContainer}>
         <div className={classes.HeaderContainer}>
           <h4 className={classes.HeaderName}>DISCOVER</h4>
           <div className={classes.UnderScore} />

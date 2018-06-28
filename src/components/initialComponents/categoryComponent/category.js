@@ -7,7 +7,7 @@ import classes from "./static/css/category.css";
 export default class Category extends React.Component {
   render() {
     return (
-      <Container className={classes.Container}>
+      <Container className={classes.CategoryContainer}>
         <div className={classes.HeaderContainer}>
           <h4 className={classes.HeaderName}>CATEGORY</h4>
           <div className={classes.UnderScore} />

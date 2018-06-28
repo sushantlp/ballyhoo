@@ -7,7 +7,7 @@ import classes from "./static/css/locality.css";
 export default class Discover extends React.Component {
   render() {
     return (
-      <Container className={classes.Container}>
+      <Container className={classes.LocalityContainer}>
         <div className={classes.HeaderContainer}>
           <h4 className={classes.HeaderName}>LOCALITY</h4>
           <div className={classes.UnderScore} />

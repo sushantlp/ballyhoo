@@ -1,11 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
+import { Container, Divider, Grid, Image, List, Icon } from "semantic-ui-react";
 import classes from "../footer/static/css/footer.css";
 
-class Footer extends React.Component {
+export default class Footer extends React.Component {
   render() {
-    return <div className={classes.FooterContainer} />;
+    return <Container fluid className={classes.FooterContainer} />;
   }
 }
-
-export default Footer;

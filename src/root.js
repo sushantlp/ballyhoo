@@ -8,6 +8,7 @@ import "./static/css/root.css";
 // Containers
 import Header from "./containers/headerContainer";
 import Background from "./components/initialComponents/index";
+import Footer from "./components/footer/footer";
 
 // Router root
 const Root = ({ store }) => (
@@ -16,6 +17,7 @@ const Root = ({ store }) => (
       <div>
         <Header />
         <Background />
+        <Footer />
       </div>
     </BrowserRouter>
   </Provider>
