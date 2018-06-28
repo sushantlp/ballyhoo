@@ -12,7 +12,7 @@ export default class Discover extends React.Component {
           <h4 className={classes.HeaderName}>DISCOVER</h4>
           <div className={classes.UnderScore} />
         </div>
-        <Card.Group itemsPerRow={3} doubling stackable>
+        <Card.Group itemsPerRow={4} doubling stackable>
           <Card className={classes.DiscoverCard} raised>
             <div className="ui fluid image">
               <img
