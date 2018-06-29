@@ -8,7 +8,8 @@ import "./static/css/root.css";
 // Containers
 import Header from "./containers/headerContainer";
 import Background from "./components/initialComponents/index";
-import Footer from "./components/footer/footer";
+//import Footer from "./components/footer/footer";
+import Footer from "./containers/footerContainer";
 
 // Router root
 const Root = ({ store }) => (

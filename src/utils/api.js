@@ -1,5 +1,14 @@
 import getQueryString from "./paramParser";
 
-export const host = "https://ballyhoo.today/";
+// Base Url
+const host = "https://ballyhoo-ajayballyhoo.c9users.io/"; //"https://ballyhoo.today/";
 
-export default {};
+export default {
+  cityLocalityAPI: () => {
+    return new Promise((resolve, reject) => {
+      fetch(host + "api/v4/web/city/locality").then(response => {
+        response.json().then(videos => resolve(videos));
+      });
+    });
+  }
+};

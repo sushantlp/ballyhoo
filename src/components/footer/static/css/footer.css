@@ -1,5 +1,9 @@
 .FooterContainer {
   background-color: #444a62;
-  height: 200px;
+  
   margin-top: 1.5rem;
+  bottom: 0;
+}
+.FooterSegment {
+  background-color: #444a62;
 }
