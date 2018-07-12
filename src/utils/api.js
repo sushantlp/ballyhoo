@@ -7,7 +7,7 @@ export default {
   cityLocalityAPI: () => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v4/web/city/locality").then(response => {
-        response.json().then(videos => resolve(videos));
+        response.json().then(cityLocality => resolve(cityLocality));
       });
     });
   }

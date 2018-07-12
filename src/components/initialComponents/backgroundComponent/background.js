@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import {
   Segment,
@@ -13,7 +14,38 @@ import {
 import classes from "./static/css/background.css";
 
 export default class Background extends React.Component {
-  componentDidMount() {}
+  constructor(props) {
+    super(props);
+    this.state = {
+      cityList: [],
+      localityList: []
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.createCityList(nextProps.cityLocality.city);
+  }
+
+  // Create City List
+  createCityList = city => {
+    let cityArray = [];
+    city.map(obj => {
+      const city = {};
+      city.key = obj.c_key;
+      city.value = obj.c_text;
+      city.text = obj.c_text;
+      cityArray.push(city);
+    });
+
+    this.setState({
+      cityList: cityArray
+    });
+  };
+
+  // Create Locality List
+  createLocalityList = (event, data) => {
+    console.log(this.props.history.push(data));
+  };
 
   render() {
     if (
@@ -35,8 +67,8 @@ export default class Background extends React.Component {
       );
     }
 
-    const cityOptions = [{ key: "AL", value: "AL", text: "Delhi" }];
-    const stateOptions = [{ key: "AL", value: "AL", text: "Rajiv Chowk" }];
+    const { cityList, localityList } = this.state;
+
     const friendOptions = [
       {
         text: "Happy Hours",
@@ -87,7 +119,11 @@ export default class Background extends React.Component {
                 placeholder="City"
                 search
                 selection
-                options={cityOptions}
+                options={cityList}
+                onChange={(event, data) =>
+                  this.createLocalityList(event, data.value)
+                }
+                // value={"Durg"}
                 icon={
                   <Icon
                     position="right"
@@ -106,7 +142,7 @@ export default class Background extends React.Component {
                 placeholder="Locality"
                 search
                 selection
-                options={stateOptions}
+                options={localityList}
                 icon={
                   <Icon
                     position="right"
@@ -122,7 +158,7 @@ export default class Background extends React.Component {
             </Grid.Column>
             <Grid.Column width={5}>
               <Dropdown
-                placeholder="Select Friend"
+                placeholder="Offer"
                 fluid
                 selection
                 options={friendOptions}
@@ -148,35 +184,11 @@ export default class Background extends React.Component {
         </Grid>
       </Segment>
     );
-    // if (
-    //   this.props.cityLocality === null ||
-    //   this.props.cityLocality === undefined
-    // ) {
-    //   return (
-    //     <Segment
-    //       raised
-    //       style={{
-    //         minHeight: 600,
-    //         margin: "0",
-    //         background: "url({backgroundImage})"
-    //       }}
-    //     />
-    //   );
-    // }
-
-    // if (Object.keys(this.props.cityLocality).length === 0) {
-    //   return (
-    //     <Segment
-    //       raised
-    //       style={{
-    //         minHeight: 600,
-    //         margin: "0",
-    //         background: "url({backgroundImage})"
-    //       }}
-    //     />
-    //   );
-    // }
 
     //return <div>{this.getPlaylists()}</div>;
   }
 }
+
+// Background.propTypes = {
+//   history: PropTypes.object.isRequired
+// };

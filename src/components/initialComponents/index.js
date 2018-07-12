@@ -9,12 +9,16 @@ import Locality from "./localityComponent/locality";
 export default class Initial extends React.Component {
   componentDidMount() {
     this.props.getCityLocality();
+    console.log(this.props);
   }
 
   render() {
     return (
       <div>
-        <Background cityLocality={this.props.cityLocality} />
+        <Background
+          cityLocality={this.props.cityLocality}
+          history={this.props.history}
+        />
         <Category />
         <Discover />
         <Trending />

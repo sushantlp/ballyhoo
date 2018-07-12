@@ -16,7 +16,7 @@ const Root = ({ store }) => (
     <BrowserRouter>
       <div>
         <Header />
-        <Background />
+        <Route exact path="/" component={Background} />
         <Footer />
       </div>
     </BrowserRouter>

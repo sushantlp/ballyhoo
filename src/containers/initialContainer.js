@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import InitialComponent from "../components/initialComponents/index";
 import { getCityLocality } from "../actions/cityLocalityAction";
@@ -9,9 +10,11 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  {
-    getCityLocality: getCityLocality
-  }
-)(InitialComponent);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    {
+      getCityLocality: getCityLocality
+    }
+  )(InitialComponent)
+);
