@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
 
-import { search } from "./cityLocalityReducer";
+import { cityLocality } from "./cityLocalityReducer";
 
-export default combineReducers({ search });
+export default combineReducers({ cityLocality });

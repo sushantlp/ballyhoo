@@ -1,15 +1,15 @@
 import { actionsType } from "../actions/cityLocalityAction";
 
 const initialState = {
-  cityLocality: []
+  cityLocality: {}
 };
 
-export function search(state = initialState, action) {
+export function cityLocality(state = initialState, action) {
   switch (action.type) {
     case actionsType.cityLocality:
       return {
         ...state,
-        videos: action.videos.results
+        cityLocality: action.cityLocality
       };
     default:
       return state;

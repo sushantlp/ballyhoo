@@ -7,8 +7,7 @@ import "./static/css/root.css";
 
 // Containers
 import Header from "./containers/headerContainer";
-import Background from "./components/initialComponents/index";
-//import Footer from "./components/footer/footer";
+import Background from "./containers/initialContainer";
 import Footer from "./containers/footerContainer";
 
 // Router root

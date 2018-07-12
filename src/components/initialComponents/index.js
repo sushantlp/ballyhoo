@@ -7,12 +7,14 @@ import Trending from "./trendingComponent/trending";
 import Locality from "./localityComponent/locality";
 
 export default class Initial extends React.Component {
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.getCityLocality();
+  }
 
   render() {
     return (
       <div>
-        <Background />
+        <Background cityLocality={this.props.cityLocality} />
         <Category />
         <Discover />
         <Trending />

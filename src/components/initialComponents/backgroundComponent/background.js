@@ -1,11 +1,40 @@
 import React from "react";
 
-import { Segment, Dropdown, Grid, Icon, Button } from "semantic-ui-react";
+import {
+  Segment,
+  Dropdown,
+  Grid,
+  Icon,
+  Button,
+  Dimmer,
+  Loader
+} from "semantic-ui-react";
 
 import classes from "./static/css/background.css";
 
 export default class Background extends React.Component {
+  componentDidMount() {}
+
   render() {
+    if (
+      this.props.cityLocality === null ||
+      this.props.cityLocality === undefined
+    ) {
+      return (
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+      );
+    }
+
+    if (Object.keys(this.props.cityLocality).length === 0) {
+      return (
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+      );
+    }
+
     const cityOptions = [{ key: "AL", value: "AL", text: "Delhi" }];
     const stateOptions = [{ key: "AL", value: "AL", text: "Rajiv Chowk" }];
     const friendOptions = [
@@ -74,7 +103,7 @@ export default class Background extends React.Component {
             </Grid.Column>
             <Grid.Column width={3} style={{ paddingLeft: "45px" }}>
               <Dropdown
-                placeholder="State"
+                placeholder="Locality"
                 search
                 selection
                 options={stateOptions}
