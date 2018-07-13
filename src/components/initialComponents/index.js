@@ -7,9 +7,16 @@ import Trending from "./trendingComponent/trending";
 import Locality from "./localityComponent/locality";
 
 export default class Initial extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      defaultCity: 1,
+      defaultLocality: 267
+    };
+  }
+
   componentDidMount() {
     this.props.getCityLocality();
-    console.log(this.props);
   }
 
   render() {
@@ -18,6 +25,8 @@ export default class Initial extends React.Component {
         <Background
           cityLocality={this.props.cityLocality}
           history={this.props.history}
+          defaultCity={this.state.defaultCity}
+          defaultLocality={this.state.defaultLocality}
         />
         <Category />
         <Discover />

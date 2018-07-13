@@ -7,7 +7,7 @@ export const actionsType = {
 export function getCityLocality() {
   return dispatch => {
     api
-      .cityLocalityAPI()
+      .cityLocalityApi()
       .then(cityLocality =>
         dispatch({ type: actionsType.cityLocality, cityLocality })
       );

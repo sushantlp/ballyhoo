@@ -15,20 +15,89 @@ import classes from "./static/css/background.css";
 
 export default class Background extends React.Component {
   constructor(props) {
+    console.log("First");
     super(props);
     this.state = {
+      cityLocalityProps: [],
       cityList: [],
-      localityList: []
+      localityList: [],
+      cityId: 0,
+      localityId: 0,
+      cityValue: "City",
+      localityValue: "Locality"
     };
   }
 
   componentWillReceiveProps(nextProps) {
+    // Update State
+    this.setState({
+      cityLocalityProps: nextProps.cityLocality
+    });
+
+    // Find city
+    this.findCity(nextProps);
+
+    // Find Locality
+    this.findLocality(nextProps);
+
+    // Create City List
     this.createCityList(nextProps.cityLocality.city);
   }
 
+  // Find city
+  findCity = props => {
+    props.cityLocality.city.map(obj => {
+      // String come
+
+      if (props.defaultCity === obj.c_text) {
+        // Update State
+        this.setState({
+          cityId: obj.c_key,
+          cityValue: obj.c_text
+        });
+      } else if (props.defaultCity === obj.c_key) {
+        // Update State
+        this.setState({
+          cityId: obj.c_key,
+          cityValue: obj.c_text
+        });
+      }
+    });
+  };
+
+  // Find city
+  findLocality = props => {
+    props.cityLocality.locality.map(obj => {
+      // String come
+
+      if (props.defaultLocality === obj.l_text) {
+        // Update State
+        this.setState(
+          { localityId: obj.l_key, localityValue: obj.l_text },
+          function() {
+            // Create Locality List
+            this.createLocalityList(obj.c_key);
+          }
+        );
+      } else if (props.defaultLocality === obj.l_key) {
+        // Update State
+        this.setState(
+          { localityId: obj.l_key, localityValue: obj.l_text },
+          function() {
+            // Create Locality List
+            this.createLocalityList(obj.c_key);
+          }
+        );
+      }
+    });
+  };
+
   // Create City List
   createCityList = city => {
+    // Variable
     let cityArray = [];
+
+    // Map
     city.map(obj => {
       const city = {};
       city.key = obj.c_key;
@@ -37,14 +106,65 @@ export default class Background extends React.Component {
       cityArray.push(city);
     });
 
+    // Update State
     this.setState({
       cityList: cityArray
     });
   };
 
+  // Logic Click City
+  logicClickCity = (event, data) => {
+    //this.props.history.push(data);
+
+    // Update State
+    this.setState({
+      cityValue: data
+    });
+
+    // Update State
+    this.setState({
+      localityValue: ""
+    });
+
+    // City Array
+    this.state.cityLocalityProps.city.map(obj => {
+      if (data === obj.c_text) {
+        this.setState({ cityId: obj.c_key }, function() {
+          // Create Locality List
+          this.createLocalityList(this.state.cityId);
+        });
+      }
+    });
+  };
+
+  // Logic Click City
+  logicClickLocality = (event, data) => {
+    // Update State
+    this.setState({
+      localityValue: data
+    });
+  };
+
   // Create Locality List
-  createLocalityList = (event, data) => {
-    console.log(this.props.history.push(data));
+  createLocalityList = cityId => {
+    // Variable
+    let localityArray = [];
+
+    // Locality Array
+    this.state.cityLocalityProps.locality.map(obj => {
+      if (cityId === obj.c_key) {
+        const locality = {};
+        locality.key = obj.l_key;
+        locality.value = obj.l_text;
+        locality.text = obj.l_text;
+        localityArray.push(locality);
+      }
+    });
+
+    // Update State
+    this.setState({
+      localityList: localityArray
+    });
   };
 
   render() {
@@ -121,9 +241,10 @@ export default class Background extends React.Component {
                 selection
                 options={cityList}
                 onChange={(event, data) =>
-                  this.createLocalityList(event, data.value)
+                  this.logicClickCity(event, data.value)
                 }
-                // value={"Durg"}
+                value={this.state.cityValue}
+                text={this.state.cityValue}
                 icon={
                   <Icon
                     position="right"
@@ -143,6 +264,11 @@ export default class Background extends React.Component {
                 search
                 selection
                 options={localityList}
+                onChange={(event, data) =>
+                  this.logicClickLocality(event, data.value)
+                }
+                value={this.state.localityValue}
+                text={this.state.localityValue}
                 icon={
                   <Icon
                     position="right"
@@ -184,8 +310,6 @@ export default class Background extends React.Component {
         </Grid>
       </Segment>
     );
-
-    //return <div>{this.getPlaylists()}</div>;
   }
 }
 
