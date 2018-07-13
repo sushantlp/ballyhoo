@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import {
   Segment,
@@ -15,7 +14,6 @@ import classes from "./static/css/background.css";
 
 export default class Background extends React.Component {
   constructor(props) {
-    console.log("First");
     super(props);
     this.state = {
       cityLocalityProps: [],
@@ -29,19 +27,20 @@ export default class Background extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     // Update State
     this.setState({
       cityLocalityProps: nextProps.cityLocality
     });
 
-    // Find city
-    this.findCity(nextProps);
+    // // Find city
+    // this.findCity(nextProps);
 
-    // Find Locality
-    this.findLocality(nextProps);
+    // // Find Locality
+    // this.findLocality(nextProps);
 
-    // Create City List
-    this.createCityList(nextProps.cityLocality.city);
+    // // Create City List
+    // this.createCityList(nextProps.cityLocality.city);
   }
 
   // Find city
@@ -112,6 +111,28 @@ export default class Background extends React.Component {
     });
   };
 
+  // Create Locality List
+  createLocalityList = cityId => {
+    // Variable
+    let localityArray = [];
+
+    // Locality Array
+    this.state.cityLocalityProps.locality.map(obj => {
+      if (cityId === obj.c_key) {
+        const locality = {};
+        locality.key = obj.l_key;
+        locality.value = obj.l_text;
+        locality.text = obj.l_text;
+        localityArray.push(locality);
+      }
+    });
+
+    // Update State
+    this.setState({
+      localityList: localityArray
+    });
+  };
+
   // Logic Click City
   logicClickCity = (event, data) => {
     //this.props.history.push(data);
@@ -142,28 +163,6 @@ export default class Background extends React.Component {
     // Update State
     this.setState({
       localityValue: data
-    });
-  };
-
-  // Create Locality List
-  createLocalityList = cityId => {
-    // Variable
-    let localityArray = [];
-
-    // Locality Array
-    this.state.cityLocalityProps.locality.map(obj => {
-      if (cityId === obj.c_key) {
-        const locality = {};
-        locality.key = obj.l_key;
-        locality.value = obj.l_text;
-        locality.text = obj.l_text;
-        localityArray.push(locality);
-      }
-    });
-
-    // Update State
-    this.setState({
-      localityList: localityArray
     });
   };
 

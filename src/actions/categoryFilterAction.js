@@ -1,15 +1,15 @@
 import api from "../utils/api";
 
-export const actionsType = {
+export const actionType = {
   categoryFilter: "CATEGORY_FILTER"
 };
 
 export function getCategoryFilter(cityId) {
   return dispatch => {
     api
-      .cityLocalityApi(cityId)
+      .categoryFilterApi(cityId)
       .then(categoryFilter =>
-        dispatch({ type: actionsType.categoryFilter, categoryFilter })
+        dispatch({ type: actionType.categoryFilter, categoryFilter })
       );
   };
 }
