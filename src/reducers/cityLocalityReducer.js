@@ -5,7 +5,6 @@ const initialState = {
 };
 
 export function cityLocality(state = initialState, action) {
-  console.log(actionType.cityLocality);
   switch (action.type) {
     case actionType.cityLocality:
       return {

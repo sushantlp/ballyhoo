@@ -5,13 +5,20 @@ const initialState = {
 };
 
 export function categoryFilter(state = initialState, action) {
-  console.log(actionType.categoryFilter);
   switch (action.type) {
     case actionType.categoryFilter:
-      return {
-        ...state,
-        categoryFilter: action.categoryFilter
-      };
+      if (action.categoryFilter.hasOwnProperty("message")) {
+        return {
+          ...state,
+          categoryFilter: action.categoryFilter.message.ballyhoo
+        };
+      } else {
+        return {
+          ...state,
+          categoryFilter: action.categoryFilter
+        };
+      }
+
     default:
       return state;
   }

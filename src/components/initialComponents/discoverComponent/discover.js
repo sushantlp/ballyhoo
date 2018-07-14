@@ -1,11 +1,83 @@
 import React from "react";
 
-import { Card, Container, Button } from "semantic-ui-react";
+import {
+  Card,
+  Container,
+  Button,
+  Dimmer,
+  Loader
+} from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/discover.css";
 
+// Default Number of Items for View More Button
+const MAX_ITEMS = 4;
+
 export default class Discover extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMore: false
+    };
+    console.log(this.state);
+    console.log("Hello");
+  }
+  createDiscoverCard = (index, header, image, alt) => {
+    return (
+      <Card className={classes.DiscoverCard} raised key={index}>
+        <div className="ui fluid image">
+          <img src={image} alt={alt} />
+          <span className={classes.DiscoverHeader}>{header}</span>
+        </div>
+      </Card>
+    );
+  };
+
+  logicDiscoverCard = filter => {
+    return filter.map((obj, key) => {
+      return this.createDiscoverCard(obj.t_id, obj.title, obj.image, obj.title);
+    });
+  };
+
+  toggle = () => {
+    console.log(this.state);
+    this.setState({
+      isMore: !this.state.isMore
+    });
+  };
+
+  getDiscoverFilter = () => {
+    if (this.state.isMore) {
+      return this.props.discoverFilter;
+    }
+    return this.props.discoverFilter.slice(0, MAX_ITEMS);
+  };
+
   render() {
+    if (
+      this.props.discoverFilter === null ||
+      this.props.discoverFilter === undefined
+    ) {
+      return (
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+      );
+    }
+
+    if (
+      Object.keys(this.props.discoverFilter).length === 0 ||
+      Object.keys(this.props.discoverFilter).length === 0
+    ) {
+      return (
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+      );
+    }
+
+    const { isMore } = this.state;
+
     return (
       <Container className={classes.DiscoverContainer}>
         <div className={classes.HeaderContainer}>
@@ -13,54 +85,8 @@ export default class Discover extends React.Component {
           <div className={classes.UnderScore} />
         </div>
 
-        <Card.Group doubling stackable itemsPerRow={4}>
-          <Card className={classes.DiscoverCard} raised>
-            <div className="ui fluid image">
-              <img
-                src={
-                  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474445065/ballyhoo/WALK-IN/13.jpg"
-                }
-                alt={"Ballyhoo"}
-              />
-              <span className={classes.DiscoverHeader}>Lunch Buffet</span>
-            </div>
-          </Card>
-
-          <Card className={classes.DiscoverCard} raised>
-            <div className="ui fluid image">
-              <img
-                src={
-                  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474445065/ballyhoo/WALK-IN/13.jpg"
-                }
-                alt={"Ballyhoo"}
-              />
-              <span className={classes.DiscoverHeader}>Dinner Buffet</span>
-            </div>
-          </Card>
-
-          <Card className={classes.DiscoverCard} raised>
-            <div className="ui fluid image">
-              <img
-                src={
-                  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474445065/ballyhoo/WALK-IN/13.jpg"
-                }
-                alt={"Ballyhoo"}
-              />
-              <span className={classes.DiscoverHeader}>Takeaway</span>
-            </div>
-          </Card>
-
-          <Card className={classes.DiscoverCard} raised>
-            <div className="ui fluid image">
-              <img
-                src={
-                  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474445065/ballyhoo/WALK-IN/13.jpg"
-                }
-                alt={"Ballyhoo"}
-              />
-              <span className={classes.DiscoverHeader}>Live Performance</span>
-            </div>
-          </Card>
+        <Card.Group itemsPerRow={4} doubling stackable>
+          {this.logicDiscoverCard(this.getDiscoverFilter())}
         </Card.Group>
 
         <Button
@@ -74,8 +100,7 @@ export default class Discover extends React.Component {
             marginLeft: "45%"
           }}
         >
-          View More
-          {/* {viewMore ? "View Less" : "View More"} */}
+          {isMore ? "View Less" : "View More"}
         </Button>
       </Container>
     );

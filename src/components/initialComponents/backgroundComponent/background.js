@@ -8,7 +8,7 @@ import {
   Button,
   Dimmer,
   Loader
-} from "semantic-ui-react";
+} from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/background.css";
 
@@ -19,43 +19,49 @@ export default class Background extends React.Component {
       cityLocalityProps: [],
       cityList: [],
       localityList: [],
+      categoryList: [],
       cityId: 0,
       localityId: 0,
-      cityValue: "City",
-      localityValue: "Locality"
+      cityValue: "",
+      localityValue: ""
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     // Update State
     this.setState({
       cityLocalityProps: nextProps.cityLocality
     });
 
-    // // Find city
-    // this.findCity(nextProps);
+    // City Locality
+    if (Object.keys(nextProps.cityLocality).length !== 0) {
+      // Find city
+      this.findCity(nextProps);
 
-    // // Find Locality
-    // this.findLocality(nextProps);
+      // Find Locality
+      this.findLocality(nextProps);
 
-    // // Create City List
-    // this.createCityList(nextProps.cityLocality.city);
+      // Create City List
+      this.createCityList(nextProps.cityLocality.city);
+    }
+
+    // Category Filter
+    if (Object.keys(nextProps.categoryFilter).length !== 0) {
+      // Create Category Filter
+      this.createCategoryFilter(nextProps.categoryFilter);
+    }
   }
 
   // Find city
   findCity = props => {
     props.cityLocality.city.map(obj => {
       // String come
-
       if (props.defaultCity === obj.c_text) {
-        // Update State
         this.setState({
           cityId: obj.c_key,
           cityValue: obj.c_text
         });
       } else if (props.defaultCity === obj.c_key) {
-        // Update State
         this.setState({
           cityId: obj.c_key,
           cityValue: obj.c_text
@@ -70,7 +76,6 @@ export default class Background extends React.Component {
       // String come
 
       if (props.defaultLocality === obj.l_text) {
-        // Update State
         this.setState(
           { localityId: obj.l_key, localityValue: obj.l_text },
           function() {
@@ -79,7 +84,6 @@ export default class Background extends React.Component {
           }
         );
       } else if (props.defaultLocality === obj.l_key) {
-        // Update State
         this.setState(
           { localityId: obj.l_key, localityValue: obj.l_text },
           function() {
@@ -105,7 +109,6 @@ export default class Background extends React.Component {
       cityArray.push(city);
     });
 
-    // Update State
     this.setState({
       cityList: cityArray
     });
@@ -127,7 +130,6 @@ export default class Background extends React.Component {
       }
     });
 
-    // Update State
     this.setState({
       localityList: localityArray
     });
@@ -137,12 +139,10 @@ export default class Background extends React.Component {
   logicClickCity = (event, data) => {
     //this.props.history.push(data);
 
-    // Update State
     this.setState({
       cityValue: data
     });
 
-    // Update State
     this.setState({
       localityValue: ""
     });
@@ -160,16 +160,36 @@ export default class Background extends React.Component {
 
   // Logic Click City
   logicClickLocality = (event, data) => {
-    // Update State
     this.setState({
       localityValue: data
+    });
+  };
+
+  // Create Category Filter
+  createCategoryFilter = filter => {
+    // Variable
+    let filterArray = [];
+
+    // Map
+    filter.map((obj, index) => {
+      const category = {};
+      category.key = index;
+      category.text = obj.title;
+      category.value = obj.title;
+      filterArray.push(category);
+    });
+
+    this.setState({
+      categoryList: filterArray
     });
   };
 
   render() {
     if (
       this.props.cityLocality === null ||
-      this.props.cityLocality === undefined
+      this.props.cityLocality === undefined ||
+      this.props.categoryFilter === null ||
+      this.props.categoryFilter === undefined
     ) {
       return (
         <Dimmer active inverted>
@@ -178,7 +198,10 @@ export default class Background extends React.Component {
       );
     }
 
-    if (Object.keys(this.props.cityLocality).length === 0) {
+    if (
+      Object.keys(this.props.cityLocality).length === 0 ||
+      Object.keys(this.props.categoryFilter).length === 0
+    ) {
       return (
         <Dimmer active inverted>
           <Loader inverted>Loading</Loader>
@@ -186,27 +209,20 @@ export default class Background extends React.Component {
       );
     }
 
-    const { cityList, localityList } = this.state;
+    const { cityList, localityList, categoryList } = this.state;
 
-    const friendOptions = [
-      {
-        text: "Happy Hours",
-        value: "Jenny Hess",
-        image: {
-          avatar: true,
-          src:
-            "http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_28,w_28/v1474443032/ballyhoo/BREAKFAST/5.jpg"
-        }
-      },
-      {
-        value: "Lunch Buffet",
-        image: {
-          avatar: true,
-          src:
-            "http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_28,w_28/v1474443032/ballyhoo/BREAKFAST/5.jpg"
-        }
-      }
-    ];
+    // const friendOptions = [
+    //   {
+    //     text: "Happy Hours",
+    //     value: "Jenny Hess",
+    //     image: {
+    //       avatar: true,
+    //       src:
+    //         "http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_28,w_28/v1474443032/ballyhoo/BREAKFAST/5.jpg"
+    //     }
+    //   }
+
+    // ];
     return (
       <Segment
         raised
@@ -286,7 +302,7 @@ export default class Background extends React.Component {
                 placeholder="Offer"
                 fluid
                 selection
-                options={friendOptions}
+                options={categoryList}
                 icon={
                   <Icon
                     position="right"

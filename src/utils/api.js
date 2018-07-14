@@ -22,5 +22,23 @@ export default {
         response.json().then(categoryFilter => resolve(categoryFilter));
       });
     });
+  },
+  discoverFilterApi: () => {
+    return new Promise((resolve, reject) => {
+      fetch(host + "api/v4/web/show/discover/filter").then(response => {
+        response.json().then(discoverFilter => resolve(discoverFilter));
+      });
+    });
+  },
+  trendingMerchantApi: cityId => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/merchant/trending?" +
+          getQueryString({ c_key: cityId })
+      ).then(response => {
+        response.json().then(categoryFilter => resolve(categoryFilter));
+      });
+    });
   }
 };

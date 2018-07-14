@@ -18,6 +18,7 @@ export default class Initial extends React.Component {
   componentDidMount() {
     this.props.getCityLocality();
     this.props.getCategoryFilter(this.state.defaultCity);
+    this.props.getDiscoverFilter();
   }
 
   render() {
@@ -29,9 +30,10 @@ export default class Initial extends React.Component {
           history={this.props.history}
           defaultCity={this.state.defaultCity}
           defaultLocality={this.state.defaultLocality}
+          categoryFilter={this.props.categoryFilter}
         />
-        <Category />
-        <Discover />
+        <Category categoryFilter={this.props.categoryFilter} />
+        <Discover discoverFilter={this.props.discoverFilter} />
         <Trending />
         <Locality />
       </div>

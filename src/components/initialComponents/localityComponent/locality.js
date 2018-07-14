@@ -1,6 +1,11 @@
 import React from "react";
 
-import { Segment, Container, Grid, Label } from "semantic-ui-react";
+import {
+  Segment,
+  Container,
+  Grid,
+  Label
+} from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/locality.css";
 
