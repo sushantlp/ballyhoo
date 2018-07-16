@@ -1,6 +1,11 @@
 import React from "react";
 
-import { Card, Container, Image, Button } from "semantic-ui-react";
+import {
+  Card,
+  Container,
+  Image,
+  Button
+} from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/trending.css";
 
