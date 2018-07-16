@@ -9,10 +9,36 @@ import Locality from "./localityComponent/locality";
 export default class Initial extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      defaultCity: "Bengaluru",
-      defaultLocality: "JP Nagar"
-    };
+    console.log(this.props);
+
+    if (Object.keys(this.props.match.params).length === 0) {
+      this.state = {
+        defaultCity: "Bengaluru",
+        defaultLocality: "JP Nagar",
+        url: "bengaluru/jp-nagar"
+      };
+    } else if (
+      this.props.match.params.hasOwnProperty("city") &&
+      this.props.match.params.hasOwnProperty("locality")
+    ) {
+      this.state = {
+        defaultCity: this.props.match.params.city,
+        defaultLocality: this.props.match.params.locality,
+        url: {}
+      };
+    } else if (this.props.match.params.hasOwnProperty("city")) {
+      this.state = {
+        defaultCity: this.props.match.params.city,
+        defaultLocality: 0,
+        url: {}
+      };
+    } else {
+      this.state = {
+        defaultCity: "Bengaluru",
+        defaultLocality: "JP Nagar",
+        url: "bengaluru/jp-nagar"
+      };
+    }
   }
 
   componentDidMount() {
@@ -44,6 +70,7 @@ export default class Initial extends React.Component {
           defaultLocality={this.state.defaultLocality}
           categoryFilter={this.props.categoryFilter}
           parentCityChange={this.parentCityChange}
+          stateLocation={this.state.url}
         />
         <Category categoryFilter={this.props.categoryFilter} />
         <Discover discoverFilter={this.props.discoverFilter} />

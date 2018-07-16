@@ -34,6 +34,7 @@ export default class Background extends React.Component {
       this.setState({
         cityLocalityProps: nextProps.cityLocality
       });
+
       // Find city
       this.findCity(nextProps);
 
@@ -53,31 +54,39 @@ export default class Background extends React.Component {
 
   // Find city
   findCity = props => {
-    props.cityLocality.city.map(obj => {
+    for (let i = 0; i < props.cityLocality.city.length; i++) {
       if (typeof props.defaultCity === "string") {
         // String come
         if (
-          props.defaultCity.replace(/ /g, "").toLowerCase() ===
-          obj.c_text.replace(/ /g, "").toLowerCase()
+          props.defaultCity
+            .replace(/-/g, " ")
+            .replace(/ /g, "")
+            .toLowerCase() ===
+          props.cityLocality.city[i].c_text.replace(/ /g, "").toLowerCase()
         ) {
-          // this.setState({
-          //   cityId: obj.c_key,
-          //   cityValue: obj.c_text
-          // });
+          if (Object.keys(this.props.stateLocation).length !== 0) {
+            this.props.history.push(this.props.stateLocation);
+          }
           this.setState(
-            { cityId: obj.c_key, cityValue: obj.c_text },
+            {
+              cityId: props.cityLocality.city[i].c_key,
+              cityValue: props.cityLocality.city[i].c_text
+            },
             function() {
               this.props.parentCityChange(this.state.cityId, true);
             }
           );
+          break;
         }
-      } else if (props.defaultCity === obj.c_key) {
+      } else if (props.defaultCity === props.cityLocality.city[i].c_key) {
         this.setState({
-          cityId: obj.c_key,
-          cityValue: obj.c_text
+          cityId: props.cityLocality.city[i].c_key,
+          cityValue: props.cityLocality.city[i].c_text
         });
+
+        break;
       }
-    });
+    }
   };
 
   // Find city
@@ -86,10 +95,12 @@ export default class Background extends React.Component {
       if (typeof props.defaultLocality === "string") {
         // String come
         if (
-          props.defaultLocality.replace(/ /g, "").toLowerCase() ===
+          props.defaultLocality
+            .replace(/-/g, " ")
+            .replace(/ /g, "")
+            .toLowerCase() ===
           props.cityLocality.locality[i].l_text.replace(/ /g, "").toLowerCase()
         ) {
-          console.log("Locality");
           this.setState(
             {
               localityId: props.cityLocality.locality[i].l_key,
@@ -169,8 +180,6 @@ export default class Background extends React.Component {
 
   // Logic Click City
   logicClickCity = (event, data) => {
-    // this.props.history.push(data);
-
     this.setState({
       cityValue: data
     });
@@ -180,23 +189,39 @@ export default class Background extends React.Component {
     });
 
     // City Array
-    this.state.cityLocalityProps.city.map(obj => {
-      if (data === obj.c_text) {
-        this.setState({ cityId: obj.c_key, categoryList: [] }, function() {
-          // Create Locality List
-          this.createLocalityList(this.state.cityId);
-          this.props.parentCityChange(this.state.cityId, false);
-        });
+    for (let i = 0; i < this.state.cityLocalityProps.city.length; i++) {
+      if (data === this.state.cityLocalityProps.city[i].c_text) {
+        this.setState(
+          {
+            cityId: this.state.cityLocalityProps.city[i].c_key,
+            categoryList: []
+          },
+          function() {
+            // Create Locality List
+            this.createLocalityList(this.state.cityId);
+            this.props.parentCityChange(this.state.cityId, false);
+
+            const url = data.replace(/ /g, "-").toLowerCase();
+            this.props.history.push("/");
+            this.props.history.push(url);
+          }
+        );
       }
-    });
+    }
   };
 
   // Logic Click City
   logicClickLocality = (event, data) => {
-    //this.props.history.push(data);
-    this.setState({
-      localityValue: data
-    });
+    console.log(this.props);
+    this.setState(
+      {
+        localityValue: data
+      },
+      function() {
+        const url = data.replace(/ /g, "-").toLowerCase();
+        this.props.history.push(url);
+      }
+    );
   };
 
   // Create Category Filter
@@ -244,7 +269,6 @@ export default class Background extends React.Component {
     }
 
     const { cityList, localityList, categoryList } = this.state;
-    console.log(this.state.localityValue);
 
     // const friendOptions = [
     //   {
