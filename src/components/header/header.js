@@ -6,8 +6,6 @@ import { Menu } from "semantic-ui-react";
 import classes from "./static/css/header.css";
 
 class Header extends React.Component {
-  componentDidMount() {}
-
   render() {
     return (
       <div className={classes.HeaderContainer}>
@@ -28,15 +26,6 @@ class Header extends React.Component {
                 </h2>
               </Menu.Item>
             </Link>
-            {/* <Menu.Item className={classes.Search}>
-             
-              <Input
-                className="icon"
-                icon="location arrow"
-                placeholder="Search City..."
-                id="search-input"
-              />
-            </Menu.Item> */}
           </Menu>
         </form>
       </div>

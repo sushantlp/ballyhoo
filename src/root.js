@@ -19,6 +19,12 @@ const Root = ({ store }) => (
         <Route exact path="/" component={Background} />
         <Route exact path="/:city" component={Background} />
         <Route exact path="/:city/:locality" component={Background} />
+        <Route exact path="/:city/:locality/:offering" component={Background} />
+        <Route
+          exact
+          path="/:city/:locality/:offering/:id"
+          component={Background}
+        />
         <Footer />
       </div>
     </BrowserRouter>

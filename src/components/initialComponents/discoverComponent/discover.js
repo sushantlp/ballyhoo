@@ -38,7 +38,6 @@ export default class Discover extends React.Component {
   };
 
   toggle = () => {
-    console.log(this.state);
     this.setState({
       isMore: !this.state.isMore
     });
@@ -67,11 +66,7 @@ export default class Discover extends React.Component {
       Object.keys(this.props.discoverFilter).length === 0 ||
       Object.keys(this.props.discoverFilter).length === 0
     ) {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
+      return;
     }
 
     const { isMore } = this.state;

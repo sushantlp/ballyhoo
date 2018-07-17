@@ -242,6 +242,10 @@ export default class Background extends React.Component {
       category.key = index;
       category.text = obj.title;
       category.value = obj.title;
+      category.image = {
+        avatar: true,
+        src: obj.icon
+      };
       filterArray.push(category);
     });
 
@@ -277,18 +281,6 @@ export default class Background extends React.Component {
 
     const { cityList, localityList, categoryList } = this.state;
 
-    // const friendOptions = [
-    //   {
-    //     text: "Happy Hours",
-    //     value: "Jenny Hess",
-    //     image: {
-    //       avatar: true,
-    //       src:
-    //         "http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_28,w_28/v1474443032/ballyhoo/BREAKFAST/5.jpg"
-    //     }
-    //   }
-
-    // ];
     return (
       <Segment
         raised

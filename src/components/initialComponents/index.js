@@ -4,12 +4,12 @@ import Background from "./backgroundComponent/background";
 import Category from "./categoryComponent/category";
 import Discover from "./discoverComponent/discover";
 import Trending from "./trendingComponent/trending";
+import Facebook from "./facebookComponent/facebookEvent";
 import Locality from "./localityComponent/locality";
 
 export default class Initial extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
 
     if (Object.keys(this.props.match.params).length === 0) {
       this.state = {
@@ -42,9 +42,9 @@ export default class Initial extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     this.props.getCityLocality();
     this.props.getDiscoverFilter();
+    this.props.getFacebookEvent();
   }
 
   parentCityChange = (cityId, flag) => {
@@ -83,8 +83,9 @@ export default class Initial extends React.Component {
           match={this.props.match}
         />
         <Category categoryFilter={this.props.categoryFilter} />
-        <Discover discoverFilter={this.props.discoverFilter} />
+        <Discover facebookEvent={this.props.facebookEvent} />
         <Trending />
+        <Facebook getFacebookEvent={this.props.getFacebookEvent} />
         <Locality
           defaultCity={this.state.defaultCity}
           cityLocality={this.props}
