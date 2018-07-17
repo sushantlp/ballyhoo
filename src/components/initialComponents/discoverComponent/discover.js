@@ -19,8 +19,6 @@ export default class Discover extends React.Component {
     this.state = {
       isMore: false
     };
-    console.log(this.state);
-    console.log("Hello");
   }
   createDiscoverCard = (index, header, image, alt) => {
     return (

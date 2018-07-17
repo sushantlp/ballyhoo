@@ -42,8 +42,8 @@ export default class Initial extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     this.props.getCityLocality();
-    // this.props.getCategoryFilter(1);
     this.props.getDiscoverFilter();
   }
 
@@ -59,6 +59,14 @@ export default class Initial extends React.Component {
     }
   };
 
+  parentStateChange = (name, flag) => {
+    if (flag) {
+      this.setState({ defaultCity: name });
+    } else {
+      this.setState({ defaultLocality: name });
+    }
+  };
+
   render() {
     return (
       <div>
@@ -70,14 +78,16 @@ export default class Initial extends React.Component {
           defaultLocality={this.state.defaultLocality}
           categoryFilter={this.props.categoryFilter}
           parentCityChange={this.parentCityChange}
-          stateLocation={this.state.url}
+          parentStateChange={this.parentStateChange}
+          url={this.state.url}
+          match={this.props.match}
         />
         <Category categoryFilter={this.props.categoryFilter} />
         <Discover discoverFilter={this.props.discoverFilter} />
         <Trending />
         <Locality
           defaultCity={this.state.defaultCity}
-          cityLocality={this.props.cityLocality}
+          cityLocality={this.props}
         />
       </div>
     );

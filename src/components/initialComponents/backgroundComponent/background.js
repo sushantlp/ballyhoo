@@ -64,8 +64,8 @@ export default class Background extends React.Component {
             .toLowerCase() ===
           props.cityLocality.city[i].c_text.replace(/ /g, "").toLowerCase()
         ) {
-          if (Object.keys(this.props.stateLocation).length !== 0) {
-            this.props.history.push(this.props.stateLocation);
+          if (Object.keys(this.props.url).length !== 0) {
+            this.props.history.push(this.props.url);
           }
           this.setState(
             {
@@ -212,14 +212,21 @@ export default class Background extends React.Component {
 
   // Logic Click City
   logicClickLocality = (event, data) => {
-    console.log(this.props);
     this.setState(
       {
         localityValue: data
       },
       function() {
+        this.props.parentStateChange(data, false);
         const url = data.replace(/ /g, "-").toLowerCase();
-        this.props.history.push(url);
+        if (
+          this.props.match.params.hasOwnProperty("city") &&
+          this.props.match.params.hasOwnProperty("locality")
+        ) {
+          this.props.history.push(url);
+        } else {
+          this.props.history.push(this.props.match.params.city + "/" + url);
+        }
       }
     );
   };
