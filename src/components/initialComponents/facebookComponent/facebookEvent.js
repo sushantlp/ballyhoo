@@ -83,7 +83,9 @@ export default class Trending extends React.Component {
   };
 
   redirectRoute = () => {
-    this.props.history.push(this.props.cityName + "/facebook-post");
+    this.props.history.push("/");
+    const cityName = this.props.cityName.replace(/ /g, "-").toLowerCase();
+    this.props.history.push(cityName + "/facebook-post/");
   };
 
   render() {
