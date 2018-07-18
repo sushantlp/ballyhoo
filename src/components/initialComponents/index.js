@@ -76,16 +76,15 @@ export default class Initial extends React.Component {
           history={this.props.history}
           defaultCity={this.state.defaultCity}
           defaultLocality={this.state.defaultLocality}
-          categoryFilter={this.props.categoryFilter}
           parentCityChange={this.parentCityChange}
           parentStateChange={this.parentStateChange}
           url={this.state.url}
           match={this.props.match}
         />
         <Category categoryFilter={this.props.categoryFilter} />
-        <Discover facebookEvent={this.props.facebookEvent} />
+        <Discover discoverFilter={this.props.discoverFilter} />
         <Trending />
-        <Facebook getFacebookEvent={this.props.getFacebookEvent} />
+        <Facebook facebookEvent={this.props.facebookEvent} />
         <Locality
           defaultCity={this.state.defaultCity}
           cityLocality={this.props}

@@ -11,7 +11,89 @@ import {
 
 import classes from "./static/css/facebook.css";
 
+// Default Number of Items for View More Button
+const MAX_ITEMS = 4;
+const MAX_TITLE_LENGTH = 90;
+
 export default class Trending extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMore: false
+    };
+  }
+
+  logicClickFacebookEvent(url) {
+    let win = window.open(url, "_blank");
+    win.focus();
+  }
+
+  createFacebookEventCard = (index, header, image, content, alt, targetUrl) => {
+    return (
+      <Card
+        className={classes.FacebookCard}
+        raised
+        key={index}
+        onClick={this.logicClickFacebookEvent.bind(this, targetUrl)}
+      >
+        <Image
+          src={image}
+          alt={alt}
+          style={{
+            width: "266px",
+            height: "159px"
+          }}
+        />
+        <Card.Content>
+          <Card.Header
+            style={{
+              fontWeight: "500",
+              color: "#7a52c0"
+            }}
+          >
+            {header}
+          </Card.Header>
+          <Card.Description>{content}</Card.Description>
+        </Card.Content>
+      </Card>
+    );
+  };
+
+  logicFacebookEventCard = filter => {
+    let content = undefined;
+    return filter.map((obj, key) => {
+      content = obj.content;
+
+      if (content !== undefined && content !== "" && content !== null) {
+        if (content.length > MAX_TITLE_LENGTH) {
+          content = content.substring(0, MAX_TITLE_LENGTH) + "... ";
+        }
+
+        return this.createFacebookEventCard(
+          key,
+          obj.b_name,
+          obj.img_url,
+          content,
+          content,
+          obj.target_url
+        );
+      }
+    });
+  };
+
+  toggle = () => {
+    this.setState({
+      isMore: !this.state.isMore
+    });
+  };
+
+  readFacebookEvent = () => {
+    if (this.state.isMore) {
+      return this.props.facebookEvent;
+    }
+    return this.props.facebookEvent.slice(0, MAX_ITEMS);
+  };
+
   render() {
     if (
       this.props.facebookEvent === null ||
@@ -28,41 +110,24 @@ export default class Trending extends React.Component {
       Object.keys(this.props.facebookEvent).length === 0 ||
       Object.keys(this.props.facebookEvent).length === 0
     ) {
-      return;
+      return (
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+      );
     }
+
+    const { isMore } = this.state;
 
     return (
       <Container>
         <div className={classes.HeaderContainer}>
-          <h4 className={classes.HeaderName}>Facebook Event</h4>
+          <h4 className={classes.HeaderName}>FACEBOOK EVENT</h4>
           <div className={classes.UnderScore} />
         </div>
+
         <Card.Group itemsPerRow={4} doubling stackable>
-          <Card className={classes.FacebookCard} raised>
-            <Image src="https://d13genyhhfmqry.cloudfront.net/large/mc_1_2018-02-01-19-25-39-000475.jpg" />
-            <Card.Content>
-              <Card.Header
-                style={{
-                  fontWeight: "500",
-                  color: "#7a52c0"
-                }}
-              >
-                RESTAURANTS
-              </Card.Header>
-              <Card.Meta>
-                <span
-                  style={{
-                    color: "#F79F6D"
-                  }}
-                >
-                  Amazons
-                </span>
-              </Card.Meta>
-              <Card.Description>
-                JP Nagar 2nd phase, Bengaluru.
-              </Card.Description>
-            </Card.Content>
-          </Card>
+          {this.logicFacebookEventCard(this.readFacebookEvent())}
         </Card.Group>
 
         <Button
@@ -76,8 +141,7 @@ export default class Trending extends React.Component {
             marginLeft: "45%"
           }}
         >
-          View More
-          {/* {viewMore ? "View Less" : "View More"} */}
+          {isMore ? "View Less" : "View More"}
         </Button>
       </Container>
     );

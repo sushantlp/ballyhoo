@@ -43,7 +43,7 @@ export default class Discover extends React.Component {
     });
   };
 
-  getDiscoverFilter = () => {
+  readDiscoverFilter = () => {
     if (this.state.isMore) {
       return this.props.discoverFilter;
     }
@@ -66,7 +66,11 @@ export default class Discover extends React.Component {
       Object.keys(this.props.discoverFilter).length === 0 ||
       Object.keys(this.props.discoverFilter).length === 0
     ) {
-      return;
+      return (
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+      );
     }
 
     const { isMore } = this.state;
@@ -79,7 +83,7 @@ export default class Discover extends React.Component {
         </div>
 
         <Card.Group itemsPerRow={4} doubling stackable>
-          {this.logicDiscoverCard(this.getDiscoverFilter())}
+          {this.logicDiscoverCard(this.readDiscoverFilter())}
         </Card.Group>
 
         <Button
