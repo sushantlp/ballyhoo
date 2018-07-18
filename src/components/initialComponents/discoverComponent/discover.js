@@ -62,15 +62,8 @@ export default class Discover extends React.Component {
       );
     }
 
-    if (
-      Object.keys(this.props.discoverFilter).length === 0 ||
-      Object.keys(this.props.discoverFilter).length === 0
-    ) {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
+    if (Object.keys(this.props.discoverFilter).length === 0) {
+      return <div />;
     }
 
     const { isMore } = this.state;

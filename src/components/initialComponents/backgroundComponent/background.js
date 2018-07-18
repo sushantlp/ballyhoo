@@ -73,7 +73,11 @@ export default class Background extends React.Component {
               cityValue: props.cityLocality.city[i].c_text
             },
             function() {
-              this.props.parentCityChange(this.state.cityId, true);
+              this.props.parentCityChange(
+                this.state.cityId,
+                props.cityLocality.city[i].c_text,
+                true
+              );
             }
           );
           break;
@@ -199,7 +203,7 @@ export default class Background extends React.Component {
           function() {
             // Create Locality List
             this.createLocalityList(this.state.cityId);
-            this.props.parentCityChange(this.state.cityId, false);
+            this.props.parentCityChange(this.state.cityId, data, false);
 
             const url = data.replace(/ /g, "-").toLowerCase();
             this.props.history.push("/");
@@ -272,11 +276,7 @@ export default class Background extends React.Component {
       Object.keys(this.props.cityLocality).length === 0 ||
       Object.keys(this.props.categoryFilter).length === 0
     ) {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
+      return <div />;
     }
 
     const { cityList, localityList, categoryList } = this.state;

@@ -42,9 +42,13 @@ export default {
       });
     });
   },
-  facebookEventApi: () => {
+  facebookEventApi: (cityId, skip) => {
     return new Promise((resolve, reject) => {
-      fetch(host + "api/v4/web/facebook/events").then(response => {
+      fetch(
+        host +
+          "api/v4/web/facebook/events?" +
+          getQueryString({ c_id: cityId, skip: skip })
+      ).then(response => {
         response.json().then(facebookEvent => resolve(facebookEvent));
       });
     });

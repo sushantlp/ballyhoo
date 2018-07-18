@@ -12,7 +12,6 @@ import {
 import classes from "./static/css/facebook.css";
 
 // Default Number of Items for View More Button
-const MAX_ITEMS = 4;
 const MAX_TITLE_LENGTH = 90;
 
 export default class Trending extends React.Component {
@@ -78,18 +77,10 @@ export default class Trending extends React.Component {
     });
   };
 
-  readFacebookEvent = () => {
-    return this.props.facebookEvent.facebookEvent.slice(0, MAX_ITEMS);
-  };
-
-  redirectRoute = () => {
-    this.props.history.push(this.props.cityName + "/facebook-post");
-  };
-
   render() {
     if (
-      this.props.facebookEvent.facebookEvent === null ||
-      this.props.facebookEvent.facebookEvent === undefined
+      this.props.facebookEvent === null ||
+      this.props.facebookEvent === undefined
     ) {
       return (
         <Dimmer active inverted>
@@ -98,8 +89,15 @@ export default class Trending extends React.Component {
       );
     }
 
-    if (Object.keys(this.props.facebookEvent.facebookEvent).length === 0) {
-      return <div />;
+    if (
+      Object.keys(this.props.facebookEvent).length === 0 ||
+      Object.keys(this.props.facebookEvent).length === 0
+    ) {
+      return (
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+      );
     }
 
     return (
@@ -110,22 +108,8 @@ export default class Trending extends React.Component {
         </div>
 
         <Card.Group itemsPerRow={4} doubling stackable>
-          {this.logicFacebookEventCard(this.readFacebookEvent())}
+          {this.logicFacebookEventCard(this.props.facebookEvent )}
         </Card.Group>
-
-        <Button
-          onClick={() => this.redirectRoute()}
-          size="large"
-          basic
-          color="violet"
-          style={{
-            marginTop: "1.5em",
-            marginBottom: "1.5em",
-            marginLeft: "45%"
-          }}
-        >
-          View More
-        </Button>
       </Container>
     );
   }

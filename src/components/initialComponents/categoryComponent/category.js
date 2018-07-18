@@ -63,15 +63,8 @@ export default class Category extends React.Component {
       );
     }
 
-    if (
-      Object.keys(this.props.categoryFilter).length === 0 ||
-      Object.keys(this.props.categoryFilter).length === 0
-    ) {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
+    if (Object.keys(this.props.categoryFilter).length === 0) {
+      return <div />;
     }
 
     const { isMore } = this.state;

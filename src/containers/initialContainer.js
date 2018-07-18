@@ -12,7 +12,7 @@ function mapStateToProps(state) {
     categoryFilter: state.categoryFilter.categoryFilter,
     discoverFilter: state.discoverFilter.discoverFilter,
     cityLocality: state.cityLocality.cityLocality,
-    facebookEvent: state.facebookEvent.facebookEvent
+    facebookEvent: state.facebookEvent
   };
 }
 
