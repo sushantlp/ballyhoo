@@ -17,6 +17,21 @@ const MAX_TITLE_LENGTH = 90;
 export default class Trending extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: false,
+      disabled: false
+    };
+  }
+
+  componentDidUpdate(nextProps, nextSate) {
+    if (nextProps.facebookEvent.skip !== this.props.facebookEvent.skip) {
+      this.loadingStop();
+      return false;
+    } else if (nextProps.facebookEvent.end !== this.props.facebookEvent.end) {
+      this.loadingStop();
+      this.disabledButon();
+      return false;
+    }
   }
 
   logicClickFacebookEvent(url) {
@@ -77,10 +92,31 @@ export default class Trending extends React.Component {
     });
   };
 
+  loadingStart = () => {
+    this.setState({
+      loading: true
+    });
+
+    this.props.parentLoadFacebookEvent(this.props.facebookEvent.skip);
+  };
+
+  loadingStop = () => {
+    this.setState({
+      loading: false
+    });
+  };
+
+  disabledButon = () => {
+    this.setState({
+      disabled: true
+    });
+  };
+
   render() {
+    const { loading, disabled } = this.state;
     if (
-      this.props.facebookEvent === null ||
-      this.props.facebookEvent === undefined
+      this.props.facebookEvent.facebookEvent === null ||
+      this.props.facebookEvent.facebookEvent === undefined
     ) {
       return (
         <Dimmer active inverted>
@@ -89,27 +125,30 @@ export default class Trending extends React.Component {
       );
     }
 
-    if (
-      Object.keys(this.props.facebookEvent).length === 0 ||
-      Object.keys(this.props.facebookEvent).length === 0
-    ) {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
+    if (Object.keys(this.props.facebookEvent.facebookEvent).length === 0) {
+      return <div />;
     }
 
     return (
-      <Container>
-        <div className={classes.HeaderContainer}>
-          <h4 className={classes.HeaderName}>FACEBOOK EVENT</h4>
-          <div className={classes.UnderScore} />
-        </div>
-
+      <Container className={classes.FacebookContainer}>
         <Card.Group itemsPerRow={4} doubling stackable>
-          {this.logicFacebookEventCard(this.props.facebookEvent )}
+          {this.logicFacebookEventCard(this.props.facebookEvent.facebookEvent)}
         </Card.Group>
+
+        <Button
+          size="large"
+          color="violet"
+          loading={loading}
+          disabled={disabled}
+          onClick={() => this.loadingStart()}
+          style={{
+            marginTop: "1.5em",
+            marginBottom: "1.5em",
+            marginLeft: "45%"
+          }}
+        >
+          Load More
+        </Button>
       </Container>
     );
   }

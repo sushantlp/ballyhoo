@@ -16,10 +16,6 @@ const MAX_ITEMS = 4;
 const MAX_TITLE_LENGTH = 90;
 
 export default class Trending extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   logicClickFacebookEvent(url) {
     let win = window.open(url, "_blank");
     win.focus();
@@ -85,7 +81,9 @@ export default class Trending extends React.Component {
   redirectRoute = () => {
     this.props.history.push("/");
     const cityName = this.props.cityName.replace(/ /g, "-").toLowerCase();
-    this.props.history.push(cityName + "/facebook-post/");
+    this.props.history.push(cityName + "/facebook-post/", {
+      cityId: this.props.cityId
+    });
   };
 
   render() {

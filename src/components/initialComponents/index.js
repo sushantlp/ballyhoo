@@ -95,6 +95,7 @@ export default class Initial extends React.Component {
         <Facebook
           facebookEvent={this.props.facebookEvent}
           cityName={this.state.cityName}
+          cityId={this.state.defaultCity}
           history={this.props.history}
         />
         <Locality

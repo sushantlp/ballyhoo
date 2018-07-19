@@ -9,7 +9,7 @@ import {
   List,
   Icon,
   Segment
-} from "semantic-ui-react";
+} from "semantic-ui-react/dist/commonjs";
 import classes from "./static/css/footer.css";
 import AppStore from "./static/img/apple-store.png";
 import GooglePlay from "./static/img/google-play.png";

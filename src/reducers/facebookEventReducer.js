@@ -1,11 +1,9 @@
-import merge from "lodash/merge";
-
 import { actionType } from "../actions/facebookEventAction";
 
 const initialState = {
   facebookEvent: {},
-  end: 0,
-  skip: 0
+  skip: 0,
+  end: 0
 };
 
 export function facebookEvent(state = initialState, action) {
@@ -15,34 +13,36 @@ export function facebookEvent(state = initialState, action) {
         return {
           ...state,
           facebookEvent: action.facebookEvent.message.ballyhoo.posts,
-          end: action.facebookEvent.message.ballyhoo.end,
-          skip: action.facebookEvent.message.ballyhoo.skip
+          skip: action.facebookEvent.message.ballyhoo.skip,
+          end: action.facebookEvent.message.ballyhoo.end
         };
       } else {
         return {
           ...state,
           facebookEvent: {},
-          end: 0,
-          skip: 0
+          skip: 0,
+          end: 0
         };
       }
 
     case actionType.facebookMergeData:
       if (action.facebookEvent.hasOwnProperty("message")) {
-        // Create our new object
-        const facebook = {
-          facebookEvent: action.facebookEvent.message.ballyhoo.posts,
-          end: action.facebookEvent.message.ballyhoo.end,
-          skip: action.facebookEvent.message.ballyhoo.skip
-        };
+        const previous = state.facebookEvent;
 
-        return merge({}, state, facebook);
+        return {
+          ...state,
+          facebookEvent: previous.concat(
+            action.facebookEvent.message.ballyhoo.posts
+          ),
+          skip: action.facebookEvent.message.ballyhoo.skip,
+          end: action.facebookEvent.message.ballyhoo.end
+        };
       } else {
         return {
           ...state,
           facebookEvent: {},
-          end: 0,
-          skip: 0
+          skip: 0,
+          end: 0
         };
       }
 
