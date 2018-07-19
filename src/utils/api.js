@@ -31,14 +31,25 @@ export default {
       });
     });
   },
-  trendingMerchantApi: cityId => {
+  popularFilterApi: cityId => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v4/web/merchant/trending?" +
-          getQueryString({ c_key: cityId })
+          "api/v4/web/trending/merchants?" +
+          getQueryString({ c_id: cityId })
       ).then(response => {
-        response.json().then(categoryFilter => resolve(categoryFilter));
+        response.json().then(popularFilter => resolve(popularFilter));
+      });
+    });
+  },
+  popularLocalityApi: cityId => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/trending/localities?" +
+          getQueryString({ c_id: cityId })
+      ).then(response => {
+        response.json().then(popularLocality => resolve(popularLocality));
       });
     });
   },

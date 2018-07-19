@@ -33,8 +33,8 @@ export default class Trending extends React.Component {
           src={image}
           alt={alt}
           style={{
-            width: "266px",
-            height: "159px"
+            width: "512px",
+            height: "180px"
           }}
         />
         <Card.Content>

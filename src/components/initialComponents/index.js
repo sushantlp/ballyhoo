@@ -3,7 +3,7 @@ import React from "react";
 import Background from "./backgroundComponent/background";
 import Category from "./categoryComponent/category";
 import Discover from "./discoverComponent/discover";
-import Trending from "./trendingComponent/trending";
+import Popular from "./popularComponent/popular";
 import Facebook from "./facebookComponent/facebookEvent";
 import Locality from "./localityComponent/locality";
 
@@ -55,6 +55,8 @@ export default class Initial extends React.Component {
       this.setState({ defaultCity: cityId, cityName: cityName }, function() {
         this.props.getCategoryFilter(this.state.defaultCity);
         this.props.getFacebookEvent(this.state.defaultCity, 0, false);
+        this.props.getPopularFilter(this.state.defaultCity);
+        this.props.getPopularLocality(this.state.defaultCity);
       });
     } else {
       this.setState(
@@ -62,6 +64,8 @@ export default class Initial extends React.Component {
         function() {
           this.props.getCategoryFilter(this.state.defaultCity);
           this.props.getFacebookEvent(this.state.defaultCity, 0, false);
+          this.props.getPopularFilter(this.state.defaultCity);
+          this.props.getPopularLocality(this.state.defaultCity);
         }
       );
     }
@@ -91,17 +95,14 @@ export default class Initial extends React.Component {
         />
         <Category categoryFilter={this.props.categoryFilter} />
         <Discover discoverFilter={this.props.discoverFilter} />
-        <Trending />
+        <Popular popularFilter={this.props.popularFilter} />
         <Facebook
           facebookEvent={this.props.facebookEvent}
           cityName={this.state.cityName}
           cityId={this.state.defaultCity}
           history={this.props.history}
         />
-        <Locality
-          defaultCity={this.state.defaultCity}
-          cityLocality={this.props}
-        />
+        <Locality popularLocality={this.props.popularLocality} />
       </div>
     );
   }
