@@ -81,7 +81,7 @@ export default class Trending extends React.Component {
   redirectRoute = () => {
     this.props.history.push("/");
     const cityName = this.props.cityName.replace(/ /g, "-").toLowerCase();
-    this.props.history.push(cityName + "/facebook-post/", {
+    this.props.history.push(cityName + "/trending/", {
       cityId: this.props.cityId
     });
   };
@@ -105,7 +105,7 @@ export default class Trending extends React.Component {
     return (
       <Container>
         <div className={classes.HeaderContainer}>
-          <h4 className={classes.HeaderName}>FACEBOOK EVENT</h4>
+          <h4 className={classes.HeaderName}>TRENDING</h4>
           <div className={classes.UnderScore} />
         </div>
 

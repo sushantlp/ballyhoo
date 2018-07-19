@@ -72,7 +72,7 @@ export default class Category extends React.Component {
     return (
       <Container className={classes.CategoryContainer}>
         <div className={classes.HeaderContainer}>
-          <h4 className={classes.HeaderName}>CATEGORY</h4>
+          <h4 className={classes.HeaderName}>COLLECTION</h4>
           <div className={classes.UnderScore} />
         </div>
         <Card.Group itemsPerRow={3} doubling stackable>

@@ -14,7 +14,7 @@ export default class Trending extends React.Component {
     return (
       <Container>
         <div className={classes.HeaderContainer}>
-          <h4 className={classes.HeaderName}>TRENDING</h4>
+          <h4 className={classes.HeaderName}>MOST POPULAR</h4>
           <div className={classes.UnderScore} />
         </div>
         <Card.Group itemsPerRow={4} doubling stackable>

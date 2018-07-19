@@ -131,6 +131,11 @@ export default class Trending extends React.Component {
 
     return (
       <Container className={classes.FacebookContainer}>
+        <div className={classes.HeaderContainer}>
+          <h4 className={classes.HeaderName}>TRENDING</h4>
+          <div className={classes.UnderScore} />
+        </div>
+
         <Card.Group itemsPerRow={4} doubling stackable>
           {this.logicFacebookEventCard(this.props.facebookEvent.facebookEvent)}
         </Card.Group>
