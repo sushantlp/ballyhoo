@@ -115,6 +115,12 @@ export default class Trending extends React.Component {
 
         <Button
           onClick={() => this.redirectRoute()}
+          disabled={
+            Object.keys(this.props.facebookEvent.facebookEvent).length <
+            MAX_ITEMS
+              ? true
+              : false
+          }
           size="large"
           basic
           color="violet"

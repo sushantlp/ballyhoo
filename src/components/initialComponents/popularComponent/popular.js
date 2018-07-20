@@ -54,7 +54,7 @@ export default class Popular extends React.Component {
     return filter.map(obj => {
       return this.createPopularCard(
         obj.merchant_id,
-        obj.bname,
+        obj.category,
         obj.bname,
         obj.address,
         obj.image_path,
@@ -106,6 +106,11 @@ export default class Popular extends React.Component {
 
         <Button
           onClick={this.toggle}
+          disabled={
+            Object.keys(this.props.popularFilter).length < MAX_ITEMS
+              ? true
+              : false
+          }
           size="large"
           basic
           color="violet"

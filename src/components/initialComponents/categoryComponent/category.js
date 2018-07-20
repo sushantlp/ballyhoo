@@ -81,6 +81,11 @@ export default class Category extends React.Component {
 
         <Button
           onClick={this.toggle}
+          disabled={
+            Object.keys(this.props.categoryFilter).length < MAX_ITEMS
+              ? true
+              : false
+          }
           size="large"
           basic
           color="violet"
