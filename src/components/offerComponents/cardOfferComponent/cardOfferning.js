@@ -169,10 +169,51 @@ export default class Trending extends React.Component {
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
-              <a>
-                <Icon name="user" />
-                22 Friends
-              </a>
+              <Icon name="rupee">
+                <span>
+                  <label
+                    style={{
+                      fontWeight: "bold",
+                      textDecoration: "line-through"
+                    }}
+                  >
+                    1000
+                  </label>
+                </span>
+              </Icon>
+
+              <Icon
+                name="rupee"
+                style={{
+                  marginLeft: "1.5em"
+                }}
+              >
+                <span>
+                  <label
+                    style={{
+                      fontWeight: "bold"
+                    }}
+                  >
+                    500
+                  </label>
+                </span>
+              </Icon>
+
+              <label
+                style={{
+                  fontWeight: "bold",
+                  marginLeft: "5em"
+                }}
+              >
+                0.65km
+              </label>
+              <label
+                style={{
+                  float: "right"
+                }}
+              >
+                <Rating defaultRating={3} maxRating={5} disabled />
+              </label>
             </Card.Content>
           </Card>
 
@@ -214,10 +255,51 @@ export default class Trending extends React.Component {
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
-              <a>
-                <Icon name="user" />
-                22 Friends
-              </a>
+              <Icon name="rupee">
+                <span>
+                  <label
+                    style={{
+                      fontWeight: "bold",
+                      textDecoration: "line-through"
+                    }}
+                  >
+                    1000
+                  </label>
+                </span>
+              </Icon>
+
+              <Icon
+                name="rupee"
+                style={{
+                  marginLeft: "1.5em"
+                }}
+              >
+                <span>
+                  <label
+                    style={{
+                      fontWeight: "bold"
+                    }}
+                  >
+                    500
+                  </label>
+                </span>
+              </Icon>
+
+              <label
+                style={{
+                  fontWeight: "bold",
+                  marginLeft: "5em"
+                }}
+              >
+                0.65km
+              </label>
+              <label
+                style={{
+                  float: "right"
+                }}
+              >
+                <Rating defaultRating={3} maxRating={5} disabled />
+              </label>
             </Card.Content>
           </Card>
 
@@ -256,10 +338,51 @@ export default class Trending extends React.Component {
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
-              <a>
-                <Icon name="user" />
-                22 Friends
-              </a>
+              <Icon name="rupee">
+                <span>
+                  <label
+                    style={{
+                      fontWeight: "bold",
+                      textDecoration: "line-through"
+                    }}
+                  >
+                    1000
+                  </label>
+                </span>
+              </Icon>
+
+              <Icon
+                name="rupee"
+                style={{
+                  marginLeft: "1.5em"
+                }}
+              >
+                <span>
+                  <label
+                    style={{
+                      fontWeight: "bold"
+                    }}
+                  >
+                    500
+                  </label>
+                </span>
+              </Icon>
+
+              <label
+                style={{
+                  fontWeight: "bold",
+                  marginLeft: "5em"
+                }}
+              >
+                0.65km
+              </label>
+              <label
+                style={{
+                  float: "right"
+                }}
+              >
+                <Rating defaultRating={3} maxRating={5} disabled />
+              </label>
             </Card.Content>
           </Card>
         </Card.Group>
