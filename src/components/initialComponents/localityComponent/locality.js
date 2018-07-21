@@ -14,22 +14,19 @@ import classes from "./static/css/locality.css";
 export default class Discover extends React.Component {
   createLocalityGrid = (localityId, localityName) => {
     return (
-      <Grid.Column
+      <Label
         key={localityId}
+        as="a"
+        basic
         style={{
-          marginTop: "0.5rem",
+          color: "rgba(101, 96, 96, 0.87)",
+          marginLeft: "0.5rem",
           marginBottom: "0.5rem"
         }}
+        className={classes.Label}
       >
-        <Label
-          as="a"
-          basic
-          style={{ color: "rgba(101, 96, 96, 0.87)" }}
-          className={classes.Label}
-        >
-          {localityName}
-        </Label>
-      </Grid.Column>
+        {localityName}
+      </Label>
     );
   };
 

@@ -1,0 +1,63 @@
+/* .DummyProductCardWrapper {
+  cursor: pointer;
+  width: 30em;
+  height: 33em;
+}
+.ProductImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 18.5em;
+  background: #f4f4f4;
+  overflow: hidden;
+  animation: breath 2s infinite;
+}
+.ProductContentWrapper {
+  width: 100%;
+}
+.ProductTitle {
+  margin: 1em;
+  width: 80%;
+  height: 2em;
+  background: #f4f4f4;
+  animation: breath 2s infinite;
+}
+.ProductDetail {
+} */
+
+.OfferningContainer {
+  margin-top: 30px;
+}
+
+.OfferningImage:hover {
+  background: #fff;
+  opacity: 0.7;
+}
+.OfferningCard:hover {
+  transform: scale(1.04) !important;
+}
+
+.OfferningImage {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+}
+
+OfferningCard {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  box-shadow: 4px 4px 10px 0;
+}
+
+.Calendar {
+  position: absolute;
+  bottom: 0;
+  font-weight: 600;
+  margin: 2em 0em 1em 16em;
+  font-size: 14px;
+  color: white;
+  text-transform: uppercase;
+  background-color: #6d6969;
+  box-shadow: 4px 4px 10px 0;
+  padding: 2px;
+}

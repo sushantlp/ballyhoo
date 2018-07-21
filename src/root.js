@@ -10,6 +10,7 @@ import Header from "./containers/headerContainer";
 import Background from "./containers/initialContainer";
 import Footer from "./containers/footerContainer";
 import Facebook from "./containers/facebookContainer";
+import Offering from "./containers/offerContainer";
 
 // Router root
 const Root = ({ store }) => (
@@ -22,12 +23,7 @@ const Root = ({ store }) => (
           <Route exact path="/:city" component={Background} />
           <Route exact path="/:city/trending" component={Facebook} />
           <Route exact path="/:city/:locality" component={Background} />
-          {/* <Route exact path="/:city/:locality/:offering" component={Offering} /> */}
-          {/* <Route
-          exact
-          path="/:city/:locality/:offering/:id"
-          component={Background}
-        /> */}
+          <Route exact path="/:city/:locality/:offering" component={Offering} />
         </Switch>
         <Footer />
       </div>

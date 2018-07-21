@@ -1,9 +1,9 @@
 import getQueryString from "./paramParser";
 
 // Base Url
-const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
+// const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
 
-// const host = "https://ballyhoo.today/";
+const host = "https://ballyhoo.today/";
 
 export default {
   cityLocalityApi: () => {

@@ -214,7 +214,7 @@ export default class Background extends React.Component {
     }
   };
 
-  // Logic Click City
+  // Logic Click Locality
   logicClickLocality = (event, data) => {
     this.setState(
       {
@@ -233,6 +233,16 @@ export default class Background extends React.Component {
         }
       }
     );
+  };
+
+  logicClickOfferning = (event, data) => {
+    const url = data.replace(/ /g, "-").toLowerCase();
+    if (
+      this.props.match.params.hasOwnProperty("city") &&
+      this.props.match.params.hasOwnProperty("locality")
+    ) {
+      this.props.history.push(this.props.match.params.locality + "/" + url);
+    }
   };
 
   // Create Category Filter
@@ -361,6 +371,9 @@ export default class Background extends React.Component {
                 fluid
                 selection
                 options={categoryList}
+                onChange={(event, data) =>
+                  this.logicClickOfferning(event, data.value)
+                }
                 icon={
                   <Icon
                     position="right"
