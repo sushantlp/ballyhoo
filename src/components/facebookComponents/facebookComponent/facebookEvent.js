@@ -19,8 +19,24 @@ export default class Trending extends React.Component {
     super(props);
     this.state = {
       loading: false,
-      disabled: false
+      disabled: false,
+      cityId: 0
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.facebookSeo) {
+      this.setState({
+        cityId: nextProps.history.location.state.cityId
+      });
+    } else {
+      if (
+        Object.keys(nextProps.cityLocality).length !== 0 &&
+        Object.keys(nextProps.facebookEvent.facebookEvent).length === 0
+      ) {
+        this.findCity(nextProps, this.props.match.params.city);
+      }
+    }
   }
 
   componentDidUpdate(nextProps, nextSate) {
@@ -33,6 +49,28 @@ export default class Trending extends React.Component {
       return false;
     }
   }
+
+  findCity = (props, cityParam) => {
+    for (let i = 0; i < props.cityLocality.city.length; i++) {
+      if (
+        cityParam
+          .replace(/-/g, " ")
+          .replace(/ /g, "")
+          .toLowerCase() ===
+        props.cityLocality.city[i].c_text.replace(/ /g, "").toLowerCase()
+      ) {
+        this.setState(
+          {
+            cityId: props.cityLocality.city[i].c_key
+          },
+          function() {
+            this.props.parentLoadFacebookEvent(this.state.cityId, 0);
+          }
+        );
+        break;
+      }
+    }
+  };
 
   logicClickFacebookEvent(url) {
     let win = window.open(url, "_blank");
@@ -97,7 +135,10 @@ export default class Trending extends React.Component {
       loading: true
     });
 
-    this.props.parentLoadFacebookEvent(this.props.facebookEvent.skip);
+    this.props.parentLoadFacebookEvent(
+      this.state.cityId,
+      this.props.facebookEvent.skip
+    );
   };
 
   loadingStop = () => {
