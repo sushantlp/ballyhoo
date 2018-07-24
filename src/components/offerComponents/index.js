@@ -7,10 +7,19 @@ export default class Initial extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.getOfferningData(
+      this.props.history.location.state.cityId,
+      this.props.history.location.state.localityId,
+      this.props.history.location.state.offerningId,
+      0
+    );
+  }
+
   render() {
     return (
       <div>
-        <Offerning />
+        <Offerning offerningData={this.props.offerningData} />
       </div>
     );
   }

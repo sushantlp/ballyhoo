@@ -1,9 +1,9 @@
 import getQueryString from "./paramParser";
 
 // Base Url
-// const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
+const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
 
-const host = "https://ballyhoo.today/";
+// const host = "https://ballyhoo.today/";
 
 export default {
   cityLocalityApi: () => {
@@ -61,6 +61,22 @@ export default {
           getQueryString({ c_id: cityId, skip: skip })
       ).then(response => {
         response.json().then(facebookEvent => resolve(facebookEvent));
+      });
+    });
+  },
+  readOfferningApi: (cityId, localityId, offerningId, level) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/offer/offering?" +
+          getQueryString({
+            c_id: cityId,
+            l_id: localityId,
+            offerning: offerningId,
+            level: level
+          })
+      ).then(response => {
+        response.json().then(offerningData => resolve(offerningData));
       });
     });
   }

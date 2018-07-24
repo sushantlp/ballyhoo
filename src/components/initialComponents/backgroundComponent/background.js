@@ -236,12 +236,35 @@ export default class Background extends React.Component {
   };
 
   logicClickOfferning = (event, data) => {
-    const url = data.replace(/ /g, "-").toLowerCase();
+    // console.log(data);
+    const url = data.value.replace(/ /g, "-").toLowerCase();
+
+    const offerIndex = this.readOfferningIndex(data.value, data.options);
+
     if (
       this.props.match.params.hasOwnProperty("city") &&
       this.props.match.params.hasOwnProperty("locality")
     ) {
-      this.props.history.push(this.props.match.params.locality + "/" + url);
+      if (offerIndex.status === 4) {
+        this.props.history.push("/");
+        this.props.history.push(
+          this.props.match.params.city +
+            "/" +
+            this.props.match.params.locality +
+            "/" +
+            url
+        );
+      } else {
+        this.props.history.push(this.props.match.params.locality + "/" + url);
+      }
+    }
+  };
+
+  readOfferningIndex = (value, option) => {
+    for (let i = 0; i < option.length; i++) {
+      if (value.toLowerCase() === option[i].value.toLowerCase()) {
+        return option[i];
+      }
     }
   };
 
@@ -256,6 +279,13 @@ export default class Background extends React.Component {
       category.key = index;
       category.text = obj.title;
       category.value = obj.title;
+      category.api_type = obj.Api_Type;
+      category.c_id = obj.c_id;
+      category.o_id = obj.o_id;
+      category.status = obj.status;
+      category.locality = obj.locality;
+      category.filter = obj.filter;
+      category.h_id = obj.h_id;
       category.image = {
         avatar: true,
         src: obj.icon
@@ -372,7 +402,7 @@ export default class Background extends React.Component {
                 selection
                 options={categoryList}
                 onChange={(event, data) =>
-                  this.logicClickOfferning(event, data.value)
+                  this.logicClickOfferning(event, data)
                 }
                 icon={
                   <Icon

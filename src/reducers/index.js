@@ -7,6 +7,7 @@ import { discoverFilter } from "./discoverFilterReducer";
 import { facebookEvent } from "./facebookEventReducer";
 import { popularFilter } from "./popularFilterReducer";
 import { popularLocality } from "./popularLocalityReducer";
+import { offerningData } from "./offerningDataReducer";
 
 export default combineReducers({
   // loadingBar: loadingBarReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
   discoverFilter,
   facebookEvent,
   popularFilter,
-  popularLocality
+  popularLocality,
+  offerningData
 });
