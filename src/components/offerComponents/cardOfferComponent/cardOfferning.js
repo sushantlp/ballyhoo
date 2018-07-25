@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment-timezone";
 
 import {
   Card,
@@ -17,6 +18,11 @@ import classes from "./static/css/cardOfferning.css";
 // Default
 const MAX_DESCRIPTION_LENGTH = 90;
 
+// Current Time
+const currentTime = moment()
+  .tz("Asia/Kolkata")
+  .format("HH:mm");
+
 export default class Trending extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +33,7 @@ export default class Trending extends React.Component {
   }
 
   createOfferningCard = (
+    key,
     heartPercent,
     calendar,
     image,
@@ -42,7 +49,7 @@ export default class Trending extends React.Component {
     rating
   ) => {
     return (
-      <Card className={classes.OfferningCard}>
+      <Card className={classes.OfferningCard} key={key}>
         <div className="ui fluid image">
           <span className={classes.Heart}>
             <img
@@ -170,7 +177,59 @@ export default class Trending extends React.Component {
     );
   };
 
-  logicOfferningCard = json => {};
+  logicOfferningCard = json => {
+    let content = undefined;
+    let discount = 0;
+    let discountPrice = 0;
+    let calendar = "";
+
+    return json.map((obj, key) => {
+      content = obj.content;
+
+      if (content !== undefined && content !== "" && content !== null) {
+        if (content.length > MAX_DESCRIPTION_LENGTH) {
+          content = content.substring(0, MAX_DESCRIPTION_LENGTH) + "... ";
+        }
+      }
+
+      if (obj.Offering === "Delivery Only") {
+        const start = moment(obj.TIMINGS.Start, "HH:mm");
+        const end = moment(obj.TIMINGS.End, "HH:mm");
+        console.log(moment.duration(end.diff(currentTime)));
+        if (currentTime < start) {
+          calendar = "Opening Soon";
+        } else {
+          calendar = "Closing Soon";
+        }
+      }
+
+      if (obj.DISCOUNT.Type === "flat") {
+        discount = parseInt(obj.DISCOUNT.Value, 10);
+
+        if (obj.DISCOUNT.ActualPrice !== 0 && discount !== 0) {
+          discountPrice = (obj.DISCOUNT.ActualPrice * discount) / 100;
+        }
+      } else {
+      }
+
+      return this.createOfferningCard(
+        obj.id,
+        obj.Popularity
+        // calendar,
+        // image,
+        // veg,
+        // nonVeg,
+        // bName,
+        // offerName,
+        // description,
+        // amount,
+        // flat,
+        // onePlusOne,
+        // distance,
+        // rating
+      );
+    });
+  };
 
   loadingStart = () => {
     this.setState({
@@ -308,7 +367,7 @@ export default class Trending extends React.Component {
           </div> */}
 
         <Card.Group itemsPerRow={3} doubling stackable>
-          {/* {offerData} */}
+          {this.logicOfferningCard(offerData)}
         </Card.Group>
 
         <Button
