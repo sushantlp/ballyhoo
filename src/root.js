@@ -23,7 +23,11 @@ const Root = ({ store }) => (
           <Route exact path="/:city" component={Background} />
           <Route exact path="/:city/trending" component={Facebook} />
           <Route exact path="/:city/:locality" component={Background} />
-          <Route exact path="/:city/:locality/:offering" component={Offering} />
+          <Route
+            exact
+            path="/:city/:locality/collection/:offering"
+            component={Offering}
+          />
         </Switch>
         <Footer />
       </div>

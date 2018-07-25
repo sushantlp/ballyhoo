@@ -236,7 +236,6 @@ export default class Background extends React.Component {
   };
 
   logicClickOfferning = (event, data) => {
-    // console.log(data);
     const url = data.value.replace(/ /g, "-").toLowerCase();
 
     const offerIndex = this.readOfferningIndex(data.value, data.options);
@@ -246,16 +245,20 @@ export default class Background extends React.Component {
       this.props.match.params.hasOwnProperty("locality")
     ) {
       if (offerIndex.status === 4) {
-        this.props.history.push("/");
-        this.props.history.push(
-          this.props.match.params.city +
-            "/" +
-            this.props.match.params.locality +
-            "/" +
-            url
+        // this.props.history.push("/");
+
+        const locality = this.readLocalityIndex(
+          data.value,
+          this.state.cityLocalityProps
         );
+
+        this.props.history.push(locality.l_text + "/collection/" + url, {
+          cityId: this.props.cityId
+        });
       } else {
-        this.props.history.push(this.props.match.params.locality + "/" + url);
+        this.props.history.push(
+          this.props.match.params.locality + "/collection/" + url
+        );
       }
     }
   };
@@ -264,6 +267,20 @@ export default class Background extends React.Component {
     for (let i = 0; i < option.length; i++) {
       if (value.toLowerCase() === option[i].value.toLowerCase()) {
         return option[i];
+      }
+    }
+  };
+
+  readLocalityIndex = (localityName, localityList) => {
+    for (let i = 0; i < localityList.locality.length; i++) {
+      if (
+        localityName
+          .replace(/-/g, " ")
+          .replace(/ /g, "")
+          .toLowerCase() ===
+        localityList.locality[i].l_text.replace(/ /g, "").toLowerCase()
+      ) {
+        return localityList.locality[i];
       }
     }
   };
