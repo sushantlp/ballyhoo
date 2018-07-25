@@ -2,17 +2,34 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import OfferComponent from "../components/offerComponents";
-import { getOfferningData } from "../actions/offerningDataAction";
+import { oldOfferingData } from "../actions/oldOfferingAction";
+import { activeOfferData } from "../actions/activeOfferAction";
+import { hashtagOfferData } from "../actions/hashtagOfferAction";
+import { oldCategoryData } from "../actions/oldCategoryAction";
+import { localityOfferData } from "../actions/localityOfferAction";
+import { yoloOfferData } from "../actions/yoloOfferAction";
 
 function mapStateToProps(state) {
-  return { offerningData: state.offerningData.offerningData };
+  return {
+    oldOffering: state.oldOffering.oldOffering,
+    activeOffer: state.activeOffer.activeOffer,
+    hashtagOffer: state.hashtagOffer.hashtagOffer,
+    oldCategory: state.oldCategory.oldCategory,
+    localityOffer: state.localityOffer.localityOffer,
+    yoloOffer: state.yoloOffer.yoloOffer
+  };
 }
 
 export default withRouter(
   connect(
     mapStateToProps,
     {
-      getOfferningData: getOfferningData
+      oldOfferingData: oldOfferingData,
+      activeOfferData: activeOfferData,
+      hashtagOfferData: hashtagOfferData,
+      oldCategoryData: oldCategoryData,
+      localityOfferData: localityOfferData,
+      yoloOfferData: yoloOfferData
     }
   )(OfferComponent)
 );

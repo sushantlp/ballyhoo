@@ -27,7 +27,10 @@ export function facebookEvent(state = initialState, action) {
 
     case actionType.facebookMergeData:
       if (action.facebookEvent.hasOwnProperty("message")) {
-        const previous = state.facebookEvent;
+        let previous = state.facebookEvent;
+        if (Object.keys(previous).length === 0) {
+          previous = [];
+        }
 
         return {
           ...state,

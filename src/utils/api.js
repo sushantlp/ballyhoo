@@ -64,7 +64,7 @@ export default {
       });
     });
   },
-  readOfferningApi: (cityId, localityId, offerningId, level) => {
+  oldOfferingApi: (cityId, localityId, offeringId, level) => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -72,11 +72,87 @@ export default {
           getQueryString({
             c_id: cityId,
             l_id: localityId,
-            offerning: offerningId,
+            offering: offeringId,
             level: level
           })
       ).then(response => {
-        response.json().then(offerningData => resolve(offerningData));
+        response.json().then(offeringOffer => resolve(offeringOffer));
+      });
+    });
+  },
+  oldCategoryApi: (cityId, localityId, categoryId, level) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/offer/category?" +
+          getQueryString({
+            c_id: cityId,
+            l_id: localityId,
+            category: categoryId,
+            level: level
+          })
+      ).then(response => {
+        response.json().then(categoryOffer => resolve(categoryOffer));
+      });
+    });
+  },
+  activeOfferApi: (cityId, localityId, level) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/offer/active?" +
+          getQueryString({
+            c_id: cityId,
+            l_id: localityId,
+            level: level
+          })
+      ).then(response => {
+        response.json().then(activeOffer => resolve(activeOffer));
+      });
+    });
+  },
+  localityOfferApi: (localityId, level) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/offer/locality?" +
+          getQueryString({
+            search: localityId,
+            level: level
+          })
+      ).then(response => {
+        response.json().then(localityOffer => resolve(localityOffer));
+      });
+    });
+  },
+  yoloOfferApi: (cityId, localityId, level) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/offer/yolo?" +
+          getQueryString({
+            c_id: cityId,
+            l_id: localityId,
+            level: level
+          })
+      ).then(response => {
+        response.json().then(yoloOffer => resolve(yoloOffer));
+      });
+    });
+  },
+  hashtagOfferApi: (hashtagId, cityId, localityId, level) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/offer/hashtag?" +
+          getQueryString({
+            hash_id: hashtagId,
+            c_id: cityId,
+            l_id: localityId,
+            level: level
+          })
+      ).then(response => {
+        response.json().then(hashtagOffer => resolve(hashtagOffer));
       });
     });
   }

@@ -244,20 +244,35 @@ export default class Background extends React.Component {
       this.props.match.params.hasOwnProperty("city") &&
       this.props.match.params.hasOwnProperty("locality")
     ) {
-      if (offerIndex.status === 4) {
-        // this.props.history.push("/");
+      const city = this.readCityIndex(
+        this.props.match.params.city,
+        this.state.cityLocalityProps
+      );
 
-        const locality = this.readLocalityIndex(
+      offerIndex.city_id = city.c_key;
+
+      if (offerIndex.status === 4) {
+        const locality1 = this.readLocalityIndex(
           data.value,
           this.state.cityLocalityProps
         );
 
-        this.props.history.push(locality.l_text + "/collection/" + url, {
-          cityId: this.props.cityId
+        // this.props.history.push("/");
+        this.props.history.push(locality1.l_text + "/collection/" + url, {
+          offerData: offerIndex
         });
       } else {
+        const locality2 = this.readLocalityIndex(
+          this.props.match.params.locality,
+          this.state.cityLocalityProps
+        );
+        offerIndex.locality_id = locality2.l_key;
+
         this.props.history.push(
-          this.props.match.params.locality + "/collection/" + url
+          this.props.match.params.locality + "/collection/" + url,
+          {
+            offerData: offerIndex
+          }
         );
       }
     }
@@ -267,6 +282,20 @@ export default class Background extends React.Component {
     for (let i = 0; i < option.length; i++) {
       if (value.toLowerCase() === option[i].value.toLowerCase()) {
         return option[i];
+      }
+    }
+  };
+
+  readCityIndex = (cityName, cityList) => {
+    for (let i = 0; i < cityList.city.length; i++) {
+      if (
+        cityName
+          .replace(/-/g, " ")
+          .replace(/ /g, "")
+          .toLowerCase() ===
+        cityList.city[i].c_text.replace(/ /g, "").toLowerCase()
+      ) {
+        return cityList.city[i];
       }
     }
   };
@@ -297,12 +326,13 @@ export default class Background extends React.Component {
       category.text = obj.title;
       category.value = obj.title;
       category.api_type = obj.Api_Type;
-      category.c_id = obj.c_id;
-      category.o_id = obj.o_id;
+      category.category_id = obj.c_id;
+      category.offering_id = obj.o_id;
       category.status = obj.status;
-      category.locality = obj.locality;
+      category.locality_id = obj.locality;
       category.filter = obj.filter;
-      category.h_id = obj.h_id;
+      category.hashtag_id = obj.h_id;
+      category.city_id = 0;
       category.image = {
         avatar: true,
         src: obj.icon
