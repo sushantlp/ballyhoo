@@ -170,16 +170,18 @@ export default class Trending extends React.Component {
     );
   };
 
+  logicOfferningCard = json => {};
+
   loadingStart = () => {
     this.setState({
       loading: true
     });
   };
   render() {
-    if (
-      this.props.offerningData === null ||
-      this.props.offerningData === undefined
-    ) {
+    let offerData = undefined;
+
+    if (this.props.apiStatus === 0 || this.props.apiType === 0) {
+      console.log("Hello1");
       return (
         <Dimmer active inverted>
           <Loader inverted>Loading</Loader>
@@ -187,7 +189,107 @@ export default class Trending extends React.Component {
       );
     }
 
-    if (Object.keys(this.props.offerningData).length === 0) {
+    if (this.props.apiType === 1) {
+      if (this.props.apiStatus === 1) {
+        if (
+          this.props.activeOffer === null ||
+          this.props.activeOffer === undefined
+        ) {
+          return (
+            <Dimmer active inverted>
+              <Loader inverted>Loading</Loader>
+            </Dimmer>
+          );
+        }
+
+        if (Object.keys(this.props.activeOffer).length === 0) {
+          return <div />;
+        }
+        offerData = this.props.activeOffer;
+      } else if (this.props.apiStatus === 2) {
+        if (
+          this.props.oldCategory === null ||
+          this.props.oldCategory === undefined
+        ) {
+          return (
+            <Dimmer active inverted>
+              <Loader inverted>Loading</Loader>
+            </Dimmer>
+          );
+        }
+
+        if (Object.keys(this.props.oldCategory).length === 0) {
+          return <div />;
+        }
+        offerData = this.props.oldCategory;
+      } else if (this.props.apiStatus === 3) {
+        if (
+          this.props.oldOffering === null ||
+          this.props.oldOffering === undefined
+        ) {
+          return (
+            <Dimmer active inverted>
+              <Loader inverted>Loading</Loader>
+            </Dimmer>
+          );
+        }
+
+        if (Object.keys(this.props.oldOffering).length === 0) {
+          return <div />;
+        }
+        offerData = this.props.oldOffering;
+      } else if (this.props.apiStatus === 4) {
+        if (
+          this.props.localityOffer === null ||
+          this.props.localityOffer === undefined
+        ) {
+          return (
+            <Dimmer active inverted>
+              <Loader inverted>Loading</Loader>
+            </Dimmer>
+          );
+        }
+
+        if (Object.keys(this.props.localityOffer).length === 0) {
+          return <div />;
+        }
+        offerData = this.props.localityOffer;
+      } else if (this.props.apiStatus === 5) {
+        if (
+          this.props.yoloOffer === null ||
+          this.props.yoloOffer === undefined
+        ) {
+          return (
+            <Dimmer active inverted>
+              <Loader inverted>Loading</Loader>
+            </Dimmer>
+          );
+        }
+
+        if (Object.keys(this.props.yoloOffer).length === 0) {
+          return <div />;
+        }
+        offerData = this.props.yoloOffer;
+      } else if (this.props.apiStatus === 6) {
+        if (
+          this.props.hashtagOffer === null ||
+          this.props.hashtagOffer === undefined
+        ) {
+          return (
+            <Dimmer active inverted>
+              <Loader inverted>Loading</Loader>
+            </Dimmer>
+          );
+        }
+
+        if (Object.keys(this.props.hashtagOffer).length === 0) {
+          return <div />;
+        }
+        offerData = this.props.hashtagOffer;
+      } else {
+        return <div />;
+      }
+    } else {
       return <div />;
     }
 
@@ -205,7 +307,9 @@ export default class Trending extends React.Component {
             </div>
           </div> */}
 
-        <Card.Group itemsPerRow={3} doubling stackable />
+        <Card.Group itemsPerRow={3} doubling stackable>
+          {/* {offerData} */}
+        </Card.Group>
 
         <Button
           size="large"

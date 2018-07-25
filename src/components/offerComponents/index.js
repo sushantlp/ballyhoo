@@ -94,7 +94,16 @@ export default class Initial extends React.Component {
   render() {
     return (
       <div>
-        <Offerning oldOffering={this.props.oldOffering} />
+        <Offerning
+          oldOffering={this.props.oldOffering}
+          activeOffer={this.props.activeOffer}
+          hashtagOffer={this.props.hashtagOffer}
+          oldCategory={this.props.oldCategory}
+          localityOffer={this.props.localityOffer}
+          yoloOffer={this.props.yoloOffer}
+          apiType={this.state.apiType}
+          apiStatus={this.state.apiStatus}
+        />
       </div>
     );
   }
