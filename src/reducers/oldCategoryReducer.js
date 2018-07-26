@@ -10,7 +10,10 @@ export function oldCategory(state = initialState, action) {
       if (action.oldCategory.hasOwnProperty("message")) {
         let previous = state.oldCategory;
         if (Object.keys(previous).length === 0) {
-          previous = [];
+          return {
+            ...state,
+            oldCategory: action.oldCategory.message.ballyhoo
+          };
         }
         return {
           ...state,

@@ -10,7 +10,10 @@ export function activeOffer(state = initialState, action) {
       if (action.activeOffer.hasOwnProperty("message")) {
         let previous = state.activeOffer;
         if (Object.keys(previous).length === 0) {
-          previous = [];
+          return {
+            ...state,
+            activeOffer: action.activeOffer.message.ballyhoo
+          };
         }
         return {
           ...state,

@@ -10,7 +10,10 @@ export function hashtagOffer(state = initialState, action) {
       if (action.hashtagOffer.hasOwnProperty("message")) {
         let previous = state.hashtagOffer;
         if (Object.keys(previous).length === 0) {
-          previous = [];
+          return {
+            ...state,
+            hashtagOffer: action.hashtagOffer.message.ballyhoo
+          };
         }
         return {
           ...state,

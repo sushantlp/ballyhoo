@@ -10,13 +10,16 @@ export function oldOffering(state = initialState, action) {
       if (action.oldOffering.hasOwnProperty("message")) {
         let previous = state.oldOffering;
         if (Object.keys(previous).length === 0) {
-          previous = [];
+          return {
+            ...state,
+            oldOffering: action.oldOffering.message.ballyhoo
+          };
+        } else {
+          return {
+            ...state,
+            oldOffering: previous.concat(action.oldOffering.message.ballyhoo)
+          };
         }
-
-        return {
-          ...state,
-          oldOffering: previous.concat(action.oldOffering.message.ballyhoo)
-        };
       } else {
         return {
           ...state,

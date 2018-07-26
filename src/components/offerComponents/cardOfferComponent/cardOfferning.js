@@ -16,12 +16,16 @@ import {
 import classes from "./static/css/cardOfferning.css";
 
 // Default
-const MAX_DESCRIPTION_LENGTH = 90;
+const MAX_DESCRIPTION_LENGTH = 140;
 
 // Current Time
 const currentTime = moment()
   .tz("Asia/Kolkata")
   .format("HH:mm");
+
+const currentDate = moment()
+  .tz("Asia/Kolkata")
+  .format("YYYY-MM-DD");
 
 export default class Trending extends React.Component {
   constructor(props) {
@@ -34,38 +38,62 @@ export default class Trending extends React.Component {
 
   createOfferningCard = (
     key,
-    heartPercent,
+    popularity,
     calendar,
     image,
-    veg,
-    nonVeg,
-    bName,
-    offerName,
-    description,
-    amount,
-    flat,
-    onePlusOne,
+    femaleVeg,
+    maleNonveg,
+    businessName,
+    offeringTitle,
+    content,
+    actualPrice,
+    discountPrice,
+    discount,
     distance,
-    rating
+    rating,
+    sponsored,
+    frequency
   ) => {
     return (
       <Card className={classes.OfferningCard} key={key}>
         <div className="ui fluid image">
-          <span className={classes.Heart}>
+          <span
+            className={classes.Heart}
+            style={{
+              display: popularity === 0 ? "none" : "intial"
+            }}
+          >
             <img
               src="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1532419222/ballyhoo/EMAIL/heart.png"
               alt="non-veg, food, restaurants, dinner buffet, lunch buffet, pubs & brewery, reservation, event"
             />
-            <strong className={classes.HeartPercent}>40%</strong>
+            <strong className={classes.HeartPercent}>{popularity + "%"}</strong>
           </span>
-          <Label as="a" color="teal" ribbon>
-            Overview
+
+          <Label
+            as="a"
+            color="teal"
+            ribbon
+            style={{
+              display: sponsored === 0 ? "none" : "intial"
+            }}
+          >
+            Sponsored
           </Label>
+
           <img
-            src="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1457670910/ballyhoo/CUSTOM/8.jpg"
+            src={image}
             alt="non-veg, food, restaurants, dinner buffet, lunch buffet, pubs & brewery, reservation, event"
           />
-          <span className={classes.Calendar}>Next Day Offer</span>
+          <span
+            className={classes.Calendar}
+            // hidden={calendar === undefined ? true : false}
+            style={{
+              display: calendar === undefined ? "none" : "intial"
+            }}
+          >
+            {calendar}
+          </span>
         </div>
 
         <Card.Content>
@@ -74,13 +102,24 @@ export default class Trending extends React.Component {
               marginLeft: "0.4em"
             }}
             floated="right"
-            src=" https://res.cloudinary.com/dp67gawk6/image/upload/v1503921787/ballyhoo/EMAIL/veg.62b68100_1.jpg"
-            alt="non-veg, food, restaurants, dinner buffet, lunch buffet, pubs & brewery, reservation, event"
+            src={femaleVeg}
+            alt={
+              femaleVeg === undefined
+                ? ""
+                : "non-veg, food, restaurants, dinner buffet, lunch buffet, pubs & brewery, reservation, event"
+            }
+            hidden={femaleVeg === undefined ? true : false}
           />
+
           <Image
             floated="right"
-            src="https://res.cloudinary.com/dp67gawk6/image/upload/v1503921936/ballyhoo/EMAIL/non-veg.png"
-            alt="non-veg, food, restaurants, dinner buffet, lunch buffet, pubs & brewery, reservation, event"
+            src={maleNonveg}
+            alt={
+              maleNonveg === undefined
+                ? ""
+                : "non-veg, food, restaurants, dinner buffet, lunch buffet, pubs & brewery, reservation, event"
+            }
+            hidden={maleNonveg === undefined ? true : false}
           />
           <Card.Header
             style={{
@@ -88,25 +127,25 @@ export default class Trending extends React.Component {
               color: "#7a52c0"
             }}
           >
-            Barbeque Nation Jp N
+            {businessName}
           </Card.Header>
           <Card.Meta>
-            <span className="date">Dinner Buffet</span>
+            <span className="date">{offeringTitle}</span>
           </Card.Meta>
           <Card.Description>
-            Cuisine: North Indian, Chinese, Continental\nExpected average cost
-            for two: 1200/-\n\nFeatures:- Home Delivery, Full Bar Available.
+            {content}
             <div
               style={{
-                marginTop: "0.5em"
+                marginTop: "0.5em",
+                display: actualPrice === 0 && discount === 0 ? "none" : "intial"
               }}
             >
               <Icon
-                name="rupee"
                 style={{
                   fontSize: "18px",
                   lineHeight: "25px"
                 }}
+                name={actualPrice === 0 ? "" : "rupee"}
               >
                 <label
                   style={{
@@ -114,36 +153,52 @@ export default class Trending extends React.Component {
                     lineHeight: "25px",
                     paddingLeft: "1px"
                   }}
+                  hidden={actualPrice === 0 ? true : false}
                 >
-                  1000
+                  {actualPrice}
                 </label>
               </Icon>
-              <span className={classes.discountPricePercent}>50 %</span>
+              <span
+                className={classes.DiscountPricePercent}
+                hidden={discount === 0 ? true : false}
+              >
+                {discount}
+              </span>
             </div>
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <Icon name="rupee" style={{ marginLeft: "0.5em" }}>
-            <span>
+          <Icon
+            name="rupee"
+            style={{
+              marginLeft: "0.5em",
+              display: actualPrice === 0 ? "none" : "intial"
+            }}
+          >
+            <span style={{ display: actualPrice === 0 ? "none" : "intial" }}>
+              {/* hidden={actualPrice === 0 ? true : false} */}
               <label
                 style={{
                   textDecoration: "line-through"
                 }}
               >
-                1000
+                {actualPrice}
               </label>
             </span>
           </Icon>
 
           <Icon
+            // name={discountPrice === 0 ? null : "rupee"}
             name="rupee"
             style={{
-              marginLeft: "1.5em",
+              marginLeft: actualPrice === 0 ? "0em" : "1.5em",
               fontSize: "15px",
-              color: "rgba(0,0,0,.68)"
+              color: "rgba(0,0,0,.68)",
+              display: discountPrice === 0 ? "none" : "intial"
             }}
+            // className={discountPrice === 0 ? classes.DiscountPrice : ""}
           >
-            <span>
+            <span style={{ display: discountPrice === 0 ? "none" : "intial" }}>
               <label
                 style={{
                   fontWeight: "bold",
@@ -151,7 +206,7 @@ export default class Trending extends React.Component {
                   paddingLeft: "1px"
                 }}
               >
-                500
+                {discountPrice}
               </label>
             </span>
           </Icon>
@@ -159,33 +214,35 @@ export default class Trending extends React.Component {
           <label
             style={{
               fontWeight: "bold",
-              marginLeft: "3em",
-              color: "rgba(0,0,0,.68)"
+              // marginLeft: "3em",
+              color: "rgba(0,0,0,.68)",
+              marginLeft:
+                actualPrice === 0 && discountPrice === 0 ? "0em" : "3em"
             }}
           >
-            0.65km
+            {distance}km
           </label>
           <label
             style={{
               float: "right"
             }}
           >
-            <Rating defaultRating={3} maxRating={5} disabled />
+            <Rating defaultRating={rating} maxRating={5} disabled />
           </label>
         </Card.Content>
       </Card>
     );
   };
 
-  logicOfferningCard = json => {
-    let content = undefined;
-    let discount = 0;
-    let discountPrice = 0;
-    let calendar = "";
-
+  oldOfferingCard = json => {
     return json.map((obj, key) => {
-      content = obj.content;
+      let discount = 0;
+      let discountPrice = 0;
+      let calendar = undefined;
+      let maleNonveg = undefined;
+      let femaleVeg = undefined;
 
+      let content = obj.Description;
       if (content !== undefined && content !== "" && content !== null) {
         if (content.length > MAX_DESCRIPTION_LENGTH) {
           content = content.substring(0, MAX_DESCRIPTION_LENGTH) + "... ";
@@ -193,42 +250,105 @@ export default class Trending extends React.Component {
       }
 
       if (obj.Offering === "Delivery Only") {
-        const start = moment(obj.TIMINGS.Start, "HH:mm");
-        const end = moment(obj.TIMINGS.End, "HH:mm");
-        console.log(moment.duration(end.diff(currentTime)));
+        const start = moment.utc(obj.TIMINGS.Start, "HH:mm").format("HH:mm");
         if (currentTime < start) {
           calendar = "Opening Soon";
         } else {
-          calendar = "Closing Soon";
+          const differnce = moment
+            .utc(
+              moment(currentTime, "HH:mm").diff(
+                moment(obj.TIMINGS.End, "HH:mm")
+              )
+            )
+            .format("HH:mm");
+          if (differnce <= moment.utc("01:00", "HH:mm").format("HH:mm")) {
+            calendar = "Closing Soon";
+          }
+        }
+      }
+
+      if (
+        obj.Offering === "Lunch Buffet" ||
+        obj.Offering === "Breakfast Buffet"
+      ) {
+        const startDate = moment
+          .utc(obj.DATE.Start, "YYYY-MM-DD")
+          .format("YYYY-MM-DD");
+
+        if (currentDate !== startDate) {
+          calendar = "Next Day Offer";
         }
       }
 
       if (obj.DISCOUNT.Type === "flat") {
         discount = parseInt(obj.DISCOUNT.Value, 10);
-
         if (obj.DISCOUNT.ActualPrice !== 0 && discount !== 0) {
           discountPrice = (obj.DISCOUNT.ActualPrice * discount) / 100;
+          discount = discount + "%" + " OFF";
+        } else if (discount !== 0) {
+          discount = discount + "%" + " OFF";
+        }
+      } else if (obj.DISCOUNT.Type === "combo1,1") {
+        discount = "1 + 1";
+      } else {
+        discount = "2 + 1";
+      }
+
+      if (obj.Offering !== "Event") {
+        if (obj.foodpreference === "veg") {
+          femaleVeg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921787/ballyhoo/EMAIL/veg.62b68100_1.jpg";
+        } else if (obj.foodpreference === "nonveg") {
+          maleNonveg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921936/ballyhoo/EMAIL/non-veg.png";
+        } else {
+          maleNonveg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921936/ballyhoo/EMAIL/non-veg.png";
+          femaleVeg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921787/ballyhoo/EMAIL/veg.62b68100_1.jpg";
         }
       } else {
+        if (obj.EVENTS.gender_preference === 1) {
+          maleNonveg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+        } else if (obj.EVENTS.gender_preference === 2) {
+          femaleVeg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+        } else {
+          maleNonveg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+          femaleVeg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+        }
       }
 
       return this.createOfferningCard(
         obj.id,
-        obj.Popularity
-        // calendar,
-        // image,
-        // veg,
-        // nonVeg,
-        // bName,
-        // offerName,
-        // description,
-        // amount,
-        // flat,
-        // onePlusOne,
-        // distance,
-        // rating
+        obj.Popularity,
+        calendar,
+        obj.img_url,
+        femaleVeg,
+        maleNonveg,
+        obj.MERCHANT.Business,
+        obj.offering_title,
+        content,
+        obj.DISCOUNT.ActualPrice,
+        discountPrice,
+        discount,
+        obj.calculated_distance,
+        obj.MERCHANT.merchant_rating,
+        obj.sponsored,
+        obj.Frequency
       );
     });
+  };
+
+  logicOfferningCard = json => {
+    if (this.props.apiType === 1) {
+      return this.oldOfferingCard(json);
+    } else {
+      return;
+    }
   };
 
   loadingStart = () => {
@@ -264,7 +384,7 @@ export default class Trending extends React.Component {
         if (Object.keys(this.props.activeOffer).length === 0) {
           return <div />;
         }
-        offerData = this.props.activeOffer;
+        offerData = this.props.activeOffer.deal;
       } else if (this.props.apiStatus === 2) {
         if (
           this.props.oldCategory === null ||
@@ -280,7 +400,7 @@ export default class Trending extends React.Component {
         if (Object.keys(this.props.oldCategory).length === 0) {
           return <div />;
         }
-        offerData = this.props.oldCategory;
+        offerData = this.props.oldCategory.deal;
       } else if (this.props.apiStatus === 3) {
         if (
           this.props.oldOffering === null ||
@@ -294,9 +414,13 @@ export default class Trending extends React.Component {
         }
 
         if (Object.keys(this.props.oldOffering).length === 0) {
-          return <div />;
+          return (
+            <Dimmer active inverted>
+              <Loader inverted>Loading</Loader>
+            </Dimmer>
+          );
         }
-        offerData = this.props.oldOffering;
+        offerData = this.props.oldOffering.deal;
       } else if (this.props.apiStatus === 4) {
         if (
           this.props.localityOffer === null ||
@@ -312,7 +436,7 @@ export default class Trending extends React.Component {
         if (Object.keys(this.props.localityOffer).length === 0) {
           return <div />;
         }
-        offerData = this.props.localityOffer;
+        offerData = this.props.localityOffer.deal;
       } else if (this.props.apiStatus === 5) {
         if (
           this.props.yoloOffer === null ||
@@ -328,7 +452,7 @@ export default class Trending extends React.Component {
         if (Object.keys(this.props.yoloOffer).length === 0) {
           return <div />;
         }
-        offerData = this.props.yoloOffer;
+        offerData = this.props.yoloOffer.deal;
       } else if (this.props.apiStatus === 6) {
         if (
           this.props.hashtagOffer === null ||
@@ -344,7 +468,7 @@ export default class Trending extends React.Component {
         if (Object.keys(this.props.hashtagOffer).length === 0) {
           return <div />;
         }
-        offerData = this.props.hashtagOffer;
+        offerData = this.props.hashtagOffer.deal;
       } else {
         return <div />;
       }

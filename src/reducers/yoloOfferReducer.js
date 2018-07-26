@@ -10,7 +10,10 @@ export function yoloOffer(state = initialState, action) {
       if (action.yoloOffer.hasOwnProperty("message")) {
         let previous = state.yoloOffer;
         if (Object.keys(previous).length === 0) {
-          previous = [];
+          return {
+            ...state,
+            yoloOffer: action.yoloOffer.message.ballyhoo
+          };
         }
         return {
           ...state,

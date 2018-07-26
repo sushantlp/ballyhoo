@@ -10,7 +10,10 @@ export function localityOffer(state = initialState, action) {
       if (action.localityOffer.hasOwnProperty("message")) {
         let previous = state.localityOffer;
         if (Object.keys(previous).length === 0) {
-          previous = [];
+          return {
+            ...state,
+            localityOffer: action.localityOffer.message.ballyhoo
+          };
         }
         return {
           ...state,

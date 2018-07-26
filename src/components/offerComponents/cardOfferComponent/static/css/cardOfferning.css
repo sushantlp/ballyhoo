@@ -76,7 +76,7 @@ OfferningCard {
   /* line-height: 25px; */
 }
 
-.discountPricePercent {
+.DiscountPricePercent {
   border-radius: 2px;
   background-color: #fff;
   border: 0.2em solid #7a52c0;
@@ -88,4 +88,7 @@ OfferningCard {
   margin-left: 1em;
 
   float: right;
+}
+.DiscountPrice {
+  display: none;
 }
