@@ -12,11 +12,11 @@ import { yoloOfferData } from "../actions/yoloOfferAction";
 function mapStateToProps(state) {
   return {
     oldOffering: state.oldOffering,
-    activeOffer: state.activeOffer.activeOffer,
-    hashtagOffer: state.hashtagOffer.hashtagOffer,
-    oldCategory: state.oldCategory.oldCategory,
-    localityOffer: state.localityOffer.localityOffer,
-    yoloOffer: state.yoloOffer.yoloOffer
+    activeOffer: state.activeOffer,
+    hashtagOffer: state.hashtagOffer,
+    oldCategory: state.oldCategory,
+    localityOffer: state.localityOffer,
+    yoloOffer: state.yoloOffer
   };
 }
 

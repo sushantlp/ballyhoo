@@ -46,6 +46,48 @@ export default class Trending extends React.Component {
         // show loading again
         this.setState(this.getInitialLevel(nextProps.oldOffering.level));
       }
+    } else if (Object.keys(nextProps.oldCategory.oldCategory).length !== 0) {
+      if (
+        nextProps.oldCategory.level !== this.props.oldCategory.level ||
+        this.state.level === 0
+      ) {
+        // show loading again
+        this.setState(this.getInitialLevel(nextProps.oldCategory.level));
+      }
+    } else if (Object.keys(nextProps.activeOffer.activeOffer).length !== 0) {
+      if (
+        nextProps.activeOffer.level !== this.props.activeOffer.level ||
+        this.state.level === 0
+      ) {
+        // show loading again
+        this.setState(this.getInitialLevel(nextProps.activeOffer.level));
+      }
+    } else if (Object.keys(nextProps.hashtagOffer.hashtagOffer).length !== 0) {
+      if (
+        nextProps.hashtagOffer.level !== this.props.hashtagOffer.level ||
+        this.state.level === 0
+      ) {
+        // show loading again
+        this.setState(this.getInitialLevel(nextProps.hashtagOffer.level));
+      }
+    } else if (
+      Object.keys(nextProps.localityOffer.localityOffer).length !== 0
+    ) {
+      if (
+        nextProps.localityOffer.level !== this.props.localityOffer.level ||
+        this.state.level === 0
+      ) {
+        // show loading again
+        this.setState(this.getInitialLevel(nextProps.localityOffer.level));
+      }
+    } else if (Object.keys(nextProps.yoloOffer.yoloOffer).length !== 0) {
+      if (
+        nextProps.yoloOffer.level !== this.props.yoloOffer.level ||
+        this.state.level === 0
+      ) {
+        // show loading again
+        this.setState(this.getInitialLevel(nextProps.yoloOffer.level));
+      }
     }
   }
 
@@ -462,7 +504,6 @@ export default class Trending extends React.Component {
         level: level + 1
       },
       function() {
-        console.log(this.state.level);
         this.setState({
           loading: false
         });
@@ -490,7 +531,6 @@ export default class Trending extends React.Component {
 
   render() {
     let offerData = [];
-    let level = 0;
 
     if (this.props.apiStatus === 0 || this.props.apiType === 0) {
       return (
@@ -503,8 +543,8 @@ export default class Trending extends React.Component {
     if (this.props.apiType === 1) {
       if (this.props.apiStatus === 1) {
         if (
-          this.props.activeOffer === null ||
-          this.props.activeOffer === undefined
+          this.props.activeOffer.activeOffer === null ||
+          this.props.activeOffer.activeOffer === undefined
         ) {
           return (
             <Dimmer active inverted>
@@ -513,14 +553,15 @@ export default class Trending extends React.Component {
           );
         }
 
-        if (Object.keys(this.props.activeOffer).length === 0) {
+        if (Object.keys(this.props.activeOffer.activeOffer).length === 0) {
           return <div />;
         }
-        offerData = this.props.activeOffer.deal;
+
+        offerData = this.props.activeOffer.activeOffer.deal;
       } else if (this.props.apiStatus === 2) {
         if (
-          this.props.oldCategory === null ||
-          this.props.oldCategory === undefined
+          this.props.oldCategory.oldCategory === null ||
+          this.props.oldCategory.oldCategory === undefined
         ) {
           return (
             <Dimmer active inverted>
@@ -529,10 +570,10 @@ export default class Trending extends React.Component {
           );
         }
 
-        if (Object.keys(this.props.oldCategory).length === 0) {
+        if (Object.keys(this.props.oldCategory.oldCategory).length === 0) {
           return <div />;
         }
-        offerData = this.props.oldCategory.deal;
+        offerData = this.props.oldCategory.oldCategory.deal;
       } else if (this.props.apiStatus === 3) {
         if (
           this.props.oldOffering.oldOffering === null ||
@@ -554,11 +595,10 @@ export default class Trending extends React.Component {
         }
 
         offerData = this.props.oldOffering.oldOffering;
-        level = this.props.oldOffering.level;
       } else if (this.props.apiStatus === 4) {
         if (
-          this.props.localityOffer === null ||
-          this.props.localityOffer === undefined
+          this.props.localityOffer.localityOffer === null ||
+          this.props.localityOffer.localityOffer === undefined
         ) {
           return (
             <Dimmer active inverted>
@@ -567,14 +607,14 @@ export default class Trending extends React.Component {
           );
         }
 
-        if (Object.keys(this.props.localityOffer).length === 0) {
+        if (Object.keys(this.props.localityOffer.localityOffer).length === 0) {
           return <div />;
         }
-        offerData = this.props.localityOffer.deal;
+        offerData = this.props.localityOffer.localityOffer.deal;
       } else if (this.props.apiStatus === 5) {
         if (
-          this.props.yoloOffer === null ||
-          this.props.yoloOffer === undefined
+          this.props.yoloOffer.yoloOffer === null ||
+          this.props.yoloOffer.yoloOffer === undefined
         ) {
           return (
             <Dimmer active inverted>
@@ -583,14 +623,14 @@ export default class Trending extends React.Component {
           );
         }
 
-        if (Object.keys(this.props.yoloOffer).length === 0) {
+        if (Object.keys(this.props.yoloOffer.yoloOffer).length === 0) {
           return <div />;
         }
-        offerData = this.props.yoloOffer.deal;
+        offerData = this.props.yoloOffer.yoloOffer.deal;
       } else if (this.props.apiStatus === 6) {
         if (
-          this.props.hashtagOffer === null ||
-          this.props.hashtagOffer === undefined
+          this.props.hashtagOffer.hashtagOffer === null ||
+          this.props.hashtagOffer.hashtagOffer === undefined
         ) {
           return (
             <Dimmer active inverted>
@@ -599,10 +639,10 @@ export default class Trending extends React.Component {
           );
         }
 
-        if (Object.keys(this.props.hashtagOffer).length === 0) {
+        if (Object.keys(this.props.hashtagOffer.hashtagOffer).length === 0) {
           return <div />;
         }
-        offerData = this.props.hashtagOffer.deal;
+        offerData = this.props.hashtagOffer.hashtagOffer.deal;
       } else {
         return <div />;
       }
@@ -625,7 +665,7 @@ export default class Trending extends React.Component {
           </div> */}
 
         <Card.Group itemsPerRow={3} doubling stackable>
-          {this.logicOfferningCard(offerData, level)}
+          {this.logicOfferningCard(offerData)}
         </Card.Group>
 
         <Button
