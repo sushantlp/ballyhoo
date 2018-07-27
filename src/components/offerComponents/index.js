@@ -13,8 +13,6 @@ export default class Initial extends React.Component {
 
   componentDidMount() {
     if (this.props.history.location.state !== undefined) {
-      console.log(this.props);
-
       if (this.props.history.location.state.offerData.api_type === 1) {
         this.setState({
           apiType: 1
@@ -49,7 +47,8 @@ export default class Initial extends React.Component {
             this.props.history.location.state.offerData.city_id,
             this.props.history.location.state.offerData.locality_id,
             this.props.history.location.state.offerData.offering_id,
-            0
+            0,
+            true
           );
         } else if (this.props.history.location.state.offerData.status === 4) {
           this.setState({
@@ -91,6 +90,36 @@ export default class Initial extends React.Component {
     }
   }
 
+  parentLoadOldOfferData = (
+    cityId,
+    localityId,
+    hashtagId,
+    offeringId,
+    categoryId,
+    level,
+    status
+  ) => {
+    if (status === 1) {
+      // Active Offer
+      this.props.activeOfferData(cityId, localityId, level, false);
+    } else if (status === 2) {
+      // Category Offer
+      this.props.oldCategoryData(cityId, localityId, categoryId, level, false);
+    } else if (status === 3) {
+      // Offering Offer
+      this.props.oldOfferingData(cityId, localityId, offeringId, level, false);
+    } else if (status === 4) {
+      // Locality Offer
+      this.props.localityOfferData(localityId, level, false);
+    } else if (status === 5) {
+      // Yolo Offer
+      this.props.yoloOfferData(cityId, localityId, level, false);
+    } else if (status === 6) {
+      // Hashtag Offer
+      this.props.hashtagOfferData(hashtagId, cityId, localityId, level, false);
+    }
+  };
+
   render() {
     return (
       <div>
@@ -103,6 +132,9 @@ export default class Initial extends React.Component {
           yoloOffer={this.props.yoloOffer}
           apiType={this.state.apiType}
           apiStatus={this.state.apiStatus}
+          parentLoadOldOfferData={this.parentLoadOldOfferData}
+          location={this.props.location}
+          match={this.props.match}
         />
       </div>
     );

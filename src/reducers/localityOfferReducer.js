@@ -14,11 +14,15 @@ export function localityOffer(state = initialState, action) {
             ...state,
             localityOffer: action.localityOffer.message.ballyhoo
           };
+        } else {
+          previous = state.localityOffer.deal;
+          return {
+            ...state,
+            localityOffer: previous.concat(
+              action.localityOffer.message.ballyhoo
+            )
+          };
         }
-        return {
-          ...state,
-          localityOffer: previous.concat(action.localityOffer.message.ballyhoo)
-        };
       } else {
         return {
           ...state,

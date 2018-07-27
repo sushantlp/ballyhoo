@@ -11,7 +11,7 @@ import { yoloOfferData } from "../actions/yoloOfferAction";
 
 function mapStateToProps(state) {
   return {
-    oldOffering: state.oldOffering.oldOffering,
+    oldOffering: state.oldOffering,
     activeOffer: state.activeOffer.activeOffer,
     hashtagOffer: state.hashtagOffer.hashtagOffer,
     oldCategory: state.oldCategory.oldCategory,

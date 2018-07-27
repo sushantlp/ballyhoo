@@ -14,11 +14,13 @@ export function activeOffer(state = initialState, action) {
             ...state,
             activeOffer: action.activeOffer.message.ballyhoo
           };
+        } else {
+          previous = state.activeOffer.deal;
+          return {
+            ...state,
+            activeOffer: previous.concat(action.activeOffer.message.ballyhoo)
+          };
         }
-        return {
-          ...state,
-          activeOffer: previous.concat(action.activeOffer.message.ballyhoo)
-        };
       } else {
         return {
           ...state,

@@ -9,7 +9,7 @@ import {
   Loader,
   Label,
   Icon,
-  Rating,
+  // Rating,
   Button
 } from "semantic-ui-react/dist/commonjs";
 
@@ -32,8 +32,21 @@ export default class Trending extends React.Component {
     super(props);
     this.state = {
       loading: false,
-      disabled: false
+      disabled: false,
+      level: 0
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (Object.keys(nextProps.oldOffering.oldOffering).length !== 0) {
+      if (
+        nextProps.oldOffering.level !== this.props.oldOffering.level ||
+        this.state.level === 0
+      ) {
+        // show loading again
+        this.setState(this.getInitialLevel(nextProps.oldOffering.level));
+      }
+    }
   }
 
   createOfferningCard = (
@@ -50,9 +63,11 @@ export default class Trending extends React.Component {
     discountPrice,
     discount,
     distance,
-    rating,
     sponsored,
-    frequency
+    frequency,
+    full,
+    half,
+    empty
   ) => {
     return (
       <Card className={classes.OfferningCard} key={key}>
@@ -72,10 +87,12 @@ export default class Trending extends React.Component {
 
           <Label
             as="a"
-            color="teal"
             ribbon
             style={{
-              display: sponsored === 0 ? "none" : "intial"
+              display: sponsored === 0 ? "none" : "intial",
+              backgroundColor: "#fa4a4d",
+              borderColor: "#fa4a4d",
+              color: "#fff"
             }}
           >
             Sponsored
@@ -172,10 +189,16 @@ export default class Trending extends React.Component {
             name="rupee"
             style={{
               marginLeft: "0.5em",
-              display: actualPrice === 0 ? "none" : "intial"
+              display:
+                actualPrice === 0 || discountPrice === 0 ? "none" : "intial"
             }}
           >
-            <span style={{ display: actualPrice === 0 ? "none" : "intial" }}>
+            <span
+              style={{
+                display:
+                  actualPrice === 0 || discountPrice === 0 ? "none" : "intial"
+              }}
+            >
               {/* hidden={actualPrice === 0 ? true : false} */}
               <label
                 style={{
@@ -217,7 +240,11 @@ export default class Trending extends React.Component {
               // marginLeft: "3em",
               color: "rgba(0,0,0,.68)",
               marginLeft:
-                actualPrice === 0 && discountPrice === 0 ? "0em" : "3em"
+                actualPrice === 0 && discountPrice === 0
+                  ? "0em"
+                  : discountPrice === 0
+                    ? "0em"
+                    : "3em"
             }}
           >
             {distance}km
@@ -227,7 +254,12 @@ export default class Trending extends React.Component {
               float: "right"
             }}
           >
-            <Rating defaultRating={rating} maxRating={5} disabled />
+            <span>
+              {full}
+              {half}
+              {empty}
+            </span>
+            {/* <Rating defaultRating={rating} maxRating={5} disabled /> */}
           </label>
         </Card.Content>
       </Card>
@@ -235,6 +267,10 @@ export default class Trending extends React.Component {
   };
 
   oldOfferingCard = json => {
+    if (json === undefined) {
+      return;
+    }
+
     return json.map((obj, key) => {
       let discount = 0;
       let discountPrice = 0;
@@ -322,6 +358,73 @@ export default class Trending extends React.Component {
         }
       }
 
+      const rating = obj.MERCHANT.merchant_rating + "";
+      const totalArray = rating.split(".");
+
+      let emptyVar = 5;
+      let half = undefined;
+      let fullArray = [];
+      let emptyArray = [];
+
+      // Half Star
+      if (totalArray[1] !== undefined) {
+        emptyVar = emptyVar - Number(totalArray[0]);
+        emptyVar = emptyVar - 1;
+
+        half = (
+          <Icon
+            name="star half full"
+            style={{
+              color: "#7a52c0",
+              padding: "0px",
+              margin: "0px"
+            }}
+          />
+        );
+      } else {
+        emptyVar = emptyVar - Number(totalArray[0]);
+      }
+
+      // Full Star
+      for (let i = 0; i < Number(totalArray[0]); i++) {
+        fullArray.push(i);
+      }
+
+      // Full Star
+      let full = fullArray.map(function(i) {
+        return (
+          <Icon
+            key={i}
+            name="star"
+            style={{
+              color: "#7a52c0",
+              padding: "0px",
+              margin: "0px"
+            }}
+          />
+        );
+      });
+
+      // Empty Star
+      for (let i = 0; i < emptyVar; i++) {
+        emptyArray.push(i);
+      }
+
+      // Empty Star
+      let empty = emptyArray.map(function(i) {
+        return (
+          <Icon
+            key={i}
+            name="star empty"
+            style={{
+              color: "#7a52c0",
+              padding: "0px",
+              margin: "0px"
+            }}
+          />
+        );
+      });
+
       return this.createOfferningCard(
         obj.id,
         obj.Popularity,
@@ -336,9 +439,11 @@ export default class Trending extends React.Component {
         discountPrice,
         discount,
         obj.calculated_distance,
-        obj.MERCHANT.merchant_rating,
         obj.sponsored,
-        obj.Frequency
+        obj.Frequency,
+        full,
+        half,
+        empty
       );
     });
   };
@@ -351,16 +456,43 @@ export default class Trending extends React.Component {
     }
   };
 
+  getInitialLevel = level => {
+    this.setState(
+      {
+        level: level + 1
+      },
+      function() {
+        console.log(this.state.level);
+        this.setState({
+          loading: false
+        });
+      }
+    );
+  };
   loadingStart = () => {
     this.setState({
       loading: true
     });
+
+    if (this.props.location.state !== undefined) {
+      this.props.parentLoadOldOfferData(
+        this.props.location.state.offerData.city_id,
+        this.props.location.state.offerData.locality_id,
+        this.props.location.state.offerData.hashtag_id,
+        this.props.location.state.offerData.offering_id,
+        this.props.location.state.offerData.category_id,
+        this.state.level,
+        this.props.apiStatus
+      );
+    } else {
+    }
   };
+
   render() {
-    let offerData = undefined;
+    let offerData = [];
+    let level = 0;
 
     if (this.props.apiStatus === 0 || this.props.apiType === 0) {
-      console.log("Hello1");
       return (
         <Dimmer active inverted>
           <Loader inverted>Loading</Loader>
@@ -403,8 +535,8 @@ export default class Trending extends React.Component {
         offerData = this.props.oldCategory.deal;
       } else if (this.props.apiStatus === 3) {
         if (
-          this.props.oldOffering === null ||
-          this.props.oldOffering === undefined
+          this.props.oldOffering.oldOffering === null ||
+          this.props.oldOffering.oldOffering === undefined
         ) {
           return (
             <Dimmer active inverted>
@@ -413,14 +545,16 @@ export default class Trending extends React.Component {
           );
         }
 
-        if (Object.keys(this.props.oldOffering).length === 0) {
+        if (Object.keys(this.props.oldOffering.oldOffering).length === 0) {
           return (
             <Dimmer active inverted>
               <Loader inverted>Loading</Loader>
             </Dimmer>
           );
         }
-        offerData = this.props.oldOffering.deal;
+
+        offerData = this.props.oldOffering.oldOffering;
+        level = this.props.oldOffering.level;
       } else if (this.props.apiStatus === 4) {
         if (
           this.props.localityOffer === null ||
@@ -491,14 +625,14 @@ export default class Trending extends React.Component {
           </div> */}
 
         <Card.Group itemsPerRow={3} doubling stackable>
-          {this.logicOfferningCard(offerData)}
+          {this.logicOfferningCard(offerData, level)}
         </Card.Group>
 
         <Button
           size="large"
           color="violet"
           loading={loading}
-          disabled={disabled}
+          disabled={this.state.level === 4 ? true : false}
           onClick={() => this.loadingStart()}
           style={{
             marginTop: "1.5em",

@@ -14,11 +14,13 @@ export function hashtagOffer(state = initialState, action) {
             ...state,
             hashtagOffer: action.hashtagOffer.message.ballyhoo
           };
+        } else {
+          previous = state.hashtagOffer;
+          return {
+            ...state,
+            hashtagOffer: previous.concat(action.hashtagOffer.message.ballyhoo)
+          };
         }
-        return {
-          ...state,
-          hashtagOffer: previous.concat(action.hashtagOffer.message.ballyhoo)
-        };
       } else {
         return {
           ...state,

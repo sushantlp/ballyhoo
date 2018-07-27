@@ -14,11 +14,13 @@ export function oldCategory(state = initialState, action) {
             ...state,
             oldCategory: action.oldCategory.message.ballyhoo
           };
+        } else {
+          previous = state.oldCategory.deal;
+          return {
+            ...state,
+            oldCategory: previous.concat(action.oldCategory.message.ballyhoo)
+          };
         }
-        return {
-          ...state,
-          oldCategory: previous.concat(action.oldCategory.message.ballyhoo)
-        };
       } else {
         return {
           ...state,

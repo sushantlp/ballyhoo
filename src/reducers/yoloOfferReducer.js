@@ -14,11 +14,13 @@ export function yoloOffer(state = initialState, action) {
             ...state,
             yoloOffer: action.yoloOffer.message.ballyhoo
           };
+        } else {
+          previous = state.yoloOffer.deal;
+          return {
+            ...state,
+            yoloOffer: previous.concat(action.yoloOffer.message.ballyhoo)
+          };
         }
-        return {
-          ...state,
-          yoloOffer: previous.concat(action.yoloOffer.message.ballyhoo)
-        };
       } else {
         return {
           ...state,
