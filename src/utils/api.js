@@ -1,9 +1,9 @@
 import getQueryString from "./paramParser";
 
 // Base Url
-const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
+// const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
 
-// const host = "https://ballyhoo.today/";
+const host = "https://ballyhoo.today/";
 
 export default {
   cityLocalityApi: () => {
@@ -153,6 +153,38 @@ export default {
           })
       ).then(response => {
         response.json().then(hashtagOffer => resolve(hashtagOffer));
+      });
+    });
+  },
+  discoverOldOfferApi: (tabId, cityId, localityId, level) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/offer/category" +
+          getQueryString({
+            category: tabId,
+            c_id: cityId,
+            l_id: localityId,
+            level: level
+          })
+      ).then(response => {
+        response.json().then(discoverOldOffer => resolve(discoverOldOffer));
+      });
+    });
+  },
+  discoverNewOfferApi: (tabId, cityId, localityId, level) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/latest/offer/category" +
+          getQueryString({
+            category: tabId,
+            c_id: cityId,
+            l_id: localityId,
+            level: level
+          })
+      ).then(response => {
+        response.json().then(discoverNewOffer => resolve(discoverNewOffer));
       });
     });
   }

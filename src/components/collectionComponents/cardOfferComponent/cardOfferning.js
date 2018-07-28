@@ -109,7 +109,8 @@ export default class Trending extends React.Component {
     frequency,
     full,
     half,
-    empty
+    empty,
+    object
   ) => {
     return (
       <Card className={classes.OfferningCard} key={key}>
@@ -148,7 +149,8 @@ export default class Trending extends React.Component {
             className={classes.Calendar}
             // hidden={calendar === undefined ? true : false}
             style={{
-              display: calendar === undefined ? "none" : "intial"
+              display: calendar === undefined ? "none" : "intial",
+              marginLeft: object.Offering === "Event" ? "22em" : "20em"
             }}
           >
             {calendar}
@@ -398,6 +400,8 @@ export default class Trending extends React.Component {
           femaleVeg =
             "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
         }
+
+        calendar = obj.EVENTS.event_day;
       }
 
       const rating = obj.MERCHANT.merchant_rating + "";
@@ -485,7 +489,8 @@ export default class Trending extends React.Component {
         obj.Frequency,
         full,
         half,
-        empty
+        empty,
+        obj
       );
     });
   };

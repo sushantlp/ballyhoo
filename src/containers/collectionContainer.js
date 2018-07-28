@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import OfferComponent from "../components/offerComponents";
+import CollectionComponent from "../components/collectionComponents";
 import { oldOfferingData } from "../actions/oldOfferingAction";
 import { activeOfferData } from "../actions/activeOfferAction";
 import { hashtagOfferData } from "../actions/hashtagOfferAction";
@@ -31,5 +31,5 @@ export default withRouter(
       localityOfferData: localityOfferData,
       yoloOfferData: yoloOfferData
     }
-  )(OfferComponent)
+  )(CollectionComponent)
 );
