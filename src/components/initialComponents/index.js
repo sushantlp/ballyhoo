@@ -79,21 +79,58 @@ export default class Initial extends React.Component {
     }
   };
 
+  readCityIndex = (cityName, cityList) => {
+    for (let i = 0; i < cityList.city.length; i++) {
+      if (
+        cityName
+          .replace(/-/g, " ")
+          .replace(/ /g, "")
+          .toLowerCase() ===
+        cityList.city[i].c_text.replace(/ /g, "").toLowerCase()
+      ) {
+        return cityList.city[i];
+      }
+    }
+  };
+
+  readLocalityIndex = (localityName, localityList) => {
+    for (let i = 0; i < localityList.locality.length; i++) {
+      if (
+        localityName
+          .replace(/-/g, " ")
+          .replace(/ /g, "")
+          .toLowerCase() ===
+        localityList.locality[i].l_text.replace(/ /g, "").toLowerCase()
+      ) {
+        return localityList.locality[i];
+      }
+    }
+  };
+
   render() {
     return (
       <div>
         <Background
           cityLocality={this.props.cityLocality}
           categoryFilter={this.props.categoryFilter}
-          history={this.props.history}
           defaultCity={this.state.defaultCity}
           defaultLocality={this.state.defaultLocality}
           parentCityChange={this.parentCityChange}
           parentStateChange={this.parentStateChange}
+          history={this.props.history}
           url={this.state.url}
           match={this.props.match}
+          readCityIndex={this.readCityIndex}
+          readLocalityIndex={this.readLocalityIndex}
         />
-        <Category categoryFilter={this.props.categoryFilter} />
+        <Category
+          categoryFilter={this.props.categoryFilter}
+          readCityIndex={this.readCityIndex}
+          readLocalityIndex={this.readLocalityIndex}
+          cityLocality={this.props.cityLocality}
+          match={this.props.match}
+          history={this.props.history}
+        />
         <Discover discoverFilter={this.props.discoverFilter} />
         <Popular popularFilter={this.props.popularFilter} />
         <Facebook
@@ -102,7 +139,13 @@ export default class Initial extends React.Component {
           cityId={this.state.defaultCity}
           history={this.props.history}
         />
-        <Locality popularLocality={this.props.popularLocality} />
+        <Locality
+          popularLocality={this.props.popularLocality}
+          cityName={this.state.cityName}
+          cityId={this.state.defaultCity}
+          match={this.props.match}
+          history={this.props.history}
+        />
       </div>
     );
   }

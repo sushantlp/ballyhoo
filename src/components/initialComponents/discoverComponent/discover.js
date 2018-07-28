@@ -20,9 +20,14 @@ export default class Discover extends React.Component {
       isMore: false
     };
   }
-  createDiscoverCard = (index, header, image, alt) => {
+  createDiscoverCard = (index, header, image, alt, obj) => {
     return (
-      <Card className={classes.DiscoverCard} raised key={index}>
+      <Card
+        className={classes.DiscoverCard}
+        raised
+        key={index}
+        onClick={() => this.clickDiscoverIndex(obj)}
+      >
         <div className="ui fluid image">
           <img src={image} alt={alt} />
           <span className={classes.DiscoverHeader}>{header}</span>
@@ -31,9 +36,19 @@ export default class Discover extends React.Component {
     );
   };
 
+  clickDiscoverIndex = object => {
+    console.log(object);
+  };
+
   logicDiscoverCard = filter => {
     return filter.map((obj, key) => {
-      return this.createDiscoverCard(obj.t_id, obj.title, obj.image, obj.title);
+      return this.createDiscoverCard(
+        obj.t_id,
+        obj.title,
+        obj.image,
+        obj.title,
+        obj
+      );
     });
   };
 

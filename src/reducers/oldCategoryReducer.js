@@ -12,7 +12,10 @@ export function oldCategory(state = initialState, action) {
         return {
           ...state,
           oldCategory: action.oldCategory.message.ballyhoo.deal,
-          level: parseInt(action.oldCategory.message.ballyhoo.ballyhoo_level)
+          level: parseInt(
+            action.oldCategory.message.ballyhoo.ballyhoo_level,
+            10
+          )
         };
       } else {
         return {
@@ -34,7 +37,10 @@ export function oldCategory(state = initialState, action) {
           oldCategory: previous.concat(
             action.oldCategory.message.ballyhoo.deal
           ),
-          level: parseInt(action.oldCategory.message.ballyhoo.ballyhoo_level)
+          level: parseInt(
+            action.oldCategory.message.ballyhoo.ballyhoo_level,
+            10
+          )
         };
       } else {
         return {

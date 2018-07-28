@@ -12,10 +12,11 @@ import {
 import classes from "./static/css/locality.css";
 
 export default class Discover extends React.Component {
-  createLocalityGrid = (localityId, localityName) => {
+  createLocalityGrid = (localityId, localityName, obj) => {
     return (
       <Label
         key={localityId}
+        onClick={() => this.clickLocalityIndex(obj)}
         as="a"
         basic
         style={{
@@ -30,9 +31,25 @@ export default class Discover extends React.Component {
     );
   };
 
+  clickLocalityIndex = object => {
+    let newObject = {};
+    const localityUrl = object.locality.replace(/ /g, "-").toLowerCase();
+    const cityUrl = this.props.cityName.replace(/ /g, "-").toLowerCase();
+
+    newObject.api_type = 1;
+    newObject.city_id = this.props.cityId;
+    newObject.locality_id = object.locality_id;
+    newObject.status = 4;
+
+    this.props.history.push("/");
+    this.props.history.push(cityUrl + "/" + localityUrl + "/popular-location", {
+      offerData: newObject
+    });
+  };
+
   logicPopularCard = filter => {
     return filter.map(obj => {
-      return this.createLocalityGrid(obj.locality_id, obj.locality);
+      return this.createLocalityGrid(obj.locality_id, obj.locality, obj);
     });
   };
 

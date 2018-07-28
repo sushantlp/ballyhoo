@@ -12,7 +12,7 @@ import {
 import classes from "./static/css/facebook.css";
 
 // Default Number of Items for View More Button
-const MAX_TITLE_LENGTH = 90;
+const MAX_TITLE_LENGTH = 50;
 
 export default class Trending extends React.Component {
   constructor(props) {

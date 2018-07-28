@@ -25,6 +25,11 @@ const Root = ({ store }) => (
           <Route exact path="/:city/:locality" component={Background} />
           <Route
             exact
+            path="/:city/:locality/popular-location"
+            component={Offering}
+          />
+          <Route
+            exact
             path="/:city/:locality/collection/:offering"
             component={Offering}
           />

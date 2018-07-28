@@ -12,7 +12,10 @@ export function oldOffering(state = initialState, action) {
         return {
           ...state,
           oldOffering: action.oldOffering.message.ballyhoo.deal,
-          level: parseInt(action.oldOffering.message.ballyhoo.ballyhoo_level)
+          level: parseInt(
+            action.oldOffering.message.ballyhoo.ballyhoo_level,
+            10
+          )
         };
       } else {
         return {
@@ -34,7 +37,10 @@ export function oldOffering(state = initialState, action) {
           oldOffering: previous.concat(
             action.oldOffering.message.ballyhoo.deal
           ),
-          level: parseInt(action.oldOffering.message.ballyhoo.ballyhoo_level)
+          level: parseInt(
+            action.oldOffering.message.ballyhoo.ballyhoo_level,
+            10
+          )
         };
       } else {
         return {

@@ -21,9 +21,15 @@ export default class Category extends React.Component {
     };
   }
 
-  createCategoryCard = (index, header, image, alt) => {
+  createCategoryCard = (index, header, image, alt, obj) => {
     return (
-      <Card className={classes.CategoryCard} raised key={index}>
+      <Card
+        className={classes.CategoryCard}
+        raised
+        key={index}
+        onClick={() => this.clickCollectionIndex(obj)}
+        // onClick={this.clickCollectionIndex.bind(this, obj)}
+      >
         <div className="ui fluid image">
           <img src={image} alt={alt} />
           <span className={classes.CategoryHeader}>{header}</span>
@@ -32,9 +38,59 @@ export default class Category extends React.Component {
     );
   };
 
+  clickCollectionIndex = object => {
+    if (
+      this.props.match.params.hasOwnProperty("city") &&
+      this.props.match.params.hasOwnProperty("locality")
+    ) {
+      let newObject = {};
+
+      const url = object.title.replace(/ /g, "-").toLowerCase();
+
+      const city = this.props.readCityIndex(
+        this.props.match.params.city,
+        this.props.cityLocality
+      );
+
+      newObject.city_id = city.c_key;
+      newObject.api_type = object.Api_Type;
+      newObject.status = object.status;
+      newObject.hashtag_id = object.h_id;
+      newObject.offering_id = object.o_id;
+      newObject.category_id = object.c_id;
+      newObject.hashtag_id = object.h_id;
+      newObject.key = object.key;
+      newObject.filter = object.filter;
+
+      if (object.status === 4) {
+        const locality1 = this.props.readLocalityIndex(
+          object.title,
+          this.props.cityLocality
+        );
+        this.props.history.push(locality1.l_text + "/collection/" + url, {
+          offerData: newObject
+        });
+      } else {
+        const locality2 = this.props.readLocalityIndex(
+          this.props.match.params.locality,
+          this.props.cityLocality
+        );
+
+        newObject.locality_id = locality2.l_key;
+
+        this.props.history.push(
+          this.props.match.params.locality + "/collection/" + url,
+          {
+            offerData: newObject
+          }
+        );
+      }
+    }
+  };
+
   logicCategoryCard = filter => {
     return filter.map((obj, key) => {
-      return this.createCategoryCard(key, obj.title, obj.image, obj.title);
+      return this.createCategoryCard(key, obj.title, obj.image, obj.title, obj);
     });
   };
 

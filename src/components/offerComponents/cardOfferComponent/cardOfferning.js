@@ -510,6 +510,7 @@ export default class Trending extends React.Component {
       }
     );
   };
+
   loadingStart = () => {
     this.setState({
       loading: true
@@ -557,7 +558,7 @@ export default class Trending extends React.Component {
           return <div />;
         }
 
-        offerData = this.props.activeOffer.activeOffer.deal;
+        offerData = this.props.activeOffer.activeOffer;
       } else if (this.props.apiStatus === 2) {
         if (
           this.props.oldCategory.oldCategory === null ||
@@ -573,7 +574,7 @@ export default class Trending extends React.Component {
         if (Object.keys(this.props.oldCategory.oldCategory).length === 0) {
           return <div />;
         }
-        offerData = this.props.oldCategory.oldCategory.deal;
+        offerData = this.props.oldCategory.oldCategory;
       } else if (this.props.apiStatus === 3) {
         if (
           this.props.oldOffering.oldOffering === null ||
@@ -587,11 +588,7 @@ export default class Trending extends React.Component {
         }
 
         if (Object.keys(this.props.oldOffering.oldOffering).length === 0) {
-          return (
-            <Dimmer active inverted>
-              <Loader inverted>Loading</Loader>
-            </Dimmer>
-          );
+          return <div />;
         }
 
         offerData = this.props.oldOffering.oldOffering;
@@ -610,7 +607,8 @@ export default class Trending extends React.Component {
         if (Object.keys(this.props.localityOffer.localityOffer).length === 0) {
           return <div />;
         }
-        offerData = this.props.localityOffer.localityOffer.deal;
+
+        offerData = this.props.localityOffer.localityOffer;
       } else if (this.props.apiStatus === 5) {
         if (
           this.props.yoloOffer.yoloOffer === null ||
@@ -626,7 +624,8 @@ export default class Trending extends React.Component {
         if (Object.keys(this.props.yoloOffer.yoloOffer).length === 0) {
           return <div />;
         }
-        offerData = this.props.yoloOffer.yoloOffer.deal;
+
+        offerData = this.props.yoloOffer.yoloOffer;
       } else if (this.props.apiStatus === 6) {
         if (
           this.props.hashtagOffer.hashtagOffer === null ||
@@ -642,7 +641,8 @@ export default class Trending extends React.Component {
         if (Object.keys(this.props.hashtagOffer.hashtagOffer).length === 0) {
           return <div />;
         }
-        offerData = this.props.hashtagOffer.hashtagOffer.deal;
+
+        offerData = this.props.hashtagOffer.hashtagOffer;
       } else {
         return <div />;
       }

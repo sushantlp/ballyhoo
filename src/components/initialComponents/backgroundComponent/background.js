@@ -244,7 +244,7 @@ export default class Background extends React.Component {
       this.props.match.params.hasOwnProperty("city") &&
       this.props.match.params.hasOwnProperty("locality")
     ) {
-      const city = this.readCityIndex(
+      const city = this.props.readCityIndex(
         this.props.match.params.city,
         this.state.cityLocalityProps
       );
@@ -252,7 +252,7 @@ export default class Background extends React.Component {
       offerIndex.city_id = city.c_key;
 
       if (offerIndex.status === 4) {
-        const locality1 = this.readLocalityIndex(
+        const locality1 = this.props.readLocalityIndex(
           data.value,
           this.state.cityLocalityProps
         );
@@ -262,7 +262,7 @@ export default class Background extends React.Component {
           offerData: offerIndex
         });
       } else {
-        const locality2 = this.readLocalityIndex(
+        const locality2 = this.props.readLocalityIndex(
           this.props.match.params.locality,
           this.state.cityLocalityProps
         );
@@ -286,33 +286,33 @@ export default class Background extends React.Component {
     }
   };
 
-  readCityIndex = (cityName, cityList) => {
-    for (let i = 0; i < cityList.city.length; i++) {
-      if (
-        cityName
-          .replace(/-/g, " ")
-          .replace(/ /g, "")
-          .toLowerCase() ===
-        cityList.city[i].c_text.replace(/ /g, "").toLowerCase()
-      ) {
-        return cityList.city[i];
-      }
-    }
-  };
+  // readCityIndex = (cityName, cityList) => {
+  //   for (let i = 0; i < cityList.city.length; i++) {
+  //     if (
+  //       cityName
+  //         .replace(/-/g, " ")
+  //         .replace(/ /g, "")
+  //         .toLowerCase() ===
+  //       cityList.city[i].c_text.replace(/ /g, "").toLowerCase()
+  //     ) {
+  //       return cityList.city[i];
+  //     }
+  //   }
+  // };
 
-  readLocalityIndex = (localityName, localityList) => {
-    for (let i = 0; i < localityList.locality.length; i++) {
-      if (
-        localityName
-          .replace(/-/g, " ")
-          .replace(/ /g, "")
-          .toLowerCase() ===
-        localityList.locality[i].l_text.replace(/ /g, "").toLowerCase()
-      ) {
-        return localityList.locality[i];
-      }
-    }
-  };
+  // readLocalityIndex = (localityName, localityList) => {
+  //   for (let i = 0; i < localityList.locality.length; i++) {
+  //     if (
+  //       localityName
+  //         .replace(/-/g, " ")
+  //         .replace(/ /g, "")
+  //         .toLowerCase() ===
+  //       localityList.locality[i].l_text.replace(/ /g, "").toLowerCase()
+  //     ) {
+  //       return localityList.locality[i];
+  //     }
+  //   }
+  // };
 
   // Create Category Filter
   createCategoryFilter = filter => {

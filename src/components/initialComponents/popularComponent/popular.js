@@ -22,9 +22,9 @@ export default class Popular extends React.Component {
     };
   }
 
-  createPopularCard = (merchantId, catgory, bname, address, image, alt) => {
+  createPopularCard = (key, catgory, bname, address, image, alt, object) => {
     return (
-      <Card className={classes.TrendingCard} raised key={merchantId}>
+      <Card className={classes.TrendingCard} raised key={key}>
         <Image src={image} alt={alt} />
         <Card.Content>
           <Card.Header
@@ -51,15 +51,16 @@ export default class Popular extends React.Component {
   };
 
   logicPopularCard = filter => {
-    return filter.map(obj => {
+    return filter.map((obj, key) => {
       return this.createPopularCard(
-        obj.merchant_id,
+        key,
         obj.category,
         obj.bname,
         obj.address,
         obj.image_path,
         obj.description,
-        obj.api_type
+        obj.api_type,
+        obj
       );
     });
   };

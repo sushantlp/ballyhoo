@@ -12,7 +12,10 @@ export function localityOffer(state = initialState, action) {
         return {
           ...state,
           localityOffer: action.localityOffer.message.ballyhoo.deal,
-          level: parseInt(action.localityOffer.message.ballyhoo.ballyhoo_level)
+          level: parseInt(
+            action.localityOffer.message.ballyhoo.ballyhoo_level,
+            10
+          )
         };
       } else {
         return {
@@ -34,7 +37,10 @@ export function localityOffer(state = initialState, action) {
           localityOffer: previous.concat(
             action.localityOffer.message.ballyhoo.deal
           ),
-          level: parseInt(action.localityOffer.message.ballyhoo.ballyhoo_level)
+          level: parseInt(
+            action.localityOffer.message.ballyhoo.ballyhoo_level,
+            10
+          )
         };
       } else {
         return {

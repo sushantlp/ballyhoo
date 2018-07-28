@@ -12,7 +12,7 @@ export function yoloOffer(state = initialState, action) {
         return {
           ...state,
           yoloOffer: action.yoloOffer.message.ballyhoo.deal,
-          level: parseInt(action.yoloOffer.message.ballyhoo.ballyhoo_level)
+          level: parseInt(action.yoloOffer.message.ballyhoo.ballyhoo_level, 10)
         };
       } else {
         return {
@@ -32,7 +32,7 @@ export function yoloOffer(state = initialState, action) {
         return {
           ...state,
           yoloOffer: previous.concat(action.yoloOffer.message.ballyhoo.deal),
-          level: parseInt(action.yoloOffer.message.ballyhoo.ballyhoo_level)
+          level: parseInt(action.yoloOffer.message.ballyhoo.ballyhoo_level, 10)
         };
       } else {
         return {

@@ -12,7 +12,10 @@ export function hashtagOffer(state = initialState, action) {
         return {
           ...state,
           hashtagOffer: action.hashtagOffer.message.ballyhoo.deal,
-          level: parseInt(action.hashtagOffer.message.ballyhoo.ballyhoo_level)
+          level: parseInt(
+            action.hashtagOffer.message.ballyhoo.ballyhoo_level,
+            10
+          )
         };
       } else {
         return {
@@ -34,7 +37,10 @@ export function hashtagOffer(state = initialState, action) {
           hashtagOffer: previous.concat(
             action.hashtagOffer.message.ballyhoo.deal
           ),
-          level: parseInt(action.hashtagOffer.message.ballyhoo.ballyhoo_level)
+          level: parseInt(
+            action.hashtagOffer.message.ballyhoo.ballyhoo_level,
+            10
+          )
         };
       } else {
         return {
