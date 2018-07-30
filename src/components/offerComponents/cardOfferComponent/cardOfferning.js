@@ -31,103 +31,205 @@ export default class Trending extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      click_disabled: false,
       loading: false,
       disabled: false,
       level: 0,
       cityId: 0,
-      localityId: 0
+      localityId: 0,
+      apiObject: {
+        tab_id: 0,
+        hashtag_id: 0,
+        offering_id: 0,
+        category_id: 0,
+        api_status: 0,
+        api_type: 0,
+        flag: 0
+      }
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.offerSeo) {
-      if (Object.keys(nextProps.oldOffering.oldOffering).length !== 0) {
-        if (
-          nextProps.oldOffering.level !== this.props.oldOffering.level ||
-          this.state.level === 0
+    if (nextProps !== undefined) {
+      if (nextProps.offerSeo) {
+        if (Object.keys(nextProps.oldOffering.oldOffering).length !== 0) {
+          if (
+            nextProps.oldOffering.level !== this.props.oldOffering.level ||
+            this.state.level === 0
+          ) {
+            // show loading again
+            this.getInitialLevel(nextProps.oldOffering.level);
+          }
+        } else if (
+          Object.keys(nextProps.oldCategory.oldCategory).length !== 0
         ) {
-          // show loading again
-          this.getInitialLevel(nextProps.oldOffering.level);
-        }
-      } else if (Object.keys(nextProps.oldCategory.oldCategory).length !== 0) {
-        if (
-          nextProps.oldCategory.level !== this.props.oldCategory.level ||
-          this.state.level === 0
+          if (
+            nextProps.oldCategory.level !== this.props.oldCategory.level ||
+            this.state.level === 0
+          ) {
+            // show loading again
+            this.getInitialLevel(nextProps.oldCategory.level);
+          }
+        } else if (
+          Object.keys(nextProps.activeOffer.activeOffer).length !== 0
         ) {
-          // show loading again
-          this.getInitialLevel(nextProps.oldCategory.level);
-        }
-      } else if (Object.keys(nextProps.activeOffer.activeOffer).length !== 0) {
-        if (
-          nextProps.activeOffer.level !== this.props.activeOffer.level ||
-          this.state.level === 0
+          if (
+            nextProps.activeOffer.level !== this.props.activeOffer.level ||
+            this.state.level === 0
+          ) {
+            // show loading again
+            this.getInitialLevel(nextProps.activeOffer.level);
+          }
+        } else if (
+          Object.keys(nextProps.hashtagOffer.hashtagOffer).length !== 0
         ) {
-          // show loading again
-          this.getInitialLevel(nextProps.activeOffer.level);
-        }
-      } else if (
-        Object.keys(nextProps.hashtagOffer.hashtagOffer).length !== 0
-      ) {
-        if (
-          nextProps.hashtagOffer.level !== this.props.hashtagOffer.level ||
-          this.state.level === 0
+          if (
+            nextProps.hashtagOffer.level !== this.props.hashtagOffer.level ||
+            this.state.level === 0
+          ) {
+            // show loading again
+            this.getInitialLevel(nextProps.hashtagOffer.level);
+          }
+        } else if (
+          Object.keys(nextProps.localityOffer.localityOffer).length !== 0
         ) {
-          // show loading again
-          this.getInitialLevel(nextProps.hashtagOffer.level);
-        }
-      } else if (
-        Object.keys(nextProps.localityOffer.localityOffer).length !== 0
-      ) {
-        if (
-          nextProps.localityOffer.level !== this.props.localityOffer.level ||
-          this.state.level === 0
+          if (
+            nextProps.localityOffer.level !== this.props.localityOffer.level ||
+            this.state.level === 0
+          ) {
+            // show loading again
+            this.getInitialLevel(nextProps.localityOffer.level);
+          }
+        } else if (Object.keys(nextProps.yoloOffer.yoloOffer).length !== 0) {
+          if (
+            nextProps.yoloOffer.level !== this.props.yoloOffer.level ||
+            this.state.level === 0
+          ) {
+            // show loading again
+            this.getInitialLevel(nextProps.yoloOffer.level);
+          }
+        } else if (
+          Object.keys(nextProps.discoverOldOffer.discoverOldOffer).length !== 0
         ) {
-          // show loading again
-          this.getInitialLevel(nextProps.localityOffer.level);
-        }
-      } else if (Object.keys(nextProps.yoloOffer.yoloOffer).length !== 0) {
-        if (
-          nextProps.yoloOffer.level !== this.props.yoloOffer.level ||
-          this.state.level === 0
+          if (
+            nextProps.discoverOldOffer.level !==
+              this.props.discoverOldOffer.level ||
+            this.state.level === 0
+          ) {
+            // show loading again
+            this.getInitialLevel(nextProps.discoverOldOffer.level);
+          }
+        } else if (
+          Object.keys(nextProps.discoverNewOffer.discoverNewOffer).length !== 0
         ) {
-          // show loading again
-          this.getInitialLevel(nextProps.yoloOffer.level);
+          if (
+            nextProps.discoverNewOffer.level !==
+              this.props.discoverNewOffer.level ||
+            this.state.level === 0
+          ) {
+            // show loading again
+            this.getInitialLevel(nextProps.discoverNewOffer.level);
+          }
         }
-      } else if (
-        Object.keys(nextProps.discoverOldOffer.discoverOldOffer).length !== 0
-      ) {
+      } else {
         if (
-          nextProps.discoverOldOffer.level !==
-            this.props.discoverOldOffer.level ||
-          this.state.level === 0
+          Object.keys(nextProps.cityLocality).length !== 0 &&
+          Object.keys(nextProps.discoverFilter).length === 0 &&
+          Object.keys(nextProps.categoryFilter).length === 0 &&
+          this.state.cityId === 0
         ) {
-          // show loading again
-          this.getInitialLevel(nextProps.discoverOldOffer.level);
+          this.offerSeoLogic(nextProps.cityLocality);
+        } else if (Object.keys(nextProps.discoverFilter).length !== 0) {
+          this.readDiscoverIndex(
+            nextProps.discoverFilter,
+            this.props.match.params.discover
+          );
+        } else if (Object.keys(nextProps.categoryFilter).length !== 0) {
+          this.readCategoryIndex(
+            nextProps.categoryFilter,
+            this.props.match.params.offering
+          );
         }
-      } else if (
-        Object.keys(nextProps.discoverNewOffer.discoverNewOffer).length !== 0
-      ) {
-        if (
-          nextProps.discoverNewOffer.level !==
-            this.props.discoverNewOffer.level ||
-          this.state.level === 0
-        ) {
-          // show loading again
-          this.getInitialLevel(nextProps.discoverNewOffer.level);
-        }
-      }
-    } else {
-      if (
-        Object.keys(nextProps.cityLocality).length !== 0 &&
-        Object.keys(nextProps.discoverFilter).length === 0 &&
-        Object.keys(nextProps.categoryFilter).length === 0
-      ) {
-        this.offerSeoLogic(nextProps.cityLocality);
-      } else if (Object.keys(nextProps.discoverFilter).length !== 0) {
-      } else if (Object.keys(nextProps.categoryFilter).length !== 0) {
       }
     }
   }
+
+  readDiscoverIndex = (discoverList, discoverName) => {
+    for (let i = 0; i < discoverList.length; i++) {
+      if (
+        discoverName
+          .replace(/-/g, " ")
+          .replace(/ /g, "")
+          .toLowerCase() ===
+        discoverList[i].title.replace(/ /g, "").toLowerCase()
+      ) {
+        this.setState({
+          apiObject: {
+            tab_id: discoverList[i].t_id,
+            hashtag_id: 0,
+            offering_id: discoverList[i].o_id,
+            category_id: discoverList[i].c_id,
+            api_status: discoverList[i].status,
+            api_type: discoverList[i].api_type,
+            flag: 2
+          }
+        });
+        this.props.parentLoadOldOfferData(
+          discoverList[i].t_id,
+          this.state.cityId,
+          this.state.localityId,
+          0,
+          discoverList[i].o_id,
+          discoverList[i].c_id,
+          0,
+          discoverList[i].status,
+          discoverList[i].api_type,
+          2,
+          true,
+          true
+        );
+      }
+    }
+  };
+
+  readCategoryIndex = (categoryList, offeringName) => {
+    for (let i = 0; i < categoryList.length; i++) {
+      if (
+        offeringName
+          .replace(/-/g, " ")
+          .replace(/ /g, "")
+          .toLowerCase() ===
+        categoryList[i].title.replace(/ /g, "").toLowerCase()
+      ) {
+        this.setState({
+          apiObject: {
+            tab_id: 0,
+            hashtag_id: categoryList[i].h_id,
+            offering_id: categoryList[i].o_id,
+            category_id: categoryList[i].c_id,
+            api_status: categoryList[i].status,
+            api_type: categoryList[i].Api_Type,
+            flag: 1
+          }
+        });
+
+        this.props.parentLoadOldOfferData(
+          0,
+          this.state.cityId,
+          this.state.localityId,
+          categoryList[i].h_id,
+          categoryList[i].o_id,
+          categoryList[i].c_id,
+          0,
+          categoryList[i].status,
+          categoryList[i].Api_Type,
+          1,
+          true,
+          true
+        );
+      }
+    }
+  };
 
   offerSeoLogic = cityList => {
     const cityIndex = this.readCityIndex(
@@ -139,12 +241,38 @@ export default class Trending extends React.Component {
       cityList
     );
 
+    this.setState({ cityId: cityIndex.c_key, localityId: localityIndex.l_key });
     if (this.props.match.params.hasOwnProperty("offering")) {
       this.props.callCategoryFilter(cityIndex.c_key);
     } else if (this.props.match.params.hasOwnProperty("discover")) {
       this.props.callDiscoverFilter();
     } else {
-      return;
+      this.setState({
+        apiObject: {
+          tab_id: 0,
+          hashtag_id: 0,
+          offering_id: 0,
+          category_id: 0,
+          api_status: 4,
+          api_type: 1,
+          flag: 1
+        }
+      });
+
+      this.props.parentLoadOldOfferData(
+        0,
+        cityIndex.c_key,
+        localityIndex.l_key,
+        0,
+        0,
+        0,
+        0,
+        4,
+        1,
+        1,
+        false,
+        true
+      );
     }
   };
 
@@ -595,7 +723,8 @@ export default class Trending extends React.Component {
       },
       function() {
         this.setState({
-          loading: false
+          loading: false,
+          click_disabled:false
         });
       }
     );
@@ -603,7 +732,9 @@ export default class Trending extends React.Component {
 
   loadingStart = () => {
     this.setState({
-      loading: true
+      loading: true,
+      click_disabled:true
+
     });
 
     if (this.props.location.state !== undefined) {
@@ -618,9 +749,24 @@ export default class Trending extends React.Component {
         this.props.apiStatus,
         this.props.apiType,
         this.props.flag,
+        false,
         false
       );
     } else {
+      this.props.parentLoadOldOfferData(
+        this.state.apiObject.tab_id,
+        this.state.cityId,
+        this.state.localityId,
+        this.state.apiObject.hashtag_id,
+        this.state.apiObject.offering_id,
+        this.state.apiObject.category_id,
+        this.state.level,
+        this.state.apiObject.api_status,
+        this.state.apiObject.api_type,
+        this.state.apiObject.flag,
+        false,
+        false
+      );
     }
   };
 
@@ -818,7 +964,7 @@ export default class Trending extends React.Component {
           size="large"
           color="violet"
           loading={loading}
-          disabled={this.state.level === 4 ? true : false}
+          disabled={this.state.level === 4 ? true : this.state.click_disabled}
           onClick={() => this.loadingStart()}
           style={{
             marginTop: "1.5em",

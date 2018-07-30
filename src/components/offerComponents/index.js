@@ -155,8 +155,18 @@ export default class Initial extends React.Component {
     apiStatus,
     apiType,
     flag,
-    boolean
+    boolean,
+    seo
   ) => {
+    if (seo) {
+      this.setState({
+        offerSeo: true,
+        apiType: apiType,
+        apiStatus: apiStatus,
+        flag: flag
+      });
+    }
+
     if (flag === 1) {
       if (apiType === 1) {
         if (apiStatus === 1) {
@@ -221,9 +231,6 @@ export default class Initial extends React.Component {
     }
   };
 
-  // seoDiscoverOldOfferData = () => {
-
-  // }
   render() {
     return (
       <div>

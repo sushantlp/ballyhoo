@@ -17,12 +17,7 @@ export function discoverNewOfferData(tabId, cityId, localityId, level, flag) {
   } else {
     return dispatch => {
       api
-        .discoverOlddiscoverNewOfferApiOfferApi(
-          tabId,
-          cityId,
-          localityId,
-          level
-        )
+        .discoverNewOfferApi(tabId, cityId, localityId, level)
         .then(discoverNewOffer =>
           dispatch({ type: actionType.discoverNewOfferMerge, discoverNewOffer })
         );
