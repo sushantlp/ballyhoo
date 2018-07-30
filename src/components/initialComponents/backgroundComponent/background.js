@@ -249,6 +249,7 @@ export default class Background extends React.Component {
         this.state.cityLocalityProps
       );
 
+      offerIndex.flag = 1;
       offerIndex.city_id = city.c_key;
 
       if (offerIndex.status === 4) {

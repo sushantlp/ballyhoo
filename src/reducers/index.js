@@ -13,6 +13,8 @@ import { yoloOffer } from "./yoloOfferReducer";
 import { localityOffer } from "./localityOfferReducer";
 import { activeOffer } from "./activeOfferReducer";
 import { oldCategory } from "./oldCategoryReducer";
+import { discoverOldOffer } from "./discoverOldReducer";
+import { discoverNewOffer } from "./discoverNewReducer";
 
 export default combineReducers({
   // loadingBar: loadingBarReducer,
@@ -27,5 +29,7 @@ export default combineReducers({
   yoloOffer,
   localityOffer,
   activeOffer,
-  oldCategory
+  oldCategory,
+  discoverOldOffer,
+  discoverNewOffer
 });

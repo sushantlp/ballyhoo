@@ -10,7 +10,7 @@ import Header from "./containers/headerContainer";
 import Background from "./containers/initialContainer";
 import Footer from "./containers/footerContainer";
 import Facebook from "./containers/facebookContainer";
-import Collection from "./containers/collectionContainer";
+import Offerning from "./containers/offerContainer";
 
 // Router root
 const Root = ({ store }) => (
@@ -26,17 +26,17 @@ const Root = ({ store }) => (
           <Route
             exact
             path="/:city/:locality/popular-location"
-            component={Collection}
+            component={Offerning}
           />
           <Route
             exact
             path="/:city/:locality/collection/:offering"
-            component={Collection}
+            component={Offerning}
           />
           <Route
             exact
-            path="/:city/:locality/discover/:offering"
-            component={Collection}
+            path="/:city/:locality/discover/:discover"
+            component={Offerning}
           />
         </Switch>
         <Footer />

@@ -160,9 +160,9 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v4/web/offer/category" +
+          "api/v4/web/offer/discover?" +
           getQueryString({
-            category: tabId,
+            tab: tabId,
             c_id: cityId,
             l_id: localityId,
             level: level
@@ -176,9 +176,9 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v4/web/latest/offer/category" +
+          "api/v4/web/latest/offer/discover?" +
           getQueryString({
-            category: tabId,
+            tab: tabId,
             c_id: cityId,
             l_id: localityId,
             level: level

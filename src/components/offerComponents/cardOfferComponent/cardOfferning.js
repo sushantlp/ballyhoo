@@ -33,63 +33,148 @@ export default class Trending extends React.Component {
     this.state = {
       loading: false,
       disabled: false,
-      level: 0
+      level: 0,
+      cityId: 0,
+      localityId: 0
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (Object.keys(nextProps.oldOffering.oldOffering).length !== 0) {
-      if (
-        nextProps.oldOffering.level !== this.props.oldOffering.level ||
-        this.state.level === 0
+    if (nextProps.offerSeo) {
+      if (Object.keys(nextProps.oldOffering.oldOffering).length !== 0) {
+        if (
+          nextProps.oldOffering.level !== this.props.oldOffering.level ||
+          this.state.level === 0
+        ) {
+          // show loading again
+          this.getInitialLevel(nextProps.oldOffering.level);
+        }
+      } else if (Object.keys(nextProps.oldCategory.oldCategory).length !== 0) {
+        if (
+          nextProps.oldCategory.level !== this.props.oldCategory.level ||
+          this.state.level === 0
+        ) {
+          // show loading again
+          this.getInitialLevel(nextProps.oldCategory.level);
+        }
+      } else if (Object.keys(nextProps.activeOffer.activeOffer).length !== 0) {
+        if (
+          nextProps.activeOffer.level !== this.props.activeOffer.level ||
+          this.state.level === 0
+        ) {
+          // show loading again
+          this.getInitialLevel(nextProps.activeOffer.level);
+        }
+      } else if (
+        Object.keys(nextProps.hashtagOffer.hashtagOffer).length !== 0
       ) {
-        // show loading again
-        this.setState(this.getInitialLevel(nextProps.oldOffering.level));
+        if (
+          nextProps.hashtagOffer.level !== this.props.hashtagOffer.level ||
+          this.state.level === 0
+        ) {
+          // show loading again
+          this.getInitialLevel(nextProps.hashtagOffer.level);
+        }
+      } else if (
+        Object.keys(nextProps.localityOffer.localityOffer).length !== 0
+      ) {
+        if (
+          nextProps.localityOffer.level !== this.props.localityOffer.level ||
+          this.state.level === 0
+        ) {
+          // show loading again
+          this.getInitialLevel(nextProps.localityOffer.level);
+        }
+      } else if (Object.keys(nextProps.yoloOffer.yoloOffer).length !== 0) {
+        if (
+          nextProps.yoloOffer.level !== this.props.yoloOffer.level ||
+          this.state.level === 0
+        ) {
+          // show loading again
+          this.getInitialLevel(nextProps.yoloOffer.level);
+        }
+      } else if (
+        Object.keys(nextProps.discoverOldOffer.discoverOldOffer).length !== 0
+      ) {
+        if (
+          nextProps.discoverOldOffer.level !==
+            this.props.discoverOldOffer.level ||
+          this.state.level === 0
+        ) {
+          // show loading again
+          this.getInitialLevel(nextProps.discoverOldOffer.level);
+        }
+      } else if (
+        Object.keys(nextProps.discoverNewOffer.discoverNewOffer).length !== 0
+      ) {
+        if (
+          nextProps.discoverNewOffer.level !==
+            this.props.discoverNewOffer.level ||
+          this.state.level === 0
+        ) {
+          // show loading again
+          this.getInitialLevel(nextProps.discoverNewOffer.level);
+        }
       }
-    } else if (Object.keys(nextProps.oldCategory.oldCategory).length !== 0) {
+    } else {
       if (
-        nextProps.oldCategory.level !== this.props.oldCategory.level ||
-        this.state.level === 0
+        Object.keys(nextProps.cityLocality).length !== 0 &&
+        Object.keys(nextProps.discoverFilter).length === 0 &&
+        Object.keys(nextProps.categoryFilter).length === 0
       ) {
-        // show loading again
-        this.setState(this.getInitialLevel(nextProps.oldCategory.level));
-      }
-    } else if (Object.keys(nextProps.activeOffer.activeOffer).length !== 0) {
-      if (
-        nextProps.activeOffer.level !== this.props.activeOffer.level ||
-        this.state.level === 0
-      ) {
-        // show loading again
-        this.setState(this.getInitialLevel(nextProps.activeOffer.level));
-      }
-    } else if (Object.keys(nextProps.hashtagOffer.hashtagOffer).length !== 0) {
-      if (
-        nextProps.hashtagOffer.level !== this.props.hashtagOffer.level ||
-        this.state.level === 0
-      ) {
-        // show loading again
-        this.setState(this.getInitialLevel(nextProps.hashtagOffer.level));
-      }
-    } else if (
-      Object.keys(nextProps.localityOffer.localityOffer).length !== 0
-    ) {
-      if (
-        nextProps.localityOffer.level !== this.props.localityOffer.level ||
-        this.state.level === 0
-      ) {
-        // show loading again
-        this.setState(this.getInitialLevel(nextProps.localityOffer.level));
-      }
-    } else if (Object.keys(nextProps.yoloOffer.yoloOffer).length !== 0) {
-      if (
-        nextProps.yoloOffer.level !== this.props.yoloOffer.level ||
-        this.state.level === 0
-      ) {
-        // show loading again
-        this.setState(this.getInitialLevel(nextProps.yoloOffer.level));
+        this.offerSeoLogic(nextProps.cityLocality);
+      } else if (Object.keys(nextProps.discoverFilter).length !== 0) {
+      } else if (Object.keys(nextProps.categoryFilter).length !== 0) {
       }
     }
   }
+
+  offerSeoLogic = cityList => {
+    const cityIndex = this.readCityIndex(
+      this.props.match.params.city,
+      cityList
+    );
+    const localityIndex = this.readLocalityIndex(
+      this.props.match.params.locality,
+      cityList
+    );
+
+    if (this.props.match.params.hasOwnProperty("offering")) {
+      this.props.callCategoryFilter(cityIndex.c_key);
+    } else if (this.props.match.params.hasOwnProperty("discover")) {
+      this.props.callDiscoverFilter();
+    } else {
+      return;
+    }
+  };
+
+  readCityIndex = (cityName, cityList) => {
+    for (let i = 0; i < cityList.city.length; i++) {
+      if (
+        cityName
+          .replace(/-/g, " ")
+          .replace(/ /g, "")
+          .toLowerCase() ===
+        cityList.city[i].c_text.replace(/ /g, "").toLowerCase()
+      ) {
+        return cityList.city[i];
+      }
+    }
+  };
+
+  readLocalityIndex = (localityName, localityList) => {
+    for (let i = 0; i < localityList.locality.length; i++) {
+      if (
+        localityName
+          .replace(/-/g, " ")
+          .replace(/ /g, "")
+          .toLowerCase() ===
+        localityList.locality[i].l_text.replace(/ /g, "").toLowerCase()
+      ) {
+        return localityList.locality[i];
+      }
+    }
+  };
 
   createOfferningCard = (
     key,
@@ -523,13 +608,17 @@ export default class Trending extends React.Component {
 
     if (this.props.location.state !== undefined) {
       this.props.parentLoadOldOfferData(
+        this.props.location.state.offerData.tab_id,
         this.props.location.state.offerData.city_id,
         this.props.location.state.offerData.locality_id,
         this.props.location.state.offerData.hashtag_id,
         this.props.location.state.offerData.offering_id,
         this.props.location.state.offerData.category_id,
         this.state.level,
-        this.props.apiStatus
+        this.props.apiStatus,
+        this.props.apiType,
+        this.props.flag,
+        false
       );
     } else {
     }
@@ -538,7 +627,11 @@ export default class Trending extends React.Component {
   render() {
     let offerData = [];
 
-    if (this.props.apiStatus === 0 || this.props.apiType === 0) {
+    if (
+      this.props.apiStatus === 0 ||
+      this.props.apiType === 0 ||
+      this.props.flag === 0
+    ) {
       return (
         <Dimmer active inverted>
           <Loader inverted>Loading</Loader>
@@ -546,110 +639,158 @@ export default class Trending extends React.Component {
       );
     }
 
-    if (this.props.apiType === 1) {
-      if (this.props.apiStatus === 1) {
-        if (
-          this.props.activeOffer.activeOffer === null ||
-          this.props.activeOffer.activeOffer === undefined
-        ) {
-          return (
-            <Dimmer active inverted>
-              <Loader inverted>Loading</Loader>
-            </Dimmer>
-          );
-        }
+    // Collection
+    if (this.props.flag === 1) {
+      if (this.props.apiType === 1) {
+        if (this.props.apiStatus === 1) {
+          if (
+            this.props.activeOffer.activeOffer === null ||
+            this.props.activeOffer.activeOffer === undefined
+          ) {
+            return (
+              <Dimmer active inverted>
+                <Loader inverted>Loading</Loader>
+              </Dimmer>
+            );
+          }
 
-        if (Object.keys(this.props.activeOffer.activeOffer).length === 0) {
+          if (Object.keys(this.props.activeOffer.activeOffer).length === 0) {
+            return <div />;
+          }
+
+          offerData = this.props.activeOffer.activeOffer;
+        } else if (this.props.apiStatus === 2) {
+          if (
+            this.props.oldCategory.oldCategory === null ||
+            this.props.oldCategory.oldCategory === undefined
+          ) {
+            return (
+              <Dimmer active inverted>
+                <Loader inverted>Loading</Loader>
+              </Dimmer>
+            );
+          }
+
+          if (Object.keys(this.props.oldCategory.oldCategory).length === 0) {
+            return <div />;
+          }
+          offerData = this.props.oldCategory.oldCategory;
+        } else if (this.props.apiStatus === 3) {
+          if (
+            this.props.oldOffering.oldOffering === null ||
+            this.props.oldOffering.oldOffering === undefined
+          ) {
+            return (
+              <Dimmer active inverted>
+                <Loader inverted>Loading</Loader>
+              </Dimmer>
+            );
+          }
+
+          if (Object.keys(this.props.oldOffering.oldOffering).length === 0) {
+            return <div />;
+          }
+
+          offerData = this.props.oldOffering.oldOffering;
+        } else if (this.props.apiStatus === 4) {
+          if (
+            this.props.localityOffer.localityOffer === null ||
+            this.props.localityOffer.localityOffer === undefined
+          ) {
+            return (
+              <Dimmer active inverted>
+                <Loader inverted>Loading</Loader>
+              </Dimmer>
+            );
+          }
+
+          if (
+            Object.keys(this.props.localityOffer.localityOffer).length === 0
+          ) {
+            return <div />;
+          }
+
+          offerData = this.props.localityOffer.localityOffer;
+        } else if (this.props.apiStatus === 5) {
+          if (
+            this.props.yoloOffer.yoloOffer === null ||
+            this.props.yoloOffer.yoloOffer === undefined
+          ) {
+            return (
+              <Dimmer active inverted>
+                <Loader inverted>Loading</Loader>
+              </Dimmer>
+            );
+          }
+
+          if (Object.keys(this.props.yoloOffer.yoloOffer).length === 0) {
+            return <div />;
+          }
+
+          offerData = this.props.yoloOffer.yoloOffer;
+        } else if (this.props.apiStatus === 6) {
+          if (
+            this.props.hashtagOffer.hashtagOffer === null ||
+            this.props.hashtagOffer.hashtagOffer === undefined
+          ) {
+            return (
+              <Dimmer active inverted>
+                <Loader inverted>Loading</Loader>
+              </Dimmer>
+            );
+          }
+
+          if (Object.keys(this.props.hashtagOffer.hashtagOffer).length === 0) {
+            return <div />;
+          }
+
+          offerData = this.props.hashtagOffer.hashtagOffer;
+        } else {
           return <div />;
         }
-
-        offerData = this.props.activeOffer.activeOffer;
-      } else if (this.props.apiStatus === 2) {
-        if (
-          this.props.oldCategory.oldCategory === null ||
-          this.props.oldCategory.oldCategory === undefined
-        ) {
-          return (
-            <Dimmer active inverted>
-              <Loader inverted>Loading</Loader>
-            </Dimmer>
-          );
-        }
-
-        if (Object.keys(this.props.oldCategory.oldCategory).length === 0) {
-          return <div />;
-        }
-        offerData = this.props.oldCategory.oldCategory;
-      } else if (this.props.apiStatus === 3) {
-        if (
-          this.props.oldOffering.oldOffering === null ||
-          this.props.oldOffering.oldOffering === undefined
-        ) {
-          return (
-            <Dimmer active inverted>
-              <Loader inverted>Loading</Loader>
-            </Dimmer>
-          );
-        }
-
-        if (Object.keys(this.props.oldOffering.oldOffering).length === 0) {
-          return <div />;
-        }
-
-        offerData = this.props.oldOffering.oldOffering;
-      } else if (this.props.apiStatus === 4) {
-        if (
-          this.props.localityOffer.localityOffer === null ||
-          this.props.localityOffer.localityOffer === undefined
-        ) {
-          return (
-            <Dimmer active inverted>
-              <Loader inverted>Loading</Loader>
-            </Dimmer>
-          );
-        }
-
-        if (Object.keys(this.props.localityOffer.localityOffer).length === 0) {
-          return <div />;
-        }
-
-        offerData = this.props.localityOffer.localityOffer;
-      } else if (this.props.apiStatus === 5) {
-        if (
-          this.props.yoloOffer.yoloOffer === null ||
-          this.props.yoloOffer.yoloOffer === undefined
-        ) {
-          return (
-            <Dimmer active inverted>
-              <Loader inverted>Loading</Loader>
-            </Dimmer>
-          );
-        }
-
-        if (Object.keys(this.props.yoloOffer.yoloOffer).length === 0) {
-          return <div />;
-        }
-
-        offerData = this.props.yoloOffer.yoloOffer;
-      } else if (this.props.apiStatus === 6) {
-        if (
-          this.props.hashtagOffer.hashtagOffer === null ||
-          this.props.hashtagOffer.hashtagOffer === undefined
-        ) {
-          return (
-            <Dimmer active inverted>
-              <Loader inverted>Loading</Loader>
-            </Dimmer>
-          );
-        }
-
-        if (Object.keys(this.props.hashtagOffer.hashtagOffer).length === 0) {
-          return <div />;
-        }
-
-        offerData = this.props.hashtagOffer.hashtagOffer;
       } else {
         return <div />;
+      }
+    } else if (this.props.flag === 2) {
+      // Discover
+      if (this.props.apiType === 1) {
+        if (
+          this.props.discoverOldOffer.discoverOldOffer === null ||
+          this.props.discoverOldOffer.discoverOldOffer === undefined
+        ) {
+          return (
+            <Dimmer active inverted>
+              <Loader inverted>Loading</Loader>
+            </Dimmer>
+          );
+        }
+
+        if (
+          Object.keys(this.props.discoverOldOffer.discoverOldOffer).length === 0
+        ) {
+          return <div />;
+        }
+
+        offerData = this.props.discoverOldOffer.discoverOldOffer;
+      } else {
+        if (
+          this.props.discoverNewOffer.discoverNewOffer === null ||
+          this.props.discoverNewOffer.discoverNewOffer === undefined
+        ) {
+          return (
+            <Dimmer active inverted>
+              <Loader inverted>Loading</Loader>
+            </Dimmer>
+          );
+        }
+
+        if (
+          Object.keys(this.props.discoverNewOffer.discoverNewOffer).length === 0
+        ) {
+          return <div />;
+        }
+
+        offerData = this.props.discoverNewOffer.discoverNewOffer;
       }
     } else {
       return <div />;

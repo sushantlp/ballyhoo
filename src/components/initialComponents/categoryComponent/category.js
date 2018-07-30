@@ -52,10 +52,10 @@ export default class Category extends React.Component {
         this.props.cityLocality
       );
 
+      newObject.flag = 1;
       newObject.city_id = city.c_key;
       newObject.api_type = object.Api_Type;
       newObject.status = object.status;
-      newObject.hashtag_id = object.h_id;
       newObject.offering_id = object.o_id;
       newObject.category_id = object.c_id;
       newObject.hashtag_id = object.h_id;

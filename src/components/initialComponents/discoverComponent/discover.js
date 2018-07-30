@@ -37,7 +37,52 @@ export default class Discover extends React.Component {
   };
 
   clickDiscoverIndex = object => {
-    console.log(object);
+    if (
+      this.props.match.params.hasOwnProperty("city") &&
+      this.props.match.params.hasOwnProperty("locality")
+    ) {
+      let newObject = {};
+
+      const url = object.title.replace(/ /g, "-").toLowerCase();
+
+      const city = this.props.readCityIndex(
+        this.props.match.params.city,
+        this.props.cityLocality
+      );
+
+      newObject.flag = 2;
+      newObject.city_id = city.c_key;
+      newObject.api_type = object.api_type;
+      newObject.status = object.status;
+      newObject.tab_id = object.t_id;
+      newObject.offering_id = object.o_id;
+      newObject.category_id = object.c_id;
+      newObject.key = object.t_id;
+
+      if (object.status === 4) {
+        const locality1 = this.props.readLocalityIndex(
+          object.title,
+          this.props.cityLocality
+        );
+        this.props.history.push(locality1.l_text + "/discover/" + url, {
+          offerData: newObject
+        });
+      } else {
+        const locality2 = this.props.readLocalityIndex(
+          this.props.match.params.locality,
+          this.props.cityLocality
+        );
+
+        newObject.locality_id = locality2.l_key;
+
+        this.props.history.push(
+          this.props.match.params.locality + "/discover/" + url,
+          {
+            offerData: newObject
+          }
+        );
+      }
+    }
   };
 
   logicDiscoverCard = filter => {

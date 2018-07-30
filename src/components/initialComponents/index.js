@@ -131,7 +131,14 @@ export default class Initial extends React.Component {
           match={this.props.match}
           history={this.props.history}
         />
-        <Discover discoverFilter={this.props.discoverFilter} />
+        <Discover
+          discoverFilter={this.props.discoverFilter}
+          readCityIndex={this.readCityIndex}
+          readLocalityIndex={this.readLocalityIndex}
+          cityLocality={this.props.cityLocality}
+          match={this.props.match}
+          history={this.props.history}
+        />
         <Popular popularFilter={this.props.popularFilter} />
         <Facebook
           facebookEvent={this.props.facebookEvent}

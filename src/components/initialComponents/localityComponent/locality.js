@@ -36,6 +36,7 @@ export default class Discover extends React.Component {
     const localityUrl = object.locality.replace(/ /g, "-").toLowerCase();
     const cityUrl = this.props.cityName.replace(/ /g, "-").toLowerCase();
 
+    newObject.flag = 1;
     newObject.api_type = 1;
     newObject.city_id = this.props.cityId;
     newObject.locality_id = object.locality_id;
