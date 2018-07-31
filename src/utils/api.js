@@ -219,5 +219,21 @@ export default {
         response.json().then(newCategoryOffer => resolve(newCategoryOffer));
       });
     });
+  },
+  newHashtagOfferApi: (hashtagId, cityId, localityId, level) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/offer/hashtag?" +
+          getQueryString({
+            hash_id: hashtagId,
+            c_id: cityId,
+            l_id: localityId,
+            level: level
+          })
+      ).then(response => {
+        response.json().then(newHashtagOffer => resolve(newHashtagOffer));
+      });
+    });
   }
 };

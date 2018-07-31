@@ -17,6 +17,7 @@ import { discoverOldOffer } from "./discoverOldReducer";
 import { discoverNewOffer } from "./discoverNewReducer";
 import { newCategory } from "./newCategoryReducer";
 import { newOffering } from "./newOfferingReducer";
+import { newHashtagOffer } from "./newHashtagOfferReducer";
 
 export default combineReducers({
   // loadingBar: loadingBarReducer,
@@ -35,5 +36,6 @@ export default combineReducers({
   discoverOldOffer,
   discoverNewOffer,
   newCategory,
-  newOffering
+  newOffering,
+  newHashtagOffer
 });

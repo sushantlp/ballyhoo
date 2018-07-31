@@ -121,6 +121,18 @@ export default class Initial extends React.Component {
               0,
               true
             );
+          } else if (this.props.history.location.state.offerData.status === 6) {
+            this.setState({
+              apiStatus: 6
+            });
+
+            this.props.newHashtagOfferData(
+              this.props.history.location.state.offerData.hashtag_id,
+              this.props.history.location.state.offerData.city_id,
+              this.props.history.location.state.offerData.locality_id,
+              0,
+              true
+            );
           }
         }
       } else if (this.props.history.location.state.offerData.flag === 2) {
@@ -233,6 +245,34 @@ export default class Initial extends React.Component {
           );
         }
       } else {
+        if (apiStatus === 2) {
+          // New Category Offer
+          this.props.newCategoryData(
+            cityId,
+            localityId,
+            categoryId,
+            level,
+            boolean
+          );
+        } else if (apiStatus === 3) {
+          // New Offering Offer
+          this.props.newOfferingData(
+            cityId,
+            localityId,
+            offeringId,
+            level,
+            boolean
+          );
+        } else if (apiStatus === 6) {
+          // New Hashtag Offer
+          this.props.newHashtagOfferData(
+            hashtagId,
+            cityId,
+            localityId,
+            level,
+            boolean
+          );
+        }
       }
     } else {
       if (apiType === 1) {
@@ -283,6 +323,7 @@ export default class Initial extends React.Component {
           categoryFilter={this.props.categoryFilter}
           newCategory={this.props.newCategory}
           newOffering={this.props.newOffering}
+          newHashtagOffer={this.props.newHashtagOffer}
         />
       </div>
     );

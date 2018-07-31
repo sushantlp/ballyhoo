@@ -130,6 +130,37 @@ export default class Trending extends React.Component {
             // show loading again
             this.getInitialLevel(nextProps.discoverNewOffer.level);
           }
+        } else if (
+          Object.keys(nextProps.newOffering.newOffering).length !== 0
+        ) {
+          if (
+            nextProps.newOffering.level !== this.props.newOffering.level ||
+            this.state.level === 0
+          ) {
+            // show loading again
+            this.getInitialLevel(nextProps.newOffering.level);
+          }
+        } else if (
+          Object.keys(nextProps.newCategory.newCategory).length !== 0
+        ) {
+          if (
+            nextProps.newCategory.level !== this.props.newCategory.level ||
+            this.state.level === 0
+          ) {
+            // show loading again
+            this.getInitialLevel(nextProps.newCategory.level);
+          }
+        } else if (
+          Object.keys(nextProps.newHashtagOffer.newHashtagOffer).length !== 0
+        ) {
+          if (
+            nextProps.newHashtagOffer.level !==
+              this.props.newHashtagOffer.level ||
+            this.state.level === 0
+          ) {
+            // show loading again
+            this.getInitialLevel(nextProps.newHashtagOffer.level);
+          }
         }
       } else {
         if (
@@ -731,7 +762,6 @@ export default class Trending extends React.Component {
     if (json === undefined) {
       return;
     }
-
     console.log(json);
     return json.map((obj, key) => {
       let discount = 0;
@@ -776,6 +806,19 @@ export default class Trending extends React.Component {
           if (content.length > MAX_DESCRIPTION_LENGTH) {
             content = content.substring(0, MAX_DESCRIPTION_LENGTH) + "... ";
           }
+        }
+
+        if (obj.SALOON.Gender_Preference === 1) {
+          maleNonveg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+        } else if (obj.SALOON.Gender_Preference === 2) {
+          femaleVeg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+        } else {
+          maleNonveg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+          femaleVeg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
         }
       } else {
         return;
@@ -1105,6 +1148,25 @@ export default class Trending extends React.Component {
           }
 
           offerData = this.props.newOffering.newOffering;
+        } else if (this.props.apiStatus === 6) {
+          if (
+            this.props.newHashtagOffer.newHashtagOffer === null ||
+            this.props.newHashtagOffer.newHashtagOffer === undefined
+          ) {
+            return (
+              <Dimmer active inverted>
+                <Loader inverted>Loading</Loader>
+              </Dimmer>
+            );
+          }
+
+          if (
+            Object.keys(this.props.newHashtagOffer.newHashtagOffer).length === 0
+          ) {
+            return <div />;
+          }
+
+          offerData = this.props.newHashtagOffer.newHashtagOffer;
         } else {
           return <div />;
         }
