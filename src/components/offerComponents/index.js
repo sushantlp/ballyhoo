@@ -96,6 +96,32 @@ export default class Initial extends React.Component {
             apiType: 2,
             flag: 1
           });
+
+          if (this.props.history.location.state.offerData.status === 2) {
+            this.setState({
+              apiStatus: 2
+            });
+            // New Category Offer
+            this.props.newCategoryData(
+              this.props.history.location.state.offerData.city_id,
+              this.props.history.location.state.offerData.locality_id,
+              this.props.history.location.state.offerData.category_id,
+              0,
+              true
+            );
+          } else if (this.props.history.location.state.offerData.status === 3) {
+            this.setState({
+              apiStatus: 3
+            });
+            // New Offering Offer
+            this.props.newOfferingData(
+              this.props.history.location.state.offerData.city_id,
+              this.props.history.location.state.offerData.locality_id,
+              this.props.history.location.state.offerData.offering_id,
+              0,
+              true
+            );
+          }
         }
       } else if (this.props.history.location.state.offerData.flag === 2) {
         if (this.props.history.location.state.offerData.api_type === 1) {
@@ -255,6 +281,8 @@ export default class Initial extends React.Component {
           callCategoryFilter={this.callCategoryFilter}
           discoverFilter={this.props.discoverFilter}
           categoryFilter={this.props.categoryFilter}
+          newCategory={this.props.newCategory}
+          newOffering={this.props.newOffering}
         />
       </div>
     );

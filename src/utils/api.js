@@ -187,5 +187,37 @@ export default {
         response.json().then(discoverNewOffer => resolve(discoverNewOffer));
       });
     });
+  },
+  newOfferingApi: (cityId, localityId, offeringId, level) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/latest/offer/offering?" +
+          getQueryString({
+            c_id: cityId,
+            l_id: localityId,
+            offering: offeringId,
+            level: level
+          })
+      ).then(response => {
+        response.json().then(newOfferingOffer => resolve(newOfferingOffer));
+      });
+    });
+  },
+  newCategoryApi: (cityId, localityId, categoryId, level) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/latest/offer/category?" +
+          getQueryString({
+            c_id: cityId,
+            l_id: localityId,
+            category: categoryId,
+            level: level
+          })
+      ).then(response => {
+        response.json().then(newCategoryOffer => resolve(newCategoryOffer));
+      });
+    });
   }
 };

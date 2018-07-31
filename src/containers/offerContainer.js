@@ -13,6 +13,8 @@ import { discoverNewOfferData } from "../actions/discoverNewAction";
 import { getCityLocality } from "../actions/cityLocalityAction";
 import { getCategoryFilter } from "../actions/categoryFilterAction";
 import { getDiscoverFilter } from "../actions/discoverFilterAction";
+import { newCategoryData } from "../actions/newCategoryAction";
+import { newOfferingData } from "../actions/newOfferingAction";
 
 function mapStateToProps(state) {
   return {
@@ -26,7 +28,9 @@ function mapStateToProps(state) {
     discoverNewOffer: state.discoverNewOffer,
     categoryFilter: state.categoryFilter.categoryFilter,
     discoverFilter: state.discoverFilter.discoverFilter,
-    cityLocality: state.cityLocality.cityLocality
+    cityLocality: state.cityLocality.cityLocality,
+    newCategory: state.newCategory,
+    newOffering: state.newOffering
   };
 }
 
@@ -44,7 +48,9 @@ export default withRouter(
       discoverNewOfferData: discoverNewOfferData,
       getCityLocality: getCityLocality,
       getCategoryFilter: getCategoryFilter,
-      getDiscoverFilter: getDiscoverFilter
+      getDiscoverFilter: getDiscoverFilter,
+      newCategoryData: newCategoryData,
+      newOfferingData: newOfferingData
     }
   )(OfferComponent)
 );

@@ -323,10 +323,15 @@ export default class Trending extends React.Component {
     full,
     half,
     empty,
+    priceStatus,
     object
   ) => {
     return (
-      <Card className={classes.OfferningCard} key={key}>
+      <Card
+        className={classes.OfferningCard}
+        key={key}
+        style={{ cursor: "pointer" }}
+      >
         <div className="ui fluid image">
           <span
             className={classes.Heart}
@@ -425,16 +430,29 @@ export default class Trending extends React.Component {
                   style={{
                     fontSize: "18px",
                     lineHeight: "25px",
-                    paddingLeft: "1px"
+                    paddingLeft: "1px",
+                    display: actualPrice === 0 ? "none" : "intial"
                   }}
-                  hidden={actualPrice === 0 ? true : false}
+                  // hidden={actualPrice === 0 ? true : false}
                 >
                   {actualPrice}
+                  <span
+                    style={{
+                      display: priceStatus === 0 ? "none" : "intial",
+                      fontSize: "16px",
+                      paddingLeft: "2px"
+                    }}
+                  >
+                    Onwards
+                  </span>
                 </label>
               </Icon>
               <span
                 className={classes.DiscountPricePercent}
-                hidden={discount === 0 ? true : false}
+                // hidden={discount === 0 ? true : false}
+                style={{
+                  display: discount === 0 ? "none" : "intial"
+                }}
               >
                 {discount}
               </span>
@@ -703,6 +721,165 @@ export default class Trending extends React.Component {
         full,
         half,
         empty,
+        0,
+        obj
+      );
+    });
+  };
+
+  newOfferingCard = json => {
+    if (json === undefined) {
+      return;
+    }
+
+    console.log(json);
+    return json.map((obj, key) => {
+      let discount = 0;
+      let discountPrice = 0;
+      let calendar = undefined;
+      let maleNonveg = undefined;
+      let femaleVeg = undefined;
+      let content = undefined;
+
+      if (Object.keys(obj.ACTIVITY).length !== 0) {
+        content = obj.ACTIVITY.Offer_Description;
+
+        // Description
+        if (content !== undefined && content !== "" && content !== null) {
+          if (content.length > MAX_DESCRIPTION_LENGTH) {
+            content = content.substring(0, MAX_DESCRIPTION_LENGTH) + "... ";
+          }
+        }
+      } else if (Object.keys(obj.EVENT).length !== 0) {
+        content = obj.EVENT.Offer_Description;
+
+        // Description
+        if (content !== undefined && content !== "" && content !== null) {
+          if (content.length > MAX_DESCRIPTION_LENGTH) {
+            content = content.substring(0, MAX_DESCRIPTION_LENGTH) + "... ";
+          }
+        }
+      } else if (Object.keys(obj.GETAWAY).length !== 0) {
+        content = obj.GETAWAY.Offer_Description;
+
+        // Description
+        if (content !== undefined && content !== "" && content !== null) {
+          if (content.length > MAX_DESCRIPTION_LENGTH) {
+            content = content.substring(0, MAX_DESCRIPTION_LENGTH) + "... ";
+          }
+        }
+      } else if (Object.keys(obj.SALOON).length !== 0) {
+        content = obj.SALOON.Offer_Description;
+
+        // Description
+        if (content !== undefined && content !== "" && content !== null) {
+          if (content.length > MAX_DESCRIPTION_LENGTH) {
+            content = content.substring(0, MAX_DESCRIPTION_LENGTH) + "... ";
+          }
+        }
+      } else {
+        return;
+      }
+
+      // Discount
+      discount = parseInt(obj.Offer_Basic_Details.Offer_Min_Discount, 10);
+      if (obj.Offer_Basic_Details.Offer_Min_Price !== 0 && discount !== 0) {
+        discountPrice =
+          (obj.Offer_Basic_Details.Offer_Min_Price * discount) / 100;
+        discount = discount + "%" + " OFF";
+      } else if (discount !== 0) {
+        discount = discount + "%" + " OFF";
+      }
+
+      const priceStatus = obj.Offer_Basic_Details.Offer_Min_Price === 0 ? 0 : 1;
+
+      const rating = obj.Merchant_Details.Merchant_Ratings + "";
+      const totalArray = rating.split(".");
+
+      let emptyVar = 5;
+      let half = undefined;
+      let fullArray = [];
+      let emptyArray = [];
+
+      // Half Star
+      if (totalArray[1] !== undefined) {
+        emptyVar = emptyVar - Number(totalArray[0]);
+        emptyVar = emptyVar - 1;
+
+        half = (
+          <Icon
+            name="star half full"
+            style={{
+              color: "#7a52c0",
+              padding: "0px",
+              margin: "0px"
+            }}
+          />
+        );
+      } else {
+        emptyVar = emptyVar - Number(totalArray[0]);
+      }
+
+      // Full Star
+      for (let i = 0; i < Number(totalArray[0]); i++) {
+        fullArray.push(i);
+      }
+
+      // Full Star
+      let full = fullArray.map(function(i) {
+        return (
+          <Icon
+            key={i}
+            name="star"
+            style={{
+              color: "#7a52c0",
+              padding: "0px",
+              margin: "0px"
+            }}
+          />
+        );
+      });
+
+      // Empty Star
+      for (let i = 0; i < emptyVar; i++) {
+        emptyArray.push(i);
+      }
+
+      // Empty Star
+      let empty = emptyArray.map(function(i) {
+        return (
+          <Icon
+            key={i}
+            name="star empty"
+            style={{
+              color: "#7a52c0",
+              padding: "0px",
+              margin: "0px"
+            }}
+          />
+        );
+      });
+
+      return this.createOfferningCard(
+        key,
+        obj.Offer_Basic_Details.Offer_Popularity,
+        calendar,
+        obj.Offer_Basic_Details.Offer_Image,
+        femaleVeg,
+        maleNonveg,
+        obj.Merchant_Details.Merchant_Bname,
+        obj.Offer_Basic_Details.Offering_Title,
+        content,
+        obj.Offer_Basic_Details.Offer_Min_Price,
+        discountPrice,
+        discount,
+        obj.Offer_Basic_Details.Calculated_Distance,
+        obj.Offer_Basic_Details.Sponsored,
+        undefined,
+        full,
+        half,
+        empty,
+        priceStatus,
         obj
       );
     });
@@ -712,7 +889,7 @@ export default class Trending extends React.Component {
     if (this.props.apiType === 1) {
       return this.oldOfferingCard(json);
     } else {
-      return;
+      return this.newOfferingCard(json);
     }
   };
 
@@ -724,7 +901,7 @@ export default class Trending extends React.Component {
       function() {
         this.setState({
           loading: false,
-          click_disabled:false
+          click_disabled: false
         });
       }
     );
@@ -733,8 +910,7 @@ export default class Trending extends React.Component {
   loadingStart = () => {
     this.setState({
       loading: true,
-      click_disabled:true
-
+      click_disabled: true
     });
 
     if (this.props.location.state !== undefined) {
@@ -895,7 +1071,43 @@ export default class Trending extends React.Component {
           return <div />;
         }
       } else {
-        return <div />;
+        if (this.props.apiStatus === 2) {
+          if (
+            this.props.newCategory.newCategory === null ||
+            this.props.newCategory.newCategory === undefined
+          ) {
+            return (
+              <Dimmer active inverted>
+                <Loader inverted>Loading</Loader>
+              </Dimmer>
+            );
+          }
+
+          if (Object.keys(this.props.newCategory.newCategory).length === 0) {
+            return <div />;
+          }
+
+          offerData = this.props.newCategory.newCategory;
+        } else if (this.props.apiStatus === 3) {
+          if (
+            this.props.newOffering.newOffering === null ||
+            this.props.newOffering.newOffering === undefined
+          ) {
+            return (
+              <Dimmer active inverted>
+                <Loader inverted>Loading</Loader>
+              </Dimmer>
+            );
+          }
+
+          if (Object.keys(this.props.newOffering.newOffering).length === 0) {
+            return <div />;
+          }
+
+          offerData = this.props.newOffering.newOffering;
+        } else {
+          return <div />;
+        }
       }
     } else if (this.props.flag === 2) {
       // Discover

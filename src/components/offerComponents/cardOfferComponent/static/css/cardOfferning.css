@@ -43,7 +43,6 @@
 }
 
 OfferningCard {
-  cursor: pointer;
   position: absolute;
   top: 0;
   box-shadow: 4px 4px 10px 0;
