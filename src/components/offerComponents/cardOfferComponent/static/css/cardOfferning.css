@@ -1,29 +1,3 @@
-/* .DummyProductCardWrapper {
-  cursor: pointer;
-  width: 30em;
-  height: 33em;
-}
-.ProductImageWrapper {
-  position: relative;
-  width: 100%;
-  height: 18.5em;
-  background: #f4f4f4;
-  overflow: hidden;
-  animation: breath 2s infinite;
-}
-.ProductContentWrapper {
-  width: 100%;
-}
-.ProductTitle {
-  margin: 1em;
-  width: 80%;
-  height: 2em;
-  background: #f4f4f4;
-  animation: breath 2s infinite;
-}
-.ProductDetail {
-} */
-
 .OfferningContainer {
   margin-top: 30px;
 }

@@ -114,8 +114,12 @@ export default class Discover extends React.Component {
       return <DiscoverLoader />;
     }
 
-    if (_.isEmpty(this.props.discoverFilter)) {
+    if (!_.isArray(this.props.discoverFilter)) {
       return <DiscoverLoader />;
+    }
+
+    if (_.isEmpty(this.props.discoverFilter)) {
+      return <div />;
     }
 
     const { isMore } = this.state;

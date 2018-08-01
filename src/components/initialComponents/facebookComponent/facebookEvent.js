@@ -1,14 +1,15 @@
 import React from "react";
+import _ from "lodash";
 
 import {
   Card,
   Container,
   Image,
   Button,
-  Dimmer,
-  Loader,
   Popup
 } from "semantic-ui-react/dist/commonjs";
+
+import FacebookLoader from "../../loaderComponents/facebookLoader";
 
 import classes from "./static/css/facebook.css";
 
@@ -73,17 +74,17 @@ export default class Trending extends React.Component {
         if (content.length > MAX_TITLE_LENGTH) {
           content = content.substring(0, MAX_TITLE_LENGTH) + "... ";
         }
-
-        return this.createFacebookEventCard(
-          key,
-          obj.b_name,
-          obj.img_url,
-          content,
-          content,
-          obj.target_url,
-          obj.content
-        );
       }
+
+      return this.createFacebookEventCard(
+        key,
+        obj.b_name,
+        obj.img_url,
+        content,
+        content,
+        obj.target_url,
+        obj.content
+      );
     });
   };
 
@@ -104,16 +105,20 @@ export default class Trending extends React.Component {
       this.props.facebookEvent.facebookEvent === null ||
       this.props.facebookEvent.facebookEvent === undefined
     ) {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
+      return <FacebookLoader />;
     }
 
-    if (Object.keys(this.props.facebookEvent.facebookEvent).length === 0) {
+    if (!_.isArray(this.props.facebookEvent.facebookEvent)) {
+      return <FacebookLoader />;
+    }
+
+    if (_.isEmpty(this.props.facebookEvent.facebookEvent)) {
       return <div />;
     }
+
+    // if (Object.keys(this.props.facebookEvent.facebookEvent).length === 0) {
+    //   return <div />;
+    // }
 
     return (
       <Container>

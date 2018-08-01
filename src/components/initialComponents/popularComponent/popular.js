@@ -1,13 +1,14 @@
 import React from "react";
+import _ from "lodash";
 
 import {
   Card,
   Container,
   Image,
-  Button,
-  Dimmer,
-  Loader
+  Button
 } from "semantic-ui-react/dist/commonjs";
+
+import FacebookLoader from "../../loaderComponents/facebookLoader";
 
 import classes from "./static/css/popular.css";
 
@@ -83,16 +84,17 @@ export default class Popular extends React.Component {
       this.props.popularFilter === null ||
       this.props.popularFilter === undefined
     ) {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
+      return <FacebookLoader />;
     }
 
-    if (Object.keys(this.props.popularFilter).length === 0) {
+    if (!_.isArray(this.props.popularFilter)) {
+      return <FacebookLoader />;
+    }
+
+    if (_.isEmpty(this.props.popularFilter)) {
       return <div />;
     }
+
     const { isMore } = this.state;
 
     return (

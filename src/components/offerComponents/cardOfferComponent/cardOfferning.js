@@ -14,6 +14,8 @@ import {
   Button
 } from "semantic-ui-react/dist/commonjs";
 
+import CardLoader from "../../loaderComponents/cardLoader";
+
 import classes from "./static/css/cardOfferning.css";
 
 // Default
@@ -998,11 +1000,7 @@ export default class Trending extends React.Component {
       this.props.apiType === 0 ||
       this.props.flag === 0
     ) {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
+      return <CardLoader />;
     }
 
     // Collection
@@ -1013,15 +1011,11 @@ export default class Trending extends React.Component {
             this.props.activeOffer.activeOffer === null ||
             this.props.activeOffer.activeOffer === undefined
           ) {
-            return (
-              <Dimmer active inverted>
-                <Loader inverted>Loading</Loader>
-              </Dimmer>
-            );
+            return <CardLoader />;
           }
 
           if (Object.keys(this.props.activeOffer.activeOffer).length === 0) {
-            return <div />;
+            return <CardLoader />;
           }
 
           offerData = this.props.activeOffer.activeOffer;
@@ -1030,15 +1024,11 @@ export default class Trending extends React.Component {
             this.props.oldCategory.oldCategory === null ||
             this.props.oldCategory.oldCategory === undefined
           ) {
-            return (
-              <Dimmer active inverted>
-                <Loader inverted>Loading</Loader>
-              </Dimmer>
-            );
+            return <CardLoader />;
           }
 
           if (Object.keys(this.props.oldCategory.oldCategory).length === 0) {
-            return <div />;
+            return <CardLoader />;
           }
           offerData = this.props.oldCategory.oldCategory;
         } else if (this.props.apiStatus === 3) {
@@ -1046,21 +1036,16 @@ export default class Trending extends React.Component {
             this.props.oldOffering.oldOffering === null ||
             this.props.oldOffering.oldOffering === undefined
           ) {
-            return (
-              <Dimmer active inverted>
-                <Loader inverted>Loading</Loader>
-              </Dimmer>
-            );
+            return <CardLoader />;
           }
 
           if (!_.isArray(this.props.oldOffering.oldOffering)) {
-            return (
-              <Dimmer active inverted>
-                <Loader inverted>Loading</Loader>
-              </Dimmer>
-            );
+            return <CardLoader />;
           }
 
+          if (_.isEmpty(this.props.oldOffering.oldOffering)) {
+            return <div />;
+          }
           offerData = this.props.oldOffering.oldOffering;
         } else if (this.props.apiStatus === 4) {
           if (
@@ -1224,17 +1209,6 @@ export default class Trending extends React.Component {
     const { loading, disabled } = this.state;
     return (
       <Container className={classes.OfferningContainer}>
-        {/*         
-          <div className={classes.DummyProductCardWrapper}>
-            <div className={classes.ProductImageWrapper}>
-              <div class="shimmer shimmer-position-1" />
-            </div>
-            <div className={classes.ProductContentWrapper}>
-              <div className={classes.ProductTitle} />
-              <div className={classes.ProductDetail} />
-            </div>
-          </div> */}
-
         <Card.Group itemsPerRow={3} doubling stackable>
           {this.logicOfferningCard(offerData)}
         </Card.Group>

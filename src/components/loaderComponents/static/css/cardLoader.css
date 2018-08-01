@@ -1,0 +1,59 @@
+.DummyProductCardWrapper {
+  cursor: pointer;
+  width: 25em;
+  height: 28em;
+  -webkit-box-shadow: 0 0.5em 1.5em 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0.5em 1.5em 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.5em 1.5em 0 rgba(0, 0, 0, 0.1);
+  margin: 1em;
+  -webkit-transition: all 0.2s ease-in-out 0s;
+  -moz-transition: all 0.2s ease-in-out 0s;
+  -o-transition: all 0.2s ease-in-out 0s;
+  -ms-transition: all 0.2s ease-in-out 0s;
+  transition: all 0.2s ease-in-out 0s;
+}
+
+.DummyProductCardWrapper .ProductImageWrapper {
+  position: relative;
+  width: 25em;
+  height: 15.5em;
+  background: #f4f4f4;
+  overflow: hidden;
+  animation: breath 2s infinite;
+}
+
+.DummyProductCardWrapper .ProductContentWrapper {
+  width: 100%;
+}
+
+.ProductListWrapper {
+  margin: auto;
+}
+
+.ProductsWrapper {
+  margin: auto;
+}
+
+.ProductGridWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.DummyProductCardWrapper .ProductContentWrapper .ProductTitle {
+  margin: 1em;
+  width: 80%;
+  height: 2em;
+  background: #f4f4f4;
+  animation: breath 2s infinite;
+}
+
+.ProductDetail {
+  animation: breath 2s 0.5s infinite;
+}
+
+.DummyProductCardWrapper:hover {
+  transform: scale(1.07);
+  opacity: 1 !important;
+  cursor: pointer;
+}

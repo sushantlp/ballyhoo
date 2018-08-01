@@ -8,6 +8,7 @@ const BackgroundLoader = props => (
     speed={2}
     primaryColor="#f3f3f3"
     secondaryColor="#ecebeb"
+    primaryOpacity={1}
     {...props}
   >
     <rect x="0" y="0" rx="5" ry="5" width="1000" height="400" />

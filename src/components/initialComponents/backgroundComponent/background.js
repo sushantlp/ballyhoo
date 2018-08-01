@@ -329,6 +329,13 @@ export default class Background extends React.Component {
       return <BackgroundLoader />;
     }
 
+    // if (
+    //   !_.isArray(this.props.cityLocality) ||
+    //   !_.isArray(this.props.categoryFilter)
+    // ) {
+    //   return <BackgroundLoader />;
+    // }
+
     if (
       _.isEmpty(this.props.cityLocality) ||
       _.isEmpty(this.props.categoryFilter)

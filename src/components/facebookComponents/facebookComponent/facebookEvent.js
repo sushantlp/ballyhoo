@@ -1,13 +1,14 @@
 import React from "react";
+import _ from "lodash";
 
 import {
   Card,
   Container,
   Image,
-  Button,
-  Dimmer,
-  Loader
+  Button
 } from "semantic-ui-react/dist/commonjs";
+
+import FacebookLoader from "../../loaderComponents/facebookLoader";
 
 import classes from "./static/css/facebook.css";
 
@@ -159,14 +160,14 @@ export default class Trending extends React.Component {
       this.props.facebookEvent.facebookEvent === null ||
       this.props.facebookEvent.facebookEvent === undefined
     ) {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
+      return <FacebookLoader />;
     }
 
-    if (Object.keys(this.props.facebookEvent.facebookEvent).length === 0) {
+    if (!_.isArray(this.props.facebookEvent.facebookEvent)) {
+      return <FacebookLoader />;
+    }
+
+    if (_.isEmpty(this.props.facebookEvent.facebookEvent)) {
       return <div />;
     }
 

@@ -112,8 +112,12 @@ export default class Category extends React.Component {
       return <CategoryLoader />;
     }
 
-    if (_.isEmpty(this.props.categoryFilter)) {
+    if (!_.isArray(this.props.categoryFilter)) {
       return <CategoryLoader />;
+    }
+
+    if (_.isEmpty(this.props.categoryFilter)) {
+      return <div />;
     }
 
     const { isMore } = this.state;
