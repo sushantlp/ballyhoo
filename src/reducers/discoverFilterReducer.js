@@ -15,7 +15,7 @@ export function discoverFilter(state = initialState, action) {
       } else {
         return {
           ...state,
-          discoverFilter: action.discoverFilter
+          discoverFilter: []
         };
       }
 

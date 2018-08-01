@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment-timezone";
+import _ from "lodash";
 
 import {
   Card,
@@ -762,7 +763,7 @@ export default class Trending extends React.Component {
     if (json === undefined) {
       return;
     }
-    console.log(json);
+
     return json.map((obj, key) => {
       let discount = 0;
       let discountPrice = 0;
@@ -1052,8 +1053,12 @@ export default class Trending extends React.Component {
             );
           }
 
-          if (Object.keys(this.props.oldOffering.oldOffering).length === 0) {
-            return <div />;
+          if (!_.isArray(this.props.oldOffering.oldOffering)) {
+            return (
+              <Dimmer active inverted>
+                <Loader inverted>Loading</Loader>
+              </Dimmer>
+            );
           }
 
           offerData = this.props.oldOffering.oldOffering;

@@ -15,7 +15,7 @@ export function popularFilter(state = initialState, action) {
       } else {
         return {
           ...state,
-          popularFilter: action.popularFilter
+          popularFilter: []
         };
       }
 

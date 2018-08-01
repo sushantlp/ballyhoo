@@ -20,7 +20,7 @@ export function discoverNewOffer(state = initialState, action) {
       } else {
         return {
           ...state,
-          discoverNewOffer: {},
+          discoverNewOffer: [],
           level: 0
         };
       }
@@ -45,7 +45,7 @@ export function discoverNewOffer(state = initialState, action) {
       } else {
         return {
           ...state,
-          discoverNewOffer: {},
+          discoverNewOffer: [],
           level: 0
         };
       }

@@ -1,14 +1,15 @@
 import React from "react";
+import _ from "lodash";
 
 import {
   Segment,
   Dropdown,
   Grid,
   Icon,
-  Button,
-  Dimmer,
-  Loader
+  Button
 } from "semantic-ui-react/dist/commonjs";
+
+import BackgroundLoader from "../../loaderComponents/backgroundLoader";
 
 import classes from "./static/css/background.css";
 
@@ -287,34 +288,6 @@ export default class Background extends React.Component {
     }
   };
 
-  // readCityIndex = (cityName, cityList) => {
-  //   for (let i = 0; i < cityList.city.length; i++) {
-  //     if (
-  //       cityName
-  //         .replace(/-/g, " ")
-  //         .replace(/ /g, "")
-  //         .toLowerCase() ===
-  //       cityList.city[i].c_text.replace(/ /g, "").toLowerCase()
-  //     ) {
-  //       return cityList.city[i];
-  //     }
-  //   }
-  // };
-
-  // readLocalityIndex = (localityName, localityList) => {
-  //   for (let i = 0; i < localityList.locality.length; i++) {
-  //     if (
-  //       localityName
-  //         .replace(/-/g, " ")
-  //         .replace(/ /g, "")
-  //         .toLowerCase() ===
-  //       localityList.locality[i].l_text.replace(/ /g, "").toLowerCase()
-  //     ) {
-  //       return localityList.locality[i];
-  //     }
-  //   }
-  // };
-
   // Create Category Filter
   createCategoryFilter = filter => {
     // Variable
@@ -353,18 +326,14 @@ export default class Background extends React.Component {
       this.props.categoryFilter === null ||
       this.props.categoryFilter === undefined
     ) {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
+      return <BackgroundLoader />;
     }
 
     if (
-      Object.keys(this.props.cityLocality).length === 0 ||
-      Object.keys(this.props.categoryFilter).length === 0
+      _.isEmpty(this.props.cityLocality) ||
+      _.isEmpty(this.props.categoryFilter)
     ) {
-      return <div />;
+      return <BackgroundLoader />;
     }
 
     const { cityList, localityList, categoryList } = this.state;

@@ -1,14 +1,10 @@
 import React from "react";
+import _ from "lodash";
 
-import {
-  Card,
-  Container,
-  Button,
-  Dimmer,
-  Loader
-} from "semantic-ui-react/dist/commonjs";
+import { Card, Container, Button } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/discover.css";
+import DiscoverLoader from "../../loaderComponents/discoverLoader";
 
 // Default Number of Items for View More Button
 const MAX_ITEMS = 4;
@@ -115,15 +111,11 @@ export default class Discover extends React.Component {
       this.props.discoverFilter === null ||
       this.props.discoverFilter === undefined
     ) {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
+      return <DiscoverLoader />;
     }
 
-    if (Object.keys(this.props.discoverFilter).length === 0) {
-      return <div />;
+    if (_.isEmpty(this.props.discoverFilter)) {
+      return <DiscoverLoader />;
     }
 
     const { isMore } = this.state;

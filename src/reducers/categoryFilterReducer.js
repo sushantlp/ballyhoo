@@ -15,7 +15,7 @@ export function categoryFilter(state = initialState, action) {
       } else {
         return {
           ...state,
-          categoryFilter: action.categoryFilter
+          categoryFilter: []
         };
       }
 

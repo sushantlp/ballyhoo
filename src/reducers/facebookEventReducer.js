@@ -19,7 +19,7 @@ export function facebookEvent(state = initialState, action) {
       } else {
         return {
           ...state,
-          facebookEvent: {},
+          facebookEvent: [],
           skip: 0,
           end: 0
         };
@@ -43,7 +43,7 @@ export function facebookEvent(state = initialState, action) {
       } else {
         return {
           ...state,
-          facebookEvent: {},
+          facebookEvent: [],
           skip: 0,
           end: 0
         };

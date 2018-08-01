@@ -15,7 +15,7 @@ export function popularLocality(state = initialState, action) {
       } else {
         return {
           ...state,
-          popularLocality: action.popularLocality
+          popularLocality: []
         };
       }
 

@@ -20,7 +20,7 @@ export function localityOffer(state = initialState, action) {
       } else {
         return {
           ...state,
-          localityOffer: {},
+          localityOffer: [],
           level: 0
         };
       }
@@ -45,7 +45,7 @@ export function localityOffer(state = initialState, action) {
       } else {
         return {
           ...state,
-          localityOffer: {},
+          localityOffer: [],
           level: 0
         };
       }

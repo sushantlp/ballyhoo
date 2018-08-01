@@ -1,12 +1,9 @@
 import React from "react";
+import _ from "lodash";
 
-import {
-  Card,
-  Container,
-  Dimmer,
-  Loader,
-  Button
-} from "semantic-ui-react/dist/commonjs";
+import { Card, Container, Button } from "semantic-ui-react/dist/commonjs";
+
+import CategoryLoader from "../../loaderComponents/categoryLoader";
 
 import classes from "./static/css/category.css";
 
@@ -112,15 +109,11 @@ export default class Category extends React.Component {
       this.props.categoryFilter === null ||
       this.props.categoryFilter === undefined
     ) {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
+      return <CategoryLoader />;
     }
 
-    if (Object.keys(this.props.categoryFilter).length === 0) {
-      return <div />;
+    if (_.isEmpty(this.props.categoryFilter)) {
+      return <CategoryLoader />;
     }
 
     const { isMore } = this.state;

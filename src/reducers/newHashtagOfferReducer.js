@@ -20,7 +20,7 @@ export function newHashtagOffer(state = initialState, action) {
       } else {
         return {
           ...state,
-          newHashtagOffer: {},
+          newHashtagOffer: [],
           level: 0
         };
       }
@@ -45,7 +45,7 @@ export function newHashtagOffer(state = initialState, action) {
       } else {
         return {
           ...state,
-          newHashtagOffer: {},
+          newHashtagOffer: [],
           level: 0
         };
       }

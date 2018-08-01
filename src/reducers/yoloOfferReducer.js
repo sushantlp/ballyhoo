@@ -17,7 +17,7 @@ export function yoloOffer(state = initialState, action) {
       } else {
         return {
           ...state,
-          yoloOffer: {},
+          yoloOffer: [],
           level: 0
         };
       }
@@ -37,7 +37,7 @@ export function yoloOffer(state = initialState, action) {
       } else {
         return {
           ...state,
-          yoloOffer: {},
+          yoloOffer: [],
           level: 0
         };
       }

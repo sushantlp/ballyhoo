@@ -20,7 +20,7 @@ export function oldOffering(state = initialState, action) {
       } else {
         return {
           ...state,
-          oldOffering: {},
+          oldOffering: [],
           level: 0
         };
       }
@@ -45,7 +45,7 @@ export function oldOffering(state = initialState, action) {
       } else {
         return {
           ...state,
-          oldOffering: {},
+          oldOffering: [],
           level: 0
         };
       }

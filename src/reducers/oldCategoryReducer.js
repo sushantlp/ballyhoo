@@ -20,7 +20,7 @@ export function oldCategory(state = initialState, action) {
       } else {
         return {
           ...state,
-          oldCategory: {},
+          oldCategory: [],
           level: 0
         };
       }
@@ -45,7 +45,7 @@ export function oldCategory(state = initialState, action) {
       } else {
         return {
           ...state,
-          oldCategory: {},
+          oldCategory: [],
           level: 0
         };
       }

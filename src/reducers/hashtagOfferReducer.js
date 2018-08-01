@@ -20,7 +20,7 @@ export function hashtagOffer(state = initialState, action) {
       } else {
         return {
           ...state,
-          hashtagOffer: {},
+          hashtagOffer: [],
           level: 0
         };
       }
@@ -45,7 +45,7 @@ export function hashtagOffer(state = initialState, action) {
       } else {
         return {
           ...state,
-          hashtagOffer: {},
+          hashtagOffer: [],
           level: 0
         };
       }
