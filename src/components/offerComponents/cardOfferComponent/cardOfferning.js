@@ -1,16 +1,14 @@
 import React from "react";
 import moment from "moment-timezone";
 import _ from "lodash";
+import SweetAlert from "sweetalert2-react";
 
 import {
   Card,
   Container,
   Image,
-  Dimmer,
-  Loader,
   Label,
   Icon,
-  // Rating,
   Button
 } from "semantic-ui-react/dist/commonjs";
 
@@ -40,6 +38,7 @@ export default class Trending extends React.Component {
       level: 0,
       cityId: 0,
       localityId: 0,
+      alert: false,
       apiObject: {
         tab_id: 0,
         hashtag_id: 0,
@@ -366,7 +365,10 @@ export default class Trending extends React.Component {
         key={key}
         style={{ cursor: "pointer" }}
       >
-        <div className="ui fluid image">
+        <div
+          className="ui fluid image"
+          onClick={() => this.logicClickButton(true)}
+        >
           <span
             className={classes.Heart}
             style={{
@@ -409,7 +411,7 @@ export default class Trending extends React.Component {
           </span>
         </div>
 
-        <Card.Content>
+        <Card.Content onClick={() => this.logicClickButton(true)}>
           <Image
             style={{
               marginLeft: "0.4em"
@@ -992,6 +994,13 @@ export default class Trending extends React.Component {
     }
   };
 
+  // Logic Button Click
+  logicClickButton = boolean => {
+    this.setState({
+      alert: boolean
+    });
+  };
+
   render() {
     let offerData = [];
 
@@ -1227,6 +1236,15 @@ export default class Trending extends React.Component {
         >
           Load More
         </Button>
+        {this.state.alert ? (
+          <SweetAlert
+            show={this.state.alert}
+            title="Ballyhoo"
+            imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+            html="Please download the Ballyhoo App for Ios <a href= https://itunes.apple.com/in/app/ballyhoo-food-drinks-offers/id1138306421?mt=8>App Store</a> for Android <a href= https://play.google.com/store/apps/details?id=com.sense.today.ballyhoo>Play Store</a>"
+            onConfirm={() => this.logicClickButton(false)}
+          />
+        ) : null}
       </Container>
     );
   }

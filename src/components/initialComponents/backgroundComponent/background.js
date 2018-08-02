@@ -1,5 +1,9 @@
 import React from "react";
 import _ from "lodash";
+// import Swal from "sweetalert2";
+import SweetAlert from "sweetalert2-react";
+
+// import "sweetalert/dist/sweetalert.css";
 
 import {
   Segment,
@@ -10,6 +14,7 @@ import {
 } from "semantic-ui-react/dist/commonjs";
 
 import BackgroundLoader from "../../loaderComponents/backgroundLoader";
+// import Toast from "../../alertComponents/toast";
 
 import classes from "./static/css/background.css";
 
@@ -24,7 +29,8 @@ export default class Background extends React.Component {
       cityId: 0,
       localityId: 0,
       cityValue: "",
-      localityValue: ""
+      localityValue: "",
+      alert: false
     };
   }
 
@@ -136,7 +142,26 @@ export default class Background extends React.Component {
       } else if (props.defaultLocality === 0) {
         this.setState({ localityId: 0, localityValue: "" }, function() {
           // Create Locality List
-          this.createLocalityList(this.state.cityId);
+          const locality = this.createLocalityList(this.state.cityId);
+
+          if (!_.isEmpty(locality)) {
+            this.props.parentStateChange(locality[0].value, false);
+
+            this.setState({
+              localityValue: locality[0].value
+            });
+
+            const cityUrl = this.state.cityValue
+              .replace(/ /g, "-")
+              .toLowerCase();
+            const localityUrl = locality[0].value
+              .replace(/ /g, "-")
+              .toLowerCase();
+
+            this.props.history.push(cityUrl + "/" + localityUrl);
+          } else {
+            return;
+          }
         });
         break;
       }
@@ -181,16 +206,14 @@ export default class Background extends React.Component {
     this.setState({
       localityList: localityArray
     });
+
+    return localityArray;
   };
 
   // Logic Click City
   logicClickCity = (event, data) => {
     this.setState({
       cityValue: data
-    });
-
-    this.setState({
-      localityValue: ""
     });
 
     // City Array
@@ -202,13 +225,21 @@ export default class Background extends React.Component {
             categoryList: []
           },
           function() {
-            // Create Locality List
-            this.createLocalityList(this.state.cityId);
+            // Create Locality List localityList
+            const localityList = this.createLocalityList(this.state.cityId);
             this.props.parentCityChange(this.state.cityId, data, false);
+            this.props.parentStateChange(localityList[0].value, false);
 
-            const url = data.replace(/ /g, "-").toLowerCase();
+            this.setState({
+              localityValue: localityList[0].value
+            });
+
+            const cityUrl = data.replace(/ /g, "-").toLowerCase();
+            const localityUrl = localityList[0].value
+              .replace(/ /g, "-")
+              .toLowerCase();
             this.props.history.push("/");
-            this.props.history.push(url);
+            this.props.history.push(cityUrl + "/" + localityUrl);
           }
         );
       }
@@ -316,6 +347,13 @@ export default class Background extends React.Component {
 
     this.setState({
       categoryList: filterArray
+    });
+  };
+
+  // Logic Button Click
+  logicClickButton = boolean => {
+    this.setState({
+      alert: boolean
     });
   };
 
@@ -442,9 +480,21 @@ export default class Background extends React.Component {
               />
             </Grid.Column>
             <Grid.Column width={2}>
-              <Button style={{ backgroundColor: "#7A52C0", color: "white" }}>
+              <Button
+                style={{ backgroundColor: "#7A52C0", color: "white" }}
+                onClick={() => this.logicClickButton(true)}
+              >
                 Search
               </Button>
+              {this.state.alert ? (
+                <SweetAlert
+                  show={this.state.alert}
+                  title="Ballyhoo"
+                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                  text="Oops! Please select offer "
+                  onConfirm={() => this.logicClickButton(false)}
+                />
+              ) : null}
             </Grid.Column>
           </Grid.Row>
         </Grid>
