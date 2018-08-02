@@ -374,7 +374,7 @@ export default class Trending extends React.Component {
             }}
           >
             <img
-              src="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1532419222/ballyhoo/EMAIL/heart.png"
+              src="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1532419222/ballyhoo/EMAIL/heart.png"
               alt="non-veg, food, restaurants, dinner buffet, lunch buffet, pubs & brewery, reservation, event"
             />
             <strong className={classes.HeartPercent}>{popularity + "%"}</strong>
@@ -1014,8 +1014,12 @@ export default class Trending extends React.Component {
             return <CardLoader />;
           }
 
-          if (Object.keys(this.props.activeOffer.activeOffer).length === 0) {
+          if (!_.isArray(this.props.activeOffer.activeOffer)) {
             return <CardLoader />;
+          }
+
+          if (_.isEmpty(this.props.activeOffer.activeOffer)) {
+            return <div />;
           }
 
           offerData = this.props.activeOffer.activeOffer;
@@ -1027,9 +1031,14 @@ export default class Trending extends React.Component {
             return <CardLoader />;
           }
 
-          if (Object.keys(this.props.oldCategory.oldCategory).length === 0) {
+          if (!_.isArray(this.props.oldCategory.oldCategory)) {
             return <CardLoader />;
           }
+
+          if (_.isEmpty(this.props.oldCategory.oldCategory)) {
+            return <div />;
+          }
+
           offerData = this.props.oldCategory.oldCategory;
         } else if (this.props.apiStatus === 3) {
           if (
@@ -1052,16 +1061,14 @@ export default class Trending extends React.Component {
             this.props.localityOffer.localityOffer === null ||
             this.props.localityOffer.localityOffer === undefined
           ) {
-            return (
-              <Dimmer active inverted>
-                <Loader inverted>Loading</Loader>
-              </Dimmer>
-            );
+            return <CardLoader />;
           }
 
-          if (
-            Object.keys(this.props.localityOffer.localityOffer).length === 0
-          ) {
+          if (!_.isArray(this.props.localityOffer.localityOffer)) {
+            return <CardLoader />;
+          }
+
+          if (_.isEmpty(this.props.localityOffer.localityOffer)) {
             return <div />;
           }
 
@@ -1071,14 +1078,14 @@ export default class Trending extends React.Component {
             this.props.yoloOffer.yoloOffer === null ||
             this.props.yoloOffer.yoloOffer === undefined
           ) {
-            return (
-              <Dimmer active inverted>
-                <Loader inverted>Loading</Loader>
-              </Dimmer>
-            );
+            return <CardLoader />;
           }
 
-          if (Object.keys(this.props.yoloOffer.yoloOffer).length === 0) {
+          if (!_.isArray(this.props.yoloOffer.yoloOffer)) {
+            return <CardLoader />;
+          }
+
+          if (_.isEmpty(this.props.yoloOffer.yoloOffer)) {
             return <div />;
           }
 
@@ -1088,14 +1095,14 @@ export default class Trending extends React.Component {
             this.props.hashtagOffer.hashtagOffer === null ||
             this.props.hashtagOffer.hashtagOffer === undefined
           ) {
-            return (
-              <Dimmer active inverted>
-                <Loader inverted>Loading</Loader>
-              </Dimmer>
-            );
+            return <CardLoader />;
           }
 
-          if (Object.keys(this.props.hashtagOffer.hashtagOffer).length === 0) {
+          if (!_.isArray(this.props.hashtagOffer.hashtagOffer)) {
+            return <CardLoader />;
+          }
+
+          if (_.isEmpty(this.props.hashtagOffer.hashtagOffer)) {
             return <div />;
           }
 
@@ -1109,31 +1116,30 @@ export default class Trending extends React.Component {
             this.props.newCategory.newCategory === null ||
             this.props.newCategory.newCategory === undefined
           ) {
-            return (
-              <Dimmer active inverted>
-                <Loader inverted>Loading</Loader>
-              </Dimmer>
-            );
+            return <CardLoader />;
           }
 
-          if (Object.keys(this.props.newCategory.newCategory).length === 0) {
+          if (!_.isArray(this.props.newCategory.newCategory)) {
+            return <CardLoader />;
+          }
+
+          if (_.isEmpty(this.props.newCategory.newCategory)) {
             return <div />;
           }
-
           offerData = this.props.newCategory.newCategory;
         } else if (this.props.apiStatus === 3) {
           if (
             this.props.newOffering.newOffering === null ||
             this.props.newOffering.newOffering === undefined
           ) {
-            return (
-              <Dimmer active inverted>
-                <Loader inverted>Loading</Loader>
-              </Dimmer>
-            );
+            return <CardLoader />;
           }
 
-          if (Object.keys(this.props.newOffering.newOffering).length === 0) {
+          if (!_.isArray(this.props.newOffering.newOffering)) {
+            return <CardLoader />;
+          }
+
+          if (_.isEmpty(this.props.newOffering.newOffering)) {
             return <div />;
           }
 
@@ -1143,16 +1149,14 @@ export default class Trending extends React.Component {
             this.props.newHashtagOffer.newHashtagOffer === null ||
             this.props.newHashtagOffer.newHashtagOffer === undefined
           ) {
-            return (
-              <Dimmer active inverted>
-                <Loader inverted>Loading</Loader>
-              </Dimmer>
-            );
+            return <CardLoader />;
           }
 
-          if (
-            Object.keys(this.props.newHashtagOffer.newHashtagOffer).length === 0
-          ) {
+          if (!_.isArray(this.props.newHashtagOffer.newHashtagOffer)) {
+            return <CardLoader />;
+          }
+
+          if (_.isEmpty(this.props.newHashtagOffer.newHashtagOffer)) {
             return <div />;
           }
 
@@ -1168,16 +1172,14 @@ export default class Trending extends React.Component {
           this.props.discoverOldOffer.discoverOldOffer === null ||
           this.props.discoverOldOffer.discoverOldOffer === undefined
         ) {
-          return (
-            <Dimmer active inverted>
-              <Loader inverted>Loading</Loader>
-            </Dimmer>
-          );
+          return <CardLoader />;
         }
 
-        if (
-          Object.keys(this.props.discoverOldOffer.discoverOldOffer).length === 0
-        ) {
+        if (!_.isArray(this.props.discoverOldOffer.discoverOldOffer)) {
+          return <CardLoader />;
+        }
+
+        if (_.isEmpty(this.props.discoverOldOffer.discoverOldOffer)) {
           return <div />;
         }
 
@@ -1187,16 +1189,14 @@ export default class Trending extends React.Component {
           this.props.discoverNewOffer.discoverNewOffer === null ||
           this.props.discoverNewOffer.discoverNewOffer === undefined
         ) {
-          return (
-            <Dimmer active inverted>
-              <Loader inverted>Loading</Loader>
-            </Dimmer>
-          );
+          return <CardLoader />;
         }
 
-        if (
-          Object.keys(this.props.discoverNewOffer.discoverNewOffer).length === 0
-        ) {
+        if (!_.isArray(this.props.discoverNewOffer.discoverNewOffer)) {
+          return <CardLoader />;
+        }
+
+        if (_.isEmpty(this.props.discoverNewOffer.discoverNewOffer)) {
           return <div />;
         }
 
