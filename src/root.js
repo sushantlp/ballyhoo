@@ -11,6 +11,9 @@ import Background from "./containers/initialContainer";
 import Footer from "./containers/footerContainer";
 import Facebook from "./containers/facebookContainer";
 import Offerning from "./containers/offerContainer";
+import Privacy from "./containers/privacyContainer";
+import Terms from "./containers/termsContainer";
+import Faq from "./containers/faqContainer";
 
 // Router root
 const Root = ({ store }) => (
@@ -20,6 +23,10 @@ const Root = ({ store }) => (
         <Header />
         <Switch>
           <Route exact path="/" component={Background} />
+          <Route exact path="/terms" component={Terms} />
+          <Route exact path="/privacy" component={Privacy} />
+          <Route exact path="/faq" component={Faq} />
+
           <Route exact path="/:city" component={Background} />
           <Route exact path="/:city/trending" component={Facebook} />
           <Route exact path="/:city/:locality" component={Background} />

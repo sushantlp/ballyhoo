@@ -55,114 +55,158 @@ export default class Trending extends React.Component {
     if (nextProps !== undefined) {
       if (nextProps.offerSeo) {
         if (Object.keys(nextProps.oldOffering.oldOffering).length !== 0) {
-          if (
-            nextProps.oldOffering.level !== this.props.oldOffering.level ||
-            this.state.level === 0
-          ) {
-            // show loading again
-            this.getInitialLevel(nextProps.oldOffering.level);
-          }
+          // if (
+          //   nextProps.oldOffering.level !== this.props.oldOffering.level ||
+          //   this.state.level === 0
+          // ) {
+          //   // show loading again
+          //   this.getInitialLevel(nextProps.oldOffering.level);
+          // } else {
+          //   // show loading again
+          //   this.getInitialLevel(nextProps.oldOffering.level);
+          // }
+          this.getInitialLevel(nextProps.oldOffering.level);
         } else if (
           Object.keys(nextProps.oldCategory.oldCategory).length !== 0
         ) {
-          if (
-            nextProps.oldCategory.level !== this.props.oldCategory.level ||
-            this.state.level === 0
-          ) {
-            // show loading again
-            this.getInitialLevel(nextProps.oldCategory.level);
-          }
+          // if (
+          //   nextProps.oldCategory.level !== this.props.oldCategory.level ||
+          //   this.state.level === 0
+          // ) {
+
+          //   // show loading again
+          //   this.getInitialLevel(nextProps.oldCategory.level);
+          // } else {
+
+          // }
+          this.getInitialLevel(nextProps.oldCategory.level);
         } else if (
           Object.keys(nextProps.activeOffer.activeOffer).length !== 0
         ) {
-          if (
-            nextProps.activeOffer.level !== this.props.activeOffer.level ||
-            this.state.level === 0
-          ) {
-            // show loading again
-            this.getInitialLevel(nextProps.activeOffer.level);
-          }
+          // if (
+          //   nextProps.activeOffer.level !== this.props.activeOffer.level ||
+          //   this.state.level === 0
+          // ) {
+
+          //   // show loading again
+          //   this.getInitialLevel(nextProps.activeOffer.level);
+          // } else {
+
+          // }
+          this.getInitialLevel(nextProps.activeOffer.level);
         } else if (
           Object.keys(nextProps.hashtagOffer.hashtagOffer).length !== 0
         ) {
-          if (
-            nextProps.hashtagOffer.level !== this.props.hashtagOffer.level ||
-            this.state.level === 0
-          ) {
-            // show loading again
-            this.getInitialLevel(nextProps.hashtagOffer.level);
-          }
+          // if (
+          //   nextProps.hashtagOffer.level !== this.props.hashtagOffer.level ||
+          //   this.state.level === 0
+          // ) {
+
+          //   // show loading again
+          //   this.getInitialLevel(nextProps.hashtagOffer.level);
+          // } else {
+
+          // }
+          this.getInitialLevel(nextProps.hashtagOffer.level);
         } else if (
           Object.keys(nextProps.localityOffer.localityOffer).length !== 0
         ) {
-          if (
-            nextProps.localityOffer.level !== this.props.localityOffer.level ||
-            this.state.level === 0
-          ) {
-            // show loading again
-            this.getInitialLevel(nextProps.localityOffer.level);
-          }
+          // if (
+          //   nextProps.localityOffer.level !== this.props.localityOffer.level ||
+          //   this.state.level === 0
+          // ) {
+
+          //   // show loading again
+          //   this.getInitialLevel(nextProps.localityOffer.level);
+          // } else {
+
+          // }
+          this.getInitialLevel(nextProps.localityOffer.level);
         } else if (Object.keys(nextProps.yoloOffer.yoloOffer).length !== 0) {
-          if (
-            nextProps.yoloOffer.level !== this.props.yoloOffer.level ||
-            this.state.level === 0
-          ) {
-            // show loading again
-            this.getInitialLevel(nextProps.yoloOffer.level);
-          }
+          // if (
+          //   nextProps.yoloOffer.level !== this.props.yoloOffer.level ||
+          //   this.state.level === 0
+          // ) {
+
+          //   // show loading again
+          //   this.getInitialLevel(nextProps.yoloOffer.level);
+          // } else {
+
+          // }
+          this.getInitialLevel(nextProps.yoloOffer.level);
         } else if (
           Object.keys(nextProps.discoverOldOffer.discoverOldOffer).length !== 0
         ) {
-          if (
-            nextProps.discoverOldOffer.level !==
-              this.props.discoverOldOffer.level ||
-            this.state.level === 0
-          ) {
-            // show loading again
-            this.getInitialLevel(nextProps.discoverOldOffer.level);
-          }
+          // if (
+          //   nextProps.discoverOldOffer.level !==
+          //     this.props.discoverOldOffer.level ||
+          //   this.state.level === 0
+          // ) {
+
+          //   // show loading again
+          //   this.getInitialLevel(nextProps.discoverOldOffer.level);
+          // } else {
+
+          // }
+          this.getInitialLevel(nextProps.discoverOldOffer.level);
         } else if (
           Object.keys(nextProps.discoverNewOffer.discoverNewOffer).length !== 0
         ) {
-          if (
-            nextProps.discoverNewOffer.level !==
-              this.props.discoverNewOffer.level ||
-            this.state.level === 0
-          ) {
-            // show loading again
-            this.getInitialLevel(nextProps.discoverNewOffer.level);
-          }
+          // if (
+          //   nextProps.discoverNewOffer.level !==
+          //     this.props.discoverNewOffer.level ||
+          //   this.state.level === 0
+          // ) {
+
+          //   // show loading again
+          //   this.getInitialLevel(nextProps.discoverNewOffer.level);
+          // } else {
+
+          // }
+          this.getInitialLevel(nextProps.discoverNewOffer.level);
         } else if (
           Object.keys(nextProps.newOffering.newOffering).length !== 0
         ) {
-          if (
-            nextProps.newOffering.level !== this.props.newOffering.level ||
-            this.state.level === 0
-          ) {
-            // show loading again
-            this.getInitialLevel(nextProps.newOffering.level);
-          }
+          // if (
+          //   nextProps.newOffering.level !== this.props.newOffering.level ||
+          //   this.state.level === 0
+          // ) {
+
+          //   // show loading again
+          //   this.getInitialLevel(nextProps.newOffering.level);
+          // } else {
+
+          // }
+          this.getInitialLevel(nextProps.newOffering.level);
         } else if (
           Object.keys(nextProps.newCategory.newCategory).length !== 0
         ) {
-          if (
-            nextProps.newCategory.level !== this.props.newCategory.level ||
-            this.state.level === 0
-          ) {
-            // show loading again
-            this.getInitialLevel(nextProps.newCategory.level);
-          }
+          // if (
+          //   nextProps.newCategory.level !== this.props.newCategory.level ||
+          //   this.state.level === 0
+          // ) {
+
+          //   // show loading again
+          //   this.getInitialLevel(nextProps.newCategory.level);
+          // } else {
+
+          // }
+          this.getInitialLevel(nextProps.newCategory.level);
         } else if (
           Object.keys(nextProps.newHashtagOffer.newHashtagOffer).length !== 0
         ) {
-          if (
-            nextProps.newHashtagOffer.level !==
-              this.props.newHashtagOffer.level ||
-            this.state.level === 0
-          ) {
-            // show loading again
-            this.getInitialLevel(nextProps.newHashtagOffer.level);
-          }
+          // if (
+          //   nextProps.newHashtagOffer.level !==
+          //     this.props.newHashtagOffer.level ||
+          //   this.state.level === 0
+          // ) {
+
+          //   // show loading again
+          //   this.getInitialLevel(nextProps.newHashtagOffer.level);
+          // } else {
+
+          // }
+          this.getInitialLevel(nextProps.newHashtagOffer.level);
         }
       } else {
         if (
@@ -182,6 +226,8 @@ export default class Trending extends React.Component {
             nextProps.categoryFilter,
             this.props.match.params.offering
           );
+        } else {
+          console.log("Check");
         }
       }
     }
@@ -1238,7 +1284,7 @@ export default class Trending extends React.Component {
         </Button>
         {this.state.alert ? (
           <SweetAlert
-            show={this.state.alert}
+            show={true}
             title="Ballyhoo"
             imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
             html="Please download the Ballyhoo App for Ios <a href= https://itunes.apple.com/in/app/ballyhoo-food-drinks-offers/id1138306421?mt=8>App Store</a> for Android <a href= https://play.google.com/store/apps/details?id=com.sense.today.ballyhoo>Play Store</a>"
