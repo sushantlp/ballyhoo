@@ -1001,43 +1001,47 @@ export default class Trending extends React.Component {
     );
   };
 
-  loadingStart = () => {
-    this.setState({
-      loading: true,
-      click_disabled: true
-    });
-
-    if (this.props.location.state !== undefined) {
-      this.props.parentLoadOldOfferData(
-        this.props.location.state.offerData.tab_id,
-        this.props.location.state.offerData.city_id,
-        this.props.location.state.offerData.locality_id,
-        this.props.location.state.offerData.hashtag_id,
-        this.props.location.state.offerData.offering_id,
-        this.props.location.state.offerData.category_id,
-        this.state.level,
-        this.props.apiStatus,
-        this.props.apiType,
-        this.props.flag,
-        false,
-        false
-      );
-    } else {
-      this.props.parentLoadOldOfferData(
-        this.state.apiObject.tab_id,
-        this.state.cityId,
-        this.state.localityId,
-        this.state.apiObject.hashtag_id,
-        this.state.apiObject.offering_id,
-        this.state.apiObject.category_id,
-        this.state.level,
-        this.state.apiObject.api_status,
-        this.state.apiObject.api_type,
-        this.state.apiObject.flag,
-        false,
-        false
-      );
-    }
+  loadingStart = level => {
+    this.setState(
+      {
+        loading: true,
+        click_disabled: true,
+        level: level
+      },
+      function() {
+        if (this.props.location.state !== undefined) {
+          this.props.parentLoadOldOfferData(
+            this.props.location.state.offerData.tab_id,
+            this.props.location.state.offerData.city_id,
+            this.props.location.state.offerData.locality_id,
+            this.props.location.state.offerData.hashtag_id,
+            this.props.location.state.offerData.offering_id,
+            this.props.location.state.offerData.category_id,
+            this.state.level,
+            this.props.apiStatus,
+            this.props.apiType,
+            this.props.flag,
+            false,
+            false
+          );
+        } else {
+          this.props.parentLoadOldOfferData(
+            this.state.apiObject.tab_id,
+            this.state.cityId,
+            this.state.localityId,
+            this.state.apiObject.hashtag_id,
+            this.state.apiObject.offering_id,
+            this.state.apiObject.category_id,
+            this.state.level,
+            this.state.apiObject.api_status,
+            this.state.apiObject.api_type,
+            this.state.apiObject.flag,
+            false,
+            false
+          );
+        }
+      }
+    );
   };
 
   // Logic Button Click
@@ -1049,6 +1053,7 @@ export default class Trending extends React.Component {
 
   render() {
     let offerData = [];
+    let level = 0;
 
     if (
       this.props.apiStatus === 0 ||
@@ -1078,6 +1083,7 @@ export default class Trending extends React.Component {
           }
 
           offerData = this.props.activeOffer.activeOffer;
+          level = this.props.activeOffer.level;
         } else if (this.props.apiStatus === 2) {
           if (
             this.props.oldCategory.oldCategory === null ||
@@ -1095,6 +1101,7 @@ export default class Trending extends React.Component {
           }
 
           offerData = this.props.oldCategory.oldCategory;
+          level = this.props.oldCategory.level;
         } else if (this.props.apiStatus === 3) {
           if (
             this.props.oldOffering.oldOffering === null ||
@@ -1111,6 +1118,7 @@ export default class Trending extends React.Component {
             return <div />;
           }
           offerData = this.props.oldOffering.oldOffering;
+          level = this.props.oldOffering.level;
         } else if (this.props.apiStatus === 4) {
           if (
             this.props.localityOffer.localityOffer === null ||
@@ -1128,6 +1136,7 @@ export default class Trending extends React.Component {
           }
 
           offerData = this.props.localityOffer.localityOffer;
+          level = this.props.localityOffer.level;
         } else if (this.props.apiStatus === 5) {
           if (
             this.props.yoloOffer.yoloOffer === null ||
@@ -1145,6 +1154,7 @@ export default class Trending extends React.Component {
           }
 
           offerData = this.props.yoloOffer.yoloOffer;
+          level = this.props.yoloOffer.level;
         } else if (this.props.apiStatus === 6) {
           if (
             this.props.hashtagOffer.hashtagOffer === null ||
@@ -1162,6 +1172,7 @@ export default class Trending extends React.Component {
           }
 
           offerData = this.props.hashtagOffer.hashtagOffer;
+          level = this.props.hashtagOffer.level;
         } else {
           return <div />;
         }
@@ -1182,6 +1193,7 @@ export default class Trending extends React.Component {
             return <div />;
           }
           offerData = this.props.newCategory.newCategory;
+          level = this.props.newCategory.level;
         } else if (this.props.apiStatus === 3) {
           if (
             this.props.newOffering.newOffering === null ||
@@ -1199,6 +1211,7 @@ export default class Trending extends React.Component {
           }
 
           offerData = this.props.newOffering.newOffering;
+          level = this.props.newOffering.level;
         } else if (this.props.apiStatus === 6) {
           if (
             this.props.newHashtagOffer.newHashtagOffer === null ||
@@ -1216,6 +1229,7 @@ export default class Trending extends React.Component {
           }
 
           offerData = this.props.newHashtagOffer.newHashtagOffer;
+          level = this.props.newHashtagOffer.level;
         } else {
           return <div />;
         }
@@ -1239,6 +1253,7 @@ export default class Trending extends React.Component {
         }
 
         offerData = this.props.discoverOldOffer.discoverOldOffer;
+        level = this.props.discoverOldOffer.level;
       } else {
         if (
           this.props.discoverNewOffer.discoverNewOffer === null ||
@@ -1256,6 +1271,7 @@ export default class Trending extends React.Component {
         }
 
         offerData = this.props.discoverNewOffer.discoverNewOffer;
+        level = this.props.discoverNewOffer.level;
       }
     } else {
       return <div />;
@@ -1273,7 +1289,7 @@ export default class Trending extends React.Component {
           color="violet"
           loading={loading}
           disabled={this.state.level === 4 ? true : this.state.click_disabled}
-          onClick={() => this.loadingStart()}
+          onClick={() => this.loadingStart(level + 1)}
           style={{
             marginTop: "1.5em",
             marginBottom: "1.5em",

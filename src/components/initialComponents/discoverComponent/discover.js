@@ -55,29 +55,31 @@ export default class Discover extends React.Component {
       newObject.category_id = object.c_id;
       newObject.key = object.t_id;
 
-      if (object.status === 4) {
-        const locality1 = this.props.readLocalityIndex(
-          object.title,
-          this.props.cityLocality
-        );
-        this.props.history.push(locality1.l_text + "/discover/" + url, {
+      // if (object.status === 4) {
+      //   console.log(object);
+      //   const locality1 = this.props.readLocalityIndex(
+      //     object.title,
+      //     this.props.cityLocality
+      //   );
+      //   console.log(locality1);
+      //   this.props.history.push(locality1.l_text + "/discover/" + url, {
+      //     offerData: newObject
+      //   });
+      // } else {
+      const locality2 = this.props.readLocalityIndex(
+        this.props.match.params.locality,
+        this.props.cityLocality
+      );
+
+      newObject.locality_id = locality2.l_key;
+
+      this.props.history.push(
+        this.props.match.params.locality + "/discover/" + url,
+        {
           offerData: newObject
-        });
-      } else {
-        const locality2 = this.props.readLocalityIndex(
-          this.props.match.params.locality,
-          this.props.cityLocality
-        );
-
-        newObject.locality_id = locality2.l_key;
-
-        this.props.history.push(
-          this.props.match.params.locality + "/discover/" + url,
-          {
-            offerData: newObject
-          }
-        );
-      }
+        }
+      );
+      // }
     }
   };
 

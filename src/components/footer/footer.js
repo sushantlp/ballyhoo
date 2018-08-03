@@ -44,7 +44,7 @@ export default class Footer extends React.Component {
                     href="/merchant"
                     style={{ color: "#dfdfe7" }}
                   >
-                    Merchants
+                    Merchant
                   </List.Item>
                 </List>
               </Grid.Column>
