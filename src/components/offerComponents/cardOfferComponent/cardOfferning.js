@@ -34,7 +34,7 @@ export default class Trending extends React.Component {
     this.state = {
       click_disabled: false,
       loading: false,
-      disabled: false,
+
       level: 0,
       cityId: 0,
       localityId: 0,
@@ -1051,6 +1051,11 @@ export default class Trending extends React.Component {
     });
   };
 
+  // Back History
+  backHistory = () => {
+    this.props.history.go(-1);
+  };
+
   render() {
     let offerData = [];
     let level = 0;
@@ -1079,7 +1084,18 @@ export default class Trending extends React.Component {
           }
 
           if (_.isEmpty(this.props.activeOffer.activeOffer)) {
-            return <div />;
+            return (
+              <div>
+                <CardLoader />
+                <SweetAlert
+                  show={true}
+                  title="Ballyhoo"
+                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                  text="Seems like no offer "
+                  onConfirm={() => this.backHistory()}
+                />
+              </div>
+            );
           }
 
           offerData = this.props.activeOffer.activeOffer;
@@ -1097,7 +1113,18 @@ export default class Trending extends React.Component {
           }
 
           if (_.isEmpty(this.props.oldCategory.oldCategory)) {
-            return <div />;
+            return (
+              <div>
+                <CardLoader />
+                <SweetAlert
+                  show={true}
+                  title="Ballyhoo"
+                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                  text="Seems like no offer "
+                  onConfirm={() => this.backHistory()}
+                />
+              </div>
+            );
           }
 
           offerData = this.props.oldCategory.oldCategory;
@@ -1115,7 +1142,18 @@ export default class Trending extends React.Component {
           }
 
           if (_.isEmpty(this.props.oldOffering.oldOffering)) {
-            return <div />;
+            return (
+              <div>
+                <CardLoader />
+                <SweetAlert
+                  show={true}
+                  title="Ballyhoo"
+                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                  text="Seems like no offer "
+                  onConfirm={() => this.backHistory()}
+                />
+              </div>
+            );
           }
           offerData = this.props.oldOffering.oldOffering;
           level = this.props.oldOffering.level;
@@ -1132,7 +1170,18 @@ export default class Trending extends React.Component {
           }
 
           if (_.isEmpty(this.props.localityOffer.localityOffer)) {
-            return <div />;
+            return (
+              <div>
+                <CardLoader />
+                <SweetAlert
+                  show={true}
+                  title="Ballyhoo"
+                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                  text="Seems like no offer "
+                  onConfirm={() => this.backHistory()}
+                />
+              </div>
+            );
           }
 
           offerData = this.props.localityOffer.localityOffer;
@@ -1150,7 +1199,18 @@ export default class Trending extends React.Component {
           }
 
           if (_.isEmpty(this.props.yoloOffer.yoloOffer)) {
-            return <div />;
+            return (
+              <div>
+                <CardLoader />
+                <SweetAlert
+                  show={true}
+                  title="Ballyhoo"
+                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                  text="Seems like no offer "
+                  onConfirm={() => this.backHistory()}
+                />
+              </div>
+            );
           }
 
           offerData = this.props.yoloOffer.yoloOffer;
@@ -1168,7 +1228,18 @@ export default class Trending extends React.Component {
           }
 
           if (_.isEmpty(this.props.hashtagOffer.hashtagOffer)) {
-            return <div />;
+            return (
+              <div>
+                <CardLoader />
+                <SweetAlert
+                  show={true}
+                  title="Ballyhoo"
+                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                  text="Seems like no offer "
+                  onConfirm={() => this.backHistory()}
+                />
+              </div>
+            );
           }
 
           offerData = this.props.hashtagOffer.hashtagOffer;
@@ -1190,7 +1261,18 @@ export default class Trending extends React.Component {
           }
 
           if (_.isEmpty(this.props.newCategory.newCategory)) {
-            return <div />;
+            return (
+              <div>
+                <CardLoader />
+                <SweetAlert
+                  show={true}
+                  title="Ballyhoo"
+                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                  text="Seems like no offer "
+                  onConfirm={() => this.backHistory()}
+                />
+              </div>
+            );
           }
           offerData = this.props.newCategory.newCategory;
           level = this.props.newCategory.level;
@@ -1207,7 +1289,18 @@ export default class Trending extends React.Component {
           }
 
           if (_.isEmpty(this.props.newOffering.newOffering)) {
-            return <div />;
+            return (
+              <div>
+                <CardLoader />
+                <SweetAlert
+                  show={true}
+                  title="Ballyhoo"
+                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                  text="Seems like no offer "
+                  onConfirm={() => this.backHistory()}
+                />
+              </div>
+            );
           }
 
           offerData = this.props.newOffering.newOffering;
@@ -1225,7 +1318,18 @@ export default class Trending extends React.Component {
           }
 
           if (_.isEmpty(this.props.newHashtagOffer.newHashtagOffer)) {
-            return <div />;
+            return (
+              <div>
+                <CardLoader />
+                <SweetAlert
+                  show={true}
+                  title="Ballyhoo"
+                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                  text="Seems like no offer "
+                  onConfirm={() => this.backHistory()}
+                />
+              </div>
+            );
           }
 
           offerData = this.props.newHashtagOffer.newHashtagOffer;
@@ -1249,7 +1353,18 @@ export default class Trending extends React.Component {
         }
 
         if (_.isEmpty(this.props.discoverOldOffer.discoverOldOffer)) {
-          return <div />;
+          return (
+            <div>
+              <CardLoader />
+              <SweetAlert
+                show={true}
+                title="Ballyhoo"
+                imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                text="Seems like no offer "
+                onConfirm={() => this.backHistory()}
+              />
+            </div>
+          );
         }
 
         offerData = this.props.discoverOldOffer.discoverOldOffer;
@@ -1267,7 +1382,18 @@ export default class Trending extends React.Component {
         }
 
         if (_.isEmpty(this.props.discoverNewOffer.discoverNewOffer)) {
-          return <div />;
+          return (
+            <div>
+              <CardLoader />
+              <SweetAlert
+                show={true}
+                title="Ballyhoo"
+                imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                text="Seems like no offer "
+                onConfirm={() => this.backHistory()}
+              />
+            </div>
+          );
         }
 
         offerData = this.props.discoverNewOffer.discoverNewOffer;
@@ -1277,7 +1403,8 @@ export default class Trending extends React.Component {
       return <div />;
     }
 
-    const { loading, disabled } = this.state;
+    const { loading, click_disabled } = this.state;
+
     return (
       <Container className={classes.OfferningContainer}>
         <Card.Group itemsPerRow={3} doubling stackable>
@@ -1288,7 +1415,7 @@ export default class Trending extends React.Component {
           size="large"
           color="violet"
           loading={loading}
-          disabled={this.state.level === 4 ? true : this.state.click_disabled}
+          disabled={this.state.level >= 4 ? true : click_disabled}
           onClick={() => this.loadingStart(level + 1)}
           style={{
             marginTop: "1.5em",

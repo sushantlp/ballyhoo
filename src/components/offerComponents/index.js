@@ -316,6 +316,7 @@ export default class Initial extends React.Component {
           parentLoadOldOfferData={this.parentLoadOldOfferData}
           location={this.props.location}
           match={this.props.match}
+          history={this.props.history}
           cityLocality={this.props.cityLocality}
           callDiscoverFilter={this.callDiscoverFilter}
           callCategoryFilter={this.callCategoryFilter}
