@@ -14,7 +14,7 @@ const TermsOfService = () => (
       <div className={classes.UnderScore} />
     </div>
     <Segment>
-      <Header as="h3" style={{ color: "rgba(0,0,0,.68)" }}>
+      <Header as="h4" style={{ color: "rgba(0,0,0,.68)" }}>
         1. Your Acceptance
       </Header>
       <p>
@@ -32,7 +32,7 @@ const TermsOfService = () => (
       </p>
     </Segment>
     <Segment>
-      <Header as="h3" style={{ color: "rgba(0,0,0,.68)" }}>
+      <Header as="h4" style={{ color: "rgba(0,0,0,.68)" }}>
         2. Ballyhoo Service
       </Header>
       <p>
@@ -49,7 +49,7 @@ const TermsOfService = () => (
       </p>
     </Segment>
     <Segment>
-      <Header as="h3" style={{ color: "rgba(0,0,0,.68)" }}>
+      <Header as="h4" style={{ color: "rgba(0,0,0,.68)" }}>
         3. Ballyhoo Access
       </Header>
       <p>
@@ -115,7 +115,7 @@ const TermsOfService = () => (
       </p>
     </Segment>
     <Segment>
-      <Header style={{ color: "rgba(0,0,0,.68)" }}>
+      <Header as="h4" style={{ color: "rgba(0,0,0,.68)" }}>
         4. Intellectual Property Rights
       </Header>
       <p>
@@ -131,7 +131,9 @@ const TermsOfService = () => (
       </p>
     </Segment>
     <Segment>
-      <Header style={{ color: "rgba(0,0,0,.68)" }}>5. Governing Law</Header>
+      <Header as="h4" style={{ color: "rgba(0,0,0,.68)" }}>
+        5. Governing Law
+      </Header>
       <p>
         These Terms of Service will be governed by the laws of India. You thus
         agree that any cause of action, suit or any other legal proceeding, you
@@ -147,7 +149,7 @@ const TermsOfService = () => (
       </p>
     </Segment>
     <Segment>
-      <Header style={{ color: "rgba(0,0,0,.68)" }}>
+      <Header as="h4" style={{ color: "rgba(0,0,0,.68)" }}>
         <strong>6.</strong> liveintech reserves the right to discontinue any
         aspect of the Ballyhoo Service at any time.
       </Header>
