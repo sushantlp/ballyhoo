@@ -8,6 +8,7 @@ const initialState = {
 export function newHashtagOffer(state = initialState, action) {
   switch (action.type) {
     case actionType.newHashtagOffer:
+      console.log(action);
       if (action.newHashtagOffer.hasOwnProperty("message")) {
         return {
           ...state,

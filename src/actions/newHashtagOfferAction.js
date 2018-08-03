@@ -1,8 +1,8 @@
 import api from "../utils/api";
 
 export const actionType = {
-  newHashtagOffer: "HASHTAG_OFFER",
-  newHashtagOfferMerge: "HASHTAG_OFFER_MERGE"
+  newHashtagOffer: "NEW_HASHTAG_OFFER",
+  newHashtagOfferMerge: "NEW_HASHTAG_OFFER_MERGE"
 };
 
 export function newHashtagOfferData(
