@@ -58,6 +58,7 @@ export default class Category extends React.Component {
       newObject.hashtag_id = object.h_id;
       newObject.key = object.key;
       newObject.filter = object.filter;
+      newObject.scr_id = object.scr_id;
 
       if (object.status === 4) {
         const locality1 = this.props.readLocalityIndex(

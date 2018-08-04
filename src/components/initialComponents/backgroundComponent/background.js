@@ -338,6 +338,7 @@ export default class Background extends React.Component {
       category.filter = obj.filter;
       category.hashtag_id = obj.h_id;
       category.city_id = 0;
+      category.scr_id = obj.scr_id;
       category.image = {
         avatar: true,
         src: obj.icon

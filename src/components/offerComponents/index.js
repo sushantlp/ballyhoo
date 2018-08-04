@@ -84,7 +84,7 @@ export default class Initial extends React.Component {
             });
             // Hashtag Offer
             this.props.hashtagOfferData(
-              this.props.history.location.state.offerData.hashtag_id,
+              this.props.history.location.state.offerData.scr_id,
               this.props.history.location.state.offerData.city_id,
               this.props.history.location.state.offerData.locality_id,
               0,
@@ -125,9 +125,9 @@ export default class Initial extends React.Component {
             this.setState({
               apiStatus: 6
             });
-
+            console.log("Helo");
             this.props.newHashtagOfferData(
-              this.props.history.location.state.offerData.hashtag_id,
+              this.props.history.location.state.offerData.scr_id,
               this.props.history.location.state.offerData.city_id,
               this.props.history.location.state.offerData.locality_id,
               0,
@@ -194,7 +194,8 @@ export default class Initial extends React.Component {
     apiType,
     flag,
     boolean,
-    seo
+    seo,
+    screenId
   ) => {
     if (seo) {
       this.setState({
@@ -237,7 +238,7 @@ export default class Initial extends React.Component {
         } else if (apiStatus === 6) {
           // Hashtag Offer
           this.props.hashtagOfferData(
-            hashtagId,
+            screenId,
             cityId,
             localityId,
             level,
@@ -266,7 +267,7 @@ export default class Initial extends React.Component {
         } else if (apiStatus === 6) {
           // New Hashtag Offer
           this.props.newHashtagOfferData(
-            hashtagId,
+            screenId,
             cityId,
             localityId,
             level,

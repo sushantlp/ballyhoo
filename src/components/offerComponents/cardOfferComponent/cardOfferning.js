@@ -9,7 +9,9 @@ import {
   Image,
   Label,
   Icon,
-  Button
+  Button,
+  Breadcrumb,
+  Segment
 } from "semantic-ui-react/dist/commonjs";
 
 import CardLoader from "../../loaderComponents/cardLoader";
@@ -46,7 +48,8 @@ export default class Trending extends React.Component {
         category_id: 0,
         api_status: 0,
         api_type: 0,
-        flag: 0
+        flag: 0,
+        screen_id: 0
       }
     };
   }
@@ -288,7 +291,8 @@ export default class Trending extends React.Component {
             category_id: categoryList[i].c_id,
             api_status: categoryList[i].status,
             api_type: categoryList[i].Api_Type,
-            flag: 1
+            flag: 1,
+            screen_id: categoryList[i].scr_id
           }
         });
 
@@ -304,7 +308,8 @@ export default class Trending extends React.Component {
           categoryList[i].Api_Type,
           1,
           true,
-          true
+          true,
+          categoryList[i].scr_id
         );
       }
     }
@@ -334,7 +339,8 @@ export default class Trending extends React.Component {
           category_id: 0,
           api_status: 4,
           api_type: 1,
-          flag: 1
+          flag: 1,
+          screen_id: 0
         }
       });
 
@@ -350,7 +356,8 @@ export default class Trending extends React.Component {
         1,
         1,
         false,
-        true
+        true,
+        0
       );
     }
   };
@@ -1022,7 +1029,8 @@ export default class Trending extends React.Component {
             this.props.apiType,
             this.props.flag,
             false,
-            false
+            false,
+            this.props.location.state.offerData.scr_id
           );
         } else {
           this.props.parentLoadOldOfferData(
@@ -1037,7 +1045,8 @@ export default class Trending extends React.Component {
             this.state.apiObject.api_type,
             this.state.apiObject.flag,
             false,
-            false
+            false,
+            this.state.screen_id
           );
         }
       }
@@ -1091,7 +1100,7 @@ export default class Trending extends React.Component {
                   show={true}
                   title="Ballyhoo"
                   imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Seems like no offer "
+                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                   onConfirm={() => this.backHistory()}
                 />
               </div>
@@ -1120,7 +1129,7 @@ export default class Trending extends React.Component {
                   show={true}
                   title="Ballyhoo"
                   imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Seems like no offer "
+                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                   onConfirm={() => this.backHistory()}
                 />
               </div>
@@ -1149,7 +1158,7 @@ export default class Trending extends React.Component {
                   show={true}
                   title="Ballyhoo"
                   imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Seems like no offer "
+                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                   onConfirm={() => this.backHistory()}
                 />
               </div>
@@ -1177,7 +1186,7 @@ export default class Trending extends React.Component {
                   show={true}
                   title="Ballyhoo"
                   imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Seems like no offer "
+                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                   onConfirm={() => this.backHistory()}
                 />
               </div>
@@ -1206,7 +1215,7 @@ export default class Trending extends React.Component {
                   show={true}
                   title="Ballyhoo"
                   imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Seems like no offer "
+                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                   onConfirm={() => this.backHistory()}
                 />
               </div>
@@ -1235,7 +1244,7 @@ export default class Trending extends React.Component {
                   show={true}
                   title="Ballyhoo"
                   imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Seems like no offer "
+                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                   onConfirm={() => this.backHistory()}
                 />
               </div>
@@ -1268,7 +1277,7 @@ export default class Trending extends React.Component {
                   show={true}
                   title="Ballyhoo"
                   imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Seems like no offer "
+                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                   onConfirm={() => this.backHistory()}
                 />
               </div>
@@ -1296,7 +1305,7 @@ export default class Trending extends React.Component {
                   show={true}
                   title="Ballyhoo"
                   imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Seems like no offer "
+                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                   onConfirm={() => this.backHistory()}
                 />
               </div>
@@ -1325,7 +1334,7 @@ export default class Trending extends React.Component {
                   show={true}
                   title="Ballyhoo"
                   imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Seems like no offer "
+                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                   onConfirm={() => this.backHistory()}
                 />
               </div>
@@ -1360,7 +1369,7 @@ export default class Trending extends React.Component {
                 show={true}
                 title="Ballyhoo"
                 imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                text="Seems like no offer "
+                text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                 onConfirm={() => this.backHistory()}
               />
             </div>
@@ -1389,7 +1398,7 @@ export default class Trending extends React.Component {
                 show={true}
                 title="Ballyhoo"
                 imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                text="Seems like no offer "
+                text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                 onConfirm={() => this.backHistory()}
               />
             </div>
@@ -1407,6 +1416,16 @@ export default class Trending extends React.Component {
 
     return (
       <Container className={classes.OfferningContainer}>
+        <Segment>
+          <Breadcrumb size="large">
+            <Breadcrumb.Section link>Home</Breadcrumb.Section>
+            <Breadcrumb.Divider icon="right angle" />
+            <Breadcrumb.Section link>Store</Breadcrumb.Section>
+            <Breadcrumb.Divider icon="right angle" />
+            <Breadcrumb.Section active>Shirt</Breadcrumb.Section>
+          </Breadcrumb>
+        </Segment>
+
         <Card.Group itemsPerRow={3} doubling stackable>
           {this.logicOfferningCard(offerData)}
         </Card.Group>

@@ -140,13 +140,13 @@ export default {
       });
     });
   },
-  hashtagOfferApi: (hashtagId, cityId, localityId, level) => {
+  hashtagOfferApi: (screenId, cityId, localityId, level) => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v4/web/offer/hashtag?" +
+          "api/v4/web/fnb/home/screen?" +
           getQueryString({
-            hash_id: hashtagId,
+            screen_id: screenId,
             c_id: cityId,
             l_id: localityId,
             level: level
@@ -220,13 +220,13 @@ export default {
       });
     });
   },
-  newHashtagOfferApi: (hashtagId, cityId, localityId, level) => {
+  newHashtagOfferApi: (screenId, cityId, localityId, level) => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v4/web/offer/hashtag?" +
+          "api/v4/web/latest/home/screen?" +
           getQueryString({
-            hash_id: hashtagId,
+            screen_id: screenId,
             c_id: cityId,
             l_id: localityId,
             level: level

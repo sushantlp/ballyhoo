@@ -5,11 +5,11 @@ export const actionType = {
   hashtagOfferMerge: "HASHTAG_OFFER_MERGE"
 };
 
-export function hashtagOfferData(hashtagId, cityId, localityId, level, flag) {
+export function hashtagOfferData(screenId, cityId, localityId, level, flag) {
   if (flag) {
     return dispatch => {
       api
-        .hashtagOfferApi(hashtagId, cityId, localityId, level)
+        .hashtagOfferApi(screenId, cityId, localityId, level)
         .then(hashtagOffer =>
           dispatch({ type: actionType.hashtagOffer, hashtagOffer })
         );
@@ -17,7 +17,7 @@ export function hashtagOfferData(hashtagId, cityId, localityId, level, flag) {
   } else {
     return dispatch => {
       api
-        .hashtagOfferApi(hashtagId, cityId, localityId, level)
+        .hashtagOfferApi(screenId, cityId, localityId, level)
         .then(hashtagOffer =>
           dispatch({ type: actionType.hashtagOfferMerge, hashtagOffer })
         );
