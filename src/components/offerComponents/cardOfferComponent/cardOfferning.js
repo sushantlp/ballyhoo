@@ -36,7 +36,6 @@ export default class Trending extends React.Component {
     this.state = {
       click_disabled: false,
       loading: false,
-
       level: 0,
       cityId: 0,
       localityId: 0,
@@ -57,159 +56,28 @@ export default class Trending extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps !== undefined) {
       if (nextProps.offerSeo) {
-        if (Object.keys(nextProps.oldOffering.oldOffering).length !== 0) {
-          // if (
-          //   nextProps.oldOffering.level !== this.props.oldOffering.level ||
-          //   this.state.level === 0
-          // ) {
-          //   // show loading again
-          //   this.getInitialLevel(nextProps.oldOffering.level);
-          // } else {
-          //   // show loading again
-          //   this.getInitialLevel(nextProps.oldOffering.level);
-          // }
-          this.getInitialLevel(nextProps.oldOffering.level);
-        } else if (
-          Object.keys(nextProps.oldCategory.oldCategory).length !== 0
-        ) {
-          // if (
-          //   nextProps.oldCategory.level !== this.props.oldCategory.level ||
-          //   this.state.level === 0
-          // ) {
-
-          //   // show loading again
-          //   this.getInitialLevel(nextProps.oldCategory.level);
-          // } else {
-
-          // }
-          this.getInitialLevel(nextProps.oldCategory.level);
-        } else if (
-          Object.keys(nextProps.activeOffer.activeOffer).length !== 0
-        ) {
-          // if (
-          //   nextProps.activeOffer.level !== this.props.activeOffer.level ||
-          //   this.state.level === 0
-          // ) {
-
-          //   // show loading again
-          //   this.getInitialLevel(nextProps.activeOffer.level);
-          // } else {
-
-          // }
-          this.getInitialLevel(nextProps.activeOffer.level);
-        } else if (
-          Object.keys(nextProps.hashtagOffer.hashtagOffer).length !== 0
-        ) {
-          // if (
-          //   nextProps.hashtagOffer.level !== this.props.hashtagOffer.level ||
-          //   this.state.level === 0
-          // ) {
-
-          //   // show loading again
-          //   this.getInitialLevel(nextProps.hashtagOffer.level);
-          // } else {
-
-          // }
-          this.getInitialLevel(nextProps.hashtagOffer.level);
-        } else if (
-          Object.keys(nextProps.localityOffer.localityOffer).length !== 0
-        ) {
-          // if (
-          //   nextProps.localityOffer.level !== this.props.localityOffer.level ||
-          //   this.state.level === 0
-          // ) {
-
-          //   // show loading again
-          //   this.getInitialLevel(nextProps.localityOffer.level);
-          // } else {
-
-          // }
-          this.getInitialLevel(nextProps.localityOffer.level);
-        } else if (Object.keys(nextProps.yoloOffer.yoloOffer).length !== 0) {
-          // if (
-          //   nextProps.yoloOffer.level !== this.props.yoloOffer.level ||
-          //   this.state.level === 0
-          // ) {
-
-          //   // show loading again
-          //   this.getInitialLevel(nextProps.yoloOffer.level);
-          // } else {
-
-          // }
-          this.getInitialLevel(nextProps.yoloOffer.level);
-        } else if (
+        if (
           Object.keys(nextProps.discoverOldOffer.discoverOldOffer).length !== 0
         ) {
-          // if (
-          //   nextProps.discoverOldOffer.level !==
-          //     this.props.discoverOldOffer.level ||
-          //   this.state.level === 0
-          // ) {
-
-          //   // show loading again
-          //   this.getInitialLevel(nextProps.discoverOldOffer.level);
-          // } else {
-
-          // }
           this.getInitialLevel(nextProps.discoverOldOffer.level);
         } else if (
           Object.keys(nextProps.discoverNewOffer.discoverNewOffer).length !== 0
         ) {
-          // if (
-          //   nextProps.discoverNewOffer.level !==
-          //     this.props.discoverNewOffer.level ||
-          //   this.state.level === 0
-          // ) {
-
-          //   // show loading again
-          //   this.getInitialLevel(nextProps.discoverNewOffer.level);
-          // } else {
-
-          // }
           this.getInitialLevel(nextProps.discoverNewOffer.level);
         } else if (
-          Object.keys(nextProps.newOffering.newOffering).length !== 0
+          Object.keys(nextProps.collectionOldOffer.collectionOldOffer)
+            .length !== 0
         ) {
-          // if (
-          //   nextProps.newOffering.level !== this.props.newOffering.level ||
-          //   this.state.level === 0
-          // ) {
-
-          //   // show loading again
-          //   this.getInitialLevel(nextProps.newOffering.level);
-          // } else {
-
-          // }
-          this.getInitialLevel(nextProps.newOffering.level);
+          this.getInitialLevel(nextProps.collectionOldOffer.level);
         } else if (
-          Object.keys(nextProps.newCategory.newCategory).length !== 0
+          Object.keys(nextProps.collectionNewOffer.collectionNewOffer)
+            .length !== 0
         ) {
-          // if (
-          //   nextProps.newCategory.level !== this.props.newCategory.level ||
-          //   this.state.level === 0
-          // ) {
-
-          //   // show loading again
-          //   this.getInitialLevel(nextProps.newCategory.level);
-          // } else {
-
-          // }
-          this.getInitialLevel(nextProps.newCategory.level);
+          this.getInitialLevel(nextProps.collectionNewOffer.level);
         } else if (
-          Object.keys(nextProps.newHashtagOffer.newHashtagOffer).length !== 0
+          Object.keys(nextProps.localityOldOffer.localityOldOffer).length !== 0
         ) {
-          // if (
-          //   nextProps.newHashtagOffer.level !==
-          //     this.props.newHashtagOffer.level ||
-          //   this.state.level === 0
-          // ) {
-
-          //   // show loading again
-          //   this.getInitialLevel(nextProps.newHashtagOffer.level);
-          // } else {
-
-          // }
-          this.getInitialLevel(nextProps.newHashtagOffer.level);
+          this.getInitialLevel(nextProps.localityOldOffer.level);
         }
       } else {
         if (
@@ -248,27 +116,22 @@ export default class Trending extends React.Component {
         this.setState({
           apiObject: {
             tab_id: discoverList[i].t_id,
-            hashtag_id: 0,
-            offering_id: discoverList[i].o_id,
-            category_id: discoverList[i].c_id,
-            api_status: discoverList[i].status,
             api_type: discoverList[i].api_type,
-            flag: 2
+            flag: 2,
+            screen_id: discoverList[i].scr_id
           }
         });
+
         this.props.parentLoadOldOfferData(
           discoverList[i].t_id,
           this.state.cityId,
           this.state.localityId,
           0,
-          discoverList[i].o_id,
-          discoverList[i].c_id,
-          0,
-          discoverList[i].status,
           discoverList[i].api_type,
           2,
           true,
-          true
+          true,
+          discoverList[i].scr_id
         );
       }
     }
@@ -286,10 +149,6 @@ export default class Trending extends React.Component {
         this.setState({
           apiObject: {
             tab_id: 0,
-            hashtag_id: categoryList[i].h_id,
-            offering_id: categoryList[i].o_id,
-            category_id: categoryList[i].c_id,
-            api_status: categoryList[i].status,
             api_type: categoryList[i].Api_Type,
             flag: 1,
             screen_id: categoryList[i].scr_id
@@ -300,11 +159,7 @@ export default class Trending extends React.Component {
           0,
           this.state.cityId,
           this.state.localityId,
-          categoryList[i].h_id,
-          categoryList[i].o_id,
-          categoryList[i].c_id,
           0,
-          categoryList[i].status,
           categoryList[i].Api_Type,
           1,
           true,
@@ -334,12 +189,8 @@ export default class Trending extends React.Component {
       this.setState({
         apiObject: {
           tab_id: 0,
-          hashtag_id: 0,
-          offering_id: 0,
-          category_id: 0,
-          api_status: 4,
           api_type: 1,
-          flag: 1,
+          flag: 3,
           screen_id: 0
         }
       });
@@ -349,13 +200,9 @@ export default class Trending extends React.Component {
         cityIndex.c_key,
         localityIndex.l_key,
         0,
-        0,
-        0,
-        0,
-        4,
         1,
-        1,
-        false,
+        3,
+        true,
         true,
         0
       );
@@ -1021,11 +868,7 @@ export default class Trending extends React.Component {
             this.props.location.state.offerData.tab_id,
             this.props.location.state.offerData.city_id,
             this.props.location.state.offerData.locality_id,
-            this.props.location.state.offerData.hashtag_id,
-            this.props.location.state.offerData.offering_id,
-            this.props.location.state.offerData.category_id,
             this.state.level,
-            this.props.apiStatus,
             this.props.apiType,
             this.props.flag,
             false,
@@ -1037,16 +880,12 @@ export default class Trending extends React.Component {
             this.state.apiObject.tab_id,
             this.state.cityId,
             this.state.localityId,
-            this.state.apiObject.hashtag_id,
-            this.state.apiObject.offering_id,
-            this.state.apiObject.category_id,
             this.state.level,
-            this.state.apiObject.api_status,
             this.state.apiObject.api_type,
             this.state.apiObject.flag,
             false,
             false,
-            this.state.screen_id
+            this.state.apiObject.screen_id
           );
         }
       }
@@ -1069,283 +908,70 @@ export default class Trending extends React.Component {
     let offerData = [];
     let level = 0;
 
-    if (
-      this.props.apiStatus === 0 ||
-      this.props.apiType === 0 ||
-      this.props.flag === 0
-    ) {
+    if (this.props.apiType === 0 || this.props.flag === 0) {
       return <CardLoader />;
     }
 
     // Collection
     if (this.props.flag === 1) {
       if (this.props.apiType === 1) {
-        if (this.props.apiStatus === 1) {
-          if (
-            this.props.activeOffer.activeOffer === null ||
-            this.props.activeOffer.activeOffer === undefined
-          ) {
-            return <CardLoader />;
-          }
-
-          if (!_.isArray(this.props.activeOffer.activeOffer)) {
-            return <CardLoader />;
-          }
-
-          if (_.isEmpty(this.props.activeOffer.activeOffer)) {
-            return (
-              <div>
-                <CardLoader />
-                <SweetAlert
-                  show={true}
-                  title="Ballyhoo"
-                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
-                  onConfirm={() => this.backHistory()}
-                />
-              </div>
-            );
-          }
-
-          offerData = this.props.activeOffer.activeOffer;
-          level = this.props.activeOffer.level;
-        } else if (this.props.apiStatus === 2) {
-          if (
-            this.props.oldCategory.oldCategory === null ||
-            this.props.oldCategory.oldCategory === undefined
-          ) {
-            return <CardLoader />;
-          }
-
-          if (!_.isArray(this.props.oldCategory.oldCategory)) {
-            return <CardLoader />;
-          }
-
-          if (_.isEmpty(this.props.oldCategory.oldCategory)) {
-            return (
-              <div>
-                <CardLoader />
-                <SweetAlert
-                  show={true}
-                  title="Ballyhoo"
-                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
-                  onConfirm={() => this.backHistory()}
-                />
-              </div>
-            );
-          }
-
-          offerData = this.props.oldCategory.oldCategory;
-          level = this.props.oldCategory.level;
-        } else if (this.props.apiStatus === 3) {
-          if (
-            this.props.oldOffering.oldOffering === null ||
-            this.props.oldOffering.oldOffering === undefined
-          ) {
-            return <CardLoader />;
-          }
-
-          if (!_.isArray(this.props.oldOffering.oldOffering)) {
-            return <CardLoader />;
-          }
-
-          if (_.isEmpty(this.props.oldOffering.oldOffering)) {
-            return (
-              <div>
-                <CardLoader />
-                <SweetAlert
-                  show={true}
-                  title="Ballyhoo"
-                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
-                  onConfirm={() => this.backHistory()}
-                />
-              </div>
-            );
-          }
-          offerData = this.props.oldOffering.oldOffering;
-          level = this.props.oldOffering.level;
-        } else if (this.props.apiStatus === 4) {
-          if (
-            this.props.localityOffer.localityOffer === null ||
-            this.props.localityOffer.localityOffer === undefined
-          ) {
-            return <CardLoader />;
-          }
-
-          if (!_.isArray(this.props.localityOffer.localityOffer)) {
-            return <CardLoader />;
-          }
-
-          if (_.isEmpty(this.props.localityOffer.localityOffer)) {
-            return (
-              <div>
-                <CardLoader />
-                <SweetAlert
-                  show={true}
-                  title="Ballyhoo"
-                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
-                  onConfirm={() => this.backHistory()}
-                />
-              </div>
-            );
-          }
-
-          offerData = this.props.localityOffer.localityOffer;
-          level = this.props.localityOffer.level;
-        } else if (this.props.apiStatus === 5) {
-          if (
-            this.props.yoloOffer.yoloOffer === null ||
-            this.props.yoloOffer.yoloOffer === undefined
-          ) {
-            return <CardLoader />;
-          }
-
-          if (!_.isArray(this.props.yoloOffer.yoloOffer)) {
-            return <CardLoader />;
-          }
-
-          if (_.isEmpty(this.props.yoloOffer.yoloOffer)) {
-            return (
-              <div>
-                <CardLoader />
-                <SweetAlert
-                  show={true}
-                  title="Ballyhoo"
-                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
-                  onConfirm={() => this.backHistory()}
-                />
-              </div>
-            );
-          }
-
-          offerData = this.props.yoloOffer.yoloOffer;
-          level = this.props.yoloOffer.level;
-        } else if (this.props.apiStatus === 6) {
-          if (
-            this.props.hashtagOffer.hashtagOffer === null ||
-            this.props.hashtagOffer.hashtagOffer === undefined
-          ) {
-            return <CardLoader />;
-          }
-
-          if (!_.isArray(this.props.hashtagOffer.hashtagOffer)) {
-            return <CardLoader />;
-          }
-
-          if (_.isEmpty(this.props.hashtagOffer.hashtagOffer)) {
-            return (
-              <div>
-                <CardLoader />
-                <SweetAlert
-                  show={true}
-                  title="Ballyhoo"
-                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
-                  onConfirm={() => this.backHistory()}
-                />
-              </div>
-            );
-          }
-
-          offerData = this.props.hashtagOffer.hashtagOffer;
-          level = this.props.hashtagOffer.level;
-        } else {
-          return <div />;
+        if (
+          this.props.collectionOldOffer.collectionOldOffer === null ||
+          this.props.collectionOldOffer.collectionOldOffer === undefined
+        ) {
+          return <CardLoader />;
         }
+
+        if (!_.isArray(this.props.collectionOldOffer.collectionOldOffer)) {
+          return <CardLoader />;
+        }
+
+        if (_.isEmpty(this.props.collectionOldOffer.collectionOldOffer)) {
+          return (
+            <div>
+              <CardLoader />
+              <SweetAlert
+                show={true}
+                title="Ballyhoo"
+                imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
+                onConfirm={() => this.backHistory()}
+              />
+            </div>
+          );
+        }
+
+        offerData = this.props.collectionOldOffer.collectionOldOffer;
+        level = this.props.collectionOldOffer.level;
       } else {
-        if (this.props.apiStatus === 2) {
-          if (
-            this.props.newCategory.newCategory === null ||
-            this.props.newCategory.newCategory === undefined
-          ) {
-            return <CardLoader />;
-          }
-
-          if (!_.isArray(this.props.newCategory.newCategory)) {
-            return <CardLoader />;
-          }
-
-          if (_.isEmpty(this.props.newCategory.newCategory)) {
-            return (
-              <div>
-                <CardLoader />
-                <SweetAlert
-                  show={true}
-                  title="Ballyhoo"
-                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
-                  onConfirm={() => this.backHistory()}
-                />
-              </div>
-            );
-          }
-          offerData = this.props.newCategory.newCategory;
-          level = this.props.newCategory.level;
-        } else if (this.props.apiStatus === 3) {
-          if (
-            this.props.newOffering.newOffering === null ||
-            this.props.newOffering.newOffering === undefined
-          ) {
-            return <CardLoader />;
-          }
-
-          if (!_.isArray(this.props.newOffering.newOffering)) {
-            return <CardLoader />;
-          }
-
-          if (_.isEmpty(this.props.newOffering.newOffering)) {
-            return (
-              <div>
-                <CardLoader />
-                <SweetAlert
-                  show={true}
-                  title="Ballyhoo"
-                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
-                  onConfirm={() => this.backHistory()}
-                />
-              </div>
-            );
-          }
-
-          offerData = this.props.newOffering.newOffering;
-          level = this.props.newOffering.level;
-        } else if (this.props.apiStatus === 6) {
-          if (
-            this.props.newHashtagOffer.newHashtagOffer === null ||
-            this.props.newHashtagOffer.newHashtagOffer === undefined
-          ) {
-            return <CardLoader />;
-          }
-
-          if (!_.isArray(this.props.newHashtagOffer.newHashtagOffer)) {
-            return <CardLoader />;
-          }
-
-          if (_.isEmpty(this.props.newHashtagOffer.newHashtagOffer)) {
-            return (
-              <div>
-                <CardLoader />
-                <SweetAlert
-                  show={true}
-                  title="Ballyhoo"
-                  imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-                  text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
-                  onConfirm={() => this.backHistory()}
-                />
-              </div>
-            );
-          }
-
-          offerData = this.props.newHashtagOffer.newHashtagOffer;
-          level = this.props.newHashtagOffer.level;
-        } else {
-          return <div />;
+        if (
+          this.props.collectionNewOffer.collectionNewOffer === null ||
+          this.props.collectionNewOffer.collectionNewOffer === undefined
+        ) {
+          return <CardLoader />;
         }
+
+        if (!_.isArray(this.props.collectionNewOffer.collectionNewOffer)) {
+          return <CardLoader />;
+        }
+
+        if (_.isEmpty(this.props.collectionNewOffer.collectionNewOffer)) {
+          return (
+            <div>
+              <CardLoader />
+              <SweetAlert
+                show={true}
+                title="Ballyhoo"
+                imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
+                onConfirm={() => this.backHistory()}
+              />
+            </div>
+          );
+        }
+
+        offerData = this.props.collectionNewOffer.collectionNewOffer;
+        level = this.props.collectionNewOffer.level;
       }
     } else if (this.props.flag === 2) {
       // Discover
@@ -1408,6 +1034,35 @@ export default class Trending extends React.Component {
         offerData = this.props.discoverNewOffer.discoverNewOffer;
         level = this.props.discoverNewOffer.level;
       }
+    } else if (this.props.flag === 3) {
+      if (
+        this.props.localityOldOffer.localityOldOffer === null ||
+        this.props.localityOldOffer.localityOldOffer === undefined
+      ) {
+        return <CardLoader />;
+      }
+
+      if (!_.isArray(this.props.localityOldOffer.localityOldOffer)) {
+        return <CardLoader />;
+      }
+
+      if (_.isEmpty(this.props.localityOldOffer.localityOldOffer)) {
+        return (
+          <div>
+            <CardLoader />
+            <SweetAlert
+              show={true}
+              title="Ballyhoo"
+              imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+              text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
+              onConfirm={() => this.backHistory()}
+            />
+          </div>
+        );
+      }
+
+      offerData = this.props.localityOldOffer.localityOldOffer;
+      level = this.props.localityOldOffer.level;
     } else {
       return <div />;
     }
@@ -1416,7 +1071,7 @@ export default class Trending extends React.Component {
 
     return (
       <Container className={classes.OfferningContainer}>
-        <Segment>
+        {/* <Segment>
           <Breadcrumb size="large">
             <Breadcrumb.Section link>Home</Breadcrumb.Section>
             <Breadcrumb.Divider icon="right angle" />
@@ -1424,7 +1079,7 @@ export default class Trending extends React.Component {
             <Breadcrumb.Divider icon="right angle" />
             <Breadcrumb.Section active>Shirt</Breadcrumb.Section>
           </Breadcrumb>
-        </Segment>
+        </Segment> */}
 
         <Card.Group itemsPerRow={3} doubling stackable>
           {this.logicOfferningCard(offerData)}

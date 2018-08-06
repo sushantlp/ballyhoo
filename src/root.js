@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "./static/css/root.css";
 
@@ -21,30 +21,40 @@ const Root = ({ store }) => (
     <BrowserRouter>
       <div>
         <Header />
-        <Switch>
-          <Route exact path="/" component={Background} />
-          <Route exact path="/terms" component={Terms} />
-          <Route exact path="/privacy" component={Privacy} />
-          <Route exact path="/faq" component={Faq} />
 
-          <Route exact path="/:city" component={Background} />
-          <Route exact path="/:city/trending" component={Facebook} />
-          <Route exact path="/:city/:locality" component={Background} />
+        <Switch>
+          <Route exact path="/food-drink-offer" component={Background} />
+          <Route exact path="/food-drink-offer/terms" component={Terms} />
+          <Route exact path="/food-drink-offer/privacy" component={Privacy} />
+          <Route exact path="/food-drink-offer/faq" component={Faq} />
+
+          <Route exact path="/food-drink-offer/:city" component={Background} />
           <Route
             exact
-            path="/:city/:locality/popular-location"
+            path="/food-drink-offer/:city/trending"
+            component={Facebook}
+          />
+          <Route
+            exact
+            path="/food-drink-offer/:city/:locality"
+            component={Background}
+          />
+          <Route
+            exact
+            path="/food-drink-offer/:city/:locality/popular-location"
             component={Offerning}
           />
           <Route
             exact
-            path="/:city/:locality/collection/:offering"
+            path="/food-drink-offer/:city/:locality/collection/:offering"
             component={Offerning}
           />
           <Route
             exact
-            path="/:city/:locality/discover/:discover"
+            path="/food-drink-offer/:city/:locality/discover/:discover"
             component={Offerning}
           />
+          <Redirect from="/" to="/food-drink-offer" />
         </Switch>
         <Footer />
       </div>
