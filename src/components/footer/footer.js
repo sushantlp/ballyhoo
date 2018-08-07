@@ -39,13 +39,13 @@ export default class Footer extends React.Component {
                     <Link to="/food-drink-offer/faq">FAQ's</Link>
                   </List.Item>
 
-                  <List.Item
+                  {/* <List.Item
                     as="a"
                     href="/merchant"
                     style={{ color: "#dfdfe7" }}
                   >
                     Merchant
-                  </List.Item>
+                  </List.Item> */}
                 </List>
               </Grid.Column>
               <Grid.Column floated="right" textAlign="right">
