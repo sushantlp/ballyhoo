@@ -41,9 +41,9 @@ export default class Discover extends React.Component {
     newObject.city_id = this.props.cityId;
     newObject.locality_id = object.locality_id;
 
-    this.props.history.push("/food-drink-offer");
+    this.props.history.push("/web");
     this.props.history.push(
-      "/food-drink-offer/" + cityUrl + "/" + localityUrl + "/popular-location",
+      "/web/" + cityUrl + "/" + localityUrl + "/popular-location",
       {
         offerData: newObject
       }

@@ -29,14 +29,14 @@ export default class Footer extends React.Component {
               <Grid.Column floated="left">
                 <List horizontal link inverted relaxed>
                   <List.Item>
-                    <Link to="/food-drink-offer/terms">Terms of Service </Link>
+                    <Link to="/web/terms">Terms of Service </Link>
                   </List.Item>
                   <List.Item>
-                    <Link to="/food-drink-offer/privacy">Privacy Policy</Link>
+                    <Link to="/web/privacy">Privacy Policy</Link>
                   </List.Item>
 
                   <List.Item>
-                    <Link to="/food-drink-offer/faq">FAQ's</Link>
+                    <Link to="/web/faq">FAQ's</Link>
                   </List.Item>
 
                   {/* <List.Item

@@ -72,7 +72,7 @@ export default class Background extends React.Component {
           props.cityLocality.city[i].c_text.replace(/ /g, "").toLowerCase()
         ) {
           if (Object.keys(this.props.url).length !== 0) {
-            this.props.history.push("/food-drink-offer/" + this.props.url);
+            this.props.history.push("/web/" + this.props.url);
           }
           this.setState(
             {
@@ -158,9 +158,7 @@ export default class Background extends React.Component {
               .replace(/ /g, "-")
               .toLowerCase();
 
-            this.props.history.push(
-              "/food-drink-offer/" + cityUrl + "/" + localityUrl
-            );
+            this.props.history.push("/web/" + cityUrl + "/" + localityUrl);
           } else {
             return;
           }
@@ -240,10 +238,8 @@ export default class Background extends React.Component {
             const localityUrl = localityList[0].value
               .replace(/ /g, "-")
               .toLowerCase();
-            this.props.history.push("/food-drink-offer");
-            this.props.history.push(
-              "/food-drink-offer/" + cityUrl + "/" + localityUrl
-            );
+            this.props.history.push("/web");
+            this.props.history.push("/web/" + cityUrl + "/" + localityUrl);
           }
         );
       }
@@ -264,11 +260,11 @@ export default class Background extends React.Component {
           this.props.match.params.hasOwnProperty("locality")
         ) {
           this.props.history.push(
-            "/food-drink-offer/" + this.props.match.params.city + "/" + url
+            "/web/" + this.props.match.params.city + "/" + url
           );
         } else {
           this.props.history.push(
-            "/food-drink-offer/" + this.props.match.params.city + "/" + url
+            "/web/" + this.props.match.params.city + "/" + url
           );
         }
       }

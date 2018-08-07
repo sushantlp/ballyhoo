@@ -1089,7 +1089,7 @@ export default class Trending extends React.Component {
           size="large"
           color="violet"
           loading={loading}
-          disabled={this.state.level >= 4 ? true : click_disabled}
+          disabled={this.state.level > 4 ? true : click_disabled}
           onClick={() => this.loadingStart(level + 1)}
           style={{
             marginTop: "1.5em",

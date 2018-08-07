@@ -23,38 +23,30 @@ const Root = ({ store }) => (
         <Header />
 
         <Switch>
-          <Route exact path="/food-drink-offer" component={Background} />
-          <Route exact path="/food-drink-offer/terms" component={Terms} />
-          <Route exact path="/food-drink-offer/privacy" component={Privacy} />
-          <Route exact path="/food-drink-offer/faq" component={Faq} />
+          <Route exact path="/web" component={Background} />
+          <Route exact path="/web/terms" component={Terms} />
+          <Route exact path="/web/privacy" component={Privacy} />
+          <Route exact path="/web/faq" component={Faq} />
 
-          <Route exact path="/food-drink-offer/:city" component={Background} />
+          <Route exact path="/web/:city" component={Background} />
+          <Route exact path="/web/:city/trending" component={Facebook} />
+          <Route exact path="/web/:city/:locality" component={Background} />
           <Route
             exact
-            path="/food-drink-offer/:city/trending"
-            component={Facebook}
-          />
-          <Route
-            exact
-            path="/food-drink-offer/:city/:locality"
-            component={Background}
-          />
-          <Route
-            exact
-            path="/food-drink-offer/:city/:locality/popular-location"
+            path="/web/:city/:locality/popular-location"
             component={Offerning}
           />
           <Route
             exact
-            path="/food-drink-offer/:city/:locality/collection/:offering"
+            path="/web/:city/:locality/collection/:offering"
             component={Offerning}
           />
           <Route
             exact
-            path="/food-drink-offer/:city/:locality/discover/:discover"
+            path="/web/:city/:locality/discover/:discover"
             component={Offerning}
           />
-          <Redirect from="/" to="/food-drink-offer" />
+          <Redirect from="/" to="/web" />
         </Switch>
         <Footer />
       </div>
