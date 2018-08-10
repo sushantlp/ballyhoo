@@ -6,7 +6,6 @@ import getQueryString from "./paramParser";
 const host = "https://ballyhoo.today/";
 
 export default {
-
   cityLocalityApi: () => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v4/web/city/locality").then(response => {
@@ -154,13 +153,13 @@ export default {
     });
   },
 
-  oldViewDetailApi:(offerId) => {
+  oldViewDetailApi: offerId => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
           "api/v4/web" +
           getQueryString({
-            offer_id: offerId,
+            offer_id: offerId
           })
       ).then(response => {
         response.json().then(oldViewDetail => resolve(oldViewDetail));
@@ -168,18 +167,32 @@ export default {
     });
   },
 
-  newViewDetailApi:(offerId) => {
+  newViewDetailApi: offerId => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
           "api/v4/web" +
           getQueryString({
-            offer_id: offerId,
+            offer_id: offerId
           })
       ).then(response => {
         response.json().then(newViewDetail => resolve(newViewDetail));
       });
     });
   },
-  
+
+  similarOfferApi: (merchantId, offeringId) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/similar" +
+          getQueryString({
+            m_id: merchantId,
+            o_id: offeringId
+          })
+      ).then(response => {
+        response.json().then(similarOffer => resolve(similarOffer));
+      });
+    });
+  }
 };

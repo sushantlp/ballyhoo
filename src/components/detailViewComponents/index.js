@@ -1,5 +1,7 @@
 import React from "react";
 
+import Offerning from "./cardOffComponent/cardOfferning";
+
 export default class DetailView extends React.Component {
 	constructor(props) {
 		super(props);

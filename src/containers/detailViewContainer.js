@@ -5,11 +5,13 @@ import DetailViewComponent from "../components/detailViewComponents";
 
 import { getOldViewDetail } from "../actions/oldViewDetailAction";
 import { getNewViewDetail } from "../actions/newViewDetailAction";
+import { getSimilarOffer } from "../actions/similarOfferAction";
 
 function mapStateToProps(state) {
   return {
     newViewDetail: state.newViewDetail,
-    oldViewDetail: state.oldViewDetail
+    oldViewDetail: state.oldViewDetail,
+    similarOffer: state.similarOffer
   };
 }
 
@@ -18,7 +20,8 @@ export default withRouter(
     mapStateToProps,
     {
       getOldViewDetail: getOldViewDetail,
-      getNewViewDetail: getNewViewDetail
+      getNewViewDetail: getNewViewDetail,
+      getSimilarOffer: getSimilarOffer
     }
   )(DetailViewComponent)
 );
