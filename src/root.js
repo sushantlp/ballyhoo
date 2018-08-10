@@ -38,7 +38,7 @@ const Root = ({ store }) => (
           />
           <Route
             exact
-            path="/web/:city/:locality/collection/:offering"
+            path="/web/:city/:locality/collection/:collection"
             component={Offerning}
           />
           <Route
@@ -46,6 +46,13 @@ const Root = ({ store }) => (
             path="/web/:city/:locality/discover/:discover"
             component={Offerning}
           />
+
+          <Route
+            exact
+            path="/web/:city/:locality/:id/:category/:merchant"
+            component={Offerning}
+          />
+
           <Redirect from="/" to="/web" />
         </Switch>
         <Footer />

@@ -237,6 +237,23 @@ export default class Trending extends React.Component {
     }
   };
 
+  clickCardIndex = (object) => {
+    console.log(this.props.match)
+    console.log(object)
+
+     if (
+      this.props.match.params.hasOwnProperty("city") &&
+      this.props.match.params.hasOwnProperty("locality") &&
+      this.props.match.params.hasOwnProperty("discover")
+    ) {
+
+     } else if ( this.props.match.params.hasOwnProperty("city") &&
+      this.props.match.params.hasOwnProperty("locality") &&
+      this.props.match.params.hasOwnProperty("collection")) {
+      
+     }
+  }
+
   createOfferningCard = (
     key,
     popularity,
@@ -267,7 +284,7 @@ export default class Trending extends React.Component {
       >
         <div
           className="ui fluid image"
-          onClick={() => this.logicClickButton(true)}
+          onClick={() => this.clickCardIndex(object)}
         >
           <span
             className={classes.Heart}
@@ -311,7 +328,7 @@ export default class Trending extends React.Component {
           </span>
         </div>
 
-        <Card.Content onClick={() => this.logicClickButton(true)}>
+        <Card.Content onClick={() => this.clickCardIndex(object)}>
           <Image
             style={{
               marginLeft: "0.4em"

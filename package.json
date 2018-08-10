@@ -2,6 +2,10 @@
   "name": "ballyhoo",
   "version": "0.1.0",
   "private": true,
+   "repository": {
+    "type": "git",
+    "url": "https://github.com/sushantlp/ballyhoo.git"
+  },
   "dependencies": {
     "autoprefixer": "7.1.6",
     "axios": "^0.18.0",
