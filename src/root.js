@@ -14,6 +14,7 @@ import Offerning from "./containers/offerContainer";
 import Privacy from "./containers/privacyContainer";
 import Terms from "./containers/termsContainer";
 import Faq from "./containers/faqContainer";
+import DetailView from "./containers/detailViewContainer";
 
 // Router root
 const Root = ({ store }) => (
@@ -23,6 +24,7 @@ const Root = ({ store }) => (
         <Header />
 
         <Switch>
+
           <Route exact path="/web" component={Background} />
           <Route exact path="/web/terms" component={Terms} />
           <Route exact path="/web/privacy" component={Privacy} />
@@ -49,11 +51,12 @@ const Root = ({ store }) => (
 
           <Route
             exact
-            path="/web/:city/:locality/:id/:category/:merchant"
-            component={Offerning}
+            path="/web/:id/:city/:locality/:category/:merchant"
+            component={DetailView}
           />
 
-          <Redirect from="/" to="/web" />
+          // <Redirect from="/" to="/web" />
+        
         </Switch>
         <Footer />
       </div>

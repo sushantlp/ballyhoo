@@ -6,6 +6,7 @@ import getQueryString from "./paramParser";
 const host = "https://ballyhoo.today/";
 
 export default {
+
   cityLocalityApi: () => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v4/web/city/locality").then(response => {
@@ -13,6 +14,7 @@ export default {
       });
     });
   },
+
   categoryFilterApi: cityId => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -24,6 +26,7 @@ export default {
       });
     });
   },
+
   discoverFilterApi: () => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v4/web/show/discover/filter").then(response => {
@@ -31,6 +34,7 @@ export default {
       });
     });
   },
+
   popularFilterApi: cityId => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -42,6 +46,7 @@ export default {
       });
     });
   },
+
   popularLocalityApi: cityId => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -53,6 +58,7 @@ export default {
       });
     });
   },
+
   facebookEventApi: (cityId, skip) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -81,6 +87,7 @@ export default {
       });
     });
   },
+
   discoverNewOfferApi: (tabId, cityId, localityId, level) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -97,6 +104,7 @@ export default {
       });
     });
   },
+
   collectionOldOfferApi: (screenId, cityId, localityId, level) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -113,6 +121,7 @@ export default {
       });
     });
   },
+
   collectionNewOfferApi: (screenId, cityId, localityId, level) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -129,6 +138,7 @@ export default {
       });
     });
   },
+
   localityOfferApi: (localityId, level) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -142,5 +152,34 @@ export default {
         response.json().then(localityOldOffer => resolve(localityOldOffer));
       });
     });
-  }
+  },
+
+  oldViewDetailApi:(offerId) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web" +
+          getQueryString({
+            offer_id: offerId,
+          })
+      ).then(response => {
+        response.json().then(oldViewDetail => resolve(oldViewDetail));
+      });
+    });
+  },
+
+  newViewDetailApi:(offerId) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web" +
+          getQueryString({
+            offer_id: offerId,
+          })
+      ).then(response => {
+        response.json().then(newViewDetail => resolve(newViewDetail));
+      });
+    });
+  },
+  
 };

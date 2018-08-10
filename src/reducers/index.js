@@ -16,6 +16,9 @@ import { discoverNewOffer } from "./discoverNewReducer";
 import { collectionOldOffer } from "./collectionOldReducer";
 import { collectionNewOffer } from "./collectionNewReducer";
 
+import { newViewDetail } from "./newViewDetailReducer";
+import { oldViewDetail } from "./oldViewDetailReducer";
+
 export default combineReducers({
   // loadingBar: loadingBarReducer,
   cityLocality,
@@ -28,5 +31,7 @@ export default combineReducers({
   discoverNewOffer,
   collectionNewOffer,
   collectionOldOffer,
-  localityOldOffer
+  localityOldOffer,
+  newViewDetail,
+  oldViewDetail
 });

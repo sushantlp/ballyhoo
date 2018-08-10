@@ -237,21 +237,36 @@ export default class Trending extends React.Component {
     }
   };
 
-  clickCardIndex = (object) => {
-    console.log(this.props.match)
-    console.log(object)
+  clickCardIndex = (object,apiType) => {
+   
+    let newObject = {};
+    let category = undefined
+    let businessName = undefined
 
-     if (
-      this.props.match.params.hasOwnProperty("city") &&
-      this.props.match.params.hasOwnProperty("locality") &&
-      this.props.match.params.hasOwnProperty("discover")
-    ) {
+    if (apiType === 1) {
+     
+      category = object.Category.replace(/ /g, "-").toLowerCase();
+      businessName = object.MERCHANT.Business.replace(/ /g, "-").toLowerCase();
 
-     } else if ( this.props.match.params.hasOwnProperty("city") &&
-      this.props.match.params.hasOwnProperty("locality") &&
-      this.props.match.params.hasOwnProperty("collection")) {
+      newObject.data = object;
+      newObject.api_type = apiType;
       
-     }
+      this.props.history.push("/web/" + object.id + "/" + this.props.match.params.city + "/" + this.props.match.params.locality + "/" + category + "/" + businessName, {
+        offerData: newObject
+      });
+    } else {
+      
+      category = object.Offer_Basic_Details.Category_Name.replace(/ /g, "-").toLowerCase();
+      businessName = object.Merchant_Details.Merchant_Bname.replace(/ /g, "-").toLowerCase();
+
+      newObject.data = object;
+      newObject.api_type = apiType;
+
+      this.props.history.push("/web/" + object.Offer_Basic_Details.Offer_Id + "/" + this.props.match.params.city + "/" + this.props.match.params.locality + "/" + category + "/" + businessName, {
+        offerData: newObject
+      });
+
+    }
   }
 
   createOfferningCard = (
@@ -274,7 +289,8 @@ export default class Trending extends React.Component {
     half,
     empty,
     priceStatus,
-    object
+    object,
+    apiType
   ) => {
     return (
       <Card
@@ -284,7 +300,7 @@ export default class Trending extends React.Component {
       >
         <div
           className="ui fluid image"
-          onClick={() => this.clickCardIndex(object)}
+          onClick={() => this.clickCardIndex(object,apiType)}
         >
           <span
             className={classes.Heart}
@@ -328,7 +344,7 @@ export default class Trending extends React.Component {
           </span>
         </div>
 
-        <Card.Content onClick={() => this.clickCardIndex(object)}>
+        <Card.Content onClick={() => this.clickCardIndex(object,apiType)}>
           <Image
             style={{
               marginLeft: "0.4em"
@@ -675,7 +691,8 @@ export default class Trending extends React.Component {
         half,
         empty,
         0,
-        obj
+        obj,
+        1
       );
     });
   };
@@ -845,7 +862,8 @@ export default class Trending extends React.Component {
         half,
         empty,
         priceStatus,
-        obj
+        obj,
+        2
       );
     });
   };
