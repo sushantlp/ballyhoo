@@ -24,12 +24,10 @@ const Root = ({ store }) => (
         <Header />
 
         <Switch>
-
           <Route exact path="/web" component={Background} />
           <Route exact path="/web/terms" component={Terms} />
           <Route exact path="/web/privacy" component={Privacy} />
           <Route exact path="/web/faq" component={Faq} />
-
           <Route exact path="/web/:city" component={Background} />
           <Route exact path="/web/:city/trending" component={Facebook} />
           <Route exact path="/web/:city/:locality" component={Background} />
@@ -48,15 +46,12 @@ const Root = ({ store }) => (
             path="/web/:city/:locality/discover/:discover"
             component={Offerning}
           />
-
           <Route
             exact
             path="/web/:id/:city/:locality/:category/:merchant"
             component={DetailView}
           />
-
           // <Redirect from="/" to="/web" />
-        
         </Switch>
         <Footer />
       </div>

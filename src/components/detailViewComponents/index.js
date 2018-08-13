@@ -1,6 +1,7 @@
 import React from "react";
 
-import Offerning from "./cardOffComponent/cardOfferning";
+import Image from "./imageComponent/image";
+import Map from "./mapComponent/map";
 
 export default class DetailView extends React.Component {
 	constructor(props) {
@@ -23,5 +24,9 @@ export default class DetailView extends React.Component {
 				apiState: true
 			});
 		}
+	}
+
+	render() {
+		return <Image history={this.props.history} />;
 	}
 }
