@@ -6,17 +6,6 @@ import classes from "./static/css/faq.css";
 
 const FaqComponent = () => (
   <Container>
-    {/* <Header
-        as="h1"
-        textAlign="center"
-        style={{
-          marginTop: "2%",
-          fontWeight: "600",
-          color: "rgb(122, 82, 192)"
-        }}
-      >
-        FAQ's
-      </Header> */}
     <div className={classes.HeaderContainer}>
       <h4 className={classes.HeaderName}>FAQ'S</h4>
       <div className={classes.UnderScore} />
