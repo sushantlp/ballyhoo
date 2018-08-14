@@ -2,6 +2,7 @@ import React from "react";
 
 import Image from "./imageComponent/image";
 import Map from "./mapComponent/map";
+import Content from "./contentComponent/content";
 
 export default class DetailView extends React.Component {
 	constructor(props) {
@@ -27,6 +28,11 @@ export default class DetailView extends React.Component {
 	}
 
 	render() {
-		return <Image history={this.props.history} />;
+		return (
+			<div>
+				<Image history={this.props.history} />
+				<Content history={this.props.history} />
+			</div>
+		);
 	}
 }
