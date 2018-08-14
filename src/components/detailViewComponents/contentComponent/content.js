@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid } from "semantic-ui-react/dist/commonjs";
+import { Container, Grid, Label, Icon } from "semantic-ui-react/dist/commonjs";
 import Carousel from "nuka-carousel";
 
 import classes from "./static/css/content.css";
@@ -7,11 +7,21 @@ import classes from "./static/css/content.css";
 export default class ImageSlider extends React.Component {
   render() {
     return (
-      <Container>
+      <Container style={{ marginTop: "10px" }}>
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column>
-              <label>Casa Piccosa</label>
+              <Label
+                style={{
+                  float: "right",
+                  backgroundColor: "#fa4a4d",
+                  color: "white"
+                }}
+              >
+                <Icon name="star" style={{ padding: "0px" }} />
+                3.5
+              </Label>
+
               <h2
                 style={{
                   fontWeight: "500",
@@ -19,9 +29,9 @@ export default class ImageSlider extends React.Component {
                   margin: "0px"
                 }}
               >
-                Sunday Sundowner
+                Lunch Buffet
               </h2>
-              <label>PUBS & BREWERY</label>
+              <label>Toscano - Whitefeild</label>
             </Grid.Column>
             <Grid.Column />
           </Grid.Row>
