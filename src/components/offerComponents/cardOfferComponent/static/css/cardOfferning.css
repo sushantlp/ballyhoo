@@ -28,9 +28,9 @@ OfferningCard {
   font-weight: 600;
   margin: 2em 0em 1em 20em;
   font-size: 12px;
-  color: black;
+  color: white;
   text-transform: uppercase;
-  background-color: white;
+  background-color: black;
   box-shadow: 4px 4px 10px 0;
   padding: 2px;
   opacity: 0.8;
@@ -38,8 +38,8 @@ OfferningCard {
 .Heart {
   position: absolute;
   margin: 1em 0em 1em 20em;
-  color: black;
-  background-color: white;
+  color: white;
+  background-color: black;
   opacity: 0.8;
   display: flex;
 }
