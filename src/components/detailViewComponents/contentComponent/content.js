@@ -4,7 +4,8 @@ import {
   Grid,
   Label,
   Icon,
-  Segment
+  Segment,
+  Image
 } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/content.css";
@@ -15,7 +16,7 @@ export default class ImageSlider extends React.Component {
       <Container style={{ marginTop: "10px" }}>
         <Grid>
           <Grid.Row columns={2}>
-            <Grid.Column>
+            <Grid.Column width={10}>
               <Label
                 style={{
                   float: "right",
@@ -56,7 +57,6 @@ export default class ImageSlider extends React.Component {
                   the rights to change the prices without any notice.
                 </label>
               </Segment>
-
               <div className={classes.HeaderContainer}>
                 <h4 className={classes.HeaderName}>HIGHLIGHTS</h4>
                 <div className={classes.UnderScore} />
@@ -75,7 +75,6 @@ export default class ImageSlider extends React.Component {
                   updates/contest.
                 </label>
               </Segment>
-
               <div className={classes.HeaderContainer}>
                 <h4 className={classes.HeaderName}>NOTES</h4>
                 <div className={classes.UnderScore} />
@@ -90,7 +89,7 @@ export default class ImageSlider extends React.Component {
                 </label>
               </Segment>
             </Grid.Column>
-            <Grid.Column />
+            <Grid.Column width={2} />
           </Grid.Row>
         </Grid>
       </Container>

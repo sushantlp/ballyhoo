@@ -5,7 +5,8 @@ import {
   Card,
   Container,
   Image,
-  Button
+  Button,
+  Popup
 } from "semantic-ui-react/dist/commonjs";
 
 import FacebookLoader from "../../loaderComponents/facebookLoader";
@@ -78,7 +79,15 @@ export default class Trending extends React.Component {
     win.focus();
   }
 
-  createFacebookEventCard = (index, header, image, content, alt, targetUrl) => {
+  createFacebookEventCard = (
+    index,
+    header,
+    image,
+    content,
+    alt,
+    targetUrl,
+    fullContent
+  ) => {
     return (
       <Card
         className={classes.FacebookCard}
@@ -103,7 +112,9 @@ export default class Trending extends React.Component {
           >
             {header}
           </Card.Header>
-          <Card.Description>{content}</Card.Description>
+          <Popup trigger={<Card.Description>{content} </Card.Description>}>
+            {fullContent}
+          </Popup>
         </Card.Content>
       </Card>
     );
@@ -125,7 +136,8 @@ export default class Trending extends React.Component {
           obj.img_url,
           content,
           content,
-          obj.target_url
+          obj.target_url,
+          obj.content
         );
       }
     });

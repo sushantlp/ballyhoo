@@ -93,11 +93,12 @@ export default class Trending extends React.Component {
   };
 
   redirectRoute = () => {
-    this.props.history.push("/web");
+    // this.props.history.push("/web");
     const cityName = this.props.cityName.replace(/ /g, "-").toLowerCase();
-    this.props.history.push(cityName + "/trending/", {
+    this.props.history.push("/web/" + cityName + "/trending/", {
       cityId: this.props.cityId
     });
+    console.log(this.props.history);
   };
 
   render() {
