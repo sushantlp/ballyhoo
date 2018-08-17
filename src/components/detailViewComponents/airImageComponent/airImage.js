@@ -10,7 +10,7 @@ export default class ImageSlider extends React.Component {
   render() {
     return (
       <Image
-        src="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_1300/v1457670910/ballyhoo/WALK-IN/13.jpg"
+        src={this.props.history.location.state.offerData.data.full_img}
         fluid
         style={{
           height: "370px",

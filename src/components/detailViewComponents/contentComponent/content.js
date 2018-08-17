@@ -1,4 +1,5 @@
 import React from "react";
+import Truncate from "react-truncate";
 import { Label, Icon, Segment } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/content.css";
