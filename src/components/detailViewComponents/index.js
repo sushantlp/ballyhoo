@@ -51,7 +51,7 @@ export default class DetailView extends React.Component {
         </Container>
         <ImageCarousel />
         <MenuCarousel />
-        <Review />
+        <Map />
       </div>
     );
   }
