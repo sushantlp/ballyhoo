@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Segment } from "semantic-ui-react/dist/commonjs";
 
-import { withGoogleMap, GoogleMap } from "react-google-maps";
+import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 
 import classes from "./static/css/map.css";
 
@@ -9,9 +9,13 @@ export default class Map extends React.Component {
   render() {
     const GoogleMapExample = withGoogleMap(props => (
       <GoogleMap
-        defaultCenter={{ lat: 40.756795, lng: -73.954298 }}
+        defaultCenter={{ lat: 12.906492, lng: 77.596765 }}
         defaultZoom={13}
-      />
+      >
+        
+          <Marker position={{ lat: 12.906492, lng: 77.596765 }} />
+        
+      </GoogleMap>
     ));
     return (
       <Container>
