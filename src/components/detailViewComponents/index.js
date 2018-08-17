@@ -3,6 +3,11 @@ import React from "react";
 import AirImage from "./airImageComponent/airImage";
 import Map from "./mapComponent/map";
 import Content from "./contentComponent/content";
+import ImageCarousel from "./imageCarouselComponent/imageCarousel";
+import MenuCarousel from "./menuCarouselComponent/menuCarousel";
+import Review from "./reviewComponent/review";
+
+import { Container, Grid } from "semantic-ui-react/dist/commonjs";
 
 export default class DetailView extends React.Component {
   constructor(props) {
@@ -30,8 +35,23 @@ export default class DetailView extends React.Component {
   render() {
     return (
       <div>
-        <AirImage history={this.props.history} />
-        <Content history={this.props.history} />
+        <Container fluid>
+          <AirImage history={this.props.history} />
+        </Container>
+
+        <Container style={{ marginTop: "10px" }}>
+          <Grid>
+            <Grid.Row columns={2}>
+              <Grid.Column width={10}>
+                <Content history={this.props.history} />
+              </Grid.Column>
+              <Grid.Column width={2} />
+            </Grid.Row>
+          </Grid>
+        </Container>
+        <ImageCarousel />
+        <MenuCarousel />
+        <Review />
       </div>
     );
   }

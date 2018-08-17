@@ -6,7 +6,7 @@ import SweetAlert from "sweetalert2-react";
 // import "sweetalert/dist/sweetalert.css";
 
 import {
-  Segment,
+  Container,
   Dropdown,
   Grid,
   Icon,
@@ -372,13 +372,6 @@ export default class Background extends React.Component {
       return <BackgroundLoader />;
     }
 
-    // if (
-    //   !_.isArray(this.props.cityLocality) ||
-    //   !_.isArray(this.props.categoryFilter)
-    // ) {
-    //   return <BackgroundLoader />;
-    // }
-
     if (
       _.isEmpty(this.props.cityLocality) ||
       _.isEmpty(this.props.categoryFilter)
@@ -389,8 +382,8 @@ export default class Background extends React.Component {
     const { cityList, localityList, categoryList } = this.state;
 
     return (
-      <Segment
-        raised
+      <Container
+        fluid
         style={{
           width: "auto",
           height: "500px",
@@ -503,7 +496,7 @@ export default class Background extends React.Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </Segment>
+      </Container>
     );
   }
 }
