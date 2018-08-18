@@ -1,9 +1,6 @@
 import React from "react";
 import { Image } from "semantic-ui-react/dist/commonjs";
 
-// import ImageGallery from "react-image-gallery";
-// import "react-image-gallery/styles/css/image-gallery.css";
-
 import classes from "./static/css/airImage.css";
 
 export default class ImageSlider extends React.Component {

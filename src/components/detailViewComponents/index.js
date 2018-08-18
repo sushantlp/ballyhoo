@@ -2,7 +2,7 @@ import React from "react";
 
 import AirImage from "./airImageComponent/airImage";
 import Map from "./mapComponent/map";
-import Content from "./contentComponent/content";
+import Content from "./contentComponent";
 import ImageCarousel from "./imageCarouselComponent/imageCarousel";
 import MenuCarousel from "./menuCarouselComponent/menuCarousel";
 import Review from "./reviewComponent/review";
