@@ -1,0 +1,24 @@
+.HeaderContainer {
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+.HeaderName {
+  color: #7a52c0;
+  font-weight: 600;
+  font-size: 15px;
+}
+.UnderScore {
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#7a52c0),
+    to(#dee5ef)
+  );
+  margin-top: -5px;
+  content: "";
+  height: 4px;
+  display: block;
+  box-sizing: border-box;
+  width: 40px;
+}

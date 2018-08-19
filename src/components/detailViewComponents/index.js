@@ -13,21 +13,19 @@ export default class DetailView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      apiType: 0,
-      apiState: false
+      apiCall: false
     };
   }
 
   componentDidMount() {
     if (this.props.history.location.state !== undefined) {
       this.setState({
-        apiType: 1
+        apiCall: false
       });
-
       console.log(this.props.history.location.state);
     } else {
       this.setState({
-        apiState: true
+        apiCall: true
       });
     }
   }
@@ -36,23 +34,26 @@ export default class DetailView extends React.Component {
     return (
       <div>
         <Container fluid>
-          <AirImage history={this.props.history} />
+          <AirImage history={this.props.history} detailState={this.state} />
         </Container>
 
         <Container style={{ marginTop: "10px" }}>
           <Grid>
             <Grid.Row columns={2}>
               <Grid.Column width={10}>
-                <Content history={this.props.history} />
+                <Content
+                  history={this.props.history}
+                  detailState={this.state}
+                />
               </Grid.Column>
               <Grid.Column width={2} />
             </Grid.Row>
           </Grid>
         </Container>
-        <ImageCarousel />
-        <MenuCarousel />
-        <Map />
-        <Review />
+        <ImageCarousel history={this.props.history} detailState={this.state} />
+        <MenuCarousel history={this.props.history} detailState={this.state} />
+        <Map history={this.props.history} detailState={this.state} />
+        <Review history={this.props.history} detailState={this.state} />
       </div>
     );
   }

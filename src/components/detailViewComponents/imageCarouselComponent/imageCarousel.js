@@ -1,17 +1,14 @@
 import React from "react";
-import { Container, Card, Segment } from "semantic-ui-react/dist/commonjs";
+import _ from "lodash";
+
+import { Container, Card } from "semantic-ui-react/dist/commonjs";
 
 import Lightbox from "lightbox-react";
 
 import classes from "./static/css/imageCarousel.css";
 
 const images = [
-  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474443487/merchant/1111110524/1506.jpg",
-  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474443487/merchant/1111110524/1508.jpg",
-  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474443487/merchant/1111110524/1510.jpg",
-  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474443487/merchant/1111110524/1511.jpg",
-  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474443487/merchant/1111110524/1512.jpg",
-  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474443487/merchant/1111110524/1514.jpg"
+  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474443487/merchant/1111110524/1506.jpg"
 ];
 
 export default class ImageCarousel extends React.Component {
@@ -23,8 +20,47 @@ export default class ImageCarousel extends React.Component {
     };
   }
 
+  carousel = (image, key) => {
+    return (
+      <Card raised image={image} style={{ cursor: "pointer" }} key={key} />
+    );
+  };
+
+  loopCarouselImage = images => {
+    return images.map((image, key) => {
+      return this.carousel(image, key);
+    });
+  };
+
+  logicCarousel = () => {
+    if (this.props.history.location.state.offerData.api_type === 1) {
+      return this.loopCarouselImage(
+        this.props.history.location.state.offerData.data.full_img
+      );
+    } else {
+      if (
+        _.isEmpty(
+          this.props.history.location.state.offerData.data.Offer_Basic_Details
+            .Offer_Venue_Images
+        )
+      ) {
+        return <div />;
+      }
+
+      return this.loopCarouselImage(
+        this.props.history.location.state.offerData.data.Offer_Basic_Details
+          .Offer_Venue_Images
+      );
+    }
+  };
+
   render() {
     const { photoIndex, isOpen } = this.state;
+
+    if (this.props.detailState.apiCall) {
+    } else {
+      return this.logicCarousel();
+    }
 
     return (
       <Container>
@@ -37,14 +73,8 @@ export default class ImageCarousel extends React.Component {
           itemsPerRow={8}
           onClick={() => this.setState({ isOpen: true })}
         >
-          <Card raised image={images[0]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[1]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[2]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[3]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[4]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[5]} style={{ cursor: "pointer" }} />
+          {this.logicCarousel()}
         </Card.Group>
-
         {isOpen && (
           <Lightbox
             mainSrc={images[photoIndex]}

@@ -47,20 +47,6 @@ export default class ImageCarousel extends React.Component {
           onClick={() => this.setState({ isOpen: true })}
         >
           <Card raised image={images[0]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[1]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[2]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[3]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[4]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[5]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[6]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[7]} style={{ cursor: "pointer" }} />
-          {/* <Card raised image={images[8]} style={{ cursor: "pointer" }} /> */}
-          {/* <Card raised image={images[9]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[10]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[11]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[12]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[13]} style={{ cursor: "pointer" }} />
-          <Card raised image={images[14]} style={{ cursor: "pointer" }} /> */}
         </Card.Group>
 
         {isOpen && (
