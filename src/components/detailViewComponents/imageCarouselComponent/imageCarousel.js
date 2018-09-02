@@ -7,9 +7,7 @@ import Lightbox from "lightbox-react";
 
 import classes from "./static/css/imageCarousel.css";
 
-const images = [
-  "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_400,w_600/v1474443487/merchant/1111110524/1506.jpg"
-];
+let globalImageArray = [];
 
 export default class ImageCarousel extends React.Component {
   constructor(props) {
@@ -28,14 +26,31 @@ export default class ImageCarousel extends React.Component {
 
   loopCarouselImage = images => {
     return images.map((image, key) => {
-      return this.carousel(image, key);
+      return this.carousel(image.Image_Url, key);
     });
+  };
+
+  createImageArray = images => {
+    let imageArray = [];
+    images.map(image => {
+      imageArray.push(image.Image_Url);
+    });
+
+    globalImageArray = imageArray;
   };
 
   logicCarousel = () => {
     if (this.props.history.location.state.offerData.api_type === 1) {
+      if (_.isEmpty(this.props.history.location.state.offerData.data.IMAGES)) {
+        return <div />;
+      }
+
+      this.createImageArray(
+        this.props.history.location.state.offerData.data.IMAGES
+      );
+
       return this.loopCarouselImage(
-        this.props.history.location.state.offerData.data.full_img
+        this.props.history.location.state.offerData.data.IMAGES
       );
     } else {
       if (
@@ -47,7 +62,38 @@ export default class ImageCarousel extends React.Component {
         return <div />;
       }
 
+      this.createImageArray(
+        this.props.history.location.state.offerData.data.Offer_Basic_Details
+          .Offer_Venue_Images
+      );
+
       return this.loopCarouselImage(
+        this.props.history.location.state.offerData.data.Offer_Basic_Details
+          .Offer_Venue_Images
+      );
+    }
+  };
+
+  logicCreateImageArray = () => {
+    if (this.props.history.location.state.offerData.api_type === 1) {
+      if (_.isEmpty(this.props.history.location.state.offerData.data.IMAGES)) {
+        return [];
+      }
+
+      return this.createImageArray(
+        this.props.history.location.state.offerData.data.IMAGES
+      );
+    } else {
+      if (
+        _.isEmpty(
+          this.props.history.location.state.offerData.data.Offer_Basic_Details
+            .Offer_Venue_Images
+        )
+      ) {
+        return [];
+      }
+
+      return this.createImageArray(
         this.props.history.location.state.offerData.data.Offer_Basic_Details
           .Offer_Venue_Images
       );
@@ -58,8 +104,6 @@ export default class ImageCarousel extends React.Component {
     const { photoIndex, isOpen } = this.state;
 
     if (this.props.detailState.apiCall) {
-    } else {
-      return this.logicCarousel();
     }
 
     return (
@@ -71,24 +115,36 @@ export default class ImageCarousel extends React.Component {
 
         <Card.Group
           itemsPerRow={8}
+          doubling
+          stackable
           onClick={() => this.setState({ isOpen: true })}
         >
           {this.logicCarousel()}
+          {this.logicCreateImageArray()}
         </Card.Group>
         {isOpen && (
           <Lightbox
-            mainSrc={images[photoIndex]}
-            nextSrc={images[(photoIndex + 1) % images.length]}
-            prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+            mainSrc={globalImageArray[photoIndex]}
+            nextSrc={
+              globalImageArray[(photoIndex + 1) % globalImageArray.length]
+            }
+            prevSrc={
+              globalImageArray[
+                (photoIndex + globalImageArray.length - 1) %
+                  globalImageArray.length
+              ]
+            }
             onCloseRequest={() => this.setState({ isOpen: false })}
             onMovePrevRequest={() =>
               this.setState({
-                photoIndex: (photoIndex + images.length - 1) % images.length
+                photoIndex:
+                  (photoIndex + globalImageArray.length - 1) %
+                  globalImageArray.length
               })
             }
             onMoveNextRequest={() =>
               this.setState({
-                photoIndex: (photoIndex + 1) % images.length
+                photoIndex: (photoIndex + 1) % globalImageArray.length
               })
             }
           />
