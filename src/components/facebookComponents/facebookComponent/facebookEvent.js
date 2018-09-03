@@ -21,7 +21,7 @@ export default class Trending extends React.Component {
     super(props);
     this.state = {
       loading: false,
-      disabled: false,
+
       cityId: 0
     };
   }
@@ -47,7 +47,6 @@ export default class Trending extends React.Component {
       return false;
     } else if (nextProps.facebookEvent.end !== this.props.facebookEvent.end) {
       this.loadingStop();
-      this.disabledButon();
       return false;
     }
   }
@@ -160,14 +159,8 @@ export default class Trending extends React.Component {
     });
   };
 
-  disabledButon = () => {
-    this.setState({
-      disabled: true
-    });
-  };
-
   render() {
-    const { loading, disabled } = this.state;
+    const { loading } = this.state;
     if (
       this.props.facebookEvent.facebookEvent === null ||
       this.props.facebookEvent.facebookEvent === undefined
@@ -198,7 +191,7 @@ export default class Trending extends React.Component {
           size="large"
           color="violet"
           loading={loading}
-          disabled={disabled}
+          disabled={this.props.facebookEvent.end === 1 ? true : false}
           onClick={() => this.loadingStart()}
           style={{
             marginTop: "1.5em",
