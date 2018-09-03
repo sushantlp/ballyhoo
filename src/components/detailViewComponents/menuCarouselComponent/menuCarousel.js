@@ -1,5 +1,7 @@
 import React from "react";
-import { Container, Card, Segment } from "semantic-ui-react/dist/commonjs";
+import _ from "lodash";
+
+import { Container, Card } from "semantic-ui-react/dist/commonjs";
 
 import Lightbox from "lightbox-react";
 
@@ -16,36 +18,50 @@ export default class ImageCarousel extends React.Component {
     };
   }
 
-  logicCreateMenuArray = () => {
-    if (this.props.history.location.state.offerData.api_type === 1) {
-      if (
-        _.isEmpty(this.props.history.location.state.offerData.data.MENU_PIC)
-      ) {
-        return [];
-      }
+  carousel = (image, key) => {
+    return (
+      <Card raised image={image} style={{ cursor: "pointer" }} key={key} />
+    );
+  };
 
-      return this.createImageArray(
-        this.props.history.location.state.offerData.data.MENU_PIC
-      );
-    } else {
-      if (
-        _.isEmpty(
-          this.props.history.location.state.offerData.data.Offer_Basic_Details
-            .Offer_Venue_Images
-        )
-      ) {
-        return [];
-      }
+  loopCarouselImage = images => {
+    return images.map((image, key) => {
+      return this.carousel(image.Menu_Url, key);
+    });
+  };
 
-      return this.createImageArray(
-        this.props.history.location.state.offerData.data.Offer_Basic_Details
-          .Offer_Venue_Images
-      );
-    }
+  createImageArray = images => {
+    let imageArray = [];
+    images.map(image => {
+      imageArray.push(image.Menu_Url);
+    });
+
+    globalMenuArray = imageArray;
+  };
+
+  logicCarousel = menuData => {
+    this.createImageArray(menuData);
+    return this.loopCarouselImage(menuData);
   };
 
   render() {
     const { photoIndex, isOpen } = this.state;
+    let menuData = [];
+
+    if (this.props.detailState.apiCall) {
+    } else {
+      if (this.props.history.location.state.offerData.api_type === 1) {
+        if (
+          _.isEmpty(this.props.history.location.state.offerData.data.MENU_PIC)
+        ) {
+          return <div />;
+        } else {
+          menuData = this.props.history.location.state.offerData.data.MENU_PIC;
+        }
+      } else {
+        return <div />;
+      }
+    }
 
     return (
       <Container>
@@ -60,8 +76,7 @@ export default class ImageCarousel extends React.Component {
           stackable
           onClick={() => this.setState({ isOpen: true })}
         >
-          {this.logicCarousel()}
-          {this.logicCreateMenuArray()}
+          {this.logicCarousel(menuData)}
         </Card.Group>
         {isOpen && (
           <Lightbox

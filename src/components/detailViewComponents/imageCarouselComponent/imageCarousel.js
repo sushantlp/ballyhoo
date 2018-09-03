@@ -39,71 +39,38 @@ export default class ImageCarousel extends React.Component {
     globalImageArray = imageArray;
   };
 
-  logicCarousel = () => {
-    if (this.props.history.location.state.offerData.api_type === 1) {
-      if (_.isEmpty(this.props.history.location.state.offerData.data.IMAGES)) {
-        return <div />;
-      }
-
-      this.createImageArray(
-        this.props.history.location.state.offerData.data.IMAGES
-      );
-
-      return this.loopCarouselImage(
-        this.props.history.location.state.offerData.data.IMAGES
-      );
-    } else {
-      if (
-        _.isEmpty(
-          this.props.history.location.state.offerData.data.Offer_Basic_Details
-            .Offer_Venue_Images
-        )
-      ) {
-        return <div />;
-      }
-
-      this.createImageArray(
-        this.props.history.location.state.offerData.data.Offer_Basic_Details
-          .Offer_Venue_Images
-      );
-
-      return this.loopCarouselImage(
-        this.props.history.location.state.offerData.data.Offer_Basic_Details
-          .Offer_Venue_Images
-      );
-    }
-  };
-
-  logicCreateImageArray = () => {
-    if (this.props.history.location.state.offerData.api_type === 1) {
-      if (_.isEmpty(this.props.history.location.state.offerData.data.IMAGES)) {
-        return [];
-      }
-
-      return this.createImageArray(
-        this.props.history.location.state.offerData.data.IMAGES
-      );
-    } else {
-      if (
-        _.isEmpty(
-          this.props.history.location.state.offerData.data.Offer_Basic_Details
-            .Offer_Venue_Images
-        )
-      ) {
-        return [];
-      }
-
-      return this.createImageArray(
-        this.props.history.location.state.offerData.data.Offer_Basic_Details
-          .Offer_Venue_Images
-      );
-    }
+  logicCarousel = images => {
+    this.createImageArray(images);
+    return this.loopCarouselImage(images);
   };
 
   render() {
     const { photoIndex, isOpen } = this.state;
+    let imageData = [];
 
     if (this.props.detailState.apiCall) {
+    } else {
+      if (this.props.history.location.state.offerData.api_type === 1) {
+        if (
+          _.isEmpty(this.props.history.location.state.offerData.data.IMAGES)
+        ) {
+          return <div />;
+        } else {
+          imageData = this.props.history.location.state.offerData.data.IMAGES;
+        }
+      } else {
+        if (
+          _.isEmpty(
+            this.props.history.location.state.offerData.data.Offer_Basic_Details
+              .Offer_Venue_Images
+          )
+        ) {
+          return <div />;
+        } else {
+          imageData = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Offer_Venue_Images;
+        }
+      }
     }
 
     return (
@@ -119,8 +86,7 @@ export default class ImageCarousel extends React.Component {
           stackable
           onClick={() => this.setState({ isOpen: true })}
         >
-          {this.logicCarousel()}
-          {this.logicCreateImageArray()}
+          {this.logicCarousel(imageData)}
         </Card.Group>
         {isOpen && (
           <Lightbox
