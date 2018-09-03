@@ -6,6 +6,23 @@ import classes from "./static/css/inclusion.css";
 
 export default class Inclusion extends React.Component {
   render() {
+    let inclusion = "";
+    if (this.props.detailState.apiCall) {
+    } else {
+      if (this.props.history.location.state.offerData.api_type === 1) {
+        if (
+          this.props.history.location.state.offerData.data.Inclusion === null ||
+          this.props.history.location.state.offerData.data.Inclusion === ""
+        ) {
+          return <div />;
+        } else {
+          inclusion = this.props.history.location.state.offerData.data
+            .Inclusion;
+        }
+      } else {
+      }
+    }
+
     return (
       <div>
         <div className={classes.HeaderContainer}>
@@ -13,14 +30,8 @@ export default class Inclusion extends React.Component {
           <div className={classes.UnderScore} />
         </div>
         <Segment>
-          <label style={{ color: "rgba(0,0,0,.6)" }}>
-            About Buffet:- Enjoy Authentic BBQ Cuisine with Unlimited spread for
-            Dinner Buffet @BBQ Nation.↵↵Inclusions: An indoor barbecue concept
-            venue offering a 'Do-It-Yourself' grilling experience at every
-            table↵↵T&C:↵Validity: Monday – Sunday.↵All inclusive per
-            person↵Taxes may Apply.↵Can not be shared.↵Rights of reservation
-            reserved.↵Management reserved the rights to change the prices
-            without any notice.
+          <label style={{ color: "rgba(0,0,0,.6)", whiteSpace: "pre-line" }}>
+            {inclusion}
           </label>
         </Segment>
       </div>

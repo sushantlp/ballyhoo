@@ -11,12 +11,30 @@ export default class Content extends React.Component {
   render() {
     return (
       <div>
-        <Basic />
-        <BusinessHour />
-        <Hashtag />
-        <Highlight />
-        <Inclusion />
-        <Note />
+        <Basic
+          history={this.props.history}
+          detailState={this.props.detailState}
+        />
+        <BusinessHour
+          history={this.props.history}
+          detailState={this.props.detailState}
+        />
+        <Hashtag
+          history={this.props.history}
+          detailState={this.props.detailState}
+        />
+        <Highlight
+          history={this.props.history}
+          detailState={this.props.detailState}
+        />
+        <Inclusion
+          history={this.props.history}
+          detailState={this.props.detailState}
+        />
+        <Note
+          history={this.props.history}
+          detailState={this.props.detailState}
+        />
       </div>
     );
   }

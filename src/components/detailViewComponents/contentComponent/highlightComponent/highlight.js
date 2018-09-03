@@ -6,6 +6,18 @@ import classes from "./static/css/highlight.css";
 
 export default class Highlight extends React.Component {
   render() {
+    let highlight = "";
+    if (this.props.detailState.apiCall) {
+    } else {
+      if (this.props.history.location.state.offerData.api_type === 1) {
+        highlight =
+          this.props.history.location.state.offerData.data.Description +
+          "\n\n" +
+          this.props.history.location.state.offerData.data.MERCHANT.Description;
+      } else {
+      }
+    }
+
     return (
       <div>
         <div className={classes.HeaderContainer}>
@@ -13,16 +25,8 @@ export default class Highlight extends React.Component {
           <div className={classes.UnderScore} />
         </div>
         <Segment>
-          <label style={{ color: "rgba(0,0,0,.6)" }}>
-            Cuisine: North Indian, European, Mediterranean, BBQ,
-            Kebab.↵↵Expected average cost for two: 1600/-↵↵Features : Full Bar
-            Available, Buffet, Kid Friendly.↵↵Popularity:- Mutton Curry, Kulfi,
-            Mutton Seekh Kebab, Chicken Biryani, Kheer, Vegetable Biryani,
-            Mocktails.↵↵Other offers:- Currently no Promotional Offers are
-            Available.↵↵Ballyhoo Brings exciting Live offers in real time, where
-            you can Discover, Trend, Eat & Escape! ↵↵Follow us on Social Media-
-            Facebook/Twitter/Instagram (@BallyhooToday)for latest
-            updates/contest.
+          <label style={{ color: "rgba(0,0,0,.6)", whiteSpace: "pre-line" }}>
+            {highlight}
           </label>
         </Segment>
       </div>
