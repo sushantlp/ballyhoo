@@ -334,7 +334,6 @@ export default class Trending extends React.Component {
           />
           <span
             className={classes.Calendar}
-            // hidden={calendar === undefined ? true : false}
             style={{
               display: calendar === undefined ? "none" : "intial",
               marginLeft: object.Offering === "Event" ? "22em" : "20em"

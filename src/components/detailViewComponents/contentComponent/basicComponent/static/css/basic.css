@@ -23,15 +23,12 @@
   width: 40px;
 }
 
-/* .DiscountPricePercent {
-  border-radius: 2px;
-  background-color: #fff;
-  border: 0.2em solid #7a52c0;
-  font-size: 10px;
-  font-weight: 700;
-  color: #7a52c0;
-  padding: 2px 8px;
-  position: relative;
-  margin-left: 35px;
-  color: "rgba(0,0,0,.68)";
-} */
+.Heart {
+  position: absolute;
+  margin-left: 0.8em;
+}
+.HeartPercent {
+  font-size: 18px;
+  padding-left: 34px;
+  color: rgba(0, 0, 0, 0.68);
+}

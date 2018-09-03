@@ -14,7 +14,8 @@ export default class Hashtag extends React.Component {
         basic
         style={{
           color: "rgba(0,0,0,.6)",
-          fontSize: "14px"
+          fontSize: "14px",
+          marginBottom: "3px"
         }}
       >
         {tag}

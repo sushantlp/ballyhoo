@@ -1,6 +1,7 @@
 import React from "react";
 import Truncate from "react-truncate";
 
+import Header from "./headerComponent/header";
 import Basic from "./basicComponent/basic";
 import BusinessHour from "./businessHourComponent/business";
 import Hashtag from "./hashtagComponent/hashtag";
@@ -11,6 +12,10 @@ export default class Content extends React.Component {
   render() {
     return (
       <div>
+        <Header
+          history={this.props.history}
+          detailState={this.props.detailState}
+        />
         <Basic
           history={this.props.history}
           detailState={this.props.detailState}
