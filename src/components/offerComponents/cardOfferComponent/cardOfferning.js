@@ -237,37 +237,63 @@ export default class Trending extends React.Component {
     }
   };
 
-  clickCardIndex = (object,apiType) => {
-   
+  clickCardIndex = (object, apiType) => {
     let newObject = {};
-    let category = undefined
-    let businessName = undefined
+    let category = undefined;
+    let businessName = undefined;
 
     if (apiType === 1) {
-     
       category = object.Category.replace(/ /g, "-").toLowerCase();
       businessName = object.MERCHANT.Business.replace(/ /g, "-").toLowerCase();
 
       newObject.data = object;
       newObject.api_type = apiType;
-      
-      this.props.history.push("/web/" + object.id + "/" + this.props.match.params.city + "/" + this.props.match.params.locality + "/" + category + "/" + businessName, {
-        offerData: newObject
-      });
+
+      this.props.history.push(
+        "/web/" +
+          object.id +
+          "/" +
+          this.props.match.params.city +
+          "/" +
+          this.props.match.params.locality +
+          "/" +
+          category +
+          "/" +
+          businessName,
+        {
+          offerData: newObject
+        }
+      );
     } else {
-      
-      category = object.Offer_Basic_Details.Category_Name.replace(/ /g, "-").toLowerCase();
-      businessName = object.Merchant_Details.Merchant_Bname.replace(/ /g, "-").toLowerCase();
+      category = object.Offer_Basic_Details.Category_Name.replace(
+        / /g,
+        "-"
+      ).toLowerCase();
+      businessName = object.Merchant_Details.Merchant_Bname.replace(
+        / /g,
+        "-"
+      ).toLowerCase();
 
       newObject.data = object;
       newObject.api_type = apiType;
 
-      this.props.history.push("/web/" + object.Offer_Basic_Details.Offer_Id + "/" + this.props.match.params.city + "/" + this.props.match.params.locality + "/" + category + "/" + businessName, {
-        offerData: newObject
-      });
-
+      this.props.history.push(
+        "/web/" +
+          object.Offer_Basic_Details.Offer_Id +
+          "/" +
+          this.props.match.params.city +
+          "/" +
+          this.props.match.params.locality +
+          "/" +
+          category +
+          "/" +
+          businessName,
+        {
+          offerData: newObject
+        }
+      );
     }
-  }
+  };
 
   createOfferningCard = (
     key,
@@ -300,7 +326,7 @@ export default class Trending extends React.Component {
       >
         <div
           className="ui fluid image"
-          onClick={() => this.clickCardIndex(object,apiType)}
+          onClick={() => this.clickCardIndex(object, apiType)}
         >
           <span
             className={classes.Heart}
@@ -343,7 +369,7 @@ export default class Trending extends React.Component {
           </span>
         </div>
 
-        <Card.Content onClick={() => this.clickCardIndex(object,apiType)}>
+        <Card.Content onClick={() => this.clickCardIndex(object, apiType)}>
           <Image
             style={{
               marginLeft: "0.4em"
@@ -490,7 +516,8 @@ export default class Trending extends React.Component {
                     : "3em"
             }}
           >
-            {distance}km
+            {distance}
+            km
           </label>
           <label
             style={{
@@ -563,6 +590,7 @@ export default class Trending extends React.Component {
         discount = parseInt(obj.DISCOUNT.Value, 10);
         if (obj.DISCOUNT.ActualPrice !== 0 && discount !== 0) {
           discountPrice = (obj.DISCOUNT.ActualPrice * discount) / 100;
+          discountPrice = _.round(obj.DISCOUNT.ActualPrice - discountPrice);
           discount = discount + "%" + " OFF";
         } else if (discount !== 0) {
           discount = discount + "%" + " OFF";

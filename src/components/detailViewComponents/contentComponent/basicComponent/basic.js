@@ -1,12 +1,7 @@
 import React from "react";
+import _ from "lodash";
 
-import {
-  Label,
-  Segment,
-  Icon,
-  Grid,
-  Image
-} from "semantic-ui-react/dist/commonjs";
+import { Label, Segment, Icon, Image } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/basic.css";
 
@@ -24,212 +19,224 @@ export default class Basic extends React.Component {
   ) => {
     return (
       <div>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column width={12} style={{ marginBottom: "8px" }}>
-              <label
-                style={{
-                  color: "rgba(0,0,0,.6)",
-                  fontSize: "18px",
-                  display: "inline"
-                }}
-              >
-                {labelName}
-              </label>
+        <Label
+          as="a"
+          basic
+          style={{
+            color: "rgba(0,0,0,.6)",
+            fontSize: "14px",
+            display: "inline",
+            lineHeight: "40px"
+          }}
+        >
+          {labelName}
+        </Label>
 
-              <Image
-                style={{
-                  display: "inline",
-                  marginLeft: "10px",
-                  marginBottom: "2px"
-                }}
-                src={femaleVeg}
-              />
-              <Image
-                style={{
-                  display: "inline",
-                  marginLeft: "5px",
-                  marginBottom: "2px"
-                }}
-                src={maleNonveg}
-              />
-            </Grid.Column>
+        <Image
+          style={{
+            display: "inline",
+            marginLeft: "10px",
+            marginBottom: "2px"
+          }}
+          src={femaleVeg}
+        />
+        <Image
+          style={{
+            display: "inline",
+            marginLeft: "5px",
+            marginBottom: "2px"
+          }}
+          src={maleNonveg}
+        />
 
-            <Grid.Column width={12} style={{ marginBottom: "8px" }}>
-              <label
-                style={{
-                  color: "rgba(0,0,0,.6)",
-                  fontSize: "18px",
-                  display: remaining === 0 ? "none" : "inline"
-                }}
-              >
-                Popularity :
-              </label>
+        <Label
+          as="a"
+          basic
+          style={{
+            marginLeft: "20px",
+            color: "rgba(0,0,0,.6)",
+            fontSize: "14px",
+            lineHeight: "40px",
+            display: remaining === 0 ? "none" : "inline"
+          }}
+        >
+          Popularity :
+        </Label>
 
-              <span
-                className={classes.Heart}
-                style={{
-                  display: popularity === 0 ? "none" : "intial"
-                }}
-              >
-                <img
-                  src="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_20/v1532419222/ballyhoo/EMAIL/heart.png"
-                  alt="non-veg, food, restaurants, dinner buffet, lunch buffet, pubs & brewery, reservation, event"
-                />
-              </span>
+        <span
+          className={classes.Heart}
+          style={{
+            display: popularity === 0 ? "none" : "intial"
+          }}
+        >
+          <img
+            src="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_22/v1532419222/ballyhoo/EMAIL/heart.png"
+            alt="non-veg, food, restaurants, dinner buffet, lunch buffet, pubs & brewery, reservation, event"
+            style={{
+              display: popularity === 0 ? "none" : "intial",
+              marginTop: "10px"
+            }}
+          />
+        </span>
 
-              <label className={classes.HeartPercent}>{popularity + "%"}</label>
-            </Grid.Column>
+        <label
+          className={classes.HeartPercent}
+          style={{
+            display: popularity === 0 ? "none" : "intial",
+            fontSize: "14px"
+          }}
+        >
+          {popularity + "%"}
+        </label>
 
-            <Grid.Column width={12} style={{ marginBottom: "8px" }}>
-              <label
-                style={{
-                  color: "rgba(0,0,0,.6)",
-                  fontSize: "18px",
-                  display: actualPrice === 0 ? "none" : "inline"
-                }}
-              >
-                Actual-Price :
-              </label>
+        <Label
+          as="a"
+          basic
+          style={{
+            marginLeft: "20px",
+            lineHeight: "40px",
+            color: "rgba(0,0,0,.6)",
+            fontSize: "14px",
+            display: remaining === 0 ? "none" : "inline"
+          }}
+        >
+          Offers-Remaining :
+        </Label>
+        <label
+          style={{
+            color: "rgba(0,0,0,.68)",
+            fontSize: "14px",
+            display: remaining === 0 ? "none" : "inline",
+            marginLeft: "10px"
+          }}
+        >
+          {remaining}
+        </label>
 
-              <Icon
-                style={{
-                  fontSize: "18px",
-                  lineHeight: "25px",
-                  marginLeft: "10px",
-                  color: "rgba(0,0,0,.68)",
-                  display: actualPrice === 0 ? "none" : "intial"
-                }}
-                name="rupee"
-              >
-                <label
-                  style={{
-                    fontSize: "18px",
-                    lineHeight: "25px",
-                    paddingLeft: "1px",
-                    color: "rgba(0,0,0,.68)",
-                    display: actualPrice === 0 ? "none" : "intial"
-                  }}
-                >
-                  {actualPrice}
-                  <span
-                    style={{
-                      fontSize: "16px",
-                      paddingLeft: "2px",
-                      color: "rgba(0,0,0,.68)",
-                      display: onward === 0 ? "none" : "intial"
-                    }}
-                  >
-                    Onwards
-                  </span>
-                </label>
-              </Icon>
-            </Grid.Column>
+        <br />
 
-            <Grid.Column
-              width={12}
+        <Label
+          as="a"
+          basic
+          style={{
+            color: "rgba(0,0,0,.6)",
+            fontSize: "14px",
+            lineHeight: "40px",
+            display: actualPrice === 0 ? "none" : "inline"
+          }}
+        >
+          Actual-Price :
+        </Label>
+
+        <Icon
+          style={{
+            fontSize: "14px",
+            lineHeight: "25px",
+            marginLeft: "10px",
+            color: "rgba(0,0,0,.68)",
+            display: actualPrice === 0 ? "none" : "intial"
+          }}
+          name="rupee"
+        >
+          <label
+            style={{
+              fontSize: "14px",
+              lineHeight: "25px",
+              paddingLeft: "1px",
+              color: "rgba(0,0,0,.68)",
+              display: actualPrice === 0 ? "none" : "intial"
+            }}
+          >
+            {actualPrice}
+            <span
               style={{
-                marginBottom: "8px",
+                fontSize: "14px",
+                paddingLeft: "2px",
+                color: "rgba(0,0,0,.68)",
+                display: onward === 0 ? "none" : "intial"
+              }}
+            >
+              Onwards
+            </span>
+          </label>
+        </Icon>
+
+        <label
+          style={{
+            marginLeft: "70px",
+            display: onward === 0 ? "none" : "intial"
+          }}
+        />
+        <Label
+          as="a"
+          basic
+          style={{
+            marginLeft: "20px",
+            fontSize: "14px",
+            lineHeight: "40px",
+            color: "rgba(0,0,0,.6)",
+            display: discountPrice === 0 ? "none" : "inline"
+          }}
+        >
+          Pay-Only :
+        </Label>
+
+        <Icon
+          name="rupee"
+          style={{
+            fontSize: "14px",
+            marginLeft: "10px",
+            textDecoration: "line-through",
+            color: "rgba(0,0,0,.68)",
+            display: discountPrice === 0 ? "none" : "intial"
+          }}
+        >
+          <span style={{ display: discountPrice === 0 ? "none" : "intial" }}>
+            <label
+              style={{
+                textDecoration: "line-through",
+                fontSize: "14px",
+                color: "rgba(0,0,0,.68)"
+              }}
+            >
+              {actualPrice}
+            </label>
+          </span>
+        </Icon>
+
+        <Icon
+          name="rupee"
+          style={{
+            fontSize: "14px",
+            color: "rgba(0,0,0,.68)",
+            marginLeft: "20px",
+            color: "rgba(0,0,0,.68)",
+            display: discountPrice === 0 ? "none" : "intial"
+          }}
+        >
+          <span>
+            <label
+              style={{
+                fontSize: "14px",
+                paddingLeft: "1px",
                 display: discountPrice === 0 ? "none" : "intial"
               }}
             >
-              <label
-                style={{
-                  color: "rgba(0,0,0,.6)",
-                  fontSize: "18px",
-                  display: "inline",
-                  display: discountPrice === 0 ? "none" : "intial"
-                }}
-              >
-                Pay-Only :
-              </label>
+              {discountPrice}
+            </label>
+          </span>
+        </Icon>
 
-              <Icon
-                name="rupee"
-                style={{
-                  marginLeft: "10px",
-                  fontSize: "18px",
-                  textDecoration: "line-through",
-                  color: "rgba(0,0,0,.68)",
-                  display: discountPrice === 0 ? "none" : "intial"
-                }}
-              >
-                <span
-                  style={{ display: discountPrice === 0 ? "none" : "intial" }}
-                >
-                  <label
-                    style={{
-                      textDecoration: "line-through",
-                      fontSize: "18px",
-                      color: "rgba(0,0,0,.68)"
-                    }}
-                  >
-                    {actualPrice}
-                  </label>
-                </span>
-              </Icon>
-
-              <Icon
-                name="rupee"
-                style={{
-                  fontSize: "18px",
-                  color: "rgba(0,0,0,.68)",
-                  marginLeft: "30px",
-                  color: "rgba(0,0,0,.68)",
-                  display: discountPrice === 0 ? "none" : "intial"
-                }}
-              >
-                <span>
-                  <label
-                    style={{
-                      fontSize: "18px",
-                      paddingLeft: "1px",
-                      display: discountPrice === 0 ? "none" : "intial"
-                    }}
-                  >
-                    {discountPrice}
-                  </label>
-                </span>
-              </Icon>
-
-              <Label
-                as="a"
-                basic
-                style={{
-                  marginLeft: "35px",
-                  fontSize: "12px",
-                  color: "rgba(0,0,0,.68)",
-                  display: discountPrice === 0 ? "none" : "intial"
-                }}
-              >
-                {discount}
-              </Label>
-            </Grid.Column>
-
-            <Grid.Column width={12} style={{ marginBottom: "8px" }}>
-              <label
-                style={{
-                  color: "rgba(0,0,0,.6)",
-                  fontSize: "18px",
-                  display: remaining === 0 ? "none" : "inline"
-                }}
-              >
-                Offers-Remaining :
-              </label>
-
-              <label
-                style={{
-                  color: "rgba(0,0,0,.68)",
-                  fontSize: "18px",
-                  display: remaining === 0 ? "none" : "inline",
-                  marginLeft: "10px"
-                }}
-              >
-                {remaining}
-              </label>
-            </Grid.Column>  
-          </Grid.Row>
-        </Grid>
+        <label
+          style={{
+            marginLeft: "20px",
+            fontSize: "14px",
+            color: "rgba(0,0,0,.68)",
+            display: discountPrice === 0 ? "none" : "intial"
+          }}
+        >
+          {discount}
+        </label>
       </div>
     );
   };
@@ -261,6 +268,10 @@ export default class Basic extends React.Component {
               .ActualPrice *
               discount) /
             100;
+          discountPrice = _.round(
+            this.props.history.location.state.offerData.data.DISCOUNT
+              .ActualPrice - discountPrice
+          );
           discount = discount + "%" + " OFF";
         } else if (discount !== 0) {
           discount = discount + "%" + " OFF";
@@ -303,18 +314,18 @@ export default class Basic extends React.Component {
             .gender_preference === 1
         ) {
           maleNonveg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
         } else if (
           this.props.history.location.state.offerData.data.EVENTS
             .gender_preference === 2
         ) {
           femaleVeg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
         } else {
           maleNonveg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
           femaleVeg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
         }
 
         labelName = "Gender :";
