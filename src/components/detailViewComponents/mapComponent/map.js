@@ -7,14 +7,29 @@ import classes from "./static/css/map.css";
 
 export default class Map extends React.Component {
   render() {
+    let latitude = 0;
+    let longitude = 0;
+    let address = "";
+
+    if (this.props.detailState.apiCall) {
+    } else {
+      if (this.props.history.location.state.offerData.api_type === 1) {
+        latitude = this.props.history.location.state.offerData.data
+          .MERCHANT_LOCATION.latitude;
+        longitude = this.props.history.location.state.offerData.data
+          .MERCHANT_LOCATION.longitude;
+        address = this.props.history.location.state.offerData.data.MERCHANT
+          .Address;
+      } else {
+      }
+    }
+
     const GoogleMapExample = withGoogleMap(props => (
       <GoogleMap
-        defaultCenter={{ lat: 12.906492, lng: 77.596765 }}
+        defaultCenter={{ lat: latitude, lng: longitude }}
         defaultZoom={13}
       >
-        
-          <Marker position={{ lat: 12.906492, lng: 77.596765 }} />
-        
+        <Marker position={{ lat: latitude, lng: longitude }} />
       </GoogleMap>
     ));
     return (
@@ -24,9 +39,7 @@ export default class Map extends React.Component {
           <div className={classes.UnderScore} />
         </div>
 
-        <label style={{ color: "rgba(0,0,0,.6)" }}>
-          Las Vegas Motor Speedway, 7000 Las Vegas Blvd N., Las Vegas
-        </label>
+        <label style={{ color: "rgba(0,0,0,.6)" }}>{address}</label>
 
         <Segment>
           <GoogleMapExample
