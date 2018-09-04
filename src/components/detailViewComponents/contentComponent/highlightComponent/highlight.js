@@ -15,7 +15,38 @@ export default class Highlight extends React.Component {
           "\n\n" +
           this.props.history.location.state.offerData.data.MERCHANT.Description;
       } else {
+        if (
+          Object.keys(this.props.history.location.state.offerData.data.ACTIVITY)
+            .length !== 0
+        ) {
+          highlight = this.props.history.location.state.offerData.data.ACTIVITY
+            .Offer_Description;
+        } else if (
+          Object.keys(this.props.history.location.state.offerData.data.EVENT)
+            .length !== 0
+        ) {
+          highlight = this.props.history.location.state.offerData.data.EVENT
+            .Offer_Description;
+        } else if (
+          Object.keys(this.props.history.location.state.offerData.data.GETAWAY)
+            .length !== 0
+        ) {
+          highlight = this.props.history.location.state.offerData.data.GETAWAY
+            .Offer_Description;
+        } else if (
+          Object.keys(this.props.history.location.state.offerData.data.SALOON)
+            .length !== 0
+        ) {
+          highlight = this.props.history.location.state.offerData.data.SALOON
+            .Offer_Description;
+        } else {
+          return <div />;
+        }
       }
+    }
+
+    if (highlight === "" || highlight === undefined || highlight === null) {
+      return <div />;
     }
 
     return (

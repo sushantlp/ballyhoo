@@ -41,6 +41,17 @@ export default class Hashtag extends React.Component {
           hashtag = this.props.history.location.state.offerData.data.TAGS;
         }
       } else {
+        if (
+          _.isEmpty(
+            this.props.history.location.state.offerData.data.Merchant_Details
+              .Merchant_Hash_Tags
+          )
+        ) {
+          return <div />;
+        } else {
+          hashtag = this.props.history.location.state.offerData.data
+            .Merchant_Details.Merchant_Hash_Tags;
+        }
       }
     }
 

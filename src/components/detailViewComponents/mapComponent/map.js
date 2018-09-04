@@ -21,6 +21,77 @@ export default class Map extends React.Component {
         address = this.props.history.location.state.offerData.data.MERCHANT
           .Address;
       } else {
+        if (
+          Object.keys(this.props.history.location.state.offerData.data.ACTIVITY)
+            .length !== 0
+        ) {
+          address =
+            this.props.history.location.state.offerData.data.ACTIVITY
+              .Offer_Address +
+            " " +
+            this.props.history.location.state.offerData.data.ACTIVITY
+              .Offer_Address_Locality +
+            ", " +
+            this.props.history.location.state.offerData.data.ACTIVITY
+              .Offer_Address_City;
+          latitude = this.props.history.location.state.offerData.data.ACTIVITY
+            .Offer_Location_Lat;
+          longitude = this.props.history.location.state.offerData.data.ACTIVITY
+            .Offer_Location_Long;
+        } else if (
+          Object.keys(this.props.history.location.state.offerData.data.EVENT)
+            .length !== 0
+        ) {
+          address =
+            this.props.history.location.state.offerData.data.EVENT
+              .Offer_Address +
+            " " +
+            this.props.history.location.state.offerData.data.EVENT
+              .Offer_Address_Locality +
+            ", " +
+            this.props.history.location.state.offerData.data.EVENT
+              .Offer_Address_City;
+          latitude = this.props.history.location.state.offerData.data.EVENT
+            .Offer_Location_Lat;
+          longitude = this.props.history.location.state.offerData.data.EVENT
+            .Offer_Location_Long;
+        } else if (
+          Object.keys(this.props.history.location.state.offerData.data.GETAWAY)
+            .length !== 0
+        ) {
+          address =
+            this.props.history.location.state.offerData.data.GETAWAY
+              .Offer_Address +
+            " " +
+            this.props.history.location.state.offerData.data.GETAWAY
+              .Offer_Address_Locality +
+            ", " +
+            this.props.history.location.state.offerData.data.GETAWAY
+              .Offer_Address_City;
+          latitude = this.props.history.location.state.offerData.data.GETAWAY
+            .Offer_Location_Lat;
+          longitude = this.props.history.location.state.offerData.data.GETAWAY
+            .Offer_Location_Long;
+        } else if (
+          Object.keys(this.props.history.location.state.offerData.data.SALOON)
+            .length !== 0
+        ) {
+          address =
+            this.props.history.location.state.offerData.data.Merchant_Details
+              .Merchant_Address +
+            " " +
+            this.props.history.location.state.offerData.data.Merchant_Details
+              .Offer_Address_Locality +
+            ", " +
+            this.props.history.location.state.offerData.data.Merchant_Details
+              .Offer_Address_City;
+          latitude = this.props.history.location.state.offerData.data
+            .Merchant_Details.Merchant_Latitude;
+          longitude = this.props.history.location.state.offerData.data
+            .Merchant_Details.Merchant_Longitude;
+        } else {
+          return <div />;
+        }
       }
     }
 

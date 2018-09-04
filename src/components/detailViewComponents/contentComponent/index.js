@@ -2,12 +2,15 @@ import React from "react";
 import Truncate from "react-truncate";
 
 import Header from "./headerComponent/header";
-import Basic from "./basicComponent/basic.jsx";
+import Basic from "./basicComponent/basic";
 import BusinessHour from "./businessHourComponent/business";
 import Hashtag from "./hashtagComponent/hashtag";
 import Highlight from "./highlightComponent/highlight";
 import Inclusion from "./inclusionComponent/inclusion";
 import Note from "./noteComponent/note";
+import Term from "./termComponent/term";
+import Faq from "./faqComponent/faq";
+
 export default class Content extends React.Component {
   render() {
     return (
@@ -33,6 +36,14 @@ export default class Content extends React.Component {
           detailState={this.props.detailState}
         />
         <Inclusion
+          history={this.props.history}
+          detailState={this.props.detailState}
+        />
+        <Term
+          history={this.props.history}
+          detailState={this.props.detailState}
+        />
+        <Faq
           history={this.props.history}
           detailState={this.props.detailState}
         />

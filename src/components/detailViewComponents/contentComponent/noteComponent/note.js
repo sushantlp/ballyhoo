@@ -18,7 +18,22 @@ export default class Note extends React.Component {
           note = this.props.history.location.state.offerData.data.NOTE;
         }
       } else {
+        if (
+          this.props.history.location.state.offerData.data.Offer_Basic_Details
+            .Offer_Note === null ||
+          this.props.history.location.state.offerData.data.Offer_Basic_Details
+            .Offer_Note === ""
+        ) {
+          return <div />;
+        } else {
+          note = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Offer_Note;
+        }
       }
+    }
+
+    if (note === "" || note === undefined || note === null) {
+      return <div />;
     }
 
     return (

@@ -2,11 +2,11 @@ import React from "react";
 
 import { Segment } from "semantic-ui-react/dist/commonjs";
 
-import classes from "./static/css/inclusion.css";
+import classes from "./static/css/faq.css";
 
 export default class Inclusion extends React.Component {
   render() {
-    let inclusion = "";
+    let faq = "";
     if (this.props.detailState.apiCall) {
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
@@ -16,53 +16,52 @@ export default class Inclusion extends React.Component {
         ) {
           return <div />;
         } else {
-          inclusion = this.props.history.location.state.offerData.data
-            .Inclusion;
+          faq = this.props.history.location.state.offerData.data.Inclusion;
         }
       } else {
         if (
           Object.keys(this.props.history.location.state.offerData.data.ACTIVITY)
             .length !== 0
         ) {
-          inclusion = this.props.history.location.state.offerData.data.ACTIVITY
-            .Offer_Synopsis;
+          faq = this.props.history.location.state.offerData.data.ACTIVITY
+            .Offer_Faqs;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.EVENT)
             .length !== 0
         ) {
-          inclusion = this.props.history.location.state.offerData.data.EVENT
-            .Offer_Synopsis;
+          faq = this.props.history.location.state.offerData.data.EVENT
+            .Offer_Faqs;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.GETAWAY)
             .length !== 0
         ) {
-          inclusion = this.props.history.location.state.offerData.data.GETAWAY
-            .Offer_Synopsis;
+          faq = this.props.history.location.state.offerData.data.GETAWAY
+            .Offer_Faqs;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.SALOON)
             .length !== 0
         ) {
-          inclusion = this.props.history.location.state.offerData.data.SALOON
-            .Offer_Synopsis;
+          faq = this.props.history.location.state.offerData.data.SALOON
+            .Offer_Faqs;
         } else {
           return <div />;
         }
       }
     }
 
-    if (inclusion === "" || inclusion === undefined || inclusion === null) {
+    if (faq === "" || faq === undefined || faq === null) {
       return <div />;
     }
 
     return (
       <div>
         <div className={classes.HeaderContainer}>
-          <h4 className={classes.HeaderName}>INCLUSIONS</h4>
+          <h4 className={classes.HeaderName}>FAQS</h4>
           <div className={classes.UnderScore} />
         </div>
         <Segment>
           <label style={{ color: "rgba(0,0,0,.6)", whiteSpace: "pre-line" }}>
-            {inclusion}
+            {faq}
           </label>
         </Segment>
       </div>

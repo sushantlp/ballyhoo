@@ -36,6 +36,8 @@ export default class Business extends React.Component {
         businessHour = this.props.history.location.state.offerData.data
           .BUSINESS_HOUR;
       } else {
+        businessHour = this.props.history.location.state.offerData.data
+          .Merchant_Details.Merchant_Business_Hours;
       }
     }
 
