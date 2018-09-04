@@ -316,7 +316,8 @@ export default class Trending extends React.Component {
     empty,
     priceStatus,
     object,
-    apiType
+    apiType,
+    currencySymbol
   ) => {
     return (
       <Card
@@ -427,7 +428,6 @@ export default class Trending extends React.Component {
                     paddingLeft: "1px",
                     display: actualPrice === 0 ? "none" : "intial"
                   }}
-                  // hidden={actualPrice === 0 ? true : false}
                 >
                   {actualPrice}
                   <span
@@ -443,7 +443,6 @@ export default class Trending extends React.Component {
               </Icon>
               <span
                 className={classes.DiscountPricePercent}
-                // hidden={discount === 0 ? true : false}
                 style={{
                   display: discount === 0 ? "none" : "intial"
                 }}
@@ -454,59 +453,57 @@ export default class Trending extends React.Component {
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <Icon
-            name="rupee"
+          <span
             style={{
               marginLeft: "0.5em",
               display:
                 actualPrice === 0 || discountPrice === 0 ? "none" : "intial"
             }}
           >
-            <span
+            {currencySymbol}
+          </span>
+
+          <span
+            style={{
+              display:
+                actualPrice === 0 || discountPrice === 0 ? "none" : "intial"
+            }}
+          >
+            <label
               style={{
-                display:
-                  actualPrice === 0 || discountPrice === 0 ? "none" : "intial"
+                textDecoration: "line-through"
               }}
             >
-              {/* hidden={actualPrice === 0 ? true : false} */}
-              <label
-                style={{
-                  textDecoration: "line-through"
-                }}
-              >
-                {actualPrice}
-              </label>
-            </span>
-          </Icon>
+              {actualPrice}
+            </label>
+          </span>
 
-          <Icon
-            // name={discountPrice === 0 ? null : "rupee"}
-            name="rupee"
+          <span
             style={{
               marginLeft: actualPrice === 0 ? "0em" : "1.5em",
               fontSize: "15px",
               color: "rgba(0,0,0,.68)",
               display: discountPrice === 0 ? "none" : "intial"
             }}
-            // className={discountPrice === 0 ? classes.DiscountPrice : ""}
           >
-            <span style={{ display: discountPrice === 0 ? "none" : "intial" }}>
-              <label
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "15px",
-                  paddingLeft: "1px"
-                }}
-              >
-                {discountPrice}
-              </label>
-            </span>
-          </Icon>
+            {currencySymbol}
+          </span>
+
+          <span style={{ display: discountPrice === 0 ? "none" : "intial" }}>
+            <label
+              style={{
+                fontWeight: "bold",
+                fontSize: "15px",
+                paddingLeft: "1px"
+              }}
+            >
+              {discountPrice}
+            </label>
+          </span>
 
           <label
             style={{
               fontWeight: "bold",
-              // marginLeft: "3em",
               color: "rgba(0,0,0,.68)",
               marginLeft:
                 actualPrice === 0 && discountPrice === 0
@@ -529,7 +526,6 @@ export default class Trending extends React.Component {
               {half}
               {empty}
             </span>
-            {/* <Rating defaultRating={rating} maxRating={5} disabled /> */}
           </label>
         </Card.Content>
       </Card>
@@ -698,6 +694,11 @@ export default class Trending extends React.Component {
         );
       });
 
+      const REG_HEX = /&#x([a-fA-F0-9]+);/;
+
+      const hex = obj.currency_text.replace(REG_HEX, "$1");
+      const dec = parseInt(hex, 16);
+
       return this.createOfferningCard(
         obj.id,
         obj.Popularity,
@@ -719,7 +720,8 @@ export default class Trending extends React.Component {
         empty,
         0,
         obj,
-        1
+        1,
+        String.fromCharCode(dec)
       );
     });
   };
@@ -869,6 +871,10 @@ export default class Trending extends React.Component {
         );
       });
 
+      const REG_HEX = /&#x([a-fA-F0-9]+);/;
+      const hex = obj.Offer_Basic_Details.Currency_Text.replace(REG_HEX, "$1");
+      const dec = parseInt(hex, 16);
+
       return this.createOfferningCard(
         key,
         obj.Offer_Basic_Details.Offer_Popularity,
@@ -890,7 +896,8 @@ export default class Trending extends React.Component {
         empty,
         priceStatus,
         obj,
-        2
+        2,
+        String.fromCharCode(dec)
       );
     });
   };

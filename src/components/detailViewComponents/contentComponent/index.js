@@ -2,7 +2,7 @@ import React from "react";
 import Truncate from "react-truncate";
 
 import Header from "./headerComponent/header";
-import Basic from "./basicComponent/basic";
+import Basic from "./basicComponent/basic.jsx";
 import BusinessHour from "./businessHourComponent/business";
 import Hashtag from "./hashtagComponent/hashtag";
 import Highlight from "./highlightComponent/highlight";

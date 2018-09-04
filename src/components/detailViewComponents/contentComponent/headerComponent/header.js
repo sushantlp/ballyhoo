@@ -68,12 +68,24 @@ export default class Header extends React.Component {
         businessName = this.props.history.location.state.offerData.data.MERCHANT
           .Business;
       } else {
-        rating = this.props.history.location.state.offerData.data.MERCHANT
-          .merchant_rating;
+        if (
+          Number.isInteger(
+            this.props.history.location.state.offerData.data.Merchant_Details
+              .Merchant_Ratings
+          )
+        ) {
+          rating =
+            this.props.history.location.state.offerData.data.Merchant_Details
+              .Merchant_Ratings + ".0";
+        } else {
+          rating = this.props.history.location.state.offerData.data
+            .Merchant_Details.Merchant_Ratings;
+        }
+
         offering = this.props.history.location.state.offerData.data
-          .offering_title;
-        businessName = this.props.history.location.state.offerData.data.MERCHANT
-          .Business;
+          .Offer_Basic_Details.Offering_Title;
+        businessName = this.props.history.location.state.offerData.data
+          .Merchant_Details.Merchant_Bname;
       }
     }
 

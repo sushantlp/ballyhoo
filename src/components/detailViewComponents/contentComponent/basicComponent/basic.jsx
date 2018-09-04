@@ -6,20 +6,20 @@ import { Label, Segment, Icon, Image } from "semantic-ui-react/dist/commonjs";
 import classes from "./static/css/basic.css";
 
 export default class Basic extends React.Component {
-  basicComponent = (
+  oldBasicComponent = (
     femaleVeg,
     maleNonveg,
     labelName,
     discount,
     discountPrice,
     actualPrice,
-    onward,
     remaining,
     popularity,
     eventDate,
     eventDay,
     startTime,
-    endTime
+    endTime,
+    currencySymbol
   ) => {
     return (
       <div>
@@ -29,8 +29,8 @@ export default class Basic extends React.Component {
           style={{
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
-            display: "inline",
-            lineHeight: "40px"
+            lineHeight: "40px",
+            display: labelName === undefined ? "none" : "inline"
           }}
         >
           {labelName}
@@ -38,15 +38,15 @@ export default class Basic extends React.Component {
 
         <Image
           style={{
-            display: "inline",
             marginLeft: "10px",
-            marginBottom: "2px"
+            marginBottom: "2px",
+            display: femaleVeg === undefined ? "none" : "inline"
           }}
           src={femaleVeg}
         />
         <Image
           style={{
-            display: "inline",
+            display: maleNonveg === undefined ? "none" : "inline",
             marginLeft: "5px",
             marginBottom: "2px"
           }}
@@ -61,7 +61,7 @@ export default class Basic extends React.Component {
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
             lineHeight: "40px",
-            display: remaining === 0 ? "none" : "inline"
+            display: popularity === 0 ? "none" : "inline"
           }}
         >
           Popularity :
@@ -98,7 +98,6 @@ export default class Basic extends React.Component {
             lineHeight: "40px",
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
-
             display: remaining === 0 ? "none" : "inline"
           }}
         >
@@ -126,46 +125,28 @@ export default class Basic extends React.Component {
           }}
         >
           Actual-Price :
-          <Icon
+          <span
             style={{
-              fontSize: "14px",
-              lineHeight: "25px",
-              marginLeft: "10px",
+              fontSize: "16px",
+              marginLeft: "5px",
               color: "rgba(0,0,0,.68)",
               display: actualPrice === 0 ? "none" : "intial"
             }}
-            name="rupee"
           >
-            <label
-              style={{
-                fontSize: "14px",
-                lineHeight: "25px",
-                paddingLeft: "1px",
-                color: "rgba(0,0,0,.68)",
-                display: actualPrice === 0 ? "none" : "intial"
-              }}
-            >
-              {actualPrice}
-              <span
-                style={{
-                  fontSize: "14px",
-                  paddingLeft: "2px",
-                  color: "rgba(0,0,0,.68)",
-                  display: onward === 0 ? "none" : "intial"
-                }}
-              >
-                Onwards
-              </span>
-            </label>
-          </Icon>
+            {currencySymbol}
+          </span>
+          <label
+            style={{
+              fontSize: "14px",
+              lineHeight: "25px",
+              paddingLeft: "1px",
+              color: "rgba(0,0,0,.68)",
+              display: actualPrice === 0 ? "none" : "intial"
+            }}
+          >
+            {actualPrice}
+          </label>
         </Label>
-
-        <label
-          style={{
-            marginLeft: "70px",
-            display: onward === 0 ? "none" : "intial"
-          }}
-        />
 
         <Label
           as="a"
@@ -203,50 +184,48 @@ export default class Basic extends React.Component {
           }}
         >
           Pay-Only :
-          <Icon
-            name="rupee"
+          <span
             style={{
-              fontSize: "14px",
-              marginLeft: "5px",
-              textDecoration: "line-through",
-              color: "rgba(0,0,0,.68)",
-              display: discountPrice === 0 ? "none" : "intial"
-            }}
-          >
-            <span style={{ display: discountPrice === 0 ? "none" : "intial" }}>
-              <strong
-                style={{
-                  textDecoration: "line-through",
-                  fontSize: "14px",
-                  color: "rgba(0,0,0,.68)"
-                }}
-              >
-                {actualPrice}
-              </strong>
-            </span>
-          </Icon>
-          <Icon
-            name="rupee"
-            style={{
-              fontSize: "14px",
-              color: "rgba(0,0,0,.68)",
+              fontSize: "16px",
               marginLeft: "5px",
               color: "rgba(0,0,0,.68)",
               display: discountPrice === 0 ? "none" : "intial"
             }}
           >
-            <span>
-              <strong
-                style={{
-                  fontSize: "14px",
-                  paddingLeft: "1px",
-                  display: discountPrice === 0 ? "none" : "intial"
-                }}
-              >
-                {discountPrice}
-              </strong>
-            </span>
-          </Icon>
+            {currencySymbol}
+          </span>
+          <span style={{ display: discountPrice === 0 ? "none" : "intial" }}>
+            <strong
+              style={{
+                textDecoration: "line-through",
+                fontSize: "14px",
+                color: "rgba(0,0,0,.68)"
+              }}
+            >
+              {actualPrice}
+            </strong>
+          </span>
+          <span
+            style={{
+              fontSize: "16px",
+              marginLeft: "5px",
+              color: "rgba(0,0,0,.68)",
+              display: discountPrice === 0 ? "none" : "intial"
+            }}
+          >
+            {currencySymbol}
+          </span>
+          <span>
+            <strong
+              style={{
+                fontSize: "14px",
+                paddingLeft: "1px",
+                display: discountPrice === 0 ? "none" : "intial"
+              }}
+            >
+              {discountPrice}
+            </strong>
+          </span>
         </Label>
 
         <br />
@@ -349,6 +328,189 @@ export default class Basic extends React.Component {
     );
   };
 
+  newBasicComponent = (
+    discount,
+    discountPrice,
+    minimumPrice,
+    popularity,
+    currencySymbol
+  ) => {
+    return (
+      <div>
+        <Label
+          as="a"
+          basic
+          style={{
+            color: "rgba(0,0,0,.6)",
+            fontSize: "14px",
+            lineHeight: "40px",
+            display: popularity === 0 ? "none" : "inline"
+          }}
+        >
+          Popularity :
+          <span
+            className={classes.Heart}
+            style={{
+              display: popularity === 0 ? "none" : "intial"
+            }}
+          >
+            <img
+              src="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_20/v1532419222/ballyhoo/EMAIL/heart.png"
+              alt="non-veg, food, restaurants, dinner buffet, lunch buffet, pubs & brewery, reservation, event"
+              style={{
+                display: popularity === 0 ? "none" : "intial",
+                marginTop: "10px"
+              }}
+            />
+          </span>
+          <strong
+            className={classes.HeartPercent}
+            style={{
+              display: popularity === 0 ? "none" : "intial",
+              fontSize: "14px"
+            }}
+          >
+            {popularity + "%"}
+          </strong>
+        </Label>
+
+        <Label
+          as="a"
+          basic
+          style={{
+            color: "rgba(0,0,0,.6)",
+            fontSize: "14px",
+            lineHeight: "40px",
+            display: minimumPrice === 0 ? "none" : "inline"
+          }}
+        >
+          Actual-Price :
+          <label
+            style={{
+              fontSize: "14px",
+              lineHeight: "25px",
+              paddingLeft: "1px",
+              color: "rgba(0,0,0,.68)",
+              display: minimumPrice === 0 ? "none" : "intial"
+            }}
+          >
+            <span
+              style={{
+                fontSize: "16px",
+                marginLeft: "5px",
+                color: "rgba(0,0,0,.68)",
+                display: minimumPrice === 0 ? "none" : "intial"
+              }}
+            >
+              {currencySymbol}
+            </span>
+
+            <span
+              style={{
+                marginLeft: "2px",
+                color: "rgba(0,0,0,.68)",
+                display: minimumPrice === 0 ? "none" : "intial"
+              }}
+            >
+              {minimumPrice}
+            </span>
+
+            <span
+              style={{
+                fontSize: "14px",
+                paddingLeft: "5px",
+                color: "rgba(0,0,0,.68)",
+                display: minimumPrice === 0 ? "none" : "intial"
+              }}
+            >
+              Onwards
+            </span>
+          </label>
+        </Label>
+
+        <Label
+          as="a"
+          basic
+          style={{
+            marginLeft: "20px",
+            fontSize: "14px",
+            lineHeight: "40px",
+            color: "rgba(0,0,0,.6)",
+            display: discountPrice === 0 ? "none" : "inline"
+          }}
+        >
+          Discount :
+          <strong
+            style={{
+              marginLeft: "5px",
+              fontSize: "14px",
+              color: "rgba(0,0,0,.68)",
+              display: discountPrice === 0 ? "none" : "intial"
+            }}
+          >
+            {discount}
+          </strong>
+        </Label>
+
+        <Label
+          as="a"
+          basic
+          style={{
+            marginLeft: "20px",
+            fontSize: "14px",
+            lineHeight: "40px",
+            color: "rgba(0,0,0,.6)",
+            display: discountPrice === 0 ? "none" : "inline"
+          }}
+        >
+          Pay-Only :
+          <span
+            style={{
+              fontSize: "16px",
+              marginLeft: "5px",
+              color: "rgba(0,0,0,.68)",
+              display: discountPrice === 0 ? "none" : "intial"
+            }}
+          >
+            {currencySymbol}
+          </span>
+          <span style={{ display: discountPrice === 0 ? "none" : "intial" }}>
+            <strong
+              style={{
+                textDecoration: "line-through",
+                fontSize: "14px",
+                color: "rgba(0,0,0,.68)"
+              }}
+            >
+              {minimumPrice}
+            </strong>
+          </span>
+          <span
+            style={{
+              fontSize: "16px",
+              marginLeft: "5px",
+              color: "rgba(0,0,0,.68)",
+              display: discountPrice === 0 ? "none" : "intial"
+            }}
+          >
+            {currencySymbol}
+          </span>
+          <span>
+            <strong
+              style={{
+                fontSize: "14px",
+                paddingLeft: "1px",
+                display: discountPrice === 0 ? "none" : "intial"
+              }}
+            >
+              {discountPrice}
+            </strong>
+          </span>
+        </Label>
+      </div>
+    );
+  };
+
   logicBasicComponent = () => {
     if (this.props.history.location.state.offerData.api_type === 1) {
       let femaleVeg = undefined;
@@ -356,7 +518,6 @@ export default class Basic extends React.Component {
       let labelName = undefined;
       let discount = 0;
       let discountPrice = 0;
-      let onward = 0;
       let eventDate = undefined;
       let eventDay = undefined;
       let startTime = undefined;
@@ -451,22 +612,74 @@ export default class Basic extends React.Component {
           .event_end_time;
       }
 
-      return this.basicComponent(
+      const REG_HEX = /&#x([a-fA-F0-9]+);/;
+
+      const hex = this.props.history.location.state.offerData.data.currency_text.replace(
+        REG_HEX,
+        "$1"
+      );
+      const dec = parseInt(hex, 16);
+
+      return this.oldBasicComponent(
         femaleVeg,
         maleNonveg,
         labelName,
         discount,
         discountPrice,
         this.props.history.location.state.offerData.data.DISCOUNT.ActualPrice,
-        onward,
         this.props.history.location.state.offerData.data.DISCOUNT.OrderLimit,
         this.props.history.location.state.offerData.data.Popularity,
         eventDate,
         eventDay,
         startTime,
-        endTime
+        endTime,
+        String.fromCharCode(dec)
       );
     } else {
+      let discount = 0;
+      let discountPrice = 0;
+
+      discount = parseInt(
+        this.props.history.location.state.offerData.data.Offer_Basic_Details
+          .Offer_Min_Discount,
+        10
+      );
+      if (
+        this.props.history.location.state.offerData.data.Offer_Basic_Details
+          .Offer_Min_Price !== 0 &&
+        discount !== 0
+      ) {
+        discountPrice =
+          (this.props.history.location.state.offerData.data.Offer_Basic_Details
+            .Offer_Min_Price *
+            discount) /
+          100;
+        discountPrice = _.round(
+          this.props.history.location.state.offerData.data.Offer_Basic_Details
+            .Offer_Min_Price - discountPrice
+        );
+        discount = discount + "%" + " OFF";
+      } else if (discount !== 0) {
+        discount = discount + "%" + " OFF";
+      }
+
+      const REG_HEX = /&#x([a-fA-F0-9]+);/;
+
+      const hex = this.props.history.location.state.offerData.data.Offer_Basic_Details.Currency_Text.replace(
+        REG_HEX,
+        "$1"
+      );
+      const dec = parseInt(hex, 16);
+
+      return this.newBasicComponent(
+        discount,
+        discountPrice,
+        this.props.history.location.state.offerData.data.Offer_Basic_Details
+          .Offer_Min_Price,
+        this.props.history.location.state.offerData.data.Offer_Basic_Details
+          .Offer_Popularity,
+        String.fromCharCode(dec)
+      );
     }
   };
 
