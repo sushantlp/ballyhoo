@@ -7,6 +7,13 @@ import { Label, Segment, Button } from "semantic-ui-react/dist/commonjs";
 import classes from "./static/css/package.css";
 
 export default class Package extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      package: []
+    };
+  }
   packageComponent = (offer, key) => {
     return (
       <Segment key={key}>
@@ -32,7 +39,22 @@ export default class Package extends React.Component {
     );
   };
 
-  eventPackageComponent = (outside, inside, key) => {
+  eventDateComponent = (stringDay, week, stringMonth, outside, key) => {
+    return (
+      <Button
+        key={key}
+        inverted
+        color="red"
+        onClick={() => this.clickStateChange(outside)}
+      >
+        <span style={{ display: "block" }}>{stringDay}</span>
+        <span style={{ display: "block" }}>{week}</span>
+        <span style={{ display: "block" }}>{stringMonth}</span>
+      </Button>
+    );
+  };
+
+  eventPackageComponent = (inside, key) => {
     return (
       <Segment key={key}>
         <Label as="a" basic style={{ color: "rgba(0, 0, 0, 0.6)" }}>
@@ -57,58 +79,107 @@ export default class Package extends React.Component {
     );
   };
 
+  clickStateChange = packages => {
+    this.setState({
+      open: true,
+      package: packages
+    });
+  };
+
+  clickEventDate = packages => {
+    return packages.Offer_Package_List.map((inside, key) => {
+      return this.eventPackageComponent(inside, key);
+    });
+  };
+
+  // Month
+  getMonth = month => {
+    let stringMonth = undefined;
+
+    if (month === 1) {
+      stringMonth = "Jan";
+    } else if (month === 2) {
+      stringMonth = "Feb";
+    } else if (month === 3) {
+      stringMonth = "Mar";
+    } else if (month === 4) {
+      stringMonth = "Apr";
+    } else if (month === 5) {
+      stringMonth = "May";
+    } else if (month === 6) {
+      stringMonth = "Jun";
+    } else if (month === 7) {
+      stringMonth = "Jul";
+    } else if (month === 8) {
+      stringMonth = "Aug";
+    } else if (month === 9) {
+      stringMonth = "Sep";
+    } else if (month === 10) {
+      stringMonth = "Oct";
+    } else if (month === 11) {
+      stringMonth = "Nov";
+    } else if (month === 12) {
+      stringMonth = "Dec";
+    }
+
+    return stringMonth;
+  };
+
+  // Week
+  getWeek = week => {
+    let stringWeek = undefined;
+    if (week === 1) {
+      stringWeek = "Mon";
+    } else if (week === 2) {
+      stringWeek = "Tue";
+    } else if (week === 3) {
+      stringWeek = "Wed";
+    } else if (week === 4) {
+      stringWeek = "Thu";
+    } else if (week === 5) {
+      stringWeek = "Fri";
+    } else if (week === 6) {
+      stringWeek = "Sat";
+    } else if (week === 7) {
+      stringWeek = "Sun";
+    }
+
+    return stringWeek;
+  };
+
   logicPackage = (offers, status) => {
     if (status) {
       return offers.map((outside, key) => {
         // Variable
-        const date = moment(outside.Start_Date, "YYYY/MM/DD");
-        let month = date.format("M");
-        let day = date.format("D");
-        const year = date.format("YYYY");
         let stringMonth = undefined;
-        month = parseInt(month, 10);
+        let stringWeek = undefined;
 
-        if (month === 1) {
-          stringMonth = "Jan";
-        } else if (month === 2) {
-          stringMonth = "Feb";
-        } else if (month === 3) {
-          stringMonth = "Mar";
-        } else if (month === 4) {
-          stringMonth = "Apr";
-        } else if (month === 5) {
-          stringMonth = "May";
-        } else if (month === 6) {
-          stringMonth = "Jun";
-        } else if (month === 7) {
-          stringMonth = "Jul";
-        } else if (month === 8) {
-          stringMonth = "Aug";
-        } else if (month === 9) {
-          stringMonth = "Sep";
-        } else if (month === 10) {
-          stringMonth = "Oct";
-        } else if (month === 11) {
-          stringMonth = "Nov";
-        } else if (month === 12) {
-          stringMonth = "Dec";
+        const date = moment(outside.Start_Date, "YYYY/MM/DD");
+        let days = date.format("D");
+        let month = date.format("M");
+        let week = date.day();
+        //const year = date.format("YYYY");
+
+        month = parseInt(month, 10);
+        week = parseInt(week, 10);
+
+        stringMonth = this.getMonth(month);
+        stringWeek = this.getWeek(week);
+
+        if (outside.End_Date !== null) {
         }
 
-        // if (obj.EVENT.Offer_Date_List.length > 1) {
-        //   if (day.toString().length === 1) {
-        //     day = "0" + day;
-        //   }
-        //   calendar = stringMonth + " " + day;
-        // } else {
-        //   if (day.toString().length === 1) {
-        //     day = "0" + day;
-        //   }
-        //   calendar = stringMonth + " " + day;
-        // }
+        if (days.toString().length === 1) {
+          days = "0" + days;
+        }
 
-        return outside.Offer_Package_List.map((inside, key) => {
-          return this.eventPackageComponent(outside, inside, key);
-        });
+        return this.eventDateComponent(
+          stringWeek,
+          days,
+          stringMonth,
+          outside,
+          key
+        );
       });
     } else {
       return offers.map((offer, key) => {
@@ -174,7 +245,10 @@ export default class Package extends React.Component {
             <div className={classes.UnderScore} />
           </div>
 
-          <Segment>{this.logicPackage(offer, status)}</Segment>
+          <Segment>
+            {this.logicPackage(offer, status)}
+            {this.state.open ? this.clickEventDate(this.state.package) : null}
+          </Segment>
         </div>
       );
     }

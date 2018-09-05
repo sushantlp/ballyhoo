@@ -487,6 +487,7 @@ export default class Basic extends React.Component {
         </Label>
 
         <br />
+        <br />
         <Label
           as="a"
           basic
