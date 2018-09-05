@@ -757,6 +757,50 @@ export default class Trending extends React.Component {
             content = content.substring(0, MAX_DESCRIPTION_LENGTH) + "... ";
           }
         }
+
+        const date = moment(obj.EVENT.Offer_Start_Date, "YYYY/MM/DD");
+        let month = date.format("M");
+        let day = date.format("D");
+        const year = date.format("YYYY");
+        let stringMonth = undefined;
+        month = parseInt(month, 10);
+        if (month === 1) {
+          stringMonth = "Jan";
+        } else if (month === 2) {
+          stringMonth = "Feb";
+        } else if (month === 3) {
+          stringMonth = "Mar";
+        } else if (month === 4) {
+          stringMonth = "Apr";
+        } else if (month === 5) {
+          stringMonth = "May";
+        } else if (month === 6) {
+          stringMonth = "Jun";
+        } else if (month === 7) {
+          stringMonth = "Jul";
+        } else if (month === 8) {
+          stringMonth = "Aug";
+        } else if (month === 9) {
+          stringMonth = "Sep";
+        } else if (month === 10) {
+          stringMonth = "Oct";
+        } else if (month === 11) {
+          stringMonth = "Nov";
+        } else if (month === 12) {
+          stringMonth = "Dec";
+        }
+
+        if (obj.EVENT.Offer_Date_List.length > 1) {
+          if (day.toString().length === 1) {
+            day = "0" + day;
+          }
+          calendar = stringMonth + " " + day + " " + "Onwards";
+        } else {
+          if (day.toString().length === 1) {
+            day = "0" + day;
+          }
+          calendar = stringMonth + " " + day;
+        }
       } else if (Object.keys(obj.GETAWAY).length !== 0) {
         content = obj.GETAWAY.Offer_Description;
 

@@ -1,5 +1,6 @@
 import React from "react";
 import _ from "lodash";
+import moment from "moment-timezone";
 
 import { Label, Segment, Icon, Image } from "semantic-ui-react/dist/commonjs";
 
@@ -29,7 +30,6 @@ export default class Basic extends React.Component {
           style={{
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
-
             display: labelName === undefined ? "none" : "inline"
           }}
         >
@@ -341,7 +341,8 @@ export default class Basic extends React.Component {
     currencySymbol,
     femaleVeg,
     maleNonveg,
-    labelName
+    labelName,
+    calendar
   ) => {
     return (
       <div>
@@ -461,6 +462,28 @@ export default class Basic extends React.Component {
               Onwards
             </span>
           </label>
+        </Label>
+
+        <Label
+          as="a"
+          basic
+          style={{
+            fontSize: "14px",
+            color: "rgba(0,0,0,.6)",
+            display: calendar === undefined ? "none" : "inline"
+          }}
+        >
+          Date :
+          <strong
+            style={{
+              marginLeft: "2px",
+              fontSize: "14px",
+              color: "rgba(0,0,0,.68)",
+              display: calendar === undefined ? "none" : "intial"
+            }}
+          >
+            {calendar}
+          </strong>
         </Label>
 
         <br />
@@ -674,6 +697,7 @@ export default class Basic extends React.Component {
       let femaleVeg = undefined;
       let maleNonveg = undefined;
       let labelName = undefined;
+      let calendar = undefined;
 
       discount = parseInt(
         this.props.history.location.state.offerData.data.Offer_Basic_Details
@@ -731,6 +755,60 @@ export default class Basic extends React.Component {
         }
 
         labelName = "Gender :";
+      } else if (
+        Object.keys(this.props.history.location.state.offerData.data.EVENT)
+          .length !== 0
+      ) {
+        const date = moment(
+          this.props.history.location.state.offerData.data.EVENT
+            .Offer_Start_Date,
+          "YYYY/MM/DD"
+        );
+        let month = date.format("M");
+        let day = date.format("D");
+        const year = date.format("YYYY");
+        let stringMonth = undefined;
+        month = parseInt(month, 10);
+        if (month === 1) {
+          stringMonth = "Jan";
+        } else if (month === 2) {
+          stringMonth = "Feb";
+        } else if (month === 3) {
+          stringMonth = "Mar";
+        } else if (month === 4) {
+          stringMonth = "Apr";
+        } else if (month === 5) {
+          stringMonth = "May";
+        } else if (month === 6) {
+          stringMonth = "Jun";
+        } else if (month === 7) {
+          stringMonth = "Jul";
+        } else if (month === 8) {
+          stringMonth = "Aug";
+        } else if (month === 9) {
+          stringMonth = "Sep";
+        } else if (month === 10) {
+          stringMonth = "Oct";
+        } else if (month === 11) {
+          stringMonth = "Nov";
+        } else if (month === 12) {
+          stringMonth = "Dec";
+        }
+
+        if (
+          this.props.history.location.state.offerData.data.EVENT.Offer_Date_List
+            .length > 1
+        ) {
+          if (day.toString().length === 1) {
+            day = "0" + day;
+          }
+          calendar = stringMonth + " " + day + " " + "Onwards";
+        } else {
+          if (day.toString().length === 1) {
+            day = "0" + day;
+          }
+          calendar = stringMonth + " " + day;
+        }
       }
       return this.newBasicComponent(
         discount,
@@ -742,7 +820,8 @@ export default class Basic extends React.Component {
         String.fromCharCode(dec),
         femaleVeg,
         maleNonveg,
-        labelName
+        labelName,
+        calendar
       );
     }
   };
