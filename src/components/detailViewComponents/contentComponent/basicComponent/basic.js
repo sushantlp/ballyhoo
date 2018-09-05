@@ -29,7 +29,7 @@ export default class Basic extends React.Component {
           style={{
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
-            lineHeight: "40px",
+
             display: labelName === undefined ? "none" : "inline"
           }}
         >
@@ -57,10 +57,9 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
-            marginLeft: "20px",
+            marginLeft: "10px",
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
-            lineHeight: "40px",
             display: popularity === 0 ? "none" : "inline"
           }}
         >
@@ -75,8 +74,7 @@ export default class Basic extends React.Component {
               src="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_20/v1532419222/ballyhoo/EMAIL/heart.png"
               alt="non-veg, food, restaurants, dinner buffet, lunch buffet, pubs & brewery, reservation, event"
               style={{
-                display: popularity === 0 ? "none" : "intial",
-                marginTop: "10px"
+                display: popularity === 0 ? "none" : "intial"
               }}
             />
           </span>
@@ -94,8 +92,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
-            marginLeft: "20px",
-            lineHeight: "40px",
+            marginLeft: "10px",
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
             display: remaining === 0 ? "none" : "inline"
@@ -113,14 +110,14 @@ export default class Basic extends React.Component {
           </strong>
         </Label>
         <br />
-
+        <br />
         <Label
           as="a"
           basic
           style={{
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
-            lineHeight: "40px",
+
             display: actualPrice === 0 ? "none" : "inline"
           }}
         >
@@ -138,7 +135,7 @@ export default class Basic extends React.Component {
           <label
             style={{
               fontSize: "14px",
-              lineHeight: "25px",
+
               paddingLeft: "1px",
               color: "rgba(0,0,0,.68)",
               display: actualPrice === 0 ? "none" : "intial"
@@ -152,9 +149,9 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
-            marginLeft: "20px",
+            marginLeft: "10px",
             fontSize: "14px",
-            lineHeight: "40px",
+
             color: "rgba(0,0,0,.6)",
             display: discountPrice === 0 ? "none" : "inline"
           }}
@@ -176,9 +173,9 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
-            marginLeft: "20px",
+            marginLeft: "10px",
             fontSize: "14px",
-            lineHeight: "40px",
+
             color: "rgba(0,0,0,.6)",
             display: discountPrice === 0 ? "none" : "inline"
           }}
@@ -228,14 +225,22 @@ export default class Basic extends React.Component {
           </span>
         </Label>
 
-        <br />
-
+        <br
+          style={{
+            display: actualPrice === 0 ? "none" : "intial"
+          }}
+        />
+        <br
+          style={{
+            display: actualPrice === 0 ? "none" : "intial"
+          }}
+        />
         <Label
           as="a"
           basic
           style={{
             fontSize: "14px",
-            lineHeight: "20px",
+
             color: "rgba(0,0,0,.6)",
             display: eventDate === undefined ? "none" : "intial"
           }}
@@ -259,7 +264,7 @@ export default class Basic extends React.Component {
           style={{
             marginLeft: "5px",
             fontSize: "14px",
-            lineHeight: "20px",
+
             color: "rgba(0,0,0,.6)",
             display: eventDay === undefined ? "none" : "intial"
           }}
@@ -283,7 +288,7 @@ export default class Basic extends React.Component {
           style={{
             marginLeft: "5px",
             fontSize: "14px",
-            lineHeight: "20px",
+
             color: "rgba(0,0,0,.6)",
             display: startTime === undefined ? "none" : "intial"
           }}
@@ -307,7 +312,7 @@ export default class Basic extends React.Component {
           style={{
             marginLeft: "5px",
             fontSize: "14px",
-            lineHeight: "20px",
+
             color: "rgba(0,0,0,.6)",
             display: endTime === undefined ? "none" : "intial"
           }}
@@ -333,7 +338,10 @@ export default class Basic extends React.Component {
     discountPrice,
     minimumPrice,
     popularity,
-    currencySymbol
+    currencySymbol,
+    femaleVeg,
+    maleNonveg,
+    labelName
   ) => {
     return (
       <div>
@@ -343,8 +351,37 @@ export default class Basic extends React.Component {
           style={{
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
-            lineHeight: "40px",
-            display: popularity === 0 ? "none" : "inline"
+            display: labelName === undefined ? "none" : "inline"
+          }}
+        >
+          {labelName}
+        </Label>
+
+        <Image
+          style={{
+            marginLeft: "5px",
+            marginBottom: "2px",
+            display: femaleVeg === undefined ? "none" : "inline"
+          }}
+          src={femaleVeg}
+        />
+        <Image
+          style={{
+            display: maleNonveg === undefined ? "none" : "inline",
+            marginLeft: "5px",
+            marginBottom: "2px"
+          }}
+          src={maleNonveg}
+        />
+
+        <Label
+          as="a"
+          basic
+          style={{
+            color: "rgba(0,0,0,.6)",
+            fontSize: "14px",
+            display: popularity === 0 ? "none" : "inline",
+            marginLeft: labelName === undefined ? "0px" : "10px"
           }}
         >
           Popularity :
@@ -359,7 +396,7 @@ export default class Basic extends React.Component {
               alt="non-veg, food, restaurants, dinner buffet, lunch buffet, pubs & brewery, reservation, event"
               style={{
                 display: popularity === 0 ? "none" : "intial",
-                marginTop: "10px"
+                marginTop: labelName === undefined ? "0px" : "2px"
               }}
             />
           </span>
@@ -380,7 +417,6 @@ export default class Basic extends React.Component {
           style={{
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
-            lineHeight: "40px",
             display: minimumPrice === 0 ? "none" : "inline"
           }}
         >
@@ -388,7 +424,6 @@ export default class Basic extends React.Component {
           <label
             style={{
               fontSize: "14px",
-              lineHeight: "25px",
               paddingLeft: "1px",
               color: "rgba(0,0,0,.68)",
               display: minimumPrice === 0 ? "none" : "intial"
@@ -428,13 +463,12 @@ export default class Basic extends React.Component {
           </label>
         </Label>
 
+        <br />
         <Label
           as="a"
           basic
           style={{
-            marginLeft: "20px",
             fontSize: "14px",
-            lineHeight: "40px",
             color: "rgba(0,0,0,.6)",
             display: discountPrice === 0 ? "none" : "inline"
           }}
@@ -458,7 +492,6 @@ export default class Basic extends React.Component {
           style={{
             marginLeft: "20px",
             fontSize: "14px",
-            lineHeight: "40px",
             color: "rgba(0,0,0,.6)",
             display: discountPrice === 0 ? "none" : "inline"
           }}
@@ -638,6 +671,9 @@ export default class Basic extends React.Component {
     } else {
       let discount = 0;
       let discountPrice = 0;
+      let femaleVeg = undefined;
+      let maleNonveg = undefined;
+      let labelName = undefined;
 
       discount = parseInt(
         this.props.history.location.state.offerData.data.Offer_Basic_Details
@@ -671,6 +707,31 @@ export default class Basic extends React.Component {
       );
       const dec = parseInt(hex, 16);
 
+      if (
+        Object.keys(this.props.history.location.state.offerData.data.SALOON)
+          .length !== 0
+      ) {
+        if (
+          this.props.history.location.state.offerData.data.SALOON
+            .Gender_Preference === 1
+        ) {
+          maleNonveg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+        } else if (
+          this.props.history.location.state.offerData.data.SALOON
+            .Gender_Preference === 2
+        ) {
+          femaleVeg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+        } else {
+          maleNonveg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+          femaleVeg =
+            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+        }
+
+        labelName = "Gender :";
+      }
       return this.newBasicComponent(
         discount,
         discountPrice,
@@ -678,7 +739,10 @@ export default class Basic extends React.Component {
           .Offer_Min_Price,
         this.props.history.location.state.offerData.data.Offer_Basic_Details
           .Offer_Popularity,
-        String.fromCharCode(dec)
+        String.fromCharCode(dec),
+        femaleVeg,
+        maleNonveg,
+        labelName
       );
     }
   };

@@ -13,6 +13,7 @@ export default class Initial extends React.Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     if (this.props.history.location.state !== undefined) {
       if (this.props.history.location.state.offerData.flag === 1) {
         // Collection

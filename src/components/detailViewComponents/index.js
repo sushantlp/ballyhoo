@@ -18,6 +18,7 @@ export default class DetailView extends React.Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0)
     if (this.props.history.location.state !== undefined) {
       this.setState({
         apiCall: false

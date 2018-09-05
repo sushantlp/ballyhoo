@@ -46,6 +46,7 @@ export default class Initial extends React.Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.props.getCityLocality();
     this.props.getDiscoverFilter();
   }
