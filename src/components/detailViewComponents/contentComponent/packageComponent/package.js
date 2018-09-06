@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import moment from "moment-timezone";
 
-import { Label, Segment, Button } from "semantic-ui-react/dist/commonjs";
+import { Segment, Button } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/package.css";
 
@@ -17,9 +17,6 @@ export default class Package extends React.Component {
   packageComponent = (offer, key) => {
     return (
       <Segment key={key}>
-        <Label as="a" basic style={{ color: "rgba(0, 0, 0, 0.6)" }}>
-          {offer.Package_Caption}
-        </Label>
         <Button
           size="small"
           style={{
@@ -30,8 +27,19 @@ export default class Package extends React.Component {
         >
           Book
         </Button>
+
+        <h3
+          style={{
+            fontWeight: "500",
+            color: "#ff695e",
+            margin: "0px"
+          }}
+        >
+          {offer.Package_Caption}
+        </h3>
+
         <br />
-        <br />
+
         <label style={{ color: "rgba(0,0,0,.6)", whiteSpace: "pre-line" }}>
           {offer.Package_Inclusion}
         </label>
@@ -47,19 +55,16 @@ export default class Package extends React.Component {
         color="red"
         onClick={() => this.clickStateChange(outside)}
       >
-        <span style={{ display: "block" }}>{stringDay}</span>
-        <span style={{ display: "block" }}>{week}</span>
         <span style={{ display: "block" }}>{stringMonth}</span>
+        <span style={{ display: "block" }}>{week}</span>
+        <span style={{ display: "block" }}>{stringDay}</span>
       </Button>
     );
   };
 
-  eventPackageComponent = (inside, key) => {
+  eventPackageComponent = (inside, packages, key) => {
     return (
       <Segment key={key}>
-        <Label as="a" basic style={{ color: "rgba(0, 0, 0, 0.6)" }}>
-          {inside.Package_Caption}
-        </Label>
         <Button
           size="small"
           style={{
@@ -70,7 +75,29 @@ export default class Package extends React.Component {
         >
           Book
         </Button>
+
+        <h3
+          style={{
+            fontWeight: "500",
+            color: "#ff695e",
+            margin: "0px"
+          }}
+        >
+          {inside.Package_Caption}
+        </h3>
+
+        <label
+          style={{
+            color: "rgba(0,0,0,.6)",
+            fontSize: "14px"
+          }}
+        >
+          {moment(packages.Event_Start_Time, ["HH:mm"]).format("h:mm A")}-
+          {moment(packages.Event_End_Time, ["HH:mm"]).format("h:mm A")}
+        </label>
+
         <br />
+
         <br />
         <label style={{ color: "rgba(0,0,0,.6)", whiteSpace: "pre-line" }}>
           {inside.Package_Inclusion}
@@ -88,7 +115,7 @@ export default class Package extends React.Component {
 
   clickEventDate = packages => {
     return packages.Offer_Package_List.map((inside, key) => {
-      return this.eventPackageComponent(inside, key);
+      return this.eventPackageComponent(inside, packages, key);
     });
   };
 
@@ -166,11 +193,28 @@ export default class Package extends React.Component {
         stringMonth = this.getMonth(month);
         stringWeek = this.getWeek(week);
 
-        if (outside.End_Date !== null) {
-        }
-
         if (days.toString().length === 1) {
           days = "0" + days;
+        }
+
+        if (outside.End_Date !== null) {
+          const endDate = moment(outside.End_Date, "YYYY/MM/DD");
+          let endDays = endDate.format("D");
+          let endMonth = endDate.format("M");
+          let endWeek = endDate.day();
+          endMonth = parseInt(endMonth, 10);
+          endWeek = parseInt(endWeek, 10);
+
+          const endStringMonth = this.getMonth(endMonth);
+          const EndStringWeek = this.getWeek(endWeek);
+
+          stringWeek = stringWeek + "-" + EndStringWeek;
+
+          if (endDays.toString().length === 1) {
+            endDays = "0" + endDays;
+          }
+
+          days = days + "-" + endDays;
         }
 
         return this.eventDateComponent(

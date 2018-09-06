@@ -11,6 +11,7 @@ import Note from "./noteComponent/note";
 import Term from "./termComponent/term";
 import Faq from "./faqComponent/faq";
 import Package from "./packageComponent/package";
+import Menu from "./menuComponent/menu";
 
 export default class Content extends React.Component {
   render() {
@@ -41,6 +42,10 @@ export default class Content extends React.Component {
           detailState={this.props.detailState}
         />
         <Package
+          history={this.props.history}
+          detailState={this.props.detailState}
+        />
+        <Menu
           history={this.props.history}
           detailState={this.props.detailState}
         />

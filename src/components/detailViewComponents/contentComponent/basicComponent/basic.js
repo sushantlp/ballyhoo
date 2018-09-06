@@ -486,8 +486,8 @@ export default class Basic extends React.Component {
           </strong>
         </Label>
 
-        <br />
-        <br />
+        <br style={{ display: discountPrice === 0 ? "none" : "intial" }} />
+        <br style={{ display: discountPrice === 0 ? "none" : "intial" }} />
         <Label
           as="a"
           basic
@@ -536,7 +536,7 @@ export default class Basic extends React.Component {
               style={{
                 textDecoration: "line-through",
                 fontSize: "14px",
-                color: "rgba(0,0,0,.68)"
+                color: "rgba(0,0,0,.6)"
               }}
             >
               {minimumPrice}
