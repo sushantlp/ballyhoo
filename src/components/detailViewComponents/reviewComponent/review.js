@@ -124,8 +124,7 @@ export default class Review extends React.Component {
         </div>
         <Segment>
           <Card.Content>
-            {" "}
-            {this.logicZomatoFeedback(this.sliceZomatoReview(zomatoData))}{" "}
+            {this.logicZomatoFeedback(this.sliceZomatoReview(zomatoData))}
           </Card.Content>
 
           <Button

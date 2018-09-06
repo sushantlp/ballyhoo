@@ -414,33 +414,36 @@ export default class Trending extends React.Component {
                 display: actualPrice === 0 && discount === 0 ? "none" : "intial"
               }}
             >
-              <Icon
+              <span
                 style={{
                   fontSize: "18px",
-                  lineHeight: "25px"
+                  lineHeight: "25px",
+                  display: actualPrice === 0 ? "none" : "intial"
                 }}
-                name={actualPrice === 0 ? "" : "rupee"}
               >
-                <label
+                {currencySymbol}
+              </span>
+
+              <label
+                style={{
+                  fontSize: "18px",
+                  lineHeight: "25px",
+                  paddingLeft: "1px",
+                  display: actualPrice === 0 ? "none" : "intial"
+                }}
+              >
+                {actualPrice}
+                <span
                   style={{
-                    fontSize: "18px",
-                    lineHeight: "25px",
-                    paddingLeft: "1px",
-                    display: actualPrice === 0 ? "none" : "intial"
+                    display: priceStatus === 0 ? "none" : "intial",
+                    fontSize: "16px",
+                    paddingLeft: "2px"
                   }}
                 >
-                  {actualPrice}
-                  <span
-                    style={{
-                      display: priceStatus === 0 ? "none" : "intial",
-                      fontSize: "16px",
-                      paddingLeft: "2px"
-                    }}
-                  >
-                    Onwards
-                  </span>
-                </label>
-              </Icon>
+                  Onwards
+                </span>
+              </label>
+
               <span
                 className={classes.DiscountPricePercent}
                 style={{
