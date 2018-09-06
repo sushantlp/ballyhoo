@@ -121,15 +121,22 @@ export default class Menu extends React.Component {
     });
   };
 
-  sliceMenu = menus => {
+  sliceMenu = (menus, status) => {
     let cut = [];
     if (this.state.isMore) {
       return menus;
     }
 
-    cut.menu_title = menus.menu_title;
-    cut.menu_category = menus.menu_category.slice(0, MAX_ITEMS);
-    console.log(cut);
+    if (status) {
+      let obj = {};
+      obj.menu_title = menus[0].menu_title;
+      obj.menu_category = menus[0].menu_category.slice(0, MAX_ITEMS);
+
+      cut.push(obj);
+    } else {
+      cut.menu_title = menus.menu_title;
+      cut.menu_category = menus.menu_category.slice(0, MAX_ITEMS);
+    }
     return cut;
   };
 
@@ -138,12 +145,14 @@ export default class Menu extends React.Component {
     let menus = "";
     let status = false;
     let currencySymbol = undefined;
+    let hide = [];
     if (this.props.detailState.apiCall) {
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         if (
           this.props.history.location.state.offerData.data.MENU === null ||
-          this.props.history.location.state.offerData.data.MENU === ""
+          this.props.history.location.state.offerData.data.MENU === "" ||
+          _.isEmpty(this.props.history.location.state.offerData.data.MENU)
         ) {
           return <div />;
         } else {
@@ -151,16 +160,24 @@ export default class Menu extends React.Component {
           status = true;
           currencySymbol = this.props.history.location.state.offerData.data
             .currency_text;
+          hide = this.props.history.location.state.offerData.data.MENU[0]
+            .menu_category;
         }
       } else {
         if (
           Object.keys(this.props.history.location.state.offerData.data.SALOON)
-            .length !== 0
+            .length !== 0 &&
+          !_.isEmpty(
+            this.props.history.location.state.offerData.data.SALOON
+              .Offer_Menu_List
+          )
         ) {
           menus = this.props.history.location.state.offerData.data.SALOON
             .Offer_Menu_List;
           currencySymbol = this.props.history.location.state.offerData.data
             .Offer_Basic_Details.Currency_Text;
+          hide = this.props.history.location.state.offerData.data.SALOON
+            .Offer_Menu_List.menu_category;
         } else {
           return <div />;
         }
@@ -183,11 +200,15 @@ export default class Menu extends React.Component {
           <div className={classes.UnderScore} />
         </div>
         <Segment>
-          {this.logicMenuData(this.sliceMenu(menus), status, currencySymbol)}
-          {/* {this.logicMenuData(menus, status, currencySymbol)} */}
+          {this.logicMenuData(
+            this.sliceMenu(menus, status),
+            status,
+            currencySymbol
+          )}
+
           <Button
             onClick={this.toggle}
-            disabled={Object.keys(menus).length < MAX_ITEMS ? true : false}
+            disabled={Object.keys(hide).length <= MAX_ITEMS ? true : false}
             size="large"
             basic
             color="violet"

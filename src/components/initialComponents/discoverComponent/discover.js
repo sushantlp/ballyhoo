@@ -113,7 +113,7 @@ export default class Discover extends React.Component {
     }
 
     const { isMore } = this.state;
-
+    const hide = this.props.discoverFilter;
     return (
       <Container className={classes.DiscoverContainer}>
         <div className={classes.HeaderContainer}>
@@ -127,11 +127,7 @@ export default class Discover extends React.Component {
 
         <Button
           onClick={this.toggle}
-          disabled={
-            Object.keys(this.props.discoverFilter).length < MAX_ITEMS
-              ? true
-              : false
-          }
+          disabled={Object.keys(hide).length <= MAX_ITEMS ? true : false}
           size="large"
           basic
           color="violet"

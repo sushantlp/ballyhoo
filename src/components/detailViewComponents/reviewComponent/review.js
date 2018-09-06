@@ -94,6 +94,7 @@ export default class Review extends React.Component {
   render() {
     const { isMore } = this.state;
     let zomatoData = [];
+    let hide = [];
 
     if (this.props.detailState.apiCall) {
     } else {
@@ -104,15 +105,10 @@ export default class Review extends React.Component {
           return <div />;
         } else {
           zomatoData = this.props.history.location.state.offerData.data.ZOMATO;
+          hide = this.props.history.location.state.offerData.data.ZOMATO;
         }
       } else {
-        if (
-          _.isEmpty(this.props.history.location.state.offerData.data.ZOMATO)
-        ) {
-          return <div />;
-        } else {
-          zomatoData = this.props.history.location.state.offerData.data.ZOMATO;
-        }
+        return <div />;
       }
     }
 
@@ -129,7 +125,7 @@ export default class Review extends React.Component {
 
           <Button
             onClick={this.toggle}
-            disabled={Object.keys(zomatoData).length < MAX_ITEMS ? true : false}
+            disabled={Object.keys(hide).length <= MAX_ITEMS ? true : false}
             size="large"
             basic
             color="violet"

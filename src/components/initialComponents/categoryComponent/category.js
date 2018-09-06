@@ -122,6 +122,7 @@ export default class Category extends React.Component {
     }
 
     const { isMore } = this.state;
+    const hide = this.props.categoryFilter;
 
     return (
       <Container className={classes.CategoryContainer}>
@@ -135,11 +136,7 @@ export default class Category extends React.Component {
 
         <Button
           onClick={this.toggle}
-          disabled={
-            Object.keys(this.props.categoryFilter).length < MAX_ITEMS
-              ? true
-              : false
-          }
+          disabled={Object.keys(hide).length <= MAX_ITEMS ? true : false}
           size="large"
           basic
           color="violet"

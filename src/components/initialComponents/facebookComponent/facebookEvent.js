@@ -118,6 +118,7 @@ export default class Trending extends React.Component {
     // if (Object.keys(this.props.facebookEvent.facebookEvent).length === 0) {
     //   return <div />;
     // }
+    const hide = this.props.facebookEvent.facebookEvent;
 
     return (
       <Container>
@@ -132,12 +133,7 @@ export default class Trending extends React.Component {
 
         <Button
           onClick={() => this.redirectRoute()}
-          disabled={
-            Object.keys(this.props.facebookEvent.facebookEvent).length <
-            MAX_ITEMS
-              ? true
-              : false
-          }
+          disabled={Object.keys(hide).length <= MAX_ITEMS ? true : false}
           size="large"
           basic
           color="violet"

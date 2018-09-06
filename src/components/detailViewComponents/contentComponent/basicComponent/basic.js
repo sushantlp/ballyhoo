@@ -109,8 +109,26 @@ export default class Basic extends React.Component {
             {remaining}
           </strong>
         </Label>
-        <br />
-        <br />
+        <br
+          style={{
+            display:
+              actualPrice === 0
+                ? eventDate === undefined
+                  ? "none"
+                  : "intial"
+                : "intial"
+          }}
+        />
+        <br
+          style={{
+            display:
+              actualPrice === 0
+                ? eventDate === undefined
+                  ? "none"
+                  : "intial"
+                : "intial"
+          }}
+        />
         <Label
           as="a"
           basic
