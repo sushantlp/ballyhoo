@@ -11,47 +11,134 @@ import {
 
 import classes from "./static/css/package.css";
 
+const REG_HEX = /&#x([a-fA-F0-9]+);/;
+
 export default class Package extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       door: false,
       packageList: [],
-      open: false
+      priceList: [],
+      open: false,
+      dimmer: "blurring",
+      size: "small",
+      currencySymbol: undefined
     };
   }
 
-  // show = dimmer => () => this.setState({ dimmer, open: true });
+  show = list => {
+    this.setState({
+      open: true,
+      priceList: list
+    });
+  };
+
   close = () => this.setState({ open: false });
 
-  packageModel = (dimmer, open, onClose) => {
+  packageModel = currencySymbol => {
+    const hex = currencySymbol.replace(REG_HEX, "$1");
+    const dec = parseInt(hex, 16);
+    const currency = String.fromCharCode(dec);
     return (
       <div>
-        {/* <Button onClick={this.show("blurring")}>Blurring</Button> */}
-
-        <Modal dimmer={dimmer} open={open} onClose={this.close}>
-          <Modal.Header>Select a Photo</Modal.Header>
-          <Modal.Content image>
+        <Modal
+          dimmer={this.state.dimmer}
+          open={this.state.open}
+          onClose={this.close}
+          size={this.state.size}
+        >
+          <Modal.Header style={{ textAlign: "center" }}>
+            Select your Category
+          </Modal.Header>
+          <Modal.Content>
             <Modal.Description>
-              <Header>Default Profile Image</Header>
-              <p>
-                We've found the following gravatar image associated with your
-                e-mail address.
-              </p>
-              <p>Is it okay to use this photo?</p>
+              {this.state.priceList.Package_Price_List.map((priceList, key) => {
+                return (
+                  <Segment key={key}>
+                    <Button
+                      size="small"
+                      basic
+                      color="violet"
+                      style={{
+                        float: "right"
+                      }}
+                    >
+                      ADD
+                    </Button>
+
+                    <h3
+                      style={{
+                        fontWeight: "500",
+                        color: "#ff695e",
+                        margin: "0px"
+                      }}
+                    >
+                      {priceList.Price_Caption}
+                    </h3>
+
+                    <span
+                      style={{
+                        color: "rgba(0,0,0,.6)"
+                      }}
+                    >
+                      {currency}
+                    </span>
+
+                    <label
+                      style={{
+                        color: "rgba(0,0,0,.6)"
+                      }}
+                    >
+                      {priceList.Price}
+                    </label>
+
+                    <br />
+
+                    <label
+                      style={{
+                        color: "rgba(0,0,0,.6)",
+                        whiteSpace: "pre-line"
+                      }}
+                    >
+                      {priceList.Price_Inclusion}
+                    </label>
+                  </Segment>
+                );
+              })}
             </Modal.Description>
           </Modal.Content>
           <Modal.Actions>
-            <Button color="black" onClick={this.close}>
-              Nope
-            </Button>
+            <label
+              style={{
+                fontSize: "23px",
+                marginRight: "80px"
+              }}
+            >
+              Total
+              <span
+                style={{
+                  fontSize: "23px",
+                  marginLeft: "10px"
+                }}
+              >
+                {currency}0
+              </span>
+            </label>
             <Button
-              positive
-              icon="checkmark"
-              labelPosition="right"
-              content="Yep, that's me"
-              onClick={this.close}
-            />
+              style={{
+                backgroundColor: "rgb(122, 82, 192)",
+                color: "white",
+                opacity: "1",
+                width: "280px",
+                height: "56px",
+                fontSize: "20px",
+                fontWeight: "500",
+                marginRight: "180px"
+              }}
+            >
+              Procced
+            </Button>
           </Modal.Actions>
         </Modal>
       </div>
@@ -68,7 +155,7 @@ export default class Package extends React.Component {
             backgroundColor: "rgb(122, 82, 192)",
             color: "white"
           }}
-          onClick={this.packageModel("blurring", true, true)}
+          onClick={() => this.show(offer)}
         >
           Book
         </Button>
@@ -100,9 +187,13 @@ export default class Package extends React.Component {
         color="red"
         onClick={() => this.clickStateChange(outside)}
       >
-        <span style={{ display: "block" }}>{stringMonth}</span>
-        <span style={{ display: "block" }}>{week}</span>
-        <span style={{ display: "block" }}>{stringDay}</span>
+        <span style={{ display: "block", paddingBottom: "3px" }}>
+          {stringMonth}
+        </span>
+        <span style={{ display: "block", paddingBottom: "3px" }}>{week}</span>
+        <span style={{ display: "block", paddingBottom: "3px" }}>
+          {stringDay}
+        </span>
       </Button>
     );
   };
@@ -117,7 +208,7 @@ export default class Package extends React.Component {
             backgroundColor: "rgb(122, 82, 192)",
             color: "white"
           }}
-          onClick={() => this.packageModel("blurring", true, true)}
+          onClick={() => this.show(inside)}
         >
           Book
         </Button>
@@ -282,6 +373,7 @@ export default class Package extends React.Component {
     const { door, packageList, open, dimmer } = this.state;
     let offer = [];
     let status = false;
+    let currencySymbol = undefined;
 
     if (this.props.detailState.apiCall) {
     } else {
@@ -294,12 +386,21 @@ export default class Package extends React.Component {
         ) {
           offer = this.props.history.location.state.offerData.data.ACTIVITY
             .Offer_Package_List;
+          currencySymbol = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Currency_Text;
+
+          this.currencyState(
+            this.props.history.location.state.offerData.data.Offer_Basic_Details
+              .Currency_Text
+          );
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.EVENT)
             .length !== 0
         ) {
           offer = this.props.history.location.state.offerData.data.EVENT
             .Offer_Date_List;
+          currencySymbol = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Currency_Text;
           status = true;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.GETAWAY)
@@ -307,6 +408,8 @@ export default class Package extends React.Component {
         ) {
           offer = this.props.history.location.state.offerData.data.GETAWAY
             .Offer_Package_List;
+          currencySymbol = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Currency_Text;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.SALOON)
             .length !== 0
@@ -317,6 +420,8 @@ export default class Package extends React.Component {
           ) {
             offer = this.props.history.location.state.offerData.data.SALOON
               .Offer_Package_List;
+            currencySymbol = this.props.history.location.state.offerData.data
+              .Offer_Basic_Details.Currency_Text;
           } else {
             return <div />;
           }
@@ -339,6 +444,7 @@ export default class Package extends React.Component {
           <Segment>
             {this.logicPackage(offer, status)}
             {door ? this.clickEventDate(packageList) : null}
+            {open ? this.packageModel(currencySymbol) : null}
           </Segment>
         </div>
       );
