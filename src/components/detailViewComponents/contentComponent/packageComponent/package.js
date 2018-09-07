@@ -6,7 +6,8 @@ import {
   Segment,
   Button,
   Modal,
-  Header
+  Header,
+  Icon
 } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/package.css";
@@ -28,6 +29,7 @@ export default class Package extends React.Component {
   }
 
   show = list => {
+    console.log(list);
     this.setState({
       open: true,
       priceList: list
@@ -54,6 +56,14 @@ export default class Package extends React.Component {
           <Modal.Content>
             <Modal.Description>
               {this.state.priceList.Package_Price_List.map((priceList, key) => {
+                let discountPrice = undefined;
+                let add = false;
+
+                if (priceList.Discount !== 0) {
+                  discountPrice = (priceList.Price * priceList.Discount) / 100;
+                  discountPrice = _.round(priceList.Price - discountPrice);
+                }
+
                 return (
                   <Segment key={key}>
                     <Button
@@ -61,12 +71,48 @@ export default class Package extends React.Component {
                       basic
                       color="violet"
                       style={{
-                        float: "right"
+                        float: "right",
+                        display: add ? "none" : "inital"
                       }}
                     >
                       ADD
                     </Button>
 
+                    <span
+                      style={{
+                        float: "right",
+                        display: add ? "none" : "inital"
+                      }}
+                    >
+                      <Icon
+                        disabled
+                        name="minus circle"
+                        style={{
+                          color: "rgb(43, 0, 119)",
+                          fontSize: "20px",
+                          display: add ? "inital" : "none"
+                        }}
+                      />
+                      <label
+                        style={{
+                          fontSize: "18px",
+                          paddingLeft: "5px",
+                          paddingRight: "5px",
+                          display: add ? "inital" : "none"
+                        }}
+                      >
+                        1
+                      </label>
+                      <Icon
+                        disabled
+                        name="plus circle"
+                        style={{
+                          color: "rgb(43, 0, 119)",
+                          fontSize: "20px",
+                          display: add ? "inital" : "none"
+                        }}
+                      />
+                    </span>
                     <h3
                       style={{
                         fontWeight: "500",
@@ -79,7 +125,9 @@ export default class Package extends React.Component {
 
                     <span
                       style={{
-                        color: "rgba(0,0,0,.6)"
+                        color: "rgba(0,0,0,.6)",
+                        textDecoration:
+                          discountPrice !== undefined ? "line-through" : "none"
                       }}
                     >
                       {currency}
@@ -87,10 +135,43 @@ export default class Package extends React.Component {
 
                     <label
                       style={{
-                        color: "rgba(0,0,0,.6)"
+                        color: "rgba(0,0,0,.6)",
+                        textDecoration:
+                          discountPrice !== undefined ? "line-through" : "none"
                       }}
                     >
                       {priceList.Price}
+                    </label>
+
+                    <span
+                      style={{
+                        color: "rgba(0,0,0,.6)",
+                        marginLeft: "5px",
+                        display:
+                          discountPrice === undefined ? "none" : "initial"
+                      }}
+                    >
+                      {currency}
+                    </span>
+
+                    <label
+                      style={{
+                        color: "rgba(0,0,0,.6)",
+                        display:
+                          discountPrice === undefined ? "none" : "initial"
+                      }}
+                    >
+                      {discountPrice}
+                    </label>
+
+                    <label
+                      style={{
+                        color: "rgba(0,0,0,.6)",
+                        marginLeft: "5px",
+                        display: priceList.Discount === 0 ? "none" : "initial"
+                      }}
+                    >
+                      {priceList.Discount} %
                     </label>
 
                     <br />
