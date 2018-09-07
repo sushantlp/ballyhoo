@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import moment from "moment-timezone";
 
-import { Label, Segment, Icon, Image } from "semantic-ui-react/dist/commonjs";
+import { Label, Segment, Image } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/basic.css";
 

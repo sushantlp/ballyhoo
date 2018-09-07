@@ -2,7 +2,12 @@ import React from "react";
 import _ from "lodash";
 import moment from "moment-timezone";
 
-import { Segment, Button } from "semantic-ui-react/dist/commonjs";
+import {
+  Segment,
+  Button,
+  Modal,
+  Header
+} from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/package.css";
 
@@ -10,10 +15,49 @@ export default class Package extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
-      package: []
+      door: false,
+      packageList: [],
+      open: false
     };
   }
+
+  // show = dimmer => () => this.setState({ dimmer, open: true });
+  close = () => this.setState({ open: false });
+
+  packageModel = (dimmer, open, onClose) => {
+    return (
+      <div>
+        {/* <Button onClick={this.show("blurring")}>Blurring</Button> */}
+
+        <Modal dimmer={dimmer} open={open} onClose={this.close}>
+          <Modal.Header>Select a Photo</Modal.Header>
+          <Modal.Content image>
+            <Modal.Description>
+              <Header>Default Profile Image</Header>
+              <p>
+                We've found the following gravatar image associated with your
+                e-mail address.
+              </p>
+              <p>Is it okay to use this photo?</p>
+            </Modal.Description>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button color="black" onClick={this.close}>
+              Nope
+            </Button>
+            <Button
+              positive
+              icon="checkmark"
+              labelPosition="right"
+              content="Yep, that's me"
+              onClick={this.close}
+            />
+          </Modal.Actions>
+        </Modal>
+      </div>
+    );
+  };
+
   packageComponent = (offer, key) => {
     return (
       <Segment key={key}>
@@ -24,6 +68,7 @@ export default class Package extends React.Component {
             backgroundColor: "rgb(122, 82, 192)",
             color: "white"
           }}
+          onClick={this.packageModel("blurring", true, true)}
         >
           Book
         </Button>
@@ -72,6 +117,7 @@ export default class Package extends React.Component {
             backgroundColor: "rgb(122, 82, 192)",
             color: "white"
           }}
+          onClick={() => this.packageModel("blurring", true, true)}
         >
           Book
         </Button>
@@ -108,8 +154,8 @@ export default class Package extends React.Component {
 
   clickStateChange = packages => {
     this.setState({
-      open: true,
-      package: packages
+      door: true,
+      packageList: packages
     });
   };
 
@@ -233,6 +279,7 @@ export default class Package extends React.Component {
   };
 
   render() {
+    const { door, packageList, open, dimmer } = this.state;
     let offer = [];
     let status = false;
 
@@ -291,7 +338,7 @@ export default class Package extends React.Component {
 
           <Segment>
             {this.logicPackage(offer, status)}
-            {this.state.open ? this.clickEventDate(this.state.package) : null}
+            {door ? this.clickEventDate(packageList) : null}
           </Segment>
         </div>
       );

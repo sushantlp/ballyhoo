@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { Button, Header, Modal } from "semantic-ui-react";
 
-class ModalExampleDimmer extends Component {
-  state = { open: false };
+import classes from "./static/css/packageModel.css";
 
+export default class packageModal extends React.Component {
+  state = { open: false };
   show = dimmer => () => this.setState({ dimmer, open: true });
   close = () => this.setState({ open: false });
 
@@ -43,5 +44,3 @@ class ModalExampleDimmer extends Component {
     );
   }
 }
-
-export default ModalExampleDimmer;
