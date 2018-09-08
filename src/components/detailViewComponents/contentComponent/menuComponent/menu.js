@@ -12,9 +12,24 @@ export default class Menu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMore: false
+      isMore: false,
+      menuList: []
     };
   }
+
+  // Add quantity parameter
+  addQuantiyParam = list => {
+    console.log(list);
+    // list.menu_category.map((obj, key) => {
+    //   obj.item.map((lists, keys) => {
+    //     lists.quantity = 0;
+    //   });
+    // });
+
+    this.setState({
+      menuList: list
+    });
+  };
 
   deliveryMenuComponent = (menuTitle, categoryTitle, items, object, key) => {
     return (
@@ -29,7 +44,11 @@ export default class Menu extends React.Component {
           {categoryTitle}
         </h3>
         <br />
-        <Card.Group items={items} style={{ cursor: "pointer" }} />
+        <Card.Group
+          items={items}
+          style={{ cursor: "pointer" }}
+          onClick={() => this.addQuantiyParam(object)}
+        />
         <br />
       </div>
     );
@@ -90,7 +109,7 @@ export default class Menu extends React.Component {
     const REG_HEX = /&#x([a-fA-F0-9]+);/;
     const hex = currencySymbol.replace(REG_HEX, "$1");
     const dec = parseInt(hex, 16);
-    console.log(menus);
+
     return menus.menu_category.map((category, key) => {
       const items = this.menuItem(
         category.item,
@@ -109,8 +128,14 @@ export default class Menu extends React.Component {
 
   logicMenuData = (menus, status, currencySymbol) => {
     if (status) {
+      // Add quantity parameter
+      // this.addQuantiyParam(menus[0]);
+
       return this.deliveryLoop(menus, currencySymbol, status);
     } else {
+      // Add quantity parameter
+      // this.addQuantiyParam(menus);
+
       return this.saloonLoop(menus, currencySymbol, status);
     }
   };

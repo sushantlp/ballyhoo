@@ -65,6 +65,7 @@ export default class Package extends React.Component {
       }
     });
   };
+
   packageModel = currencySymbol => {
     const hex = currencySymbol.replace(REG_HEX, "$1");
     const dec = parseInt(hex, 16);
@@ -352,7 +353,6 @@ export default class Package extends React.Component {
         </label>
 
         <br />
-
         <br />
         <label style={{ color: "rgba(0,0,0,.6)", whiteSpace: "pre-line" }}>
           {inside.Package_Inclusion}
@@ -549,7 +549,7 @@ export default class Package extends React.Component {
       if (offer === "" || offer === undefined || offer === null) {
         return <div />;
       }
-
+      console.log(offer);
       return (
         <div>
           <div className={classes.HeaderContainer}>
