@@ -29,19 +29,48 @@ export default class Package extends React.Component {
   }
 
   show = list => {
-    console.log(list);
+    const newList = this.addQuantiyParam(list);
     this.setState({
       open: true,
-      priceList: list
+      priceList: newList
     });
+  };
+
+  addQuantiyParam = list => {
+    list.Package_Price_List.map((obj, key) => {
+      obj.quantity = 0;
+    });
+
+    return list;
   };
 
   close = () => this.setState({ open: false });
 
+  intitalizeQuantity = (index, flag) => {
+    this.state.priceList.Package_Price_List.map((price, key) => {
+      if (key === index) {
+        if (flag) {
+          this.state.priceList.Package_Price_List[index].quantity =
+            this.state.priceList.Package_Price_List[index].quantity + 1;
+        } else {
+          if (this.state.priceList.Package_Price_List[index].quantity >= 0) {
+            this.state.priceList.Package_Price_List[index].quantity =
+              this.state.priceList.Package_Price_List[index].quantity - 1;
+          }
+        }
+
+        this.setState({
+          priceList: this.state.priceList
+        });
+      }
+    });
+  };
   packageModel = currencySymbol => {
     const hex = currencySymbol.replace(REG_HEX, "$1");
     const dec = parseInt(hex, 16);
     const currency = String.fromCharCode(dec);
+    let proceed = false;
+
     return (
       <div>
         <Modal
@@ -57,11 +86,14 @@ export default class Package extends React.Component {
             <Modal.Description>
               {this.state.priceList.Package_Price_List.map((priceList, key) => {
                 let discountPrice = undefined;
-                let add = false;
 
                 if (priceList.Discount !== 0) {
                   discountPrice = (priceList.Price * priceList.Discount) / 100;
                   discountPrice = _.round(priceList.Price - discountPrice);
+                }
+
+                if (priceList.quantity !== 0) {
+                  proceed = true;
                 }
 
                 return (
@@ -72,8 +104,9 @@ export default class Package extends React.Component {
                       color="violet"
                       style={{
                         float: "right",
-                        display: add ? "none" : "inital"
+                        display: priceList.quantity !== 0 ? "none" : "inline"
                       }}
+                      onClick={() => this.intitalizeQuantity(key, true)}
                     >
                       ADD
                     </Button>
@@ -81,7 +114,7 @@ export default class Package extends React.Component {
                     <span
                       style={{
                         float: "right",
-                        display: add ? "none" : "inital"
+                        display: priceList.quantity !== 0 ? "inline" : "none"
                       }}
                     >
                       <Icon
@@ -90,18 +123,19 @@ export default class Package extends React.Component {
                         style={{
                           color: "rgb(43, 0, 119)",
                           fontSize: "20px",
-                          display: add ? "inital" : "none"
+                          display: priceList.quantity !== 0 ? "inline" : "none"
                         }}
+                        onClick={() => this.intitalizeQuantity(key, false)}
                       />
                       <label
                         style={{
                           fontSize: "18px",
                           paddingLeft: "5px",
                           paddingRight: "5px",
-                          display: add ? "inital" : "none"
+                          display: priceList.quantity !== 0 ? "inline" : "none"
                         }}
                       >
-                        1
+                        {priceList.quantity}
                       </label>
                       <Icon
                         disabled
@@ -109,10 +143,12 @@ export default class Package extends React.Component {
                         style={{
                           color: "rgb(43, 0, 119)",
                           fontSize: "20px",
-                          display: add ? "inital" : "none"
+                          display: priceList.quantity !== 0 ? "inline" : "none"
                         }}
+                        onClick={() => this.intitalizeQuantity(key, true)}
                       />
                     </span>
+
                     <h3
                       style={{
                         fontWeight: "500",
@@ -217,6 +253,7 @@ export default class Package extends React.Component {
                 fontWeight: "500",
                 marginRight: "180px"
               }}
+              disabled={proceed ? false : true}
             >
               Procced
             </Button>
@@ -470,10 +507,8 @@ export default class Package extends React.Component {
           currencySymbol = this.props.history.location.state.offerData.data
             .Offer_Basic_Details.Currency_Text;
 
-          this.currencyState(
-            this.props.history.location.state.offerData.data.Offer_Basic_Details
-              .Currency_Text
-          );
+          currencySymbol = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Currency_Text;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.EVENT)
             .length !== 0
