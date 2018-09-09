@@ -18,22 +18,25 @@ export default class ImageSlider extends React.Component {
     );
   };
 
-  callLogic = () => {
-    if (this.props.history.location.state.offerData.api_type === 1) {
-      return this.airbnbImage(
-        this.props.history.location.state.offerData.data.full_img
-      );
-    } else {
-      return this.airbnbImage(
-        this.props.history.location.state.offerData.data.Offer_Basic_Details
-          .Offer_Image_Full
-      );
-    }
+  callLogic = image => {
+    return this.airbnbImage(image);
   };
   render() {
+    console.log(this.props);
     if (this.props.detailState.apiCall) {
+      console.log("HI");
     } else {
-      return this.callLogic();
+      console.log("HEllo");
+      if (this.props.history.location.state.offerData.api_type === 1) {
+        return this.callLogic(
+          this.props.history.location.state.offerData.data.full_img
+        );
+      } else {
+        return this.callLogic(
+          this.props.history.location.state.offerData.data.Offer_Basic_Details
+            .Offer_Image_Full
+        );
+      }
     }
   }
 }

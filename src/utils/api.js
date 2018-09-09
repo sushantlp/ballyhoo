@@ -157,7 +157,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v4/web" +
+          "api/v4/web/fnb/offer/detail?" +
           getQueryString({
             offer_id: offerId
           })
@@ -171,7 +171,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v4/web" +
+          "api/v4/web/latest/offer/detail?" +
           getQueryString({
             offer_id: offerId
           })

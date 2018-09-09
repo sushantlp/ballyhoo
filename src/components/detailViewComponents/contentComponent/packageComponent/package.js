@@ -28,15 +28,18 @@ export default class Package extends React.Component {
     };
   }
 
-  show = list => {
-    const newList = this.addQuantiyParam(list);
+  show = (list, offerId, categoryName) => {
+    const newList = this.addQuantiyParam(list, offerId, categoryName);
+
     this.setState({
       open: true,
       priceList: newList
     });
   };
 
-  addQuantiyParam = list => {
+  addQuantiyParam = (list, offerId, categoryName) => {
+    list.offerId = offerId;
+    list.category_Name = categoryName;
     list.Package_Price_List.map((obj, key) => {
       obj.quantity = 0;
     });
@@ -264,7 +267,7 @@ export default class Package extends React.Component {
     );
   };
 
-  packageComponent = (offer, key) => {
+  packageComponent = (offer, key, offerId, categoryName) => {
     return (
       <Segment key={key}>
         <Button
@@ -274,7 +277,7 @@ export default class Package extends React.Component {
             backgroundColor: "rgb(122, 82, 192)",
             color: "white"
           }}
-          onClick={() => this.show(offer)}
+          onClick={() => this.show(offer, offerId, categoryName)}
         >
           Book
         </Button>
@@ -317,7 +320,7 @@ export default class Package extends React.Component {
     );
   };
 
-  eventPackageComponent = (inside, packages, key) => {
+  eventPackageComponent = (inside, packages, key, offerId, categoryName) => {
     return (
       <Segment key={key}>
         <Button
@@ -327,7 +330,7 @@ export default class Package extends React.Component {
             backgroundColor: "rgb(122, 82, 192)",
             color: "white"
           }}
-          onClick={() => this.show(inside)}
+          onClick={() => this.show(inside, offerId, categoryName)}
         >
           Book
         </Button>
@@ -368,9 +371,15 @@ export default class Package extends React.Component {
     });
   };
 
-  clickEventDate = packages => {
+  clickEventDate = (packages, offerId, categoryName) => {
     return packages.Offer_Package_List.map((inside, key) => {
-      return this.eventPackageComponent(inside, packages, key);
+      return this.eventPackageComponent(
+        inside,
+        packages,
+        key,
+        offerId,
+        categoryName
+      );
     });
   };
 
@@ -429,7 +438,7 @@ export default class Package extends React.Component {
     return stringWeek;
   };
 
-  logicPackage = (offers, status) => {
+  logicPackage = (offers, status, offerId, categoryName) => {
     if (status) {
       return offers.map((outside, key) => {
         // Variable
@@ -482,7 +491,7 @@ export default class Package extends React.Component {
       });
     } else {
       return offers.map((offer, key) => {
-        return this.packageComponent(offer, key);
+        return this.packageComponent(offer, key, offerId, categoryName);
       });
     }
   };
@@ -492,6 +501,8 @@ export default class Package extends React.Component {
     let offer = [];
     let status = false;
     let currencySymbol = undefined;
+    let offerId = undefined;
+    let categoryName = undefined;
 
     if (this.props.detailState.apiCall) {
     } else {
@@ -506,9 +517,10 @@ export default class Package extends React.Component {
             .Offer_Package_List;
           currencySymbol = this.props.history.location.state.offerData.data
             .Offer_Basic_Details.Currency_Text;
-
-          currencySymbol = this.props.history.location.state.offerData.data
-            .Offer_Basic_Details.Currency_Text;
+          offerId = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Offer_Id;
+          categoryName = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Category_Name;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.EVENT)
             .length !== 0
@@ -518,6 +530,10 @@ export default class Package extends React.Component {
           currencySymbol = this.props.history.location.state.offerData.data
             .Offer_Basic_Details.Currency_Text;
           status = true;
+          offerId = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Offer_Id;
+          categoryName = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Category_Name;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.GETAWAY)
             .length !== 0
@@ -526,6 +542,10 @@ export default class Package extends React.Component {
             .Offer_Package_List;
           currencySymbol = this.props.history.location.state.offerData.data
             .Offer_Basic_Details.Currency_Text;
+          offerId = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Offer_Id;
+          categoryName = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Category_Name;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.SALOON)
             .length !== 0
@@ -538,6 +558,10 @@ export default class Package extends React.Component {
               .Offer_Package_List;
             currencySymbol = this.props.history.location.state.offerData.data
               .Offer_Basic_Details.Currency_Text;
+            offerId = this.props.history.location.state.offerData.data
+              .Offer_Basic_Details.Offer_Id;
+            categoryName = this.props.history.location.state.offerData.data
+              .Offer_Basic_Details.Category_Name;
           } else {
             return <div />;
           }
@@ -549,7 +573,7 @@ export default class Package extends React.Component {
       if (offer === "" || offer === undefined || offer === null) {
         return <div />;
       }
-      console.log(offer);
+
       return (
         <div>
           <div className={classes.HeaderContainer}>
@@ -558,8 +582,10 @@ export default class Package extends React.Component {
           </div>
 
           <Segment>
-            {this.logicPackage(offer, status)}
-            {door ? this.clickEventDate(packageList) : null}
+            {this.logicPackage(offer, status, offerId, categoryName)}
+            {door
+              ? this.clickEventDate(packageList, offerId, categoryName)
+              : null}
             {open ? this.packageModel(currencySymbol) : null}
           </Segment>
         </div>

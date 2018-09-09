@@ -18,24 +18,45 @@ export default class DetailView extends React.Component {
   }
 
   componentDidMount() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+
     if (this.props.history.location.state !== undefined) {
       this.setState({
         apiCall: false
       });
       console.log(this.props.history.location.state);
     } else {
-      this.setState({
-        apiCall: true
-      });
+      this.setState(
+        {
+          apiCall: true
+        },
+        function() {
+          if (
+            this.props.match.params.category === "escapes" ||
+            this.props.match.params.category === "events" ||
+            this.props.match.params.category === "activities" ||
+            this.props.match.params.category === "saloon-&-spa"
+          ) {
+            this.props.getNewViewDetail(this.props.match.params.id);
+          } else {
+            this.props.getOldViewDetail(this.props.match.params.id);
+          }
+        }
+      );
     }
   }
 
   render() {
+    console.log("Render");
     return (
       <div>
-        <Container fluid>
-          <AirImage history={this.props.history} detailState={this.state} />
+        {/* <Container fluid>
+          <AirImage
+            history={this.props.history}
+            detailState={this.state}
+            newViewDetail={this.props.newViewDetail}
+            oldViewDetail={this.props.oldViewDetail}
+          />
         </Container>
 
         <Container style={{ marginTop: "10px" }}>
@@ -54,7 +75,7 @@ export default class DetailView extends React.Component {
         <ImageCarousel history={this.props.history} detailState={this.state} />
         <MenuCarousel history={this.props.history} detailState={this.state} />
         <Map history={this.props.history} detailState={this.state} />
-        <Review history={this.props.history} detailState={this.state} />
+        <Review history={this.props.history} detailState={this.state} /> */}
       </div>
     );
   }
