@@ -51,7 +51,7 @@ const Root = ({ store }) => (
             path="/web/:id/:city/:locality/:category/:merchant"
             component={DetailView}
           />
-          // <Redirect from="/" to="/web" />
+          <Redirect from="/" to="/web" />
         </Switch>
         <Footer />
       </div>

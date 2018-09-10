@@ -7,10 +7,17 @@ const initialState = {
 export function newViewDetail(state = initialState, action) {
   switch (action.type) {
     case actionType.newViewDetail:
-      return {
-        ...state,
-        newViewDetail: action.newViewDetail
-      };
+      if (action.newViewDetail.hasOwnProperty("message")) {
+        return {
+          ...state,
+          newViewDetail: action.newViewDetail.message.ballyhoo
+        };
+      } else {
+        return {
+          ...state,
+          newViewDetail: {}
+        };
+      }
     default:
       return state;
   }

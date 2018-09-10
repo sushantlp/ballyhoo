@@ -49,6 +49,47 @@ export default class ImageCarousel extends React.Component {
     let imageData = [];
 
     if (this.props.detailState.apiCall) {
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+
+        if (
+          _.isEmpty(
+            this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
+              .Offer_Venue_Images
+          )
+        ) {
+          return <div />;
+        } else {
+          imageData = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offer_Venue_Images;
+        }
+      } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail === null ||
+          this.props.oldViewDetail.oldViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail.deal.IMAGES)) {
+          return <div />;
+        } else {
+          imageData = this.props.oldViewDetail.oldViewDetail.deal.IMAGES;
+        }
+      }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         if (

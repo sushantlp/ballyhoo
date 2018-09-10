@@ -1,4 +1,6 @@
 import React from "react";
+import _ from "lodash";
+
 import { Container, Segment } from "semantic-ui-react/dist/commonjs";
 
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
@@ -12,6 +14,106 @@ export default class Map extends React.Component {
     let address = "";
 
     if (this.props.detailState.apiCall) {
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+
+        if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.ACTIVITY)
+            .length !== 0
+        ) {
+          address =
+            this.props.newViewDetail.newViewDetail.offers.ACTIVITY
+              .Offer_Address +
+            " " +
+            this.props.newViewDetail.newViewDetail.offers.ACTIVITY
+              .Offer_Address_Locality +
+            ", " +
+            this.props.newViewDetail.newViewDetail.offers.ACTIVITY
+              .Offer_Address_City;
+          latitude = this.props.newViewDetail.newViewDetail.offers.ACTIVITY
+            .Offer_Location_Lat;
+          longitude = this.props.newViewDetail.newViewDetail.offers.ACTIVITY
+            .Offer_Location_Long;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.EVENT)
+            .length !== 0
+        ) {
+          address =
+            this.props.newViewDetail.newViewDetail.offers.EVENT.Offer_Address +
+            " " +
+            this.props.newViewDetail.newViewDetail.offers.EVENT
+              .Offer_Address_Locality +
+            ", " +
+            this.props.newViewDetail.newViewDetail.offers.EVENT
+              .Offer_Address_City;
+          latitude = this.props.newViewDetail.newViewDetail.offers.EVENT
+            .Offer_Location_Lat;
+          longitude = this.props.newViewDetail.newViewDetail.offers.EVENT
+            .Offer_Location_Long;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.GETAWAY)
+            .length !== 0
+        ) {
+          address =
+            this.props.newViewDetail.newViewDetail.offers.GETAWAY
+              .Offer_Address +
+            " " +
+            this.props.newViewDetail.newViewDetail.offers.GETAWAY
+              .Offer_Address_Locality +
+            ", " +
+            this.props.newViewDetail.newViewDetail.offers.GETAWAY
+              .Offer_Address_City;
+          latitude = this.props.newViewDetail.newViewDetail.offers.GETAWAY
+            .Offer_Location_Lat;
+          longitude = this.props.newViewDetail.newViewDetail.offers.GETAWAY
+            .Offer_Location_Long;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.SALOON)
+            .length !== 0
+        ) {
+          address =
+            this.props.newViewDetail.newViewDetail.offers.Merchant_Details
+              .Merchant_Address +
+            " " +
+            this.props.newViewDetail.newViewDetail.offers.Merchant_Details
+              .Offer_Address_Locality +
+            ", " +
+            this.props.newViewDetail.newViewDetail.offers.Merchant_Details
+              .Offer_Address_City;
+          latitude = this.props.newViewDetail.newViewDetail.offers
+            .Merchant_Details.Merchant_Latitude;
+          longitude = this.props.newViewDetail.newViewDetail.offers
+            .Merchant_Details.Merchant_Longitude;
+        } else {
+          return <div />;
+        }
+      } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail === null ||
+          this.props.oldViewDetail.oldViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
+          return <div />;
+        }
+
+        latitude = this.props.oldViewDetail.oldViewDetail.deal.MERCHANT_LOCATION
+          .latitude;
+        longitude = this.props.oldViewDetail.oldViewDetail.deal
+          .MERCHANT_LOCATION.longitude;
+        address = this.props.oldViewDetail.oldViewDetail.deal.MERCHANT.Address;
+      }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         latitude = this.props.history.location.state.offerData.data

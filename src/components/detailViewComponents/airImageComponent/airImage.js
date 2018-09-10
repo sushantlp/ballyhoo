@@ -1,4 +1,6 @@
 import React from "react";
+import _ from "lodash";
+
 import { Image } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/airImage.css";
@@ -22,11 +24,40 @@ export default class ImageSlider extends React.Component {
     return this.airbnbImage(image);
   };
   render() {
-    console.log(this.props);
     if (this.props.detailState.apiCall) {
-      console.log("HI");
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+
+        return this.callLogic(
+          this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
+            .Offer_Image_Full
+        );
+      } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail === null ||
+          this.props.oldViewDetail.oldViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
+          return <div />;
+        }
+
+        return this.callLogic(
+          this.props.oldViewDetail.oldViewDetail.deal.full_img
+        );
+      }
     } else {
-      console.log("HEllo");
       if (this.props.history.location.state.offerData.api_type === 1) {
         return this.callLogic(
           this.props.history.location.state.offerData.data.full_img
