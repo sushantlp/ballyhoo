@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import { Segment } from "semantic-ui-react/dist/commonjs";
 
@@ -8,6 +9,48 @@ export default class Term extends React.Component {
   render() {
     let term = "";
     if (this.props.detailState.apiCall) {
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+
+        if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.ACTIVITY)
+            .length !== 0
+        ) {
+          term = this.props.newViewDetail.newViewDetail.offers.ACTIVITY
+            .Offer_Terms;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.EVENT)
+            .length !== 0
+        ) {
+          term = this.props.newViewDetail.newViewDetail.offers.EVENT
+            .Offer_Terms;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.GETAWAY)
+            .length !== 0
+        ) {
+          term = this.props.newViewDetail.newViewDetail.offers.GETAWAY
+            .Offer_Terms;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.SALOON)
+            .length !== 0
+        ) {
+          term = this.props.newViewDetail.newViewDetail.offers.SALOON
+            .Offer_Terms;
+        } else {
+          return <div />;
+        }
+      } else {
+        <div />;
+      }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         return <div />;

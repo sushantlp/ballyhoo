@@ -7,6 +7,39 @@ export default class Note extends React.Component {
   render() {
     let note = "";
     if (this.props.detailState.apiCall) {
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+
+        if (
+          this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
+            .Offer_Note === null ||
+          this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
+            .Offer_Note === ""
+        ) {
+          return <div />;
+        } else {
+          note = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offer_Note;
+        }
+      } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail.deal.NOTE === null ||
+          this.props.oldViewDetail.oldViewDetail.deal.NOTE === ""
+        ) {
+          return <div />;
+        } else {
+          note = this.props.oldViewDetail.oldViewDetail.deal.NOTE;
+        }
+      }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         if (

@@ -172,6 +172,62 @@ export default class Menu extends React.Component {
     let currencySymbol = undefined;
     let hide = [];
     if (this.props.detailState.apiCall) {
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+
+        if (
+          this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
+            .Offer_Note === null ||
+          this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
+            .Offer_Note === ""
+        ) {
+          return <div />;
+        } else {
+          note = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offer_Note;
+        }
+
+        if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.SALOON)
+            .length !== 0 &&
+          !_.isEmpty(
+            this.props.newViewDetail.newViewDetail.offers.SALOON.Offer_Menu_List
+          )
+        ) {
+          menus = this.props.newViewDetail.newViewDetail.offers.SALOON
+            .Offer_Menu_List;
+          currencySymbol = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Currency_Text;
+          hide = this.props.newViewDetail.newViewDetail.offers.SALOON
+            .Offer_Menu_List.menu_category;
+        } else {
+          return <div />;
+        }
+      } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail.deal.MENU === null ||
+          this.props.oldViewDetail.oldViewDetail.deal.MENU === "" ||
+          _.isEmpty(this.props.oldViewDetail.oldViewDetail.deal.MENU)
+        ) {
+          return <div />;
+        } else {
+          menus = this.props.oldViewDetail.oldViewDetail.deal.MENU;
+          status = true;
+          currencySymbol = this.props.oldViewDetail.oldViewDetail.deal
+            .currency_text;
+          hide = this.props.oldViewDetail.oldViewDetail.deal.MENU[0]
+            .menu_category;
+        }
+      }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         if (

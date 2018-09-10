@@ -505,6 +505,72 @@ export default class Package extends React.Component {
     let categoryName = undefined;
 
     if (this.props.detailState.apiCall) {
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+
+        if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.ACTIVITY)
+            .length !== 0
+        ) {
+          offer = this.props.newViewDetail.newViewDetail.offers.ACTIVITY
+            .Offer_Package_List;
+          currencySymbol = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Currency_Text;
+          offerId = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offer_Id;
+          categoryName = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Category_Name;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.EVENT)
+            .length !== 0
+        ) {
+          offer = this.props.newViewDetail.newViewDetail.offers.EVENT
+            .Offer_Package_List;
+          currencySymbol = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Currency_Text;
+          offerId = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offer_Id;
+          categoryName = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Category_Name;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.GETAWAY)
+            .length !== 0
+        ) {
+          offer = this.props.newViewDetail.newViewDetail.offers.GETAWAY
+            .Offer_Package_List;
+          currencySymbol = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Currency_Text;
+          offerId = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offer_Id;
+          categoryName = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Category_Name;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.SALOON)
+            .length !== 0
+        ) {
+          offer = this.props.newViewDetail.newViewDetail.offers.SALOON
+            .Offer_Package_List;
+          currencySymbol = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Currency_Text;
+          offerId = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offer_Id;
+          categoryName = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Category_Name;
+        } else {
+          return <div />;
+        }
+      } else {
+        <div />;
+      }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         return <div />;

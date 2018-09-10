@@ -20,46 +20,68 @@ export default class Content extends React.Component {
         <Header
           history={this.props.history}
           detailState={this.props.detailState}
+          newViewDetail={this.props.newViewDetail}
+          oldViewDetail={this.props.oldViewDetail}
         />
         <Basic
           history={this.props.history}
           detailState={this.props.detailState}
+          newViewDetail={this.props.newViewDetail}
+          oldViewDetail={this.props.oldViewDetail}
         />
         <BusinessHour
           history={this.props.history}
           detailState={this.props.detailState}
+          newViewDetail={this.props.newViewDetail}
+          oldViewDetail={this.props.oldViewDetail}
         />
         <Hashtag
           history={this.props.history}
           detailState={this.props.detailState}
+          newViewDetail={this.props.newViewDetail}
+          oldViewDetail={this.props.oldViewDetail}
         />
         <Highlight
           history={this.props.history}
           detailState={this.props.detailState}
+          newViewDetail={this.props.newViewDetail}
+          oldViewDetail={this.props.oldViewDetail}
         />
         <Inclusion
           history={this.props.history}
           detailState={this.props.detailState}
+          newViewDetail={this.props.newViewDetail}
+          oldViewDetail={this.props.oldViewDetail}
         />
         <Package
           history={this.props.history}
           detailState={this.props.detailState}
+          newViewDetail={this.props.newViewDetail}
+          oldViewDetail={this.props.oldViewDetail}
         />
         <Menu
           history={this.props.history}
           detailState={this.props.detailState}
+          newViewDetail={this.props.newViewDetail}
+          oldViewDetail={this.props.oldViewDetail}
         />
         <Term
           history={this.props.history}
           detailState={this.props.detailState}
+          newViewDetail={this.props.newViewDetail}
+          oldViewDetail={this.props.oldViewDetail}
         />
         <Faq
           history={this.props.history}
           detailState={this.props.detailState}
+          newViewDetail={this.props.newViewDetail}
+          oldViewDetail={this.props.oldViewDetail}
         />
         <Note
           history={this.props.history}
           detailState={this.props.detailState}
+          newViewDetail={this.props.newViewDetail}
+          oldViewDetail={this.props.oldViewDetail}
         />
       </div>
     );
