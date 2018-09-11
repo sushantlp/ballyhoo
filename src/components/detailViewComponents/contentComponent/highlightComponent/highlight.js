@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import { Segment } from "semantic-ui-react/dist/commonjs";
 
@@ -8,6 +9,62 @@ export default class Highlight extends React.Component {
   render() {
     let highlight = "";
     if (this.props.detailState.apiCall) {
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+
+        if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.ACTIVITY)
+            .length !== 0
+        ) {
+          highlight = this.props.newViewDetail.newViewDetail.offers.ACTIVITY
+            .Offer_Description;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.EVENT)
+            .length !== 0
+        ) {
+          highlight = this.props.newViewDetail.newViewDetail.offers.EVENT
+            .Offer_Description;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.GETAWAY)
+            .length !== 0
+        ) {
+          highlight = this.props.newViewDetail.newViewDetail.offers.GETAWAY
+            .Offer_Description;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.SALOON)
+            .length !== 0
+        ) {
+          highlight = this.props.newViewDetail.newViewDetail.offers.SALOON
+            .Offer_Description;
+        } else {
+          return <div />;
+        }
+      } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail === null ||
+          this.props.oldViewDetail.oldViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
+          return <div />;
+        }
+
+        highlight =
+          this.props.oldViewDetail.oldViewDetail.deal.Description +
+          "\n\n" +
+          this.props.oldViewDetail.oldViewDetail.deal.MERCHANT.Description;
+      }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         highlight =

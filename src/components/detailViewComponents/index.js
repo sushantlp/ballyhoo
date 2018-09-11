@@ -60,7 +60,7 @@ export default class DetailView extends React.Component {
           />
         </Container>
 
-        {/* <Container style={{ marginTop: "10px" }}>
+        <Container style={{ marginTop: "10px" }}>
           <Grid>
             <Grid.Row columns={2}>
               <Grid.Column width={10}>
@@ -74,7 +74,7 @@ export default class DetailView extends React.Component {
               <Grid.Column width={2} />
             </Grid.Row>
           </Grid>
-        </Container> */}
+        </Container>
         <ImageCarousel
           history={this.props.history}
           detailState={this.state}

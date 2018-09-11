@@ -49,7 +49,7 @@ export default class Term extends React.Component {
           return <div />;
         }
       } else {
-        <div />;
+        return <div />;
       }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {

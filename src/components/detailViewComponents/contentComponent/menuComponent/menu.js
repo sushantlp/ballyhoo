@@ -185,18 +185,6 @@ export default class Menu extends React.Component {
         }
 
         if (
-          this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
-            .Offer_Note === null ||
-          this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
-            .Offer_Note === ""
-        ) {
-          return <div />;
-        } else {
-          note = this.props.newViewDetail.newViewDetail.offers
-            .Offer_Basic_Details.Offer_Note;
-        }
-
-        if (
           Object.keys(this.props.newViewDetail.newViewDetail.offers.SALOON)
             .length !== 0 &&
           !_.isEmpty(
@@ -213,6 +201,17 @@ export default class Menu extends React.Component {
           return <div />;
         }
       } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail === null ||
+          this.props.oldViewDetail.oldViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
+          return <div />;
+        }
+
         if (
           this.props.oldViewDetail.oldViewDetail.deal.MENU === null ||
           this.props.oldViewDetail.oldViewDetail.deal.MENU === "" ||

@@ -586,267 +586,548 @@ export default class Basic extends React.Component {
     );
   };
 
-  logicBasicComponent = () => {
-    if (this.props.history.location.state.offerData.api_type === 1) {
-      let femaleVeg = undefined;
-      let maleNonveg = undefined;
-      let labelName = undefined;
-      let discount = 0;
-      let discountPrice = 0;
-      let eventDate = undefined;
-      let eventDay = undefined;
-      let startTime = undefined;
-      let endTime = undefined;
+  logicBasicComponent = status => {
+    if (status) {
+      if (this.props.history.location.state.offerData.api_type === 1) {
+        let femaleVeg = undefined;
+        let maleNonveg = undefined;
+        let labelName = undefined;
+        let discount = 0;
+        let discountPrice = 0;
+        let eventDate = undefined;
+        let eventDay = undefined;
+        let startTime = undefined;
+        let endTime = undefined;
 
-      if (
-        this.props.history.location.state.offerData.data.DISCOUNT.Type ===
-        "flat"
-      ) {
+        if (
+          this.props.history.location.state.offerData.data.DISCOUNT.Type ===
+          "flat"
+        ) {
+          discount = parseInt(
+            this.props.history.location.state.offerData.data.DISCOUNT.Value,
+            10
+          );
+          if (
+            this.props.history.location.state.offerData.data.DISCOUNT
+              .ActualPrice !== 0 &&
+            discount !== 0
+          ) {
+            discountPrice =
+              (this.props.history.location.state.offerData.data.DISCOUNT
+                .ActualPrice *
+                discount) /
+              100;
+            discountPrice = _.round(
+              this.props.history.location.state.offerData.data.DISCOUNT
+                .ActualPrice - discountPrice
+            );
+            discount = discount + "%" + " OFF";
+          } else if (discount !== 0) {
+            discount = discount + "%" + " OFF";
+          }
+        } else if (
+          this.props.history.location.state.offerData.data.DISCOUNT.Type ===
+          "combo1,1"
+        ) {
+          discount = "1 + 1";
+        } else {
+          discount = "2 + 1";
+        }
+
+        if (
+          this.props.history.location.state.offerData.data.Offering !== "Event"
+        ) {
+          if (
+            this.props.history.location.state.offerData.data.foodpreference ===
+            "veg"
+          ) {
+            femaleVeg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921787/ballyhoo/EMAIL/veg.62b68100_1.jpg";
+          } else if (
+            this.props.history.location.state.offerData.data.foodpreference ===
+            "nonveg"
+          ) {
+            maleNonveg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921936/ballyhoo/EMAIL/non-veg.png";
+          } else {
+            maleNonveg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921936/ballyhoo/EMAIL/non-veg.png";
+            femaleVeg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921787/ballyhoo/EMAIL/veg.62b68100_1.jpg";
+          }
+
+          labelName = "Food-Type :";
+        } else {
+          if (
+            this.props.history.location.state.offerData.data.EVENTS
+              .gender_preference === 1
+          ) {
+            maleNonveg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+          } else if (
+            this.props.history.location.state.offerData.data.EVENTS
+              .gender_preference === 2
+          ) {
+            femaleVeg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+          } else {
+            maleNonveg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+            femaleVeg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+          }
+
+          labelName = "Gender :";
+          eventDate = this.props.history.location.state.offerData.data.EVENTS
+            .event_date;
+          eventDay = this.props.history.location.state.offerData.data.EVENTS
+            .event_day;
+          startTime = this.props.history.location.state.offerData.data.EVENTS
+            .event_start_time;
+          endTime = this.props.history.location.state.offerData.data.EVENTS
+            .event_end_time;
+        }
+
+        const REG_HEX = /&#x([a-fA-F0-9]+);/;
+
+        const hex = this.props.history.location.state.offerData.data.currency_text.replace(
+          REG_HEX,
+          "$1"
+        );
+        const dec = parseInt(hex, 16);
+
+        return this.oldBasicComponent(
+          femaleVeg,
+          maleNonveg,
+          labelName,
+          discount,
+          discountPrice,
+          this.props.history.location.state.offerData.data.DISCOUNT.ActualPrice,
+          this.props.history.location.state.offerData.data.DISCOUNT.OrderLimit,
+          this.props.history.location.state.offerData.data.Popularity,
+          eventDate,
+          eventDay,
+          startTime,
+          endTime,
+          String.fromCharCode(dec)
+        );
+      } else {
+        let discount = 0;
+        let discountPrice = 0;
+        let femaleVeg = undefined;
+        let maleNonveg = undefined;
+        let labelName = undefined;
+        let calendar = undefined;
+
         discount = parseInt(
-          this.props.history.location.state.offerData.data.DISCOUNT.Value,
+          this.props.history.location.state.offerData.data.Offer_Basic_Details
+            .Offer_Min_Discount,
           10
         );
         if (
-          this.props.history.location.state.offerData.data.DISCOUNT
-            .ActualPrice !== 0 &&
+          this.props.history.location.state.offerData.data.Offer_Basic_Details
+            .Offer_Min_Price !== 0 &&
           discount !== 0
         ) {
           discountPrice =
-            (this.props.history.location.state.offerData.data.DISCOUNT
-              .ActualPrice *
+            (this.props.history.location.state.offerData.data
+              .Offer_Basic_Details.Offer_Min_Price *
               discount) /
             100;
           discountPrice = _.round(
-            this.props.history.location.state.offerData.data.DISCOUNT
-              .ActualPrice - discountPrice
+            this.props.history.location.state.offerData.data.Offer_Basic_Details
+              .Offer_Min_Price - discountPrice
           );
           discount = discount + "%" + " OFF";
         } else if (discount !== 0) {
           discount = discount + "%" + " OFF";
         }
-      } else if (
-        this.props.history.location.state.offerData.data.DISCOUNT.Type ===
-        "combo1,1"
-      ) {
-        discount = "1 + 1";
-      } else {
-        discount = "2 + 1";
-      }
 
-      if (
-        this.props.history.location.state.offerData.data.Offering !== "Event"
-      ) {
+        const REG_HEX = /&#x([a-fA-F0-9]+);/;
+
+        const hex = this.props.history.location.state.offerData.data.Offer_Basic_Details.Currency_Text.replace(
+          REG_HEX,
+          "$1"
+        );
+        const dec = parseInt(hex, 16);
+
         if (
-          this.props.history.location.state.offerData.data.foodpreference ===
-          "veg"
+          Object.keys(this.props.history.location.state.offerData.data.SALOON)
+            .length !== 0
         ) {
-          femaleVeg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921787/ballyhoo/EMAIL/veg.62b68100_1.jpg";
+          if (
+            this.props.history.location.state.offerData.data.SALOON
+              .Gender_Preference === 1
+          ) {
+            maleNonveg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+          } else if (
+            this.props.history.location.state.offerData.data.SALOON
+              .Gender_Preference === 2
+          ) {
+            femaleVeg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+          } else {
+            maleNonveg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+            femaleVeg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+          }
+
+          labelName = "Gender :";
         } else if (
-          this.props.history.location.state.offerData.data.foodpreference ===
-          "nonveg"
+          Object.keys(this.props.history.location.state.offerData.data.EVENT)
+            .length !== 0
         ) {
-          maleNonveg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921936/ballyhoo/EMAIL/non-veg.png";
-        } else {
-          maleNonveg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921936/ballyhoo/EMAIL/non-veg.png";
-          femaleVeg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921787/ballyhoo/EMAIL/veg.62b68100_1.jpg";
+          const date = moment(
+            this.props.history.location.state.offerData.data.EVENT
+              .Offer_Start_Date,
+            "YYYY/MM/DD"
+          );
+          let month = date.format("M");
+          let day = date.format("D");
+          const year = date.format("YYYY");
+          let stringMonth = undefined;
+          month = parseInt(month, 10);
+          if (month === 1) {
+            stringMonth = "Jan";
+          } else if (month === 2) {
+            stringMonth = "Feb";
+          } else if (month === 3) {
+            stringMonth = "Mar";
+          } else if (month === 4) {
+            stringMonth = "Apr";
+          } else if (month === 5) {
+            stringMonth = "May";
+          } else if (month === 6) {
+            stringMonth = "Jun";
+          } else if (month === 7) {
+            stringMonth = "Jul";
+          } else if (month === 8) {
+            stringMonth = "Aug";
+          } else if (month === 9) {
+            stringMonth = "Sep";
+          } else if (month === 10) {
+            stringMonth = "Oct";
+          } else if (month === 11) {
+            stringMonth = "Nov";
+          } else if (month === 12) {
+            stringMonth = "Dec";
+          }
+
+          if (
+            this.props.history.location.state.offerData.data.EVENT
+              .Offer_Date_List.length > 1
+          ) {
+            if (day.toString().length === 1) {
+              day = "0" + day;
+            }
+            calendar = stringMonth + " " + day + " " + "Onwards";
+          } else {
+            if (day.toString().length === 1) {
+              day = "0" + day;
+            }
+            calendar = stringMonth + " " + day;
+          }
         }
-
-        labelName = "Food-Type :";
-      } else {
-        if (
-          this.props.history.location.state.offerData.data.EVENTS
-            .gender_preference === 1
-        ) {
-          maleNonveg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
-        } else if (
-          this.props.history.location.state.offerData.data.EVENTS
-            .gender_preference === 2
-        ) {
-          femaleVeg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
-        } else {
-          maleNonveg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
-          femaleVeg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
-        }
-
-        labelName = "Gender :";
-        eventDate = this.props.history.location.state.offerData.data.EVENTS
-          .event_date;
-        eventDay = this.props.history.location.state.offerData.data.EVENTS
-          .event_day;
-        startTime = this.props.history.location.state.offerData.data.EVENTS
-          .event_start_time;
-        endTime = this.props.history.location.state.offerData.data.EVENTS
-          .event_end_time;
-      }
-
-      const REG_HEX = /&#x([a-fA-F0-9]+);/;
-
-      const hex = this.props.history.location.state.offerData.data.currency_text.replace(
-        REG_HEX,
-        "$1"
-      );
-      const dec = parseInt(hex, 16);
-
-      return this.oldBasicComponent(
-        femaleVeg,
-        maleNonveg,
-        labelName,
-        discount,
-        discountPrice,
-        this.props.history.location.state.offerData.data.DISCOUNT.ActualPrice,
-        this.props.history.location.state.offerData.data.DISCOUNT.OrderLimit,
-        this.props.history.location.state.offerData.data.Popularity,
-        eventDate,
-        eventDay,
-        startTime,
-        endTime,
-        String.fromCharCode(dec)
-      );
-    } else {
-      let discount = 0;
-      let discountPrice = 0;
-      let femaleVeg = undefined;
-      let maleNonveg = undefined;
-      let labelName = undefined;
-      let calendar = undefined;
-
-      discount = parseInt(
-        this.props.history.location.state.offerData.data.Offer_Basic_Details
-          .Offer_Min_Discount,
-        10
-      );
-      if (
-        this.props.history.location.state.offerData.data.Offer_Basic_Details
-          .Offer_Min_Price !== 0 &&
-        discount !== 0
-      ) {
-        discountPrice =
-          (this.props.history.location.state.offerData.data.Offer_Basic_Details
-            .Offer_Min_Price *
-            discount) /
-          100;
-        discountPrice = _.round(
+        return this.newBasicComponent(
+          discount,
+          discountPrice,
           this.props.history.location.state.offerData.data.Offer_Basic_Details
-            .Offer_Min_Price - discountPrice
+            .Offer_Min_Price,
+          this.props.history.location.state.offerData.data.Offer_Basic_Details
+            .Offer_Popularity,
+          String.fromCharCode(dec),
+          femaleVeg,
+          maleNonveg,
+          labelName,
+          calendar
         );
-        discount = discount + "%" + " OFF";
-      } else if (discount !== 0) {
-        discount = discount + "%" + " OFF";
       }
+    } else {
+      if (this.props.detailState.which === "new") {
+        let discount = 0;
+        let discountPrice = 0;
+        let femaleVeg = undefined;
+        let maleNonveg = undefined;
+        let labelName = undefined;
+        let calendar = undefined;
 
-      const REG_HEX = /&#x([a-fA-F0-9]+);/;
-
-      const hex = this.props.history.location.state.offerData.data.Offer_Basic_Details.Currency_Text.replace(
-        REG_HEX,
-        "$1"
-      );
-      const dec = parseInt(hex, 16);
-
-      if (
-        Object.keys(this.props.history.location.state.offerData.data.SALOON)
-          .length !== 0
-      ) {
+        discount = parseInt(
+          this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
+            .Offer_Min_Discount,
+          10
+        );
         if (
-          this.props.history.location.state.offerData.data.SALOON
-            .Gender_Preference === 1
+          this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
+            .Offer_Min_Price !== 0 &&
+          discount !== 0
         ) {
-          maleNonveg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+          discountPrice =
+            (this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
+              .Offer_Min_Price *
+              discount) /
+            100;
+          discountPrice = _.round(
+            this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
+              .Offer_Min_Price - discountPrice
+          );
+          discount = discount + "%" + " OFF";
+        } else if (discount !== 0) {
+          discount = discount + "%" + " OFF";
+        }
+
+        const REG_HEX = /&#x([a-fA-F0-9]+);/;
+
+        const hex = this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details.Currency_Text.replace(
+          REG_HEX,
+          "$1"
+        );
+        const dec = parseInt(hex, 16);
+
+        if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.SALOON)
+            .length !== 0
+        ) {
+          if (
+            this.props.newViewDetail.newViewDetail.offers.SALOON
+              .Gender_Preference === 1
+          ) {
+            maleNonveg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+          } else if (
+            this.props.newViewDetail.newViewDetail.offers.SALOON
+              .Gender_Preference === 2
+          ) {
+            femaleVeg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+          } else {
+            maleNonveg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+            femaleVeg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+          }
+
+          labelName = "Gender :";
         } else if (
-          this.props.history.location.state.offerData.data.SALOON
-            .Gender_Preference === 2
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.EVENT)
+            .length !== 0
         ) {
-          femaleVeg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
-        } else {
-          maleNonveg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
-          femaleVeg =
-            "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
-        }
+          const date = moment(
+            this.props.newViewDetail.newViewDetail.offers.EVENT
+              .Offer_Start_Date,
+            "YYYY/MM/DD"
+          );
+          let month = date.format("M");
+          let day = date.format("D");
+          let stringMonth = undefined;
 
-        labelName = "Gender :";
-      } else if (
-        Object.keys(this.props.history.location.state.offerData.data.EVENT)
-          .length !== 0
-      ) {
-        const date = moment(
-          this.props.history.location.state.offerData.data.EVENT
-            .Offer_Start_Date,
-          "YYYY/MM/DD"
-        );
-        let month = date.format("M");
-        let day = date.format("D");
-        const year = date.format("YYYY");
-        let stringMonth = undefined;
-        month = parseInt(month, 10);
-        if (month === 1) {
-          stringMonth = "Jan";
-        } else if (month === 2) {
-          stringMonth = "Feb";
-        } else if (month === 3) {
-          stringMonth = "Mar";
-        } else if (month === 4) {
-          stringMonth = "Apr";
-        } else if (month === 5) {
-          stringMonth = "May";
-        } else if (month === 6) {
-          stringMonth = "Jun";
-        } else if (month === 7) {
-          stringMonth = "Jul";
-        } else if (month === 8) {
-          stringMonth = "Aug";
-        } else if (month === 9) {
-          stringMonth = "Sep";
-        } else if (month === 10) {
-          stringMonth = "Oct";
-        } else if (month === 11) {
-          stringMonth = "Nov";
-        } else if (month === 12) {
-          stringMonth = "Dec";
+          month = parseInt(month, 10);
+          if (month === 1) {
+            stringMonth = "Jan";
+          } else if (month === 2) {
+            stringMonth = "Feb";
+          } else if (month === 3) {
+            stringMonth = "Mar";
+          } else if (month === 4) {
+            stringMonth = "Apr";
+          } else if (month === 5) {
+            stringMonth = "May";
+          } else if (month === 6) {
+            stringMonth = "Jun";
+          } else if (month === 7) {
+            stringMonth = "Jul";
+          } else if (month === 8) {
+            stringMonth = "Aug";
+          } else if (month === 9) {
+            stringMonth = "Sep";
+          } else if (month === 10) {
+            stringMonth = "Oct";
+          } else if (month === 11) {
+            stringMonth = "Nov";
+          } else if (month === 12) {
+            stringMonth = "Dec";
+          }
+
+          if (
+            this.props.newViewDetail.newViewDetail.offers.EVENT.Offer_Date_List
+              .length > 1
+          ) {
+            if (day.toString().length === 1) {
+              day = "0" + day;
+            }
+            calendar = stringMonth + " " + day + " " + "Onwards";
+          } else {
+            if (day.toString().length === 1) {
+              day = "0" + day;
+            }
+            calendar = stringMonth + " " + day;
+          }
         }
+        return this.newBasicComponent(
+          discount,
+          discountPrice,
+          this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
+            .Offer_Min_Price,
+          this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
+            .Offer_Popularity,
+          String.fromCharCode(dec),
+          femaleVeg,
+          maleNonveg,
+          labelName,
+          calendar
+        );
+      } else {
+        let femaleVeg = undefined;
+        let maleNonveg = undefined;
+        let labelName = undefined;
+        let discount = 0;
+        let discountPrice = 0;
+        let eventDate = undefined;
+        let eventDay = undefined;
+        let startTime = undefined;
+        let endTime = undefined;
 
         if (
-          this.props.history.location.state.offerData.data.EVENT.Offer_Date_List
-            .length > 1
+          this.props.oldViewDetail.oldViewDetail.deal.DISCOUNT.Type === "flat"
         ) {
-          if (day.toString().length === 1) {
-            day = "0" + day;
+          discount = parseInt(
+            this.props.oldViewDetail.oldViewDetail.deal.DISCOUNT.Value,
+            10
+          );
+          if (
+            this.props.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice !==
+              0 &&
+            discount !== 0
+          ) {
+            discountPrice =
+              (this.props.oldViewDetail.oldViewDetail.deal.DISCOUNT
+                .ActualPrice *
+                discount) /
+              100;
+            discountPrice = _.round(
+              this.props.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice -
+                discountPrice
+            );
+            discount = discount + "%" + " OFF";
+          } else if (discount !== 0) {
+            discount = discount + "%" + " OFF";
           }
-          calendar = stringMonth + " " + day + " " + "Onwards";
+        } else if (
+          this.props.oldViewDetail.oldViewDetail.deal.DISCOUNT.Type ===
+          "combo1,1"
+        ) {
+          discount = "1 + 1";
         } else {
-          if (day.toString().length === 1) {
-            day = "0" + day;
-          }
-          calendar = stringMonth + " " + day;
+          discount = "2 + 1";
         }
+
+        if (this.props.oldViewDetail.oldViewDetail.deal.Offering !== "Event") {
+          if (
+            this.props.oldViewDetail.oldViewDetail.deal.foodpreference === "veg"
+          ) {
+            femaleVeg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921787/ballyhoo/EMAIL/veg.62b68100_1.jpg";
+          } else if (
+            this.props.oldViewDetail.oldViewDetail.deal.foodpreference ===
+            "nonveg"
+          ) {
+            maleNonveg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921936/ballyhoo/EMAIL/non-veg.png";
+          } else {
+            maleNonveg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921936/ballyhoo/EMAIL/non-veg.png";
+            femaleVeg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/v1503921787/ballyhoo/EMAIL/veg.62b68100_1.jpg";
+          }
+
+          labelName = "Food-Type :";
+        } else {
+          if (
+            this.props.oldViewDetail.oldViewDetail.deal.EVENTS
+              .gender_preference === 1
+          ) {
+            maleNonveg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+          } else if (
+            this.props.oldViewDetail.oldViewDetail.deal.EVENTS
+              .gender_preference === 2
+          ) {
+            femaleVeg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+          } else {
+            maleNonveg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/male-face01.png";
+            femaleVeg =
+              "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
+          }
+
+          labelName = "Gender :";
+          eventDate = this.props.oldViewDetail.oldViewDetail.deal.EVENTS
+            .event_date;
+          eventDay = this.props.oldViewDetail.oldViewDetail.deal.EVENTS
+            .event_day;
+          startTime = this.props.oldViewDetail.oldViewDetail.deal.EVENTS
+            .event_start_time;
+          endTime = this.props.oldViewDetail.oldViewDetail.deal.EVENTS
+            .event_end_time;
+        }
+
+        const REG_HEX = /&#x([a-fA-F0-9]+);/;
+
+        const hex = this.props.oldViewDetail.oldViewDetail.deal.currency_text.replace(
+          REG_HEX,
+          "$1"
+        );
+        const dec = parseInt(hex, 16);
+
+        return this.oldBasicComponent(
+          femaleVeg,
+          maleNonveg,
+          labelName,
+          discount,
+          discountPrice,
+          this.props.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice,
+          this.props.oldViewDetail.oldViewDetail.deal.DISCOUNT.OrderLimit,
+          this.props.oldViewDetail.oldViewDetail.deal.Popularity,
+          eventDate,
+          eventDay,
+          startTime,
+          endTime,
+          String.fromCharCode(dec)
+        );
       }
-      return this.newBasicComponent(
-        discount,
-        discountPrice,
-        this.props.history.location.state.offerData.data.Offer_Basic_Details
-          .Offer_Min_Price,
-        this.props.history.location.state.offerData.data.Offer_Basic_Details
-          .Offer_Popularity,
-        String.fromCharCode(dec),
-        femaleVeg,
-        maleNonveg,
-        labelName,
-        calendar
-      );
     }
   };
 
   render() {
+    let status = true;
     if (this.props.detailState.apiCall) {
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+      } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail === null ||
+          this.props.oldViewDetail.oldViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
+          return <div />;
+        }
+      }
+
+      status = false;
     }
 
     return (
@@ -856,7 +1137,7 @@ export default class Basic extends React.Component {
           <div className={classes.UnderScore} />
         </div>
 
-        <Segment>{this.logicBasicComponent()}</Segment>
+        <Segment>{this.logicBasicComponent(status)}</Segment>
       </div>
     );
   }

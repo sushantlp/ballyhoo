@@ -33,6 +33,47 @@ export default class Hashtag extends React.Component {
     let hashtag = [];
 
     if (this.props.detailState.apiCall) {
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+
+        if (
+          _.isEmpty(
+            this.props.newViewDetail.newViewDetail.offers.Merchant_Details
+              .Merchant_Hash_Tags
+          )
+        ) {
+          return <div />;
+        } else {
+          hashtag = this.props.newViewDetail.newViewDetail.offers
+            .Merchant_Details.Merchant_Hash_Tags;
+        }
+      } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail === null ||
+          this.props.oldViewDetail.oldViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail.deal.TAGS)) {
+          return <div />;
+        } else {
+          hashtag = this.props.oldViewDetail.oldViewDetail.deal.TAGS;
+        }
+      }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         if (_.isEmpty(this.props.history.location.state.offerData.data.TAGS)) {

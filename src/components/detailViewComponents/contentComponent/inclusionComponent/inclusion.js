@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import { Segment } from "semantic-ui-react/dist/commonjs";
 
@@ -8,6 +9,66 @@ export default class Inclusion extends React.Component {
   render() {
     let inclusion = "";
     if (this.props.detailState.apiCall) {
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+
+        if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.ACTIVITY)
+            .length !== 0
+        ) {
+          inclusion = this.props.newViewDetail.newViewDetail.offers.ACTIVITY
+            .Offer_Synopsis;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.EVENT)
+            .length !== 0
+        ) {
+          inclusion = this.props.newViewDetail.newViewDetail.offers.EVENT
+            .Offer_Synopsis;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.GETAWAY)
+            .length !== 0
+        ) {
+          inclusion = this.props.newViewDetail.newViewDetail.offers.GETAWAY
+            .Offer_Synopsis;
+        } else if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.SALOON)
+            .length !== 0
+        ) {
+          inclusion = this.props.newViewDetail.newViewDetail.offers.SALOON
+            .Offer_Synopsis;
+        } else {
+          return <div />;
+        }
+      } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail === null ||
+          this.props.oldViewDetail.oldViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
+          return <div />;
+        }
+
+        if (
+          this.props.oldViewDetail.oldViewDetail.deal.Inclusion === null ||
+          this.props.oldViewDetail.oldViewDetail.deal.Inclusion === ""
+        ) {
+          return <div />;
+        } else {
+          inclusion = this.props.oldViewDetail.oldViewDetail.deal.Inclusion;
+        }
+      }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         if (

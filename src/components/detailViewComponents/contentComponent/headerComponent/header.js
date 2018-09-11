@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import { Label, Icon } from "semantic-ui-react/dist/commonjs";
 
@@ -47,6 +48,65 @@ export default class Header extends React.Component {
     let businessName = undefined;
 
     if (this.props.detailState.apiCall) {
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+
+        if (
+          Number.isInteger(
+            this.props.newViewDetail.newViewDetail.offers.Merchant_Details
+              .Merchant_Ratings
+          )
+        ) {
+          rating =
+            this.props.newViewDetail.newViewDetail.offers.Merchant_Details
+              .Merchant_Ratings + ".0";
+        } else {
+          rating = this.props.newViewDetail.newViewDetail.offers
+            .Merchant_Details.Merchant_Ratings;
+        }
+
+        offering = this.props.newViewDetail.newViewDetail.offers
+          .Offer_Basic_Details.Offering_Title;
+        businessName = this.props.newViewDetail.newViewDetail.offers
+          .Merchant_Details.Merchant_Bname;
+      } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail === null ||
+          this.props.oldViewDetail.oldViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
+          return <div />;
+        }
+
+        if (
+          Number.isInteger(
+            this.props.oldViewDetail.oldViewDetail.deal.MERCHANT.merchant_rating
+          )
+        ) {
+          rating =
+            this.props.oldViewDetail.oldViewDetail.deal.MERCHANT
+              .merchant_rating + ".0";
+        } else {
+          rating = this.props.oldViewDetail.oldViewDetail.deal.MERCHANT
+            .merchant_rating;
+        }
+
+        offering = this.props.oldViewDetail.oldViewDetail.deal.offering_title;
+        businessName = this.props.oldViewDetail.oldViewDetail.deal.MERCHANT
+          .Business;
+      }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         if (

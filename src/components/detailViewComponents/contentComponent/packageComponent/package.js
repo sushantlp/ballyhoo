@@ -569,7 +569,7 @@ export default class Package extends React.Component {
           return <div />;
         }
       } else {
-        <div />;
+        return <div />;
       }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
@@ -635,27 +635,27 @@ export default class Package extends React.Component {
           return <div />;
         }
       }
-
-      if (offer === "" || offer === undefined || offer === null) {
-        return <div />;
-      }
-
-      return (
-        <div>
-          <div className={classes.HeaderContainer}>
-            <h4 className={classes.HeaderName}>PACKAGES</h4>
-            <div className={classes.UnderScore} />
-          </div>
-
-          <Segment>
-            {this.logicPackage(offer, status, offerId, categoryName)}
-            {door
-              ? this.clickEventDate(packageList, offerId, categoryName)
-              : null}
-            {open ? this.packageModel(currencySymbol) : null}
-          </Segment>
-        </div>
-      );
     }
+
+    if (offer === "" || offer === undefined || offer === null) {
+      return <div />;
+    }
+
+    return (
+      <div>
+        <div className={classes.HeaderContainer}>
+          <h4 className={classes.HeaderName}>PACKAGES</h4>
+          <div className={classes.UnderScore} />
+        </div>
+
+        <Segment>
+          {this.logicPackage(offer, status, offerId, categoryName)}
+          {door
+            ? this.clickEventDate(packageList, offerId, categoryName)
+            : null}
+          {open ? this.packageModel(currencySymbol) : null}
+        </Segment>
+      </div>
+    );
   }
 }

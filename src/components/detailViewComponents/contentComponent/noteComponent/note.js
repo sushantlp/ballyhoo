@@ -1,4 +1,6 @@
 import React from "react";
+import _ from "lodash";
+
 import { Segment } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/note.css";
@@ -31,6 +33,17 @@ export default class Note extends React.Component {
             .Offer_Basic_Details.Offer_Note;
         }
       } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail === null ||
+          this.props.oldViewDetail.oldViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
+          return <div />;
+        }
+
         if (
           this.props.oldViewDetail.oldViewDetail.deal.NOTE === null ||
           this.props.oldViewDetail.oldViewDetail.deal.NOTE === ""

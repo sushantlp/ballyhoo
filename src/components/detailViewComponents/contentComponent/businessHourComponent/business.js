@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 
 import { Label, Segment } from "semantic-ui-react/dist/commonjs";
 
@@ -31,6 +32,35 @@ export default class Business extends React.Component {
     let businessHour = [];
 
     if (this.props.detailState.apiCall) {
+      if (this.props.detailState.which === "new") {
+        if (
+          this.props.newViewDetail.newViewDetail === null ||
+          this.props.newViewDetail.newViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
+          return <div />;
+        }
+
+        businessHour = this.props.newViewDetail.newViewDetail.offers
+          .Merchant_Details.Merchant_Business_Hours;
+      } else {
+        if (
+          this.props.oldViewDetail.oldViewDetail === null ||
+          this.props.oldViewDetail.oldViewDetail === undefined
+        ) {
+          return <div />;
+        }
+
+        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
+          return <div />;
+        }
+
+        businessHour = this.props.oldViewDetail.oldViewDetail.deal
+          .BUSINESS_HOUR;
+      }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         businessHour = this.props.history.location.state.offerData.data
