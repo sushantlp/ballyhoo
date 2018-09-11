@@ -6,6 +6,7 @@ import { Container, Segment } from "semantic-ui-react/dist/commonjs";
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 
 import classes from "./static/css/map.css";
+import MapLoader from "../../loaderComponents/mapLoader";
 
 export default class Map extends React.Component {
   render() {
@@ -19,11 +20,11 @@ export default class Map extends React.Component {
           this.props.newViewDetail.newViewDetail === null ||
           this.props.newViewDetail.newViewDetail === undefined
         ) {
-          return <div />;
+          return <MapLoader />;
         }
 
         if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
-          return <div />;
+          return <MapLoader />;
         }
 
         if (
@@ -101,11 +102,11 @@ export default class Map extends React.Component {
           this.props.oldViewDetail.oldViewDetail === null ||
           this.props.oldViewDetail.oldViewDetail === undefined
         ) {
-          return <div />;
+          return <MapLoader />;
         }
 
         if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
-          return <div />;
+          return <MapLoader />;
         }
 
         latitude = this.props.oldViewDetail.oldViewDetail.deal.MERCHANT_LOCATION

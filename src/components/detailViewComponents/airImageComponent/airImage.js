@@ -4,6 +4,7 @@ import _ from "lodash";
 import { Image } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/airImage.css";
+import AirImageLoader from "../../loaderComponents/airImageLoader";
 
 export default class ImageSlider extends React.Component {
   // Back History
@@ -30,11 +31,11 @@ export default class ImageSlider extends React.Component {
           this.props.newViewDetail.newViewDetail === null ||
           this.props.newViewDetail.newViewDetail === undefined
         ) {
-          return <div />;
+          return <AirImageLoader />;
         }
 
         if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
-          return <div />;
+          return <AirImageLoader />;
         }
 
         return this.callLogic(
@@ -46,11 +47,11 @@ export default class ImageSlider extends React.Component {
           this.props.oldViewDetail.oldViewDetail === null ||
           this.props.oldViewDetail.oldViewDetail === undefined
         ) {
-          return <div />;
+          return <AirImageLoader />;
         }
 
         if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
-          return <div />;
+          return <AirImageLoader />;
         }
 
         return this.callLogic(
