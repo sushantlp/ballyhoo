@@ -1,4 +1,5 @@
 import React from "react";
+import Sticky from "react-stickynode";
 
 import AirImage from "./airImageComponent/airImage";
 import Map from "./mapComponent/map";
@@ -6,6 +7,7 @@ import Content from "./contentComponent";
 import ImageCarousel from "./imageCarouselComponent/imageCarousel";
 import MenuCarousel from "./menuCarouselComponent/menuCarousel";
 import Review from "./reviewComponent/review";
+import Book from "./bookComponent/book";
 
 import { Container, Grid } from "semantic-ui-react/dist/commonjs";
 
@@ -25,7 +27,6 @@ export default class DetailView extends React.Component {
       this.setState({
         apiCall: false
       });
-      console.log(this.props.history.location.state);
     } else {
       let which = undefined;
       if (
@@ -71,10 +72,16 @@ export default class DetailView extends React.Component {
                   oldViewDetail={this.props.oldViewDetail}
                 />
               </Grid.Column>
-              <Grid.Column width={2} />
+
+              <Grid.Column width={2}>
+                <Sticky enabled={true} top={50} bottomBoundary={2100}>
+                  <Book />
+                </Sticky>
+              </Grid.Column>
             </Grid.Row>
           </Grid>
         </Container>
+
         <ImageCarousel
           history={this.props.history}
           detailState={this.state}
