@@ -75,7 +75,12 @@ export default class DetailView extends React.Component {
 
               <Grid.Column width={2}>
                 <Sticky enabled={true} top={50} bottomBoundary={2100}>
-                  <Book />
+                  <Book
+                    history={this.props.history}
+                    detailState={this.state}
+                    newViewDetail={this.props.newViewDetail}
+                    oldViewDetail={this.props.oldViewDetail}
+                  />
                 </Sticky>
               </Grid.Column>
             </Grid.Row>

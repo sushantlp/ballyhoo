@@ -6,6 +6,8 @@ import { Label, Segment, Image } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/basic.css";
 
+const REG_HEX = /&#x([a-fA-F0-9]+);/;
+
 export default class Basic extends React.Component {
   oldBasicComponent = (
     femaleVeg,
@@ -688,7 +690,7 @@ export default class Basic extends React.Component {
             .event_end_time;
         }
 
-        const REG_HEX = /&#x([a-fA-F0-9]+);/;
+        // const REG_HEX = /&#x([a-fA-F0-9]+);/;
 
         const hex = this.props.history.location.state.offerData.data.currency_text.replace(
           REG_HEX,
@@ -742,8 +744,6 @@ export default class Basic extends React.Component {
         } else if (discount !== 0) {
           discount = discount + "%" + " OFF";
         }
-
-        const REG_HEX = /&#x([a-fA-F0-9]+);/;
 
         const hex = this.props.history.location.state.offerData.data.Offer_Basic_Details.Currency_Text.replace(
           REG_HEX,
@@ -877,7 +877,7 @@ export default class Basic extends React.Component {
           discount = discount + "%" + " OFF";
         }
 
-        const REG_HEX = /&#x([a-fA-F0-9]+);/;
+        // const REG_HEX = /&#x([a-fA-F0-9]+);/;
 
         const hex = this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details.Currency_Text.replace(
           REG_HEX,
@@ -1073,7 +1073,7 @@ export default class Basic extends React.Component {
             .event_end_time;
         }
 
-        const REG_HEX = /&#x([a-fA-F0-9]+);/;
+        // const REG_HEX = /&#x([a-fA-F0-9]+);/;
 
         const hex = this.props.oldViewDetail.oldViewDetail.deal.currency_text.replace(
           REG_HEX,
