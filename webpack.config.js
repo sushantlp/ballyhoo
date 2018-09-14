@@ -16,7 +16,18 @@ module.exports = {
           presets: ["react", "es2015", "stage-0"],
           plugins: ["transform-class-properties"]
         }
+      },
+      {
+        test: /\.css/,
+        loaders: ["style", "css"],
+        include: __dirname + "./src/index.js"
       }
     ]
+    // rules: [
+    //   {
+    //     test: /\.css$/,
+    //     use: [ 'style-loader', 'css-loader' ]
+    //   }
+    // ]
   }
 };
