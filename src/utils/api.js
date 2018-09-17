@@ -207,5 +207,35 @@ export default {
         response.json().then(paymentMode => resolve(paymentMode));
       });
     });
+  },
+  otherAdditionalChargeApi: amount => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "v6/customer/purchase/additional/charges" +
+          getQueryString({
+            amount: amount
+          })
+      ).then(response => {
+        response
+          .json()
+          .then(otherAdditionalCharge => resolve(otherAdditionalCharge));
+      });
+    });
+  },
+  deliveryAdditionalChargeApi: merchantMobile => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "v5/customer/deliveryadditionalcharges" +
+          getQueryString({
+            mobile: merchantMobile
+          })
+      ).then(response => {
+        response
+          .json()
+          .then(deliveryAdditionalCharge => resolve(deliveryAdditionalCharge));
+      });
+    });
   }
 };
