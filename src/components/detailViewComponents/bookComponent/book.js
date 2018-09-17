@@ -1,7 +1,9 @@
 import React from "react";
+import "react-dates/initialize";
 import moment from "moment-timezone";
 import _ from "lodash";
-import "react-dates/initialize";
+
+import TimePicker from "react-times";
 
 import { SingleDatePicker } from "react-dates";
 
@@ -21,35 +23,129 @@ export default class Book extends React.Component {
     super(props);
     this.state = {
       date: moment().tz("Asia/Kolkata"),
+      time: moment().format("HH:mm A"),
       focused: false,
       quantity: 1,
-      bookingPrice: 0
+      bookingPrice: 0,
+      initialPrice: 0
     };
   }
 
   componentWillMount() {
-    console.log("Mount");
-    console.log(this.props);
-    // this.bookingDateState();
+    if (this.props.history.location.state !== undefined) {
+      if (this.props.history.location.state.offerData.api_type === 1) {
+        if (
+          this.props.history.location.state.offerData.data.DISCOUNT.Type ===
+          "flat"
+        ) {
+          const discount = parseInt(
+            this.props.history.location.state.offerData.data.DISCOUNT.Value,
+            10
+          );
+          if (
+            this.props.history.location.state.offerData.data.DISCOUNT
+              .ActualPrice !== 0 &&
+            discount !== 0
+          ) {
+            const bookingPrice =
+              (this.props.history.location.state.offerData.data.DISCOUNT
+                .ActualPrice *
+                discount) /
+              100;
+
+            this.bookingDateState(
+              _.round(
+                this.props.history.location.state.offerData.data.DISCOUNT
+                  .ActualPrice - bookingPrice
+              )
+            );
+          } else {
+            this.bookingDateState(
+              this.props.history.location.state.offerData.data.DISCOUNT
+                .ActualPrice
+            );
+          }
+        } else {
+          this.bookingDateState(
+            this.props.history.location.state.offerData.data.DISCOUNT
+              .ActualPrice
+          );
+        }
+      } else {
+        this.bookingDateState(
+          this.props.history.location.state.offerData.data.Offer_Basic_Details
+            .Offer_Min_Price
+        );
+      }
+    }
   }
 
-  componentWillReceiveProps() {
-    console.log("Receive");
-    console.log(this.props);
+  componentWillReceiveProps(newProps) {
+    if (this.props.detailState.which === "old") {
+      if (newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.Type === "flat") {
+        const discount = parseInt(
+          newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.Value,
+          10
+        );
+        if (
+          newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice !==
+            0 &&
+          discount !== 0
+        ) {
+          const bookingPrice =
+            (newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice *
+              discount) /
+            100;
+          this.bookingDateState(
+            _.round(
+              newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice -
+                bookingPrice
+            )
+          );
+        } else {
+          this.bookingDateState(
+            newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice
+          );
+        }
+      } else {
+        this.bookingDateState(
+          newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice
+        );
+      }
+    } else {
+      // this.bookingDateState(
+      //   newProps.oldViewDetail.oldViewDetail.offer.Offer_Basic_Details
+      //     .Offer_Min_Price
+      // );
+    }
   }
 
   intitalizeQuantity = (flag, limit) => {
     if (flag) {
       if (this.state.quantity <= limit) {
-        this.setState({
-          quantity: this.state.quantity + 1
-        });
+        if (this.state.bookingPrice !== 0) {
+          this.setState({
+            quantity: this.state.quantity + 1,
+            bookingPrice: this.state.bookingPrice + this.state.initialPrice
+          });
+        } else {
+          this.setState({
+            quantity: this.state.quantity + 1
+          });
+        }
       }
     } else {
       if (this.state.quantity > 1) {
-        this.setState({
-          quantity: this.state.quantity - 1
-        });
+        if (this.state.bookingPrice !== 0) {
+          this.setState({
+            quantity: this.state.quantity - 1,
+            bookingPrice: this.state.bookingPrice - this.state.initialPrice
+          });
+        } else {
+          this.setState({
+            quantity: this.state.quantity - 1
+          });
+        }
       }
     }
   };
@@ -57,18 +153,26 @@ export default class Book extends React.Component {
   bookingDateState = bookingPrice => {
     if (bookingPrice !== 0) {
       this.setState({
-        bookingPrice: bookingPrice
+        bookingPrice: bookingPrice,
+        initialPrice: bookingPrice
       });
     }
   };
 
-  bookingComponent = (
-    limit,
-    calendar,
-    currencySymbol,
-    bookingPrice,
-    object
-  ) => {
+  // handleChange = (event, { name, value }) => {
+  //   if (this.state.hasOwnProperty(name)) {
+  //     this.setState({ [name]: value });
+  //   }
+  // };
+
+  onTimeChange(timeObject) {
+    const time =
+      timeObject.hour + ":" + timeObject.minute + " " + timeObject.meridiem;
+
+    this.setState({ time: time });
+  }
+
+  bookingComponent = (limit, calendar, currencySymbol, object) => {
     return (
       <div>
         <span
@@ -76,7 +180,7 @@ export default class Book extends React.Component {
             fontSize: "20px",
             marginLeft: "5px",
             color: "rgba(0,0,0,.68)",
-            display: bookingPrice === 0 ? "none" : "inline"
+            display: this.state.bookingPrice === 0 ? "none" : "inline"
           }}
         >
           {currencySymbol}
@@ -87,16 +191,22 @@ export default class Book extends React.Component {
             fontSize: "20px",
             fontWeight: "bold",
             color: "rgba(0,0,0,.9)",
-            display: bookingPrice === 0 ? "none" : "inline"
+            display: this.state.bookingPrice === 0 ? "none" : "inline"
           }}
         >
-          {bookingPrice}
+          {this.state.bookingPrice}
         </label>
-        <Divider style={{ display: bookingPrice === 0 ? "none" : "intital" }} />
+        <Divider
+          style={{
+            display: this.state.bookingPrice === 0 ? "none" : "intital"
+          }}
+        />
+
         <div
           style={{
             marginLeft: "24px",
-            marginRight: "24px"
+            marginRight: "24px",
+            marginBottom: calendar ? "20px" : "none"
           }}
         >
           <label
@@ -135,12 +245,13 @@ export default class Book extends React.Component {
             onClick={() => this.intitalizeQuantity(true, limit)}
           />
         </div>
+
         <div
           style={{
             marginLeft: "24px",
             marginRight: "24px",
-            marginTop: "20px",
-            display: calendar ? "inline" : "none"
+            display: calendar ? "inline" : "none",
+            marginBottom: "20px"
           }}
         >
           <label
@@ -169,25 +280,31 @@ export default class Book extends React.Component {
             />
           </span>
         </div>
+        <div style={{ display: calendar ? "inline" : "none" }}>
+          <TimePicker
+            time={this.state.time}
+            timeMode="12"
+            timezone="Asia/Kolkata"
+            onTimeChange={this.onTimeChange.bind(this)}
+          />
+        </div>
       </div>
     );
   };
 
-  bookingLogic = (limit, calendar, currencySymbol, bookingPrice, obj) => {
-    return this.bookingComponent(
-      limit,
-      calendar,
-      currencySymbol,
-      bookingPrice,
-      obj
-    );
+  bookingLogic = (limit, calendar, currencySymbol, obj, status) => {
+    if (status) {
+      return;
+    } else {
+      return this.bookingComponent(limit, calendar, currencySymbol, obj);
+    }
   };
   render() {
-    let bookingPrice = 0;
     let obj = {};
     let hex = 0;
     let calendar = true;
     let limit = 0;
+    let status = false;
 
     if (this.props.detailState.apiCall) {
       if (this.props.detailState.which === "new") {
@@ -201,6 +318,8 @@ export default class Book extends React.Component {
         if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
           return <div />;
         }
+
+        status = true;
       } else {
         if (
           this.props.oldViewDetail.oldViewDetail === null ||
@@ -212,45 +331,23 @@ export default class Book extends React.Component {
         if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
           return <div />;
         }
+
+        obj = this.props.oldViewDetail.oldViewDetail.deal;
+        hex = obj.currency_text.replace(REG_HEX, "$1");
+
+        if (
+          obj.Offering === "Lunch Buffet" ||
+          obj.Offering === "Dinner Buffet"
+        ) {
+          calendar = false;
+        }
+
+        limit = obj.DISCOUNT.OrderLimit;
       }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
-        if (
-          this.props.history.location.state.offerData.data.DISCOUNT.Type ===
-          "flat"
-        ) {
-          const discount = parseInt(
-            this.props.history.location.state.offerData.data.DISCOUNT.Value,
-            10
-          );
-          if (
-            this.props.history.location.state.offerData.data.DISCOUNT
-              .ActualPrice !== 0 &&
-            discount !== 0
-          ) {
-            bookingPrice =
-              (this.props.history.location.state.offerData.data.DISCOUNT
-                .ActualPrice *
-                discount) /
-              100;
-            bookingPrice = _.round(
-              this.props.history.location.state.offerData.data.DISCOUNT
-                .ActualPrice - bookingPrice
-            );
-          } else {
-            bookingPrice = this.props.history.location.state.offerData.data
-              .DISCOUNT.ActualPrice;
-          }
-        } else {
-          bookingPrice = this.props.history.location.state.offerData.data
-            .DISCOUNT.ActualPrice;
-        }
-
         obj = this.props.history.location.state.offerData.data;
-        hex = this.props.history.location.state.offerData.data.currency_text.replace(
-          REG_HEX,
-          "$1"
-        );
+        hex = obj.currency_text.replace(REG_HEX, "$1");
 
         if (
           obj.Offering === "Lunch Buffet" ||
@@ -261,6 +358,16 @@ export default class Book extends React.Component {
 
         limit = obj.DISCOUNT.OrderLimit;
       } else {
+        // obj = this.props.history.location.state.offerData.data;
+        // hex = obj.Offer_Basic_Details.Currency_Text.replace(REG_HEX, "$1");
+
+        // if (obj.Offer_Basic_Details.Offering_Name === "Activities") {
+        //   // calendar = ;
+        // }
+
+        // limit = obj.DISCOUNT.OrderLimit;
+        console.log(obj);
+        status = true;
       }
     }
 
@@ -273,8 +380,8 @@ export default class Book extends React.Component {
             limit,
             calendar,
             String.fromCharCode(dec),
-            bookingPrice,
-            obj
+            obj,
+            status
           )}
 
           <Button

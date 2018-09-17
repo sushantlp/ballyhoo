@@ -1073,7 +1073,7 @@ export default class Basic extends React.Component {
             .event_end_time;
         }
 
-        // const REG_HEX = /&#x([a-fA-F0-9]+);/;
+        //const REG_HEX = /&#x([a-fA-F0-9]+);/;
 
         const hex = this.props.oldViewDetail.oldViewDetail.deal.currency_text.replace(
           REG_HEX,
