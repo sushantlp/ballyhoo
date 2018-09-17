@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-// import { loadingBarReducer } from "react-redux-loading-bar";
 
 import { cityLocality } from "./cityLocalityReducer";
 import { categoryFilter } from "./categoryFilterReducer";
@@ -21,8 +20,9 @@ import { oldViewDetail } from "./oldViewDetailReducer";
 
 import { similarOffer } from "./similarOfferReducer";
 
+import { paymentMode } from "./paymentModeReducer";
+
 export default combineReducers({
-  // loadingBar: loadingBarReducer,
   cityLocality,
   categoryFilter,
   discoverFilter,
@@ -36,5 +36,6 @@ export default combineReducers({
   localityOldOffer,
   newViewDetail,
   oldViewDetail,
-  similarOffer
+  similarOffer,
+  paymentMode
 });

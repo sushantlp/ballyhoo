@@ -58,7 +58,6 @@
     "react-items-carousel": "^2.2.1",
     "react-loaders": "^3.0.1",
     "react-redux": "^5.0.7",
-    "react-redux-loading-bar": "^4.0.5",
     "react-router-dom": "^4.2.2",
     "react-stickynode": "^2.0.1",
     "react-times": "^3.1.9",

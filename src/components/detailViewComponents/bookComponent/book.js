@@ -250,8 +250,7 @@ export default class Book extends React.Component {
           style={{
             marginLeft: "24px",
             marginRight: "24px",
-            display: calendar ? "inline" : "none",
-            marginBottom: "20px"
+            display: calendar ? "inline" : "none"
           }}
         >
           <label
@@ -280,9 +279,14 @@ export default class Book extends React.Component {
             />
           </span>
         </div>
+
+        <br style={{ display: calendar ? "inline" : "none" }} />
+        <br style={{ display: calendar ? "inline" : "none" }} />
+
         <div style={{ display: calendar ? "inline" : "none" }}>
           <TimePicker
             time={this.state.time}
+            withoutIcon={true}
             timeMode="12"
             timezone="Asia/Kolkata"
             onTimeChange={this.onTimeChange.bind(this)}
@@ -299,6 +303,28 @@ export default class Book extends React.Component {
       return this.bookingComponent(limit, calendar, currencySymbol, obj);
     }
   };
+
+  checkoutLogic = (object, status) => {
+    let newObject = {};
+    if (status) {
+      newObject = {
+        detailObject: object,
+        detailFlag: status
+      };
+    } else {
+      newObject = {
+        detailObject: object,
+        detailFlag: status,
+        detailBookingPrice: this.state.bookingPrice,
+        detailQuantity: this.state.quantity
+      };
+    }
+
+    this.props.history.push("/web/checkout", {
+      checkoutData: newObject
+    });
+  };
+
   render() {
     let obj = {};
     let hex = 0;
@@ -335,10 +361,7 @@ export default class Book extends React.Component {
         obj = this.props.oldViewDetail.oldViewDetail.deal;
         hex = obj.currency_text.replace(REG_HEX, "$1");
 
-        if (
-          obj.Offering === "Lunch Buffet" ||
-          obj.Offering === "Dinner Buffet"
-        ) {
+        if (obj.DISCOUNT.ActualPrice !== 0) {
           calendar = false;
         }
 
@@ -349,10 +372,7 @@ export default class Book extends React.Component {
         obj = this.props.history.location.state.offerData.data;
         hex = obj.currency_text.replace(REG_HEX, "$1");
 
-        if (
-          obj.Offering === "Lunch Buffet" ||
-          obj.Offering === "Dinner Buffet"
-        ) {
+        if (obj.DISCOUNT.ActualPrice !== 0) {
           calendar = false;
         }
 
@@ -397,6 +417,7 @@ export default class Book extends React.Component {
               marginLeft: "24px",
               marginRight: "24px"
             }}
+            onClick={() => this.checkoutLogic(obj, status)}
           >
             Procced
           </Button>

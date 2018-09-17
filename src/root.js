@@ -15,6 +15,7 @@ import Privacy from "./containers/privacyContainer";
 import Terms from "./containers/termsContainer";
 import Faq from "./containers/faqContainer";
 import DetailView from "./containers/detailViewContainer";
+import Checkout from "./containers/checkoutContainer";
 
 // Router root
 const Root = ({ store }) => (
@@ -27,6 +28,7 @@ const Root = ({ store }) => (
           <Route exact path="/web/terms" component={Terms} />
           <Route exact path="/web/privacy" component={Privacy} />
           <Route exact path="/web/faq" component={Faq} />
+          <Route exact path="/web/checkout" component={Checkout} />
           <Route exact path="/web/:city" component={Background} />
           <Route exact path="/web/:city/trending" component={Facebook} />
           <Route exact path="/web/:city/:locality" component={Background} />

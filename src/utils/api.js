@@ -194,5 +194,18 @@ export default {
         response.json().then(similarOffer => resolve(similarOffer));
       });
     });
+  },
+  paymentModeApi: merchantMobile => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "v5/customer/checkadditionalpaymentmode" +
+          getQueryString({
+            mobile: merchantMobile
+          })
+      ).then(response => {
+        response.json().then(paymentMode => resolve(paymentMode));
+      });
+    });
   }
 };

@@ -137,7 +137,6 @@ export default class Basic extends React.Component {
           style={{
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
-
             display: actualPrice === 0 ? "none" : "inline"
           }}
         >
@@ -155,7 +154,6 @@ export default class Basic extends React.Component {
           <label
             style={{
               fontSize: "14px",
-
               paddingLeft: "1px",
               color: "rgba(0,0,0,.68)",
               display: actualPrice === 0 ? "none" : "intial"
@@ -171,7 +169,6 @@ export default class Basic extends React.Component {
           style={{
             marginLeft: "10px",
             fontSize: "14px",
-
             color: "rgba(0,0,0,.6)",
             display: discountPrice === 0 ? "none" : "inline"
           }}
@@ -247,12 +244,12 @@ export default class Basic extends React.Component {
 
         <br
           style={{
-            display: actualPrice === 0 ? "none" : "intial"
+            display: discountPrice === 0 ? "none" : "intial"
           }}
         />
         <br
           style={{
-            display: actualPrice === 0 ? "none" : "intial"
+            display: discountPrice === 0 ? "none" : "intial"
           }}
         />
         <Label
@@ -260,7 +257,6 @@ export default class Basic extends React.Component {
           basic
           style={{
             fontSize: "14px",
-
             color: "rgba(0,0,0,.6)",
             display: eventDate === undefined ? "none" : "intial"
           }}
@@ -284,7 +280,6 @@ export default class Basic extends React.Component {
           style={{
             marginLeft: "5px",
             fontSize: "14px",
-
             color: "rgba(0,0,0,.6)",
             display: eventDay === undefined ? "none" : "intial"
           }}
@@ -308,7 +303,6 @@ export default class Basic extends React.Component {
           style={{
             marginLeft: "5px",
             fontSize: "14px",
-
             color: "rgba(0,0,0,.6)",
             display: startTime === undefined ? "none" : "intial"
           }}
@@ -332,7 +326,6 @@ export default class Basic extends React.Component {
           style={{
             marginLeft: "5px",
             fontSize: "14px",
-
             color: "rgba(0,0,0,.6)",
             display: endTime === undefined ? "none" : "intial"
           }}
