@@ -269,7 +269,6 @@ export default {
       });
     });
   },
-
   registerNewUserApi: (mobile, email) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -284,7 +283,6 @@ export default {
       });
     });
   },
-
   verifyOtpApi: (mobile, code) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -296,6 +294,308 @@ export default {
           })
       ).then(response => {
         response.json().then(verifyOtp => resolve(verifyOtp));
+      });
+    });
+  },
+  fnbRazorpayApi: (
+    dealId,
+    quantity,
+    amount,
+    mobile,
+    time,
+    reservationDate,
+    razorpayPaymentId
+  ) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v6/customer/deal/payment" +
+          getQueryString({
+            dealid: dealId,
+            quantity: quantity,
+            amount: amount,
+            mobile: mobile,
+            time: time,
+            reservationDate: reservationDate,
+            razorpayPaymentId: razorpayPaymentId
+          })
+      ).then(response => {
+        response.json().then(fnbRazorpay => resolve(fnbRazorpay));
+      });
+    });
+  },
+  fnbWalletApi: (dealId, quantity, amount, mobile) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v6/customer/deal/pointredeem" +
+          getQueryString({
+            dealid: dealId,
+            quantity: quantity,
+            amount: amount,
+            mobile: mobile
+          })
+      ).then(response => {
+        response.json().then(fnbWallet => resolve(fnbWallet));
+      });
+    });
+  },
+  fnbPaytmApi: (dealId, orderId, quantity, mobile, amount, hash, mid) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v6/paytm /verify/paytm/transaction" +
+          getQueryString({
+            deal_id: dealId,
+            order_id: orderId,
+            quantity: quantity,
+            mobile: mobile,
+            amount: amount,
+            hash: hash,
+            mid: mid
+          })
+      ).then(response => {
+        response.json().then(fnbPaytm => resolve(fnbPaytm));
+      });
+    });
+  },
+  fnbVenueApi: (mobile, dealId, amount, quantity, time, reservationDate) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v5/customer/deal/pav/payment" +
+          getQueryString({
+            mobile: mobile,
+            deal_id: dealId,
+            amount: amount,
+            quantity: quantity,
+            time: time,
+            reservation_date: reservationDate
+          })
+      ).then(response => {
+        response.json().then(fnbVenue => resolve(fnbVenue));
+      });
+    });
+  },
+
+  deliveryRazorpayApi: (
+    mobile,
+    dealId,
+    amount,
+    deliveryDate,
+    deliveryTime,
+    razorpayPaymentId,
+    customerDetail,
+    itemDetail
+  ) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v5/customer/deal/delivery/payment" +
+          getQueryString({
+            mobile: mobile,
+            deal_id: dealId,
+            amount: amount,
+            delivery_date: deliveryDate,
+            delivery_time: deliveryTime,
+            razorpay_payment_id: razorpayPaymentId,
+            customer_details: customerDetail,
+            item_details: itemDetail
+          })
+      ).then(response => {
+        response.json().then(deliveryRazorpay => resolve(deliveryRazorpay));
+      });
+    });
+  },
+  deliveryWalletApi: (
+    mobile,
+    dealId,
+    amount,
+    deliveryDate,
+    deliveryTime,
+    customerDetail,
+    itemDetail
+  ) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v5/customer/deal/delivery/pointredeem" +
+          getQueryString({
+            mobile: mobile,
+            deal_id: dealId,
+            amount: amount,
+            delivery_date: deliveryDate,
+            delivery_time: deliveryTime,
+            customer_details: customerDetail,
+            item_details: itemDetail
+          })
+      ).then(response => {
+        response.json().then(deliveryWallet => resolve(deliveryWallet));
+      });
+    });
+  },
+  deliveryPaytmApi: (
+    mobile,
+    dealId,
+    orderId,
+    hash,
+    mid,
+    amount,
+    deliveryDate,
+    deliveryTime,
+    customerDetail,
+    itemDetail
+  ) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v5/customer/delivery/capturepaytmresponse " +
+          getQueryString({
+            mobile: mobile,
+            deal_id: dealId,
+            order_id: orderId,
+            hash: hash,
+            mid: mid,
+            amount: amount,
+            delivery_date: deliveryDate,
+            delivery_time: deliveryTime,
+            customer_details: customerDetail,
+            item_details: itemDetail
+          })
+      ).then(response => {
+        response.json().then(deliveryPaytm => resolve(deliveryPaytm));
+      });
+    });
+  },
+  deliveryVenueApi: (
+    mobile,
+    dealId,
+    amount,
+    deliveryDate,
+    deliveryTime,
+    customerDetail,
+    itemDetail
+  ) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v5/customer/deal/delivery/cashorder" +
+          getQueryString({
+            mobile: mobile,
+            deal_id: dealId,
+            amount: amount,
+            delivery_date: deliveryDate,
+            delivery_time: deliveryTime,
+            customer_details: customerDetail,
+            item_details: itemDetail
+          })
+      ).then(response => {
+        response.json().then(deliveryVenue => resolve(deliveryVenue));
+      });
+    });
+  },
+  newCategoryRazorpayApi: (
+    offerId,
+    mobile,
+    amount,
+    paymentId,
+    bookingAt,
+    orderItemList
+  ) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v6/customer/other/category/razor/purchase" +
+          getQueryString({
+            offer_id: offerId,
+            mobile: mobile,
+            amount: amount,
+            payment_id: paymentId,
+            booking_at: bookingAt,
+            order_item_list: orderItemList
+          })
+      ).then(response => {
+        response
+          .json()
+          .then(newCategoryRazorpay => resolve(newCategoryRazorpay));
+      });
+    });
+  },
+  newCategoryWalletApi: (offerId, mobile, amount, bookingAt, orderItemList) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v6/customer/other/category/wallet/purchase" +
+          getQueryString({
+            offer_id: offerId,
+            mobile: mobile,
+            amount: amount,
+            booking_at: bookingAt,
+            order_item_list: orderItemList
+          })
+      ).then(response => {
+        response.json().then(newCategoryWallet => resolve(newCategoryWallet));
+      });
+    });
+  },
+  newCategoryPaytmApi: (
+    offerId,
+    orderId,
+    mid,
+    hash,
+    mobile,
+    amount,
+    bookingAt,
+    orderItemList
+  ) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v6/customer/other/category/paytm/purchase" +
+          getQueryString({
+            offer_id: offerId,
+            order_id: orderId,
+            mid: mid,
+            hash: hash,
+            mobile: mobile,
+            amount: amount,
+            booking_at: bookingAt,
+            order_item_list: orderItemList
+          })
+      ).then(response => {
+        response.json().then(newCategoryPaytm => resolve(newCategoryPaytm));
+      });
+    });
+  },
+  newCategoryVenueApi: (offerId, mobile, amount, bookingAt, orderItemList) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v6/customer/other/category/pav/purchase" +
+          getQueryString({
+            offer_id: offerId,
+            mobile: mobile,
+            amount: amount,
+            booking_at: bookingAt,
+            order_item_list: orderItemList
+          })
+      ).then(response => {
+        response.json().then(newCategoryVenue => resolve(newCategoryVenue));
+      });
+    });
+  },
+  saloonReservationApi: (offerId, mobile, bookingAt) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v6/customer/other/category/online/reserve" +
+          getQueryString({
+            offer_id: offerId,
+            mobile: mobile,
+            booking_at: bookingAt
+          })
+      ).then(response => {
+        response.json().then(saloonReservation => resolve(saloonReservation));
       });
     });
   }

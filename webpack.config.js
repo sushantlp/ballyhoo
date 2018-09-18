@@ -1,4 +1,6 @@
 const path = require("path");
+const Dotenv = require("dotenv-webpack");
+// const HtmlWebpackPlugin = require("html-webpack-plugin");
 // const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
@@ -33,6 +35,18 @@ module.exports = {
       //   })
       // }
     ]
-  }
+  },
   // plugins: [new ExtractTextPlugin("styles.css")]
+  plugins: [
+    new Dotenv()
+    // new HtmlWebpackPlugin({
+    //   inject: false,
+    //   template: "./public/index.html",
+
+    //   // Pass the full url with the key!
+    //   apiUrl: `https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${
+    //     process.env.GOOGLE_MAP
+    //   }`
+    // })
+  ]
 };

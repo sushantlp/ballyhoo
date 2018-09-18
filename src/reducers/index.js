@@ -30,6 +30,21 @@ import { updateUserRecord } from "./updateUserRecordReducer";
 import { registerNewUser } from "./registerNewUserReducer";
 import { verifyOtp } from "./verifyOtpReducer";
 
+import { fnbRazorpay } from "./fnbRazorpayReducer";
+import { fnbWallet } from "./fnbWalletReducer";
+import { fnbPaytm } from "./fnbPaytmReducer";
+import { fnbVenue } from "./fnbVenueReducer";
+
+import { deliveryRazorpay } from "./deliveryRazorpayReducer";
+import { deliveryWallet } from "./deliveryWalletReducer";
+import { deliveryPaytm } from "./deliveryPaytmReducer";
+import { deliveryVenue } from "./deliveryVenueReducer";
+
+import { newCategoryRazorpay } from "./newCategoryRazorpayReducer";
+import { newCategoryWallet } from "./newCategoryWalletReducer";
+import { newCategoryPaytm } from "./newCategoryPaytmReducer";
+import { newCategoryVenue } from "./newCategoryVenueReducer";
+
 export default combineReducers({
   cityLocality,
   categoryFilter,
@@ -51,5 +66,17 @@ export default combineReducers({
   userRecord,
   updateUserRecord,
   registerNewUser,
-  verifyOtp
+  verifyOtp,
+  fnbRazorpay,
+  fnbWallet,
+  fnbPaytm,
+  fnbVenue,
+  deliveryRazorpay,
+  deliveryWallet,
+  deliveryPaytm,
+  deliveryVenue,
+  newCategoryRazorpay,
+  newCategoryWallet,
+  newCategoryPaytm,
+  newCategoryVenue
 });
