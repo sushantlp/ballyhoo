@@ -199,7 +199,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "v5/customer/checkadditionalpaymentmode" +
+          "api/v4/web/check/payment/mode" +
           getQueryString({
             mobile: merchantMobile
           })
@@ -212,7 +212,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "v6/customer/purchase/additional/charges" +
+          "api/v6/customer/purchase/additional/charges" +
           getQueryString({
             amount: amount
           })
@@ -227,7 +227,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "v5/customer/deliveryadditionalcharges" +
+          "api/v5/customer/deliveryadditionalcharges" +
           getQueryString({
             mobile: merchantMobile
           })
@@ -235,6 +235,67 @@ export default {
         response
           .json()
           .then(deliveryAdditionalCharge => resolve(deliveryAdditionalCharge));
+      });
+    });
+  },
+  userRecordApi: mobile => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/user" +
+          getQueryString({
+            mobile: mobile
+          })
+      ).then(response => {
+        response.json().then(userRecord => resolve(userRecord));
+      });
+    });
+  },
+  updateUserRecordApi: (mobile, firstName, lastName, email, birth, gender) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v4/web/user/profile" +
+          getQueryString({
+            mobile: mobile,
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            birth: birth,
+            gender: gender
+          })
+      ).then(response => {
+        response.json().then(updateUserRecord => resolve(updateUserRecord));
+      });
+    });
+  },
+
+  registerNewUserApi: (mobile, email) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v7/customer/newuser" +
+          getQueryString({
+            mobile: mobile,
+            email: email
+          })
+      ).then(response => {
+        response.json().then(registerNewUser => resolve(registerNewUser));
+      });
+    });
+  },
+
+  verifyOtpApi: (mobile, code) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v3/generic/otp/verify" +
+          getQueryString({
+            mobile: mobile,
+            code: code
+          })
+      ).then(response => {
+        response.json().then(verifyOtp => resolve(verifyOtp));
       });
     });
   }

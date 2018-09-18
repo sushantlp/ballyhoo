@@ -7,10 +7,17 @@ const initialState = {
 export function otherAdditionalCharge(state = initialState, action) {
   switch (action.type) {
     case actionType.otherAdditionalCharge:
-      return {
-        ...state,
-        otherAdditionalCharge: action.otherAdditionalCharge
-      };
+      if (action.otherAdditionalCharge.hasOwnProperty("message")) {
+        return {
+          ...state,
+          otherAdditionalCharge: action.otherAdditionalCharge
+        };
+      } else {
+        return {
+          ...state,
+          otherAdditionalCharge: {}
+        };
+      }
     default:
       return state;
   }

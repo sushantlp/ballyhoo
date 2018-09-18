@@ -22,6 +22,14 @@ import { similarOffer } from "./similarOfferReducer";
 
 import { paymentMode } from "./paymentModeReducer";
 
+import { deliveryAdditionalCharge } from "./deliveryAdditionalChargeReducer";
+import { otherAdditionalCharge } from "./otherAdditionalChargeReducer";
+
+import { userRecord } from "./userRecordReducer";
+import { updateUserRecord } from "./updateUserRecordReducer";
+import { registerNewUser } from "./registerNewUserReducer";
+import { verifyOtp } from "./verifyOtpReducer";
+
 export default combineReducers({
   cityLocality,
   categoryFilter,
@@ -37,5 +45,11 @@ export default combineReducers({
   newViewDetail,
   oldViewDetail,
   similarOffer,
-  paymentMode
+  paymentMode,
+  deliveryAdditionalCharge,
+  otherAdditionalCharge,
+  userRecord,
+  updateUserRecord,
+  registerNewUser,
+  verifyOtp
 });
