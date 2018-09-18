@@ -208,14 +208,21 @@ export default {
       });
     });
   },
-  otherAdditionalChargeApi: amount => {
+  otherAdditionalChargeApi: (amount, token) => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
           "api/v6/customer/purchase/additional/charges" +
           getQueryString({
             amount: amount
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response
           .json()
@@ -223,14 +230,21 @@ export default {
       });
     });
   },
-  deliveryAdditionalChargeApi: merchantMobile => {
+  deliveryAdditionalChargeApi: (merchantMobile, token) => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
           "api/v5/customer/deliveryadditionalcharges" +
           getQueryString({
             mobile: merchantMobile
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response
           .json()
@@ -251,7 +265,15 @@ export default {
       });
     });
   },
-  updateUserRecordApi: (mobile, firstName, lastName, email, birth, gender) => {
+  updateUserRecordApi: (
+    mobile,
+    firstName,
+    lastName,
+    email,
+    birth,
+    gender,
+    token
+  ) => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -263,7 +285,14 @@ export default {
             email: email,
             birth: birth,
             gender: gender
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(updateUserRecord => resolve(updateUserRecord));
       });
@@ -304,7 +333,8 @@ export default {
     mobile,
     time,
     reservationDate,
-    razorpayPaymentId
+    razorpayPaymentId,
+    token
   ) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -318,13 +348,20 @@ export default {
             time: time,
             reservationDate: reservationDate,
             razorpayPaymentId: razorpayPaymentId
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(fnbRazorpay => resolve(fnbRazorpay));
       });
     });
   },
-  fnbWalletApi: (dealId, quantity, amount, mobile) => {
+  fnbWalletApi: (dealId, quantity, amount, mobile, token) => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -334,13 +371,29 @@ export default {
             quantity: quantity,
             amount: amount,
             mobile: mobile
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(fnbWallet => resolve(fnbWallet));
       });
     });
   },
-  fnbPaytmApi: (dealId, orderId, quantity, mobile, amount, hash, mid) => {
+  fnbPaytmApi: (
+    dealId,
+    orderId,
+    quantity,
+    mobile,
+    amount,
+    hash,
+    mid,
+    token
+  ) => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -353,13 +406,28 @@ export default {
             amount: amount,
             hash: hash,
             mid: mid
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(fnbPaytm => resolve(fnbPaytm));
       });
     });
   },
-  fnbVenueApi: (mobile, dealId, amount, quantity, time, reservationDate) => {
+  fnbVenueApi: (
+    mobile,
+    dealId,
+    amount,
+    quantity,
+    time,
+    reservationDate,
+    token
+  ) => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -371,7 +439,14 @@ export default {
             quantity: quantity,
             time: time,
             reservation_date: reservationDate
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(fnbVenue => resolve(fnbVenue));
       });
@@ -386,7 +461,8 @@ export default {
     deliveryTime,
     razorpayPaymentId,
     customerDetail,
-    itemDetail
+    itemDetail,
+    token
   ) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -401,7 +477,14 @@ export default {
             razorpay_payment_id: razorpayPaymentId,
             customer_details: customerDetail,
             item_details: itemDetail
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(deliveryRazorpay => resolve(deliveryRazorpay));
       });
@@ -414,7 +497,8 @@ export default {
     deliveryDate,
     deliveryTime,
     customerDetail,
-    itemDetail
+    itemDetail,
+    token
   ) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -428,7 +512,14 @@ export default {
             delivery_time: deliveryTime,
             customer_details: customerDetail,
             item_details: itemDetail
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(deliveryWallet => resolve(deliveryWallet));
       });
@@ -444,7 +535,8 @@ export default {
     deliveryDate,
     deliveryTime,
     customerDetail,
-    itemDetail
+    itemDetail,
+    token
   ) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -461,7 +553,14 @@ export default {
             delivery_time: deliveryTime,
             customer_details: customerDetail,
             item_details: itemDetail
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(deliveryPaytm => resolve(deliveryPaytm));
       });
@@ -474,7 +573,8 @@ export default {
     deliveryDate,
     deliveryTime,
     customerDetail,
-    itemDetail
+    itemDetail,
+    token
   ) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -488,7 +588,14 @@ export default {
             delivery_time: deliveryTime,
             customer_details: customerDetail,
             item_details: itemDetail
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(deliveryVenue => resolve(deliveryVenue));
       });
@@ -500,7 +607,8 @@ export default {
     amount,
     paymentId,
     bookingAt,
-    orderItemList
+    orderItemList,
+    token
   ) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -513,7 +621,14 @@ export default {
             payment_id: paymentId,
             booking_at: bookingAt,
             order_item_list: orderItemList
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response
           .json()
@@ -521,7 +636,14 @@ export default {
       });
     });
   },
-  newCategoryWalletApi: (offerId, mobile, amount, bookingAt, orderItemList) => {
+  newCategoryWalletApi: (
+    offerId,
+    mobile,
+    amount,
+    bookingAt,
+    orderItemList,
+    token
+  ) => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -532,7 +654,14 @@ export default {
             amount: amount,
             booking_at: bookingAt,
             order_item_list: orderItemList
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(newCategoryWallet => resolve(newCategoryWallet));
       });
@@ -546,7 +675,8 @@ export default {
     mobile,
     amount,
     bookingAt,
-    orderItemList
+    orderItemList,
+    token
   ) => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -561,13 +691,27 @@ export default {
             amount: amount,
             booking_at: bookingAt,
             order_item_list: orderItemList
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(newCategoryPaytm => resolve(newCategoryPaytm));
       });
     });
   },
-  newCategoryVenueApi: (offerId, mobile, amount, bookingAt, orderItemList) => {
+  newCategoryVenueApi: (
+    offerId,
+    mobile,
+    amount,
+    bookingAt,
+    orderItemList,
+    token
+  ) => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -578,13 +722,20 @@ export default {
             amount: amount,
             booking_at: bookingAt,
             order_item_list: orderItemList
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(newCategoryVenue => resolve(newCategoryVenue));
       });
     });
   },
-  saloonReservationApi: (offerId, mobile, bookingAt) => {
+  saloonReservationApi: (offerId, mobile, bookingAt, token) => {
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -593,7 +744,14 @@ export default {
             offer_id: offerId,
             mobile: mobile,
             booking_at: bookingAt
+          }),
+        {
+          method: "post",
+          headers: new Headers({
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded"
           })
+        }
       ).then(response => {
         response.json().then(saloonReservation => resolve(saloonReservation));
       });

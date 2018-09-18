@@ -19,7 +19,6 @@ import { newViewDetail } from "./newViewDetailReducer";
 import { oldViewDetail } from "./oldViewDetailReducer";
 
 import { similarOffer } from "./similarOfferReducer";
-
 import { paymentMode } from "./paymentModeReducer";
 
 import { deliveryAdditionalCharge } from "./deliveryAdditionalChargeReducer";
@@ -44,6 +43,7 @@ import { newCategoryRazorpay } from "./newCategoryRazorpayReducer";
 import { newCategoryWallet } from "./newCategoryWalletReducer";
 import { newCategoryPaytm } from "./newCategoryPaytmReducer";
 import { newCategoryVenue } from "./newCategoryVenueReducer";
+import { saloonReservation } from "./saloonReservationReducer";
 
 export default combineReducers({
   cityLocality,
@@ -78,5 +78,6 @@ export default combineReducers({
   newCategoryRazorpay,
   newCategoryWallet,
   newCategoryPaytm,
-  newCategoryVenue
+  newCategoryVenue,
+  saloonReservation
 });

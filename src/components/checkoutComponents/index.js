@@ -11,6 +11,7 @@ export default class Initial extends React.Component {
     window.scrollTo(0, 0);
     if (this.props.history.location.state !== undefined) {
     } else {
+      this.props.history.push("/web");
     }
   }
 
