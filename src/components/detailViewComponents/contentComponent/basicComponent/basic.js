@@ -6,7 +6,7 @@ import { Label, Segment, Image } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/basic.css";
 
-const REG_HEX = /&#x([a-fA-F0-9]+);/;
+import { REG_HEX } from "../../../../constants.js";
 
 export default class Basic extends React.Component {
   oldBasicComponent = (

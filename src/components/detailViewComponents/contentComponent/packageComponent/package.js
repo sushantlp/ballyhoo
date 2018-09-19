@@ -6,7 +6,7 @@ import { Segment, Button, Modal, Icon } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/package.css";
 
-const REG_HEX = /&#x([a-fA-F0-9]+);/;
+import { REG_HEX } from "../../../../constants.js";
 
 export default class Package extends React.Component {
   constructor(props) {

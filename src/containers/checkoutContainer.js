@@ -5,11 +5,6 @@ import CheckComponent from "../components/checkoutComponents";
 
 import { getPaymentMode } from "../actions/paymentModeAction";
 
-import { getRegisterNewUser } from "../actions/registerNewUserAction";
-import { postUpdateUserRecord } from "../actions/updateUserRecordAction";
-import { getUserRecord } from "../actions/userRecordAction";
-import { postVerifyOtp } from "../actions/verifyOtpAction";
-
 import { postFnbRazorpay } from "../actions/fnbRazorpayAction";
 import { postFnbPaytm } from "../actions/fnbPaytmAction";
 import { postFnbWallet } from "../actions/fnbWalletAction";
@@ -24,10 +19,6 @@ import { postSaloonReservation } from "../actions/saloonReservationAction";
 function mapStateToProps(state) {
   return {
     paymentMode: state.paymentMode,
-    registerNewUser: state.registerNewUser,
-    updateUserRecord: state.updateUserRecord,
-    userRecord: state.userRecord,
-    verifyOtp: state.verifyOtp,
     fnbRazorpay: state.fnbRazorpay,
     fnbPaytm: state.fnbPaytm,
     fnbWallet: state.fnbWallet,
@@ -45,10 +36,6 @@ export default withRouter(
     mapStateToProps,
     {
       getPaymentMode: getPaymentMode,
-      getRegisterNewUser: getRegisterNewUser,
-      postUpdateUserRecord: postUpdateUserRecord,
-      getUserRecord: getUserRecord,
-      postVerifyOtp: postVerifyOtp,
       postFnbRazorpay: postFnbRazorpay,
       postFnbPaytm: postFnbPaytm,
       postFnbWallet: postFnbWallet,

@@ -10,3 +10,6 @@ export const keys = {
   DOWN_ARROW: 40,
   ENTER: 13
 };
+
+export const REG_HEX = /&#x([a-fA-F0-9]+);/;
+export const STORAGE = "Auth";

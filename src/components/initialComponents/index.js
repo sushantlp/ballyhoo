@@ -1,5 +1,7 @@
 import React from "react";
 
+import Header from "../header/header";
+import Footer from "../footer/footer";
 import Background from "./backgroundComponent/background";
 import Category from "./categoryComponent/category";
 import Discover from "./discoverComponent/discover";
@@ -111,6 +113,7 @@ export default class Initial extends React.Component {
   render() {
     return (
       <div>
+        <Header />
         <Background
           cityLocality={this.props.cityLocality}
           categoryFilter={this.props.categoryFilter}
@@ -154,6 +157,7 @@ export default class Initial extends React.Component {
           match={this.props.match}
           history={this.props.history}
         />
+        <Footer />
       </div>
     );
   }

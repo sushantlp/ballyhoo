@@ -14,9 +14,9 @@ import {
   Icon
 } from "semantic-ui-react/dist/commonjs";
 
-import classes from "./static/css/book.css";
+import { REG_HEX, STORAGE } from "../../../constants.js";
 
-const REG_HEX = /&#x([a-fA-F0-9]+);/;
+import classes from "./static/css/book.css";
 
 export default class Book extends React.Component {
   constructor(props) {
@@ -320,9 +320,37 @@ export default class Book extends React.Component {
       };
     }
 
-    this.props.history.push("/web/checkout", {
-      checkoutData: newObject
-    });
+    // Check Session Storage Support by Browser
+    if (window.sessionStorage) {
+      const auth = sessionStorage.getItem(STORAGE);
+      if (auth === null) {
+        this.props.history.push("/web/auth", {
+          checkoutData: newObject
+        });
+        // sessionStorage.setItem(STORAGE, "SUCCESS");
+      } else {
+        if (auth === "SUCCESS") {
+          this.props.history.push("/web/checkout", {
+            checkoutData: newObject
+          });
+        } else {
+          this.props.history.push("/web/auth", {
+            checkoutData: newObject
+          });
+        }
+        // sessionStorage.setItem(STORAGE, "FAILURE");
+      }
+    } else {
+      if (this.props.authentication.auth) {
+        this.props.history.push("/web/checkout", {
+          checkoutData: newObject
+        });
+      } else {
+        this.props.history.push("/web/auth", {
+          checkoutData: newObject
+        });
+      }
+    }
   };
 
   render() {

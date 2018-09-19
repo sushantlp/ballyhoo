@@ -1,6 +1,8 @@
 import React from "react";
 
 import Facebook from "./facebookComponent/facebookEvent";
+import Header from "../header/header";
+import Footer from "../footer/footer";
 
 export default class Initial extends React.Component {
   constructor(props) {
@@ -39,6 +41,7 @@ export default class Initial extends React.Component {
   render() {
     return (
       <div>
+        <Header />
         <Facebook
           facebookEvent={this.props.facebookEvent}
           history={this.props.history}
@@ -47,6 +50,7 @@ export default class Initial extends React.Component {
           parentLoadFacebookEvent={this.parentLoadFacebookEvent}
           cityLocality={this.props.cityLocality}
         />
+        <Footer />
       </div>
     );
   }

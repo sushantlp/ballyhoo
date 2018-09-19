@@ -1,5 +1,7 @@
 import React from "react";
 
+import Header from "../header/header";
+import Footer from "../footer/footer";
 import Offerning from "./cardOfferComponent/cardOfferning";
 
 export default class Initial extends React.Component {
@@ -168,6 +170,7 @@ export default class Initial extends React.Component {
   render() {
     return (
       <div>
+        <Header />
         <Offerning
           discoverOldOffer={this.props.discoverOldOffer}
           discoverNewOffer={this.props.discoverNewOffer}
@@ -187,6 +190,7 @@ export default class Initial extends React.Component {
           collectionNewOffer={this.props.collectionNewOffer}
           localityOldOffer={this.props.localityOldOffer}
         />
+        <Footer />
       </div>
     );
   }

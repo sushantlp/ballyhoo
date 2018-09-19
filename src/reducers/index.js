@@ -45,6 +45,8 @@ import { newCategoryPaytm } from "./newCategoryPaytmReducer";
 import { newCategoryVenue } from "./newCategoryVenueReducer";
 import { saloonReservation } from "./saloonReservationReducer";
 
+import { authentication } from "./authenticationReducer";
+
 export default combineReducers({
   cityLocality,
   categoryFilter,
@@ -79,5 +81,6 @@ export default combineReducers({
   newCategoryWallet,
   newCategoryPaytm,
   newCategoryVenue,
-  saloonReservation
+  saloonReservation,
+  authentication
 });

@@ -6,12 +6,17 @@ import DetailViewComponent from "../components/detailViewComponents";
 import { getOldViewDetail } from "../actions/oldViewDetailAction";
 import { getNewViewDetail } from "../actions/newViewDetailAction";
 import { getSimilarOffer } from "../actions/similarOfferAction";
+import {
+  registerSuccess,
+  registerFailure
+} from "../actions/authenticationAction";
 
 function mapStateToProps(state) {
   return {
     newViewDetail: state.newViewDetail,
     oldViewDetail: state.oldViewDetail,
-    similarOffer: state.similarOffer
+    similarOffer: state.similarOffer,
+    authentication: state.authentication
   };
 }
 
@@ -21,7 +26,9 @@ export default withRouter(
     {
       getOldViewDetail: getOldViewDetail,
       getNewViewDetail: getNewViewDetail,
-      getSimilarOffer: getSimilarOffer
+      getSimilarOffer: getSimilarOffer,
+      registerSuccess: registerSuccess,
+      registerFailure: registerFailure
     }
   )(DetailViewComponent)
 );

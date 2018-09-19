@@ -1,6 +1,8 @@
 import React from "react";
 import Sticky from "react-stickynode";
 
+import Header from "../header/header";
+import Footer from "../footer/footer";
 import AirImage from "./airImageComponent/airImage";
 import Map from "./mapComponent/map";
 import Content from "./contentComponent";
@@ -52,6 +54,7 @@ export default class DetailView extends React.Component {
   render() {
     return (
       <div>
+        <Header />
         <Container fluid>
           <AirImage
             history={this.props.history}
@@ -80,6 +83,9 @@ export default class DetailView extends React.Component {
                     detailState={this.state}
                     newViewDetail={this.props.newViewDetail}
                     oldViewDetail={this.props.oldViewDetail}
+                    authentication={this.props.authentication}
+                    registerSuccess={this.props.registerSuccess}
+                    registerFailure={this.props.registerFailure}
                   />
                 </Sticky>
               </Grid.Column>
@@ -111,6 +117,7 @@ export default class DetailView extends React.Component {
           newViewDetail={this.props.newViewDetail}
           oldViewDetail={this.props.oldViewDetail}
         />
+        <Footer />
       </div>
     );
   }
