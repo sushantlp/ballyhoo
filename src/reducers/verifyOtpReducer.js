@@ -1,7 +1,7 @@
 import { actionType } from "../actions/verifyOtpAction";
 
 const initialState = {
-  verifyOtp: false
+  verifyOtp: {}
 };
 
 export function verifyOtp(state = initialState, action) {

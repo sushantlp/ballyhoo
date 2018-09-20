@@ -21,14 +21,78 @@ export default class Auth extends React.Component {
       mobile: true,
       email: false,
       otp: false,
-      mobileButton: true,
-      emailButton: true,
+
       errorMessage: false,
+      errorText: "",
       sweetAlert: false,
+
       userMobile: "",
-      userEmail: ""
+      userEmail: "",
+      userOtp: "",
+      userMobileCode: "",
+
+      mobileButton: true,
+      mobileInput: false,
+      mobileDropdown: false,
+      mobileLoading: false,
+
+      emailButton: true,
+      emailInput: false,
+      emailLoading: false,
+
+      otpButton: true,
+      otpInput: false,
+      otpLoading: false
     };
   }
+
+  componentWillMount() {
+    this.createCountryCode(countryCode);
+  }
+
+  componentWillReceiveProps(nextProp) {
+    if (
+      this.props.registerNewUser.registerNewUser !==
+      nextProp.registerNewUser.registerNewUser
+    ) {
+      if (nextProp.registerNewUser.registerNewUser) {
+        this.setState({
+          sweetAlert: true,
+          emailInput: false,
+          emailLoading: false,
+          emailButton: false
+        });
+      } else {
+        const errorText =
+          "Please provide the original email associated with the account. For email update send a request to  contact@ballyhoo.today";
+        this.setState({
+          errorMessage: true,
+          errorText: errorText,
+          emailInput: false,
+          emailLoading: false,
+          emailButton: false
+        });
+      }
+    } else if (
+      this.props.verifyOtp.verifyOtp !== nextProp.verifyOtp.verifyOtp
+    ) {
+      if (nextProp.verifyOtp.verifyOtp) {
+        this.goCheckoutRoute();
+      } else {
+        this.setState({
+          errorMessage: true,
+          errorText: "wrong otp",
+          otpInput: false,
+          otpLoading: false,
+          otpButton: false
+        });
+      }
+    }
+  }
+
+  goCheckoutRoute = () => {
+    console.log(this.props);
+  };
 
   createCountryCode = countryCode => {
     const options = countryCode.map(({ name, dial_code }, key) => ({
@@ -54,33 +118,49 @@ export default class Auth extends React.Component {
       key: heaven.key,
       value: heaven.value
     });
-  };
 
-  componentWillMount() {
-    this.createCountryCode(countryCode);
-  }
+    this.setState({
+      userMobileCode: heaven.value
+    });
+  };
 
   mobileButtonClick = () => {
     this.setState({
       mobile: false,
-      email: true
+      email: true,
+      mobileInput: true,
+      mobileDropdown: true,
+      mobileLoading: true
     });
   };
 
   emailButtonClick = () => {
     if (!emailReg.test(this.state.userEmail)) {
       this.setState({
-        errorMessage: true
+        errorMessage: true,
+        errorText: "This email is invalid"
       });
     } else {
-      this.props.getRegisterNewUser(
-        this.state.userMobile,
-        this.state.userEmail
-      );
       this.setState({
-        sweetAlert: true
+        emailButton: true,
+        emailInput: true,
+        emailLoading: true
       });
+
+      const mobile = this.state.userMobileCode + this.state.userMobile;
+      this.props.getRegisterNewUser(mobile, this.state.userEmail);
     }
+  };
+
+  otpButtonClick = () => {
+    this.setState({
+      otpButton: true,
+      otpInput: true,
+      otpLoading: true
+    });
+
+    const mobile = this.state.userMobileCode + this.state.userMobile;
+    this.props.postVerifyOtp(mobile, this.state.userOtp);
   };
 
   sweetAlertButtonClick = () => {
@@ -121,6 +201,20 @@ export default class Auth extends React.Component {
     }
   };
 
+  checkOtpInput = (event, data) => {
+    if (data.value.length >= 4) {
+      this.setState({
+        otpButton: false,
+        userOtp: data.value
+      });
+    } else {
+      this.setState({
+        otpButton: true,
+        userOtp: data.value
+      });
+    }
+  };
+
   mobileInput = () => {
     return (
       <div>
@@ -128,6 +222,7 @@ export default class Auth extends React.Component {
         <label className={classes.P}>Enter your phone number (required)</label>
 
         <Input
+          disabled={this.state.mobileInput}
           type="number"
           style={{
             width: "450px",
@@ -137,6 +232,7 @@ export default class Auth extends React.Component {
           onChange={(event, data) => this.checkMobileInput(event, data)}
           label={
             <Dropdown
+              disabled={this.state.mobileDropdown}
               options={this.state.code}
               onChange={(event, data) => this.onChangeCountry(event, data)}
               onClick={() => this.createCountryCode(countryCode)}
@@ -154,6 +250,7 @@ export default class Auth extends React.Component {
 
         <Button
           disabled={this.state.mobileButton}
+          loading={this.state.mobileLoading}
           style={{
             backgroundColor: "#FF5A5F",
             color: "white",
@@ -181,6 +278,7 @@ export default class Auth extends React.Component {
         <label className={classes.P}>Enter your email (required)</label>
 
         <Input
+          disabled={this.state.emailInput}
           type="text"
           style={{
             width: "450px",
@@ -193,6 +291,7 @@ export default class Auth extends React.Component {
 
         <Button
           disabled={this.state.emailButton}
+          loading={this.state.emailLoading}
           style={{
             backgroundColor: "#FF5A5F",
             color: "white",
@@ -220,6 +319,7 @@ export default class Auth extends React.Component {
         <label className={classes.P}>Enter otp (required)</label>
 
         <Input
+          disabled={this.state.otpInput}
           type="number"
           style={{
             width: "450px",
@@ -231,7 +331,8 @@ export default class Auth extends React.Component {
         />
 
         <Button
-          disabled={this.state.emailButton}
+          disabled={this.state.otpButton}
+          loading={this.state.otpLoading}
           style={{
             backgroundColor: "#FF5A5F",
             color: "white",
@@ -260,16 +361,17 @@ export default class Auth extends React.Component {
         show={true}
         title="Ballyhoo"
         imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-        text="We will be sending the otp your mentioned email id."
+        text="We will be sending the otp to the mentioned email."
         onConfirm={() => this.sweetAlertButtonClick()}
       />
     );
   };
+
   errorMessage = () => {
     return (
       <Message negative>
         <Message.Header>Oops error</Message.Header>
-        <p>This Email is invalid</p>
+        <p>{this.state.errorText}</p>
       </Message>
     );
   };

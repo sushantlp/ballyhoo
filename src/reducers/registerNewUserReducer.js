@@ -10,12 +10,12 @@ export function registerNewUser(state = initialState, action) {
       if (action.registerNewUser.hasOwnProperty("error")) {
         return {
           ...state,
-          registerNewUser: {}
+          registerNewUser: false
         };
       } else {
         return {
           ...state,
-          registerNewUser: action.registerNewUser
+          registerNewUser: true
         };
       }
     default:
