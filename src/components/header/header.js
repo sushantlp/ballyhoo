@@ -33,8 +33,8 @@ class Header extends React.Component {
   }
 }
 
-Header.propTypes = {
-  history: PropTypes.object.isRequired
-};
+// Header.propTypes = {
+//   history: PropTypes.object.isRequired
+// };
 
 export default Header;
