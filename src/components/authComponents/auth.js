@@ -73,6 +73,10 @@ export default class Auth extends React.Component {
         errorMessage: true
       });
     } else {
+      this.props.getRegisterNewUser(
+        this.state.userMobile,
+        this.state.userEmail
+      );
       this.setState({
         sweetAlert: true
       });

@@ -327,7 +327,6 @@ export default class Book extends React.Component {
         this.props.history.push("/web/auth", {
           checkoutData: newObject
         });
-        // sessionStorage.setItem(STORAGE, "SUCCESS");
       } else {
         if (auth === "SUCCESS") {
           this.props.history.push("/web/checkout", {
@@ -338,7 +337,6 @@ export default class Book extends React.Component {
             checkoutData: newObject
           });
         }
-        // sessionStorage.setItem(STORAGE, "FAILURE");
       }
     } else {
       if (this.props.authentication.auth) {

@@ -1,7 +1,7 @@
 import { actionType } from "../actions/verifyOtpAction";
 
 const initialState = {
-  verifyOtp: {}
+  verifyOtp: false
 };
 
 export function verifyOtp(state = initialState, action) {
@@ -10,12 +10,12 @@ export function verifyOtp(state = initialState, action) {
       if (action.verifyOtp.hasOwnProperty("error")) {
         return {
           ...state,
-          verifyOtp: {}
+          verifyOtp: false
         };
       } else {
         return {
           ...state,
-          verifyOtp: action.verifyOtp
+          verifyOtp: true
         };
       }
     default:

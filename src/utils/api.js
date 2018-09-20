@@ -185,7 +185,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v4/web/similar" +
+          "api/v4/web/similar?" +
           getQueryString({
             m_id: merchantId,
             o_id: offeringId
@@ -199,7 +199,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v4/web/check/payment/mode" +
+          "api/v4/web/check/payment/mode?" +
           getQueryString({
             mobile: merchantMobile
           })
@@ -212,7 +212,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v6/customer/purchase/additional/charges" +
+          "api/v6/customer/purchase/additional/charges?" +
           getQueryString({
             amount: amount
           }),
@@ -234,7 +234,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v5/customer/deliveryadditionalcharges" +
+          "api/v5/customer/deliveryadditionalcharges?" +
           getQueryString({
             mobile: merchantMobile
           }),
@@ -256,7 +256,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v4/web/user" +
+          "api/v4/web/user?" +
           getQueryString({
             mobile: mobile
           })
@@ -277,7 +277,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v4/web/user/profile" +
+          "api/v4/web/user/profile?" +
           getQueryString({
             mobile: mobile,
             first_name: firstName,
@@ -302,7 +302,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v7/customer/newuser" +
+          "api/v7/customer/newuser?" +
           getQueryString({
             mobile: mobile,
             email: email
@@ -316,7 +316,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v3/generic/otp/verify" +
+          "api/v3/generic/otp/verify?" +
           getQueryString({
             mobile: mobile,
             code: code
@@ -339,7 +339,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v6/customer/deal/payment" +
+          "api/v6/customer/deal/payment?" +
           getQueryString({
             dealid: dealId,
             quantity: quantity,
@@ -365,7 +365,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v6/customer/deal/pointredeem" +
+          "api/v6/customer/deal/pointredeem?" +
           getQueryString({
             dealid: dealId,
             quantity: quantity,
@@ -397,7 +397,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v6/paytm /verify/paytm/transaction" +
+          "api/v6/paytm /verify/paytm/transaction?" +
           getQueryString({
             deal_id: dealId,
             order_id: orderId,
@@ -431,7 +431,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v5/customer/deal/pav/payment" +
+          "api/v5/customer/deal/pav/payment?" +
           getQueryString({
             mobile: mobile,
             deal_id: dealId,
@@ -467,7 +467,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v5/customer/deal/delivery/payment" +
+          "api/v5/customer/deal/delivery/payment?" +
           getQueryString({
             mobile: mobile,
             deal_id: dealId,
@@ -503,7 +503,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v5/customer/deal/delivery/pointredeem" +
+          "api/v5/customer/deal/delivery/pointredeem?" +
           getQueryString({
             mobile: mobile,
             deal_id: dealId,
@@ -541,7 +541,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v5/customer/delivery/capturepaytmresponse " +
+          "api/v5/customer/delivery/capturepaytmresponse?" +
           getQueryString({
             mobile: mobile,
             deal_id: dealId,
@@ -579,7 +579,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v5/customer/deal/delivery/cashorder" +
+          "api/v5/customer/deal/delivery/cashorder?" +
           getQueryString({
             mobile: mobile,
             deal_id: dealId,
@@ -613,7 +613,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v6/customer/other/category/razor/purchase" +
+          "api/v6/customer/other/category/razor/purchase?" +
           getQueryString({
             offer_id: offerId,
             mobile: mobile,
@@ -647,7 +647,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v6/customer/other/category/wallet/purchase" +
+          "api/v6/customer/other/category/wallet/purchase?" +
           getQueryString({
             offer_id: offerId,
             mobile: mobile,
@@ -681,7 +681,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v6/customer/other/category/paytm/purchase" +
+          "api/v6/customer/other/category/paytm/purchase?" +
           getQueryString({
             offer_id: offerId,
             order_id: orderId,
@@ -715,7 +715,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v6/customer/other/category/pav/purchase" +
+          "api/v6/customer/other/category/pav/purchase?" +
           getQueryString({
             offer_id: offerId,
             mobile: mobile,
@@ -739,7 +739,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v6/customer/other/category/online/reserve" +
+          "api/v6/customer/other/category/online/reserve?" +
           getQueryString({
             offer_id: offerId,
             mobile: mobile,
