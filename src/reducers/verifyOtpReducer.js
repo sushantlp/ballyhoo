@@ -13,8 +13,6 @@ export function verifyOtp(state = initialState, action) {
           verifyOtp: false
         };
       } else {
-        console.log(action.verifyOtp);
-
         return {
           ...state,
           verifyOtp: true

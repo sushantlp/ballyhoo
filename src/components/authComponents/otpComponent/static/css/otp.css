@@ -1,0 +1,26 @@
+.H2 {
+  padding-left: 320px;
+  padding-right: 320px;
+  font-size: 30px;
+  line-height: 70px;
+  color: #262626;
+  display: block;
+}
+.P {
+  padding-left: 320px;
+  padding-right: 320px;
+  font-size: 16px;
+  line-height: 36px;
+  color: #262626;
+}
+
+.Anchor {
+  margin-left: 500px;
+  margin-right: 500px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.Anchor:hover {
+  color: #7a52c0;
+}

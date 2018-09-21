@@ -13,10 +13,11 @@ export const keys = {
 
 export const REG_HEX = /&#x([a-fA-F0-9]+);/;
 export const STORAGE = "Auth";
-export const USERDATA = "User_Data";
-export const emailReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+export const USER_DATA = "User_Data";
+export const BALLY_KEY = "Bally_Key";
+export const EMAIL_REG = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
-export const countryCode = [
+export const COUNTRY_CODE = [
   { name: "Afghanistan", dial_code: "+93", code: "AF" },
   { name: "Åland Islands", dial_code: "+358", code: "AX" },
   { name: "Albania", dial_code: "+355", code: "AL" },

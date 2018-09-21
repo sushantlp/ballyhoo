@@ -1,16 +1,23 @@
 import React from "react";
 import _ from "lodash";
-import SweetAlert from "sweetalert2-react";
-import {
-  Container,
-  Dropdown,
-  Button,
-  Input,
-  Message
-} from "semantic-ui-react/dist/commonjs";
 
-import { countryCode, emailReg, USERDATA, STORAGE } from "../../constants";
-import classes from "./static/css/auth.css";
+import { Container } from "semantic-ui-react/dist/commonjs";
+
+import {
+  COUNTRY_CODE,
+  EMAIL_REG,
+  USER_DATA,
+  STORAGE,
+  BALLY_KEY
+} from "../../constants";
+
+// Component
+import Signup from "./signupComponent/signup";
+import Otp from "./otpComponent/otp";
+import Mobile from "./mobileComponent/mobile";
+import Email from "./emailComponent/email";
+import Sweet from "./sweetAlertComponent/sweet";
+import Message from "./messageComponent/message";
 
 export default class Auth extends React.Component {
   constructor(props) {
@@ -18,9 +25,11 @@ export default class Auth extends React.Component {
     this.state = {
       code: [],
       backupCode: [],
+
       mobile: true,
       email: false,
       otp: false,
+      signup: false,
 
       errorMessage: false,
       errorText: "",
@@ -47,7 +56,7 @@ export default class Auth extends React.Component {
   }
 
   componentWillMount() {
-    this.createCountryCode(countryCode);
+    this.createCountryCode(COUNTRY_CODE);
   }
 
   componentWillReceiveProps(nextProp) {
@@ -97,14 +106,43 @@ export default class Auth extends React.Component {
     } else if (
       this.props.userRecord.userRecord !== nextProp.userRecord.userRecord
     ) {
-      console.log(_.isEmpty(nextProp.userRecord.userRecord));
-      console.log(nextProp.userRecord);
-      console.log(_.isEmpty(this.props.userRecord.userRecord));
-      console.log(this.props.userRecord);
+      if (!_.isEmpty(nextProp.userRecord.userRecord)) {
+        this.checkUserData(nextProp.userRecord.userRecord);
+      }
     }
   }
 
-  // goCheckoutRoute = () => {};
+  checkUserData = userRecord => {
+    const ballyKey = {
+      token: userRecord.Token.Token,
+      role: userRecord.Token.Role,
+      razorpay: userRecord.RazorPay_Key
+    };
+
+    // Store in Session Storage
+    sessionStorage.setItem(BALLY_KEY, JSON.stringify(ballyKey));
+
+    if (
+      userRecord.Customer_Email === null ||
+      userRecord.Customer_Mobile === null ||
+      userRecord.First_Name === null ||
+      userRecord.Last_Name === null ||
+      userRecord.Dob === null ||
+      userRecord.Sex === null
+    ) {
+      this.setState({
+        otp: false,
+        otpButton: true,
+        otpInput: true,
+        otpLoading: false,
+        signup: true
+      });
+    } else {
+      this.goCheckoutRoute();
+    }
+  };
+
+  goCheckoutRoute = () => {};
 
   callUserDetailApi = () => {
     // Get User Record
@@ -121,9 +159,7 @@ export default class Auth extends React.Component {
 
     // Store in Session Storage
     sessionStorage.setItem(STORAGE, "SUCCESS");
-    sessionStorage.setItem(USERDATA, userData);
-    const auth = sessionStorage.getItem(USERDATA);
-    console.log(auth);
+    sessionStorage.setItem(USER_DATA, JSON.stringify(userData));
   };
 
   createCountryCode = countryCode => {
@@ -167,7 +203,7 @@ export default class Auth extends React.Component {
   };
 
   emailButtonClick = () => {
-    if (!emailReg.test(this.state.userEmail)) {
+    if (!EMAIL_REG.test(this.state.userEmail)) {
       this.setState({
         errorMessage: true,
         errorText: "This email is invalid"
@@ -176,7 +212,8 @@ export default class Auth extends React.Component {
       this.setState({
         emailButton: true,
         emailInput: true,
-        emailLoading: true
+        emailLoading: true,
+        errorMessage: false
       });
 
       const mobile = this.state.userMobileCode + this.state.userMobile;
@@ -237,175 +274,23 @@ export default class Auth extends React.Component {
     if (data.value.length >= 4) {
       this.setState({
         otpButton: false,
-        userOtp: data.value
+        userOtp: data.value,
+        errorMessage: false
       });
     } else {
       this.setState({
         otpButton: true,
-        userOtp: data.value
+        userOtp: data.value,
+        errorMessage: false
       });
     }
   };
 
-  mobileInput = () => {
-    return (
-      <div>
-        <label className={classes.H2}>Create an account</label>
-        <label className={classes.P}>Enter your phone number (required)</label>
-
-        <Input
-          disabled={this.state.mobileInput}
-          type="number"
-          style={{
-            width: "450px",
-            height: "50px",
-            marginLeft: "320px"
-          }}
-          onChange={(event, data) => this.checkMobileInput(event, data)}
-          label={
-            <Dropdown
-              disabled={this.state.mobileDropdown}
-              options={this.state.code}
-              onChange={(event, data) => this.onChangeCountry(event, data)}
-              onClick={() => this.createCountryCode(countryCode)}
-              defaultValue={"+91"}
-              style={{
-                paddingTop: "18px",
-                backgroundColor: "#7a52c0",
-                color: "white"
-              }}
-            />
-          }
-          labelPosition="left"
-          placeholder="Mobile..."
-        />
-
-        <Button
-          disabled={this.state.mobileButton}
-          loading={this.state.mobileLoading}
-          style={{
-            backgroundColor: "#FF5A5F",
-            color: "white",
-            opacity: "1",
-            width: "450px",
-            height: "50px",
-            fontSize: "20px",
-            fontWeight: "500",
-            marginTop: "30px",
-            marginLeft: "320px",
-            marginRight: "320px"
-          }}
-          onClick={() => this.mobileButtonClick()}
-        >
-          Next
-        </Button>
-      </div>
-    );
-  };
-
-  emailInput = () => {
-    return (
-      <div>
-        <label className={classes.H2}>Create an account</label>
-        <label className={classes.P}>Enter your email (required)</label>
-
-        <Input
-          disabled={this.state.emailInput}
-          type="text"
-          style={{
-            width: "450px",
-            height: "50px",
-            marginLeft: "320px"
-          }}
-          placeholder="Email..."
-          onChange={(event, data) => this.checkEmailInput(event, data)}
-        />
-
-        <Button
-          disabled={this.state.emailButton}
-          loading={this.state.emailLoading}
-          style={{
-            backgroundColor: "#FF5A5F",
-            color: "white",
-            opacity: "1",
-            width: "450px",
-            height: "50px",
-            fontSize: "20px",
-            fontWeight: "500",
-            marginTop: "30px",
-            marginLeft: "320px",
-            marginRight: "320px"
-          }}
-          onClick={() => this.emailButtonClick()}
-        >
-          Next
-        </Button>
-      </div>
-    );
-  };
-
-  otpInput = () => {
-    return (
-      <div>
-        <label className={classes.H2}>Create an account</label>
-        <label className={classes.P}>Enter otp (required)</label>
-
-        <Input
-          disabled={this.state.otpInput}
-          type="number"
-          style={{
-            width: "450px",
-            height: "50px",
-            marginLeft: "320px"
-          }}
-          placeholder="Otp..."
-          onChange={(event, data) => this.checkOtpInput(event, data)}
-        />
-
-        <Button
-          disabled={this.state.otpButton}
-          loading={this.state.otpLoading}
-          style={{
-            backgroundColor: "#FF5A5F",
-            color: "white",
-            opacity: "1",
-            width: "450px",
-            height: "50px",
-            fontSize: "20px",
-            fontWeight: "500",
-            marginTop: "30px",
-            marginLeft: "320px",
-            marginRight: "320px"
-          }}
-          onClick={() => this.otpButtonClick()}
-        >
-          Next
-        </Button>
-
-        <p className={classes.Anchor}>Resend otp</p>
-      </div>
-    );
-  };
-
-  sweetAlert = () => {
-    return (
-      <SweetAlert
-        show={true}
-        title="Ballyhoo"
-        imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
-        text="We will be sending the otp to the mentioned email."
-        onConfirm={() => this.sweetAlertButtonClick()}
-      />
-    );
-  };
-
-  errorMessage = () => {
-    return (
-      <Message negative>
-        <Message.Header>Oops error</Message.Header>
-        <p>{this.state.errorText}</p>
-      </Message>
-    );
+  errorMessage = (flag, text) => {
+    this.setState({
+      errorMessage: flag,
+      errorText: text
+    });
   };
 
   render() {
@@ -424,12 +309,54 @@ export default class Auth extends React.Component {
         </h1>
 
         {this.state.errorMessage ? (
-          <Container text>{this.errorMessage()}</Container>
+          <Container text>
+            <Message errorText={this.state.errorText} />
+          </Container>
         ) : null}
-        {this.state.sweetAlert ? this.sweetAlert() : null}
-        {this.state.mobile ? this.mobileInput() : null}
-        {this.state.email ? this.emailInput() : null}
-        {this.state.otp ? this.otpInput() : null}
+        {this.state.sweetAlert ? (
+          <Sweet sweetAlertButtonClick={this.sweetAlertButtonClick} />
+        ) : null}
+
+        {this.state.mobile ? (
+          <Mobile
+            mobileButtonClick={this.mobileButtonClick}
+            checkMobileInput={this.checkMobileInput}
+            mobileInput={this.state.mobileInput}
+            mobileButton={this.state.mobileButton}
+            mobileLoading={this.state.mobileLoading}
+            countryCode={COUNTRY_CODE}
+            createCountryCode={this.createCountryCode}
+            onChangeCountry={this.onChangeCountry}
+            code={this.state.code}
+          />
+        ) : null}
+
+        {this.state.email ? (
+          <Email
+            emailInput={this.state.emailInput}
+            checkEmailInput={this.checkEmailInput}
+            emailButton={this.state.emailButton}
+            emailLoading={this.state.emailLoading}
+            emailButtonClick={this.emailButtonClick}
+          />
+        ) : null}
+
+        {this.state.otp ? (
+          <Otp
+            otpButtonClick={this.otpButtonClick}
+            checkOtpInput={this.checkOtpInput}
+            otpInput={this.state.otpInput}
+            otpButton={this.state.otpButton}
+            otpLoading={this.state.otpLoading}
+          />
+        ) : null}
+
+        {this.state.signup ? (
+          <Signup
+            userRecord={this.props.userRecord.userRecord}
+            errorMessage={this.errorMessage}
+          />
+        ) : null}
       </Container>
     );
   }
