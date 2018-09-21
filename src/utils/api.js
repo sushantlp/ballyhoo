@@ -260,9 +260,14 @@ export default {
           getQueryString({
             mobile: mobile
           })
-      ).then(response => {
-        response.json().then(userRecord => resolve(userRecord));
-      });
+      )
+        .then(response => {
+          response
+            .json()
+            .then(userRecord => resolve(userRecord))
+            .catch(error => console.log(error));
+        })
+        .catch(error => console.log(error));
     });
   },
   updateUserRecordApi: (
@@ -320,10 +325,25 @@ export default {
           getQueryString({
             mobile: mobile,
             code: code
-          })
-      ).then(response => {
-        response.json().then(verifyOtp => resolve(verifyOtp));
-      });
+          }),
+        {
+          method: "POST"
+          // mode: "no-cors",
+
+          // headers: {
+          //   "Content-Type": "application/x-www-form-urlencoded",
+          //   "Access-Control-Allow-Origin": "*"
+
+          // }
+        }
+      )
+        .then(response => {
+          response
+            .json()
+            .then(verifyOtp => resolve(verifyOtp))
+            .catch(error => console.log(error));
+        })
+        .catch(error => console.log(error));
     });
   },
   fnbRazorpayApi: (
@@ -350,7 +370,7 @@ export default {
             razorpayPaymentId: razorpayPaymentId
           }),
         {
-          method: "post",
+          method: "POST",
           headers: new Headers({
             Authorization: "Bearer " + token,
             "Content-Type": "application/x-www-form-urlencoded"

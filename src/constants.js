@@ -13,6 +13,7 @@ export const keys = {
 
 export const REG_HEX = /&#x([a-fA-F0-9]+);/;
 export const STORAGE = "Auth";
+export const USERDATA = "User_Data";
 export const emailReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
 export const countryCode = [

@@ -9,7 +9,7 @@ import {
   Message
 } from "semantic-ui-react/dist/commonjs";
 
-import { countryCode, emailReg } from "../../constants";
+import { countryCode, emailReg, USERDATA, STORAGE } from "../../constants";
 import classes from "./static/css/auth.css";
 
 export default class Auth extends React.Component {
@@ -29,7 +29,7 @@ export default class Auth extends React.Component {
       userMobile: "",
       userEmail: "",
       userOtp: "",
-      userMobileCode: "",
+      userMobileCode: "+91",
 
       mobileButton: true,
       mobileInput: false,
@@ -77,8 +77,15 @@ export default class Auth extends React.Component {
       this.props.verifyOtp.verifyOtp !== nextProp.verifyOtp.verifyOtp
     ) {
       if (nextProp.verifyOtp.verifyOtp) {
-        this.goCheckoutRoute();
+        this.callUserDetailApi();
       } else {
+        // Success Action
+        this.props.registerFailure(false);
+
+        // Store in Session Storage
+        sessionStorage.setItem(STORAGE, "FAILURE");
+
+        // State Update
         this.setState({
           errorMessage: true,
           errorText: "wrong otp",
@@ -87,11 +94,36 @@ export default class Auth extends React.Component {
           otpButton: false
         });
       }
+    } else if (
+      this.props.userRecord.userRecord !== nextProp.userRecord.userRecord
+    ) {
+      console.log(_.isEmpty(nextProp.userRecord.userRecord));
+      console.log(nextProp.userRecord);
+      console.log(_.isEmpty(this.props.userRecord.userRecord));
+      console.log(this.props.userRecord);
     }
   }
 
-  goCheckoutRoute = () => {
-    console.log(this.props);
+  // goCheckoutRoute = () => {};
+
+  callUserDetailApi = () => {
+    // Get User Record
+    this.props.getUserRecord(this.state.userMobile);
+
+    // Success Action
+    this.props.registerSuccess(true);
+
+    // User Data Object
+    const userData = {
+      userMobile: this.state.userMobile,
+      userEmail: this.state.userEmail
+    };
+
+    // Store in Session Storage
+    sessionStorage.setItem(STORAGE, "SUCCESS");
+    sessionStorage.setItem(USERDATA, userData);
+    const auth = sessionStorage.getItem(USERDATA);
+    console.log(auth);
   };
 
   createCountryCode = countryCode => {
@@ -113,14 +145,14 @@ export default class Auth extends React.Component {
       _.matchesProperty("value", data.value)
     );
 
+    this.setState({
+      userMobileCode: heaven.value
+    });
+
     this.state.code.splice(heaven.key, 1, {
       text: heaven.value,
       key: heaven.key,
       value: heaven.value
-    });
-
-    this.setState({
-      userMobileCode: heaven.value
     });
   };
 
