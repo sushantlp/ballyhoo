@@ -10,11 +10,20 @@ export function postUpdateUserRecord(
   lastName,
   email,
   birth,
-  gender
+  gender,
+  token
 ) {
   return dispatch => {
     api
-      .updateUserRecordApi(mobile, firstName, lastName, email, birth, gender)
+      .updateUserRecordApi(
+        mobile,
+        firstName,
+        lastName,
+        email,
+        birth,
+        gender,
+        token
+      )
       .then(updateUserRecord =>
         dispatch({ type: actionType.updateUserRecord, updateUserRecord })
       );

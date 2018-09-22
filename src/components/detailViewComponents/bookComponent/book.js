@@ -16,8 +16,6 @@ import {
 
 import { REG_HEX, STORAGE } from "../../../constants.js";
 
-import classes from "./static/css/book.css";
-
 export default class Book extends React.Component {
   constructor(props) {
     super(props);

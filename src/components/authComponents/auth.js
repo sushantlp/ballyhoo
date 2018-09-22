@@ -145,8 +145,10 @@ export default class Auth extends React.Component {
   goCheckoutRoute = () => {};
 
   callUserDetailApi = () => {
+    const mobile = this.state.userMobileCode + this.state.userMobile;
+
     // Get User Record
-    this.props.getUserRecord(this.state.userMobile);
+    this.props.getUserRecord(mobile);
 
     // Success Action
     this.props.registerSuccess(true);
@@ -355,6 +357,9 @@ export default class Auth extends React.Component {
           <Signup
             userRecord={this.props.userRecord.userRecord}
             errorMessage={this.errorMessage}
+            postUpdateUserRecord={this.props.postUpdateUserRecord}
+            updateUserRecord={this.props.updateUserRecord}
+            BALLY_KEY={BALLY_KEY}
           />
         ) : null}
       </Container>

@@ -292,15 +292,24 @@ export default {
             gender: gender
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "POST",
+          // headers: new Headers({
+          //   Authorization: "Bearer " + token,
+          //   "Content-Type": "application/x-www-form-urlencoded"
+          // })
+
+          headers: {
+            Authorization: "Bearer " + token
+          }
         }
-      ).then(response => {
-        response.json().then(updateUserRecord => resolve(updateUserRecord));
-      });
+      )
+        .then(response => {
+          response
+            .json()
+            .then(updateUserRecord => resolve(updateUserRecord))
+            .catch(error => console.log(error));
+        })
+        .catch(error => console.log(error));
     });
   },
   registerNewUserApi: (mobile, email) => {

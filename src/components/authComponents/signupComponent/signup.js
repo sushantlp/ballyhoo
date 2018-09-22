@@ -1,9 +1,9 @@
 import React from "react";
-import moment from "moment-timezone";
+import _ from "lodash";
 
 import { DateInput } from "semantic-ui-calendar-react";
 
-import { Button, Input, Radio, Form } from "semantic-ui-react/dist/commonjs";
+import { Button, Input, Radio } from "semantic-ui-react/dist/commonjs";
 
 import classes from "./static/css/signup.css";
 
@@ -15,6 +15,8 @@ export default class Signup extends React.Component {
       lastName: false,
       dob: false,
       gender: false,
+      otpLoading: false,
+      otpButton: false,
 
       userDob: "",
       userFirstName: "",
@@ -24,31 +26,134 @@ export default class Signup extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.userRecord.First_Name !== null) {
-      this.setState({
-        userFirstName: this.props.userRecord.First_Name
-      });
+    if (!_.isEmpty(this.props.userRecord)) {
+      if (
+        this.props.userRecord.First_Name !== null &&
+        this.props.userRecord.First_Name !== undefined
+      ) {
+        this.setState({
+          userFirstName: this.props.userRecord.First_Name
+        });
+      }
+
+      if (
+        this.props.userRecord.Last_Name !== null &&
+        this.props.userRecord.Last_Name !== undefined
+      ) {
+        this.setState({
+          userLastName: this.props.userRecord.Last_Name
+        });
+      }
+
+      if (
+        this.props.userRecord.Sex !== null &&
+        this.props.userRecord.Sex !== undefined
+      ) {
+        this.setState({
+          userGender: this.props.userRecord.Sex
+        });
+      } else {
+        this.setState({
+          userGender: "male"
+        });
+      }
+
+      if (
+        this.props.userRecord.Dob !== null &&
+        this.props.userRecord.Dob !== undefined
+      ) {
+        this.setState({
+          userDob: this.props.userRecord.Dob
+        });
+      }
     }
 
-    if (this.props.userRecord.Last_Name !== null) {
-      this.setState({
-        userLastName: this.props.userRecord.Last_Name
-      });
-    }
-
-    if (this.props.userRecord.Sex !== null) {
-      this.setState({
-        userGender: this.props.userRecord.Sex
-      });
-    }
-
-    if (this.props.userRecord.Dob !== null) {
-      this.setState({
-        userDob: this.props.userRecord.Dob
-      });
-    }
+    console.log(this.props.updateUserRecord);
   }
-  handleChange = (e, { value }) => this.setState({ value });
+
+  // First Name Update
+  firstHandleChange = (event, data) => {
+    this.setState({
+      userFirstName: data.value
+    });
+  };
+
+  // Last Name Update
+  lastHandleChange = (event, data) => {
+    this.setState({
+      userLastName: data.value
+    });
+  };
+
+  // Dob Update
+  dobHandleChange = (event, data) => {
+    this.setState({
+      userDob: data.value
+    });
+  };
+
+  // Gender Update
+  genderHandleChange = (event, data) => {
+    this.setState({
+      userGender: data.value
+    });
+  };
+
+  // Button Click Call
+  otpSignupClick = () => {
+    if (
+      this.state.userFirstName === "" ||
+      this.state.userFirstName === undefined
+    ) {
+      // Call Error Message
+      this.props.errorMessage(true, "Please fill first name");
+    } else if (
+      this.state.userLastName === "" ||
+      this.state.userLastName === undefined
+    ) {
+      // Call Error Message
+      this.props.errorMessage(true, "Please fill last name");
+    } else if (this.state.userDob === "" || this.state.userDob === undefined) {
+      // Call Error Message
+      this.props.errorMessage(true, "Please fill date of birth");
+    } else if (
+      this.state.userGender === "" ||
+      this.state.userGender === undefined
+    ) {
+      // Call Error Message
+      this.props.errorMessage(true, "Please select gender");
+    } else {
+      // Store in Session Storage
+      const ballyKey = sessionStorage.getItem(
+        this.props.BALLY_KEY,
+        JSON.stringify(ballyKey)
+      );
+
+      // Update State
+      this.setState({
+        firstName: true,
+        lastName: true,
+        dob: true,
+        gender: true,
+        otpLoading: true,
+        otpButton: true
+      });
+
+      // Call Error Message
+      this.props.errorMessage(false, "");
+
+      // Update User Record
+      this.props.postUpdateUserRecord(
+        this.props.userRecord.Customer_Mobile,
+        this.state.userFirstName,
+        this.state.userLastName,
+        this.props.userRecord.Customer_Email,
+        this.state.userDob,
+        this.state.userGender,
+        ballyKey.token
+      );
+    }
+  };
 
   render() {
     return (
@@ -65,7 +170,7 @@ export default class Signup extends React.Component {
           }}
           placeholder="First-Name..."
           value={this.state.userFirstName}
-          onChange={(event, data) => this.checkOtpInput(event, data)}
+          onChange={(event, data) => this.firstHandleChange(event, data)}
         />
 
         <Input
@@ -80,6 +185,7 @@ export default class Signup extends React.Component {
           }}
           placeholder="Last-Name..."
           value={this.state.userLastName}
+          onChange={this.lastHandleChange}
         />
 
         <Input
@@ -127,10 +233,11 @@ export default class Signup extends React.Component {
             marginRight: "320px",
             marginBottom: "20px"
           }}
-          name="date"
+          name="userDob"
           placeholder="Date"
           value={this.state.userDob}
           iconPosition="left"
+          onChange={this.dobHandleChange}
         />
 
         <div
@@ -149,7 +256,7 @@ export default class Signup extends React.Component {
             name="radioGroup"
             value="male"
             checked={this.state.userGender === "male"}
-            onChange={this.handleChange}
+            onChange={this.genderHandleChange}
           />
 
           <Radio
@@ -161,7 +268,7 @@ export default class Signup extends React.Component {
             name="radioGroup"
             value="female"
             checked={this.state.userGender === "female"}
-            onChange={this.handleChange}
+            onChange={this.genderHandleChange}
           />
         </div>
         <Button
@@ -180,7 +287,7 @@ export default class Signup extends React.Component {
             marginRight: "320px",
             marginBottom: "30px"
           }}
-          //   onClick={() => this.otpButtonClick()}
+          onClick={() => this.otpSignupClick()}
         >
           Next
         </Button>

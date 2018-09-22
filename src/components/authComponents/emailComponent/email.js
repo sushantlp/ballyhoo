@@ -12,7 +12,7 @@ const Email = props => {
 
       <Input
         disabled={props.emailInput}
-        type="text"
+        type="email"
         style={{
           width: "450px",
           height: "50px",

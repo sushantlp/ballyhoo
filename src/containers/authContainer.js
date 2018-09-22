@@ -18,7 +18,8 @@ function mapStateToProps(state) {
     registerNewUser: state.registerNewUser,
     updateUserRecord: state.updateUserRecord,
     userRecord: state.userRecord,
-    verifyOtp: state.verifyOtp
+    verifyOtp: state.verifyOtp,
+    updateUserRecord: state.updateUserRecord
   };
 }
 
@@ -30,7 +31,8 @@ export default withRouter(
       registerFailure: registerFailure,
       getRegisterNewUser: getRegisterNewUser,
       postVerifyOtp: postVerifyOtp,
-      getUserRecord: getUserRecord
+      getUserRecord: getUserRecord,
+      postUpdateUserRecord: postUpdateUserRecord
     }
   )(AuthComponent)
 );
