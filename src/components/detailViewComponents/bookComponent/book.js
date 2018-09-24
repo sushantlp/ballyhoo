@@ -330,17 +330,12 @@ export default class Book extends React.Component {
           style={{
             fontSize: "20px",
             fontWeight: "bold",
-            color: "rgba(0,0,0,.9)",
-            display: this.state.bookingPrice === 0 ? "none" : "inline"
+            color: "rgba(0,0,0,.9)"
           }}
         >
           Book Now
         </label>
-        <Divider
-          style={{
-            display: this.state.bookingPrice === 0 ? "none" : "intital"
-          }}
-        />
+        <Divider style={{}} />
 
         <label
           style={{
@@ -596,6 +591,8 @@ export default class Book extends React.Component {
           >
             You won’t be charged yet
           </p>
+
+          <Divider />
         </Segment>
       </div>
     );

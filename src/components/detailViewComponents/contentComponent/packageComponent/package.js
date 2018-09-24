@@ -242,7 +242,7 @@ export default class Package extends React.Component {
             </label>
             <Button
               style={{
-                backgroundColor: "rgb(122, 82, 192)",
+                backgroundColor: "rgb(255, 90, 95)",
                 color: "white",
                 opacity: "1",
                 width: "280px",
@@ -497,6 +497,7 @@ export default class Package extends React.Component {
     let currencySymbol = undefined;
     let offerId = undefined;
     let categoryName = undefined;
+    let offerningName = undefined;
 
     if (this.props.detailState.apiCall) {
       if (this.props.detailState.which === "new") {
@@ -523,6 +524,7 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.newViewDetail.newViewDetail.offers
             .Offer_Basic_Details.Category_Name;
+          offerningName = "ACTIVITY";
         } else if (
           Object.keys(this.props.newViewDetail.newViewDetail.offers.EVENT)
             .length !== 0
@@ -535,6 +537,7 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.newViewDetail.newViewDetail.offers
             .Offer_Basic_Details.Category_Name;
+          offerningName = "EVENT";
         } else if (
           Object.keys(this.props.newViewDetail.newViewDetail.offers.GETAWAY)
             .length !== 0
@@ -547,6 +550,7 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.newViewDetail.newViewDetail.offers
             .Offer_Basic_Details.Category_Name;
+          offerningName = "GETAWAY";
         } else if (
           Object.keys(this.props.newViewDetail.newViewDetail.offers.SALOON)
             .length !== 0
@@ -559,6 +563,7 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.newViewDetail.newViewDetail.offers
             .Offer_Basic_Details.Category_Name;
+          offerningName = "SALOON";
         } else {
           return <div />;
         }
@@ -581,6 +586,7 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.history.location.state.offerData.data
             .Offer_Basic_Details.Category_Name;
+          offerningName = "ACTIVITY";
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.EVENT)
             .length !== 0
@@ -594,6 +600,7 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.history.location.state.offerData.data
             .Offer_Basic_Details.Category_Name;
+          offerningName = "EVENT";
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.GETAWAY)
             .length !== 0
@@ -606,6 +613,7 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.history.location.state.offerData.data
             .Offer_Basic_Details.Category_Name;
+          offerningName = "GETAWAY";
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.SALOON)
             .length !== 0
@@ -622,6 +630,7 @@ export default class Package extends React.Component {
               .Offer_Basic_Details.Offer_Id;
             categoryName = this.props.history.location.state.offerData.data
               .Offer_Basic_Details.Category_Name;
+            offerningName = "SALOON";
           } else {
             return <div />;
           }
