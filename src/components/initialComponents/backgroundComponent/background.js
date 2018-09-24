@@ -479,7 +479,7 @@ export default class Background extends React.Component {
             </Grid.Column>
             <Grid.Column width={2}>
               <Button
-                style={{ backgroundColor: "#7A52C0", color: "white" }}
+                style={{ backgroundColor: "rgb(255, 90, 95)", color: "white" }}
                 onClick={() => this.logicClickButton(true)}
               >
                 Search

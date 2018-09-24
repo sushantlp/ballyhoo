@@ -3,6 +3,7 @@ import "react-dates/initialize";
 import moment from "moment-timezone";
 import _ from "lodash";
 
+import { DateInput } from "semantic-ui-calendar-react";
 import TimePicker from "react-times";
 
 import { SingleDatePicker } from "react-dates";
@@ -11,7 +12,8 @@ import {
   Segment,
   Button,
   Divider,
-  Icon
+  Icon,
+  Input
 } from "semantic-ui-react/dist/commonjs";
 
 import { REG_HEX, STORAGE } from "../../../constants.js";
@@ -21,6 +23,9 @@ export default class Book extends React.Component {
     super(props);
     this.state = {
       date: moment().tz("Asia/Kolkata"),
+      newDate: moment()
+        .tz("Asia/Kolkata")
+        .format("DD-MM-YYYY"),
       time: moment().format("HH:mm A"),
       focused: false,
       quantity: 1,
@@ -157,12 +162,6 @@ export default class Book extends React.Component {
     }
   };
 
-  // handleChange = (event, { name, value }) => {
-  //   if (this.state.hasOwnProperty(name)) {
-  //     this.setState({ [name]: value });
-  //   }
-  // };
-
   onTimeChange(timeObject) {
     const time =
       timeObject.hour + ":" + timeObject.minute + " " + timeObject.meridiem;
@@ -170,7 +169,14 @@ export default class Book extends React.Component {
     this.setState({ time: time });
   }
 
-  bookingComponent = (limit, calendar, currencySymbol, object) => {
+  // Dob Update
+  dobHandleChange = (event, data) => {
+    this.setState({
+      newDate: data.value
+    });
+  };
+
+  oldBookingComponent = (limit, calendar, currencySymbol, object) => {
     return (
       <div>
         <span
@@ -247,7 +253,7 @@ export default class Book extends React.Component {
         <div
           style={{
             marginLeft: "24px",
-            marginRight: "24px",
+            // marginRight: "24px",
             display: calendar ? "inline" : "none"
           }}
         >
@@ -260,11 +266,16 @@ export default class Book extends React.Component {
           >
             Date
           </label>
+
           <span
             style={{
               marginLeft: "60px",
               marginRight: "60px",
-              display: calendar ? "inline" : "none"
+              display: calendar
+                ? object.Offering === "Event"
+                  ? "none"
+                  : "inline"
+                : "none"
             }}
           >
             <SingleDatePicker
@@ -276,12 +287,30 @@ export default class Book extends React.Component {
               id="date_input"
             />
           </span>
+
+          <span
+            style={{
+              marginLeft: "60px",
+
+              display: calendar
+                ? object.Offering === "Event"
+                  ? "inline"
+                  : "none"
+                : "none"
+            }}
+          >
+            <Input
+              placeholder="Date..."
+              value={object.EVENTS.event_date}
+              disabled={true}
+            />
+          </span>
         </div>
 
-        <br style={{ display: calendar ? "inline" : "none" }} />
-        <br style={{ display: calendar ? "inline" : "none" }} />
+        {/* <br style={{ display: calendar ? "inline" : "none" }} />
+        <br style={{ display: calendar ? "inline" : "none" }} /> */}
 
-        <div style={{ display: calendar ? "inline" : "none" }}>
+        {/* <div style={{ display: calendar ? "inline" : "none" }}>
           <TimePicker
             time={this.state.time}
             withoutIcon={true}
@@ -289,16 +318,86 @@ export default class Book extends React.Component {
             timezone="Asia/Kolkata"
             onTimeChange={this.onTimeChange.bind(this)}
           />
-        </div>
+        </div> */}
       </div>
     );
   };
 
-  bookingLogic = (limit, calendar, currencySymbol, obj, status) => {
+  newBookingComponent = (limit, calendar, currencySymbol, object, endDate) => {
+    return (
+      <div>
+        <label
+          style={{
+            fontSize: "20px",
+            fontWeight: "bold",
+            color: "rgba(0,0,0,.9)",
+            display: this.state.bookingPrice === 0 ? "none" : "inline"
+          }}
+        >
+          Book Now
+        </label>
+        <Divider
+          style={{
+            display: this.state.bookingPrice === 0 ? "none" : "intital"
+          }}
+        />
+
+        <label
+          style={{
+            fontSize: "22px",
+            color: "rgba(0,0,0,.6)",
+            marginLeft: "24px"
+          }}
+        >
+          Date
+        </label>
+
+        <span
+          style={{
+            display: endDate != null ? "-webkit-inline-box" : "none",
+            marginLeft: "20px"
+          }}
+        >
+          <DateInput
+            name="userDob"
+            placeholder="Date"
+            value={this.state.newDate}
+            iconPosition="left"
+            onChange={this.dobHandleChange}
+            minDate={this.state.newDate}
+            maxDate={endDate}
+          />
+        </span>
+
+        <span
+          style={{
+            display: endDate == null ? "-webkit-inline-box" : "none",
+            marginLeft: "20px"
+          }}
+        >
+          <DateInput
+            name="userDob"
+            placeholder="Date"
+            value={this.state.newDate}
+            iconPosition="left"
+            onChange={this.dobHandleChange}
+          />
+        </span>
+      </div>
+    );
+  };
+
+  bookingLogic = (limit, calendar, currencySymbol, obj, status, endDate) => {
     if (status) {
-      return;
+      return this.newBookingComponent(
+        limit,
+        calendar,
+        currencySymbol,
+        obj,
+        endDate
+      );
     } else {
-      return this.bookingComponent(limit, calendar, currencySymbol, obj);
+      return this.oldBookingComponent(limit, calendar, currencySymbol, obj);
     }
   };
 
@@ -355,6 +454,7 @@ export default class Book extends React.Component {
     let calendar = true;
     let limit = 0;
     let status = false;
+    let endDate = "";
 
     if (this.props.detailState.apiCall) {
       if (this.props.detailState.which === "new") {
@@ -367,6 +467,27 @@ export default class Book extends React.Component {
 
         if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
           return <div />;
+        }
+
+        obj = this.props.newViewDetail.newViewDetail.offers;
+        hex = obj.Offer_Basic_Details.Currency_Text.replace(REG_HEX, "$1");
+
+        if (Object.keys(obj.ACTIVITY).length !== 0) {
+          endDate = obj.ACTIVITY.Offer_Buy_End_Date;
+        } else if (Object.keys(obj.EVENT).length !== 0) {
+          endDate = obj.EVENT.Offer_Buy_End_Date;
+        } else if (Object.keys(obj.GETAWAY).length !== 0) {
+          endDate = obj.GETAWAY.Offer_Buy_End_Date;
+        } else if (Object.keys(obj.SALOON).length !== 0) {
+          if (obj.Offer_Basic_Details.Offering_Name === "Appointment") {
+            endDate = null;
+          } else {
+            endDate = moment(obj.SALOON.Offer_Buy_End_Date)
+              .tz("Asia/Kolkata")
+              .format("DD-MM-YYYY");
+          }
+        } else {
+          return;
         }
 
         status = true;
@@ -390,6 +511,7 @@ export default class Book extends React.Component {
         }
 
         limit = obj.DISCOUNT.OrderLimit;
+        console.log(obj);
       }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
@@ -402,16 +524,35 @@ export default class Book extends React.Component {
 
         limit = obj.DISCOUNT.OrderLimit;
       } else {
-        // obj = this.props.history.location.state.offerData.data;
-        // hex = obj.Offer_Basic_Details.Currency_Text.replace(REG_HEX, "$1");
+        obj = this.props.history.location.state.offerData.data;
+        hex = obj.Offer_Basic_Details.Currency_Text.replace(REG_HEX, "$1");
 
-        // if (obj.Offer_Basic_Details.Offering_Name === "Activities") {
-        //   // calendar = ;
-        // }
+        if (Object.keys(obj.ACTIVITY).length !== 0) {
+          endDate = moment(obj.ACTIVITY.Offer_Buy_End_Date)
+            .tz("Asia/Kolkata")
+            .format("DD-MM-YYYY");
+        } else if (Object.keys(obj.EVENT).length !== 0) {
+          endDate = moment(obj.EVENT.Offer_Buy_End_Date)
+            .tz("Asia/Kolkata")
+            .format("DD-MM-YYYY");
+        } else if (Object.keys(obj.GETAWAY).length !== 0) {
+          endDate = moment(obj.GETAWAY.Offer_Buy_End_Date)
+            .tz("Asia/Kolkata")
+            .format("DD-MM-YYYY");
+        } else if (Object.keys(obj.SALOON).length !== 0) {
+          if (obj.Offer_Basic_Details.Offering_Name === "Appointment") {
+            endDate = null;
+          } else {
+            endDate = moment(obj.SALOON.Offer_Buy_End_Date)
+              .tz("Asia/Kolkata")
+              .format("DD-MM-YYYY");
+          }
+        } else {
+          return;
+        }
 
-        // limit = obj.DISCOUNT.OrderLimit;
-        console.log(obj);
         status = true;
+        console.log(obj);
       }
     }
 
@@ -425,7 +566,8 @@ export default class Book extends React.Component {
             calendar,
             String.fromCharCode(dec),
             obj,
-            status
+            status,
+            endDate
           )}
 
           <Button

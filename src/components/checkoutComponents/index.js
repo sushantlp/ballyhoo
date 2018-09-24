@@ -1,15 +1,13 @@
 import React from "react";
 
-import Checkout from "./checkoutComponent/checkout";
+import Summary from "./summaryComponent/summary";
 import Header from "../header/header";
 import Footer from "../footer/footer";
 
 export default class Initial extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      verify: false
-    };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -25,7 +23,7 @@ export default class Initial extends React.Component {
     return (
       <div>
         <Header />
-        <Checkout history={this.props.history} parentState={this.state} />
+        <Summary history={this.props.history} parentState={this.state} />
         <Footer />
       </div>
     );

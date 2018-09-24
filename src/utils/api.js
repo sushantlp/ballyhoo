@@ -1,9 +1,10 @@
+import axios from "axios";
 import getQueryString from "./paramParser";
 
 // Base Url
-const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
+//const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
 
-//const host = "https://ballyhoo.today/";
+const host = "https://ballyhoo.today/";
 
 export default {
   cityLocalityApi: () => {
@@ -219,8 +220,7 @@ export default {
         {
           method: "post",
           headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
+            Authorization: "Bearer " + token
           })
         }
       ).then(response => {
@@ -279,6 +279,25 @@ export default {
     gender,
     token
   ) => {
+    // axios
+    //   .post(`${host}api/v4/web/user/profile?`, {
+    //     mobile: mobile,
+    //     first_name: firstName,
+    //     last_name: lastName,
+    //     email: email,
+    //     birth: birth,
+    //     gender: gender
+    //   })
+    //   .then(res => {
+    //     console.log(res);
+    //     console.log(res.data);
+    //   });
+    const header = {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`
+    };
+
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -292,15 +311,9 @@ export default {
             gender: gender
           }),
         {
-          method: "POST",
-          // headers: new Headers({
-          //   Authorization: "Bearer " + token,
-          //   "Content-Type": "application/x-www-form-urlencoded"
-          // })
-
-          headers: {
-            Authorization: "Bearer " + token
-          }
+          method: "POST"
+          //credentials: "same-origin",
+          // headers: new Headers(header)
         }
       )
         .then(response => {
@@ -337,13 +350,6 @@ export default {
           }),
         {
           method: "POST"
-          // mode: "no-cors",
-
-          // headers: {
-          //   "Content-Type": "application/x-www-form-urlencoded",
-          //   "Access-Control-Allow-Origin": "*"
-
-          // }
         }
       )
         .then(response => {

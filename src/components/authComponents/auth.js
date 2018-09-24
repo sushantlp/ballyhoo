@@ -145,7 +145,9 @@ export default class Auth extends React.Component {
   goCheckoutRoute = () => {};
 
   callUserDetailApi = () => {
-    const mobile = this.state.userMobileCode + this.state.userMobile;
+    const mobileString = this.state.userMobileCode.toString();
+    const mobileSlice = mobileString.slice(1);
+    const mobile = mobileSlice + this.state.userMobile;
 
     // Get User Record
     this.props.getUserRecord(mobile);
@@ -218,7 +220,9 @@ export default class Auth extends React.Component {
         errorMessage: false
       });
 
-      const mobile = this.state.userMobileCode + this.state.userMobile;
+      const mobileString = this.state.userMobileCode.toString();
+      const mobileSlice = mobileString.slice(1);
+      const mobile = mobileSlice + this.state.userMobile;
       this.props.getRegisterNewUser(mobile, this.state.userEmail);
     }
   };
@@ -230,7 +234,9 @@ export default class Auth extends React.Component {
       otpLoading: true
     });
 
-    const mobile = this.state.userMobileCode + this.state.userMobile;
+    const mobileString = this.state.userMobileCode.toString();
+    const mobileSlice = mobileString.slice(1);
+    const mobile = mobileSlice + this.state.userMobile;
     this.props.postVerifyOtp(mobile, this.state.userOtp);
   };
 
