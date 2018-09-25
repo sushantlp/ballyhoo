@@ -5,9 +5,6 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "./static/css/root.css";
 
-// Containers
-// import Header from "./containers/headerContainer";
-// import Footer from "./containers/footerContainer";
 import Background from "./containers/initialContainer";
 import Facebook from "./containers/facebookContainer";
 import Offerning from "./containers/offerContainer";
@@ -23,7 +20,6 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <BrowserRouter>
       <div>
-        {/* <Header /> */}
         <Switch>
           <Route exact path="/web" component={Background} />
           <Route exact path="/web/terms" component={Terms} />
@@ -56,7 +52,6 @@ const Root = ({ store }) => (
           />
           <Redirect from="/" to="/web" />
         </Switch>
-        {/* <Footer /> */}
       </div>
     </BrowserRouter>
   </Provider>

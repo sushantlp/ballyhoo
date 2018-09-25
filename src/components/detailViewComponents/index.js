@@ -18,7 +18,8 @@ export default class DetailView extends React.Component {
     super(props);
     this.state = {
       apiCall: false,
-      which: undefined
+      which: undefined,
+      bookingDateSlection: undefined
     };
   }
 
@@ -50,6 +51,13 @@ export default class DetailView extends React.Component {
       });
     }
   }
+
+  // Update Booking Date
+  updateBookingDate = date => {
+    this.setState({
+      bookingDateSlection: date
+    });
+  };
 
   render() {
     return (
@@ -86,6 +94,7 @@ export default class DetailView extends React.Component {
                     authentication={this.props.authentication}
                     registerSuccess={this.props.registerSuccess}
                     registerFailure={this.props.registerFailure}
+                    updateBookingDate={this.updateBookingDate}
                   />
                 </Sticky>
               </Grid.Column>

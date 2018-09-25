@@ -1,12 +1,12 @@
 import React from "react";
-import "react-dates/initialize";
+// import "react-dates/initialize";
 import moment from "moment-timezone";
 import _ from "lodash";
 
 import { DateInput } from "semantic-ui-calendar-react";
-import TimePicker from "react-times";
+// import TimePicker from "react-times";
 
-import { SingleDatePicker } from "react-dates";
+// import { SingleDatePicker } from "react-dates";
 
 import {
   Segment,
@@ -22,16 +22,17 @@ export default class Book extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: moment().tz("Asia/Kolkata"),
-      newDate: moment()
+      date: moment()
         .tz("Asia/Kolkata")
         .format("DD-MM-YYYY"),
+
       time: moment().format("HH:mm A"),
       focused: false,
       quantity: 1,
       bookingPrice: 0,
       initialPrice: 0
     };
+    this.props.updateBookingDate(this.state.date);
   }
 
   componentWillMount() {
@@ -83,6 +84,13 @@ export default class Book extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state !== nextState) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   componentWillReceiveProps(newProps) {
     if (this.props.detailState.which === "old") {
       if (newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.Type === "flat") {
@@ -169,11 +177,20 @@ export default class Book extends React.Component {
     this.setState({ time: time });
   }
 
-  // Dob Update
-  dobHandleChange = (event, data) => {
+  // // New Date Update
+  // newDateHandleChange = (event, data) => {
+  //   this.setState({
+  //     newDate: data.value
+  //   });
+  // };
+
+  // Old Date Update
+  oldDateHandleChange = (event, data) => {
     this.setState({
-      newDate: data.value
+      date: data.value
     });
+
+    this.props.updateBookingDate(data.value);
   };
 
   oldBookingComponent = (limit, calendar, currencySymbol, object) => {
@@ -250,7 +267,57 @@ export default class Book extends React.Component {
           />
         </div>
 
-        <div
+        <label
+          style={{
+            fontSize: "22px",
+            marginLeft: "24px",
+            color: "rgba(0,0,0,.6)",
+            display: calendar ? "inline" : "none"
+          }}
+        >
+          Date
+        </label>
+
+        <span
+          style={{
+            marginLeft: "50px",
+            display: calendar
+              ? object.Offering === "Event"
+                ? "none"
+                : "-webkit-inline-box"
+              : "none"
+          }}
+        >
+          <DateInput
+            name="userDob"
+            placeholder="Date"
+            value={this.state.date}
+            iconPosition="left"
+            onChange={this.oldDateHandleChange}
+          />
+        </span>
+
+        <span
+          style={{
+            marginLeft: "50px",
+            display: calendar
+              ? object.Offering === "Event"
+                ? "-webkit-inline-box"
+                : "none"
+              : "none"
+          }}
+        >
+          <DateInput
+            disabled={true}
+            name="userDob"
+            placeholder="Date"
+            value={object.EVENTS.event_date}
+            iconPosition="left"
+            onChange={this.oldDateHandleChange}
+          />
+        </span>
+
+        {/* <div
           style={{
             marginLeft: "24px",
             // marginRight: "24px",
@@ -305,7 +372,7 @@ export default class Book extends React.Component {
               disabled={true}
             />
           </span>
-        </div>
+        </div> */}
 
         {/* <br style={{ display: calendar ? "inline" : "none" }} />
         <br style={{ display: calendar ? "inline" : "none" }} /> */}
@@ -356,10 +423,10 @@ export default class Book extends React.Component {
           <DateInput
             name="userDob"
             placeholder="Date"
-            value={this.state.newDate}
+            value={this.state.date}
             iconPosition="left"
-            onChange={this.dobHandleChange}
-            minDate={this.state.newDate}
+            onChange={this.oldDateHandleChange}
+            minDate={this.state.date}
             maxDate={endDate}
           />
         </span>
@@ -373,9 +440,9 @@ export default class Book extends React.Component {
           <DateInput
             name="userDob"
             placeholder="Date"
-            value={this.state.newDate}
+            value={this.state.date}
             iconPosition="left"
-            onChange={this.dobHandleChange}
+            onChange={this.oldDateHandleChange}
           />
         </span>
       </div>
