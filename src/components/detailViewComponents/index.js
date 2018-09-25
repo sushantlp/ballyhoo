@@ -60,11 +60,11 @@ export default class DetailView extends React.Component {
     });
   };
 
-  // updateBookingDetail = data => {
-  //   this.setState({
-  //     bookingDetail: data
-  //   });
-  // };
+  updateBookingDetail = data => {
+    this.setState({
+      bookingDetail: data
+    });
+  };
 
   render() {
     return (
@@ -88,7 +88,7 @@ export default class DetailView extends React.Component {
                   detailState={this.state}
                   newViewDetail={this.props.newViewDetail}
                   oldViewDetail={this.props.oldViewDetail}
-                  // updateBookingDetail={this.updateBookingDetail}
+                  updateBookingDetail={this.updateBookingDetail}
                 />
               </Grid.Column>
 

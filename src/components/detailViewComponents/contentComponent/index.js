@@ -58,6 +58,7 @@ export default class Content extends React.Component {
           detailState={this.props.detailState}
           newViewDetail={this.props.newViewDetail}
           oldViewDetail={this.props.oldViewDetail}
+          updateBookingDetail={this.props.updateBookingDetail}
         />
         <Menu
           history={this.props.history}

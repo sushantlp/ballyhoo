@@ -101,13 +101,12 @@ export default class Package extends React.Component {
   createBookingDetail = (bookingPriceListIndex, calculatePrice) => {
     console.log(bookingPriceListIndex);
     let obj = {};
+    let obj1 = {};
+    let obj2 = {};
+    let arr = [];
+    let arr1 = [];
 
     if (_.isEmpty(this.props.detailState.bookingDetail)) {
-      let obj1 = {};
-      let obj2 = {};
-      let arr = [];
-      let arr1 = [];
-
       obj.offer_id = this.state.priceList.offer_id;
       obj.offering_id = this.state.priceList.offering_id;
       obj.category_name = this.state.priceList.category_name;
@@ -129,7 +128,15 @@ export default class Package extends React.Component {
       arr1.push(obj1);
       obj.packageList = arr1;
     } else {
-      for (let i = 0; i <= obj.packageList.length; i++) {}
+      for (let i = 0; i <= obj.packageList.length; i++) {
+        if (this.state.priceList.Package_Id === obj.packageList[i].package_id) {
+        } else {
+          obj1.package_caption = this.state.priceList.Package_Caption;
+          obj1.package_id = this.state.priceList.Package_Id;
+
+          for (let i = 0; i <= obj.packageList.priceList.length; i++) {}
+        }
+      }
     }
   };
   packageModel = (currencySymbol, categoryName) => {
