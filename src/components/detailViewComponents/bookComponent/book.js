@@ -12,8 +12,7 @@ import {
   Segment,
   Button,
   Divider,
-  Icon,
-  Input
+  Icon
 } from "semantic-ui-react/dist/commonjs";
 
 import { REG_HEX, STORAGE } from "../../../constants.js";
@@ -23,6 +22,9 @@ export default class Book extends React.Component {
     super(props);
     this.state = {
       date: moment()
+        .tz("Asia/Kolkata")
+        .format("DD-MM-YYYY"),
+      minDate: moment()
         .tz("Asia/Kolkata")
         .format("DD-MM-YYYY"),
 
@@ -76,10 +78,10 @@ export default class Book extends React.Component {
           );
         }
       } else {
-        this.bookingDateState(
-          this.props.history.location.state.offerData.data.Offer_Basic_Details
-            .Offer_Min_Price
-        );
+        // this.bookingDateState(
+        //   this.props.history.location.state.offerData.data.Offer_Basic_Details
+        //     .Offer_Min_Price
+        // );
       }
     }
   }
@@ -176,13 +178,6 @@ export default class Book extends React.Component {
 
     this.setState({ time: time });
   }
-
-  // // New Date Update
-  // newDateHandleChange = (event, data) => {
-  //   this.setState({
-  //     newDate: data.value
-  //   });
-  // };
 
   // Old Date Update
   oldDateHandleChange = (event, data) => {
@@ -317,66 +312,6 @@ export default class Book extends React.Component {
           />
         </span>
 
-        {/* <div
-          style={{
-            marginLeft: "24px",
-            // marginRight: "24px",
-            display: calendar ? "inline" : "none"
-          }}
-        >
-          <label
-            style={{
-              fontSize: "22px",
-              color: "rgba(0,0,0,.6)",
-              display: calendar ? "inline" : "none"
-            }}
-          >
-            Date
-          </label>
-
-          <span
-            style={{
-              marginLeft: "60px",
-              marginRight: "60px",
-              display: calendar
-                ? object.Offering === "Event"
-                  ? "none"
-                  : "inline"
-                : "none"
-            }}
-          >
-            <SingleDatePicker
-              displayFormat="DD-MM-YYYY"
-              date={this.state.date}
-              onDateChange={date => this.setState({ date })}
-              focused={this.state.focused}
-              onFocusChange={({ focused }) => this.setState({ focused })}
-              id="date_input"
-            />
-          </span>
-
-          <span
-            style={{
-              marginLeft: "60px",
-
-              display: calendar
-                ? object.Offering === "Event"
-                  ? "inline"
-                  : "none"
-                : "none"
-            }}
-          >
-            <Input
-              placeholder="Date..."
-              value={object.EVENTS.event_date}
-              disabled={true}
-            />
-          </span>
-        </div> */}
-
-        {/* <br style={{ display: calendar ? "inline" : "none" }} />
-        <br style={{ display: calendar ? "inline" : "none" }} /> */}
-
         {/* <div style={{ display: calendar ? "inline" : "none" }}>
           <TimePicker
             time={this.state.time}
@@ -426,7 +361,7 @@ export default class Book extends React.Component {
             value={this.state.date}
             iconPosition="left"
             onChange={this.oldDateHandleChange}
-            minDate={this.state.date}
+            minDate={this.state.minDate}
             maxDate={endDate}
           />
         </span>
@@ -659,7 +594,14 @@ export default class Book extends React.Component {
             You won’t be charged yet
           </p>
 
-          <Divider />
+          <Divider
+            style={{
+              display:
+                this.props.detailState.bookingDetail.length > 0
+                  ? "intial"
+                  : "none"
+            }}
+          />
         </Segment>
       </div>
     );

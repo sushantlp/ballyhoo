@@ -22,18 +22,46 @@ export default class Package extends React.Component {
     };
   }
 
-  show = (list, offerId, categoryName) => {
-    const newList = this.addQuantiyParam(list, offerId, categoryName);
-
+  show = (
+    list,
+    offerId,
+    categoryName,
+    offeringName,
+    categoryId,
+    offeringId,
+    merchantMobile
+  ) => {
+    const newList = this.addQuantiyParam(
+      list,
+      offerId,
+      categoryName,
+      offeringName,
+      categoryId,
+      offeringId,
+      merchantMobile
+    );
+    console.log(newList);
     this.setState({
       open: true,
       priceList: newList
     });
   };
 
-  addQuantiyParam = (list, offerId, categoryName) => {
-    list.offerId = offerId;
-    list.category_Name = categoryName;
+  addQuantiyParam = (
+    list,
+    offerId,
+    categoryName,
+    offeringName,
+    categoryId,
+    offeringId,
+    merchantMobile
+  ) => {
+    list.offer_id = offerId;
+    list.category_name = categoryName;
+    list.offering_name = offeringName;
+    list.category_id = categoryId;
+    list.offering_id = offeringId;
+    list.merchant_mobile = merchantMobile;
     list.Package_Price_List.map((obj, key) => {
       obj.quantity = 0;
     });
@@ -43,12 +71,17 @@ export default class Package extends React.Component {
 
   close = () => this.setState({ open: false });
 
-  intitalizeQuantity = (index, flag) => {
+  intitalizeQuantity = (index, flag, bookingPriceListIndex, calculatePrice) => {
     this.state.priceList.Package_Price_List.map((price, key) => {
       if (key === index) {
         if (flag) {
-          this.state.priceList.Package_Price_List[index].quantity =
-            this.state.priceList.Package_Price_List[index].quantity + 1;
+          if (
+            this.state.priceList.Package_Price_List[index].quantity <
+            this.state.priceList.Package_Price_List[index].Available
+          ) {
+            this.state.priceList.Package_Price_List[index].quantity =
+              this.state.priceList.Package_Price_List[index].quantity + 1;
+          }
         } else {
           if (this.state.priceList.Package_Price_List[index].quantity >= 0) {
             this.state.priceList.Package_Price_List[index].quantity =
@@ -61,9 +94,45 @@ export default class Package extends React.Component {
         });
       }
     });
+
+    this.createBookingDetail(bookingPriceListIndex, calculatePrice);
   };
 
-  packageModel = currencySymbol => {
+  createBookingDetail = (bookingPriceListIndex, calculatePrice) => {
+    console.log(bookingPriceListIndex);
+    let obj = {};
+
+    if (_.isEmpty(this.props.detailState.bookingDetail)) {
+      let obj1 = {};
+      let obj2 = {};
+      let arr = [];
+      let arr1 = [];
+
+      obj.offer_id = this.state.priceList.offer_id;
+      obj.offering_id = this.state.priceList.offering_id;
+      obj.category_name = this.state.priceList.category_name;
+      obj.offering_name = this.state.priceList.offering_name;
+      obj.merchant_mobile = this.state.priceList.merchant_mobile;
+      obj.category_id = this.state.priceList.category_id;
+
+      obj1.package_caption = this.state.priceList.Package_Caption;
+      obj1.package_id = this.state.priceList.Package_Id;
+
+      obj2.price = calculatePrice;
+      obj2.quantity = bookingPriceListIndex.quantity;
+      obj2.price_id = bookingPriceListIndex.Price_Id;
+      obj2.price_caption = bookingPriceListIndex.Price_Caption;
+
+      arr.push(obj2);
+      obj1.priceList = arr;
+
+      arr1.push(obj1);
+      obj.packageList = arr1;
+    } else {
+      for (let i = 0; i <= obj.packageList.length; i++) {}
+    }
+  };
+  packageModel = (currencySymbol, categoryName) => {
     const hex = currencySymbol.replace(REG_HEX, "$1");
     const dec = parseInt(hex, 16);
     const currency = String.fromCharCode(dec);
@@ -84,10 +153,48 @@ export default class Package extends React.Component {
             <Modal.Description>
               {this.state.priceList.Package_Price_List.map((priceList, key) => {
                 let discountPrice = undefined;
+                let price = 0;
+                if (categoryName !== "ACTIVITIES") {
+                  if (priceList.Discount !== 0) {
+                    discountPrice =
+                      (priceList.Price * priceList.Discount) / 100;
+                    discountPrice = _.round(priceList.Price - discountPrice);
+                  }
 
-                if (priceList.Discount !== 0) {
-                  discountPrice = (priceList.Price * priceList.Discount) / 100;
-                  discountPrice = _.round(priceList.Price - discountPrice);
+                  price = priceList.Price;
+                } else {
+                  const date = moment(
+                    this.props.detailState.bookingDateSlection,
+                    "DD-MM-YYYY"
+                  );
+                  let day = date.day();
+                  if (day === 1) {
+                    day = "Mon";
+                  } else if (day === 2) {
+                    day = "Tue";
+                  } else if (day === 3) {
+                    day = "Wed";
+                  } else if (day === 4) {
+                    day = "Thu";
+                  } else if (day === 5) {
+                    day = "Fri";
+                  } else if (day === 6) {
+                    day = "Sat";
+                  } else {
+                    day = "Sun";
+                  }
+
+                  for (let i = 0; i <= priceList.Daily_Price.length; i++) {
+                    if (day === priceList.Daily_Price[i].Day) {
+                      price = priceList.Daily_Price[i].Price;
+                      break;
+                    }
+                  }
+
+                  if (priceList.Discount !== 0) {
+                    discountPrice = (price * priceList.Discount) / 100;
+                    discountPrice = _.round(price - discountPrice);
+                  }
                 }
 
                 if (priceList.quantity !== 0) {
@@ -104,7 +211,9 @@ export default class Package extends React.Component {
                         float: "right",
                         display: priceList.quantity !== 0 ? "none" : "inline"
                       }}
-                      onClick={() => this.intitalizeQuantity(key, true)}
+                      onClick={() =>
+                        this.intitalizeQuantity(key, true, priceList, price)
+                      }
                     >
                       ADD
                     </Button>
@@ -116,34 +225,42 @@ export default class Package extends React.Component {
                       }}
                     >
                       <Icon
-                        disabled
+                        disabled={priceList.quantity === 1 ? true : false}
                         name="minus circle"
                         style={{
                           color: "rgb(43, 0, 119)",
                           fontSize: "20px",
                           display: priceList.quantity !== 0 ? "inline" : "none"
                         }}
-                        onClick={() => this.intitalizeQuantity(key, false)}
+                        onClick={() =>
+                          this.intitalizeQuantity(key, false, priceList, price)
+                        }
                       />
                       <label
                         style={{
                           fontSize: "18px",
                           paddingLeft: "5px",
-                          paddingRight: "5px",
+                          paddingRight: "7px",
                           display: priceList.quantity !== 0 ? "inline" : "none"
                         }}
                       >
                         {priceList.quantity}
                       </label>
                       <Icon
-                        disabled
+                        disabled={
+                          priceList.quantity < priceList.Available
+                            ? false
+                            : true
+                        }
                         name="plus circle"
                         style={{
                           color: "rgb(43, 0, 119)",
                           fontSize: "20px",
                           display: priceList.quantity !== 0 ? "inline" : "none"
                         }}
-                        onClick={() => this.intitalizeQuantity(key, true)}
+                        onClick={() =>
+                          this.intitalizeQuantity(key, true, priceList, price)
+                        }
                       />
                     </span>
 
@@ -174,7 +291,7 @@ export default class Package extends React.Component {
                           discountPrice !== undefined ? "line-through" : "none"
                       }}
                     >
-                      {priceList.Price}
+                      {price}
                     </label>
 
                     <span
@@ -224,7 +341,7 @@ export default class Package extends React.Component {
             </Modal.Description>
           </Modal.Content>
           <Modal.Actions>
-            <label
+            {/* <label
               style={{
                 fontSize: "23px",
                 marginRight: "80px"
@@ -239,7 +356,7 @@ export default class Package extends React.Component {
               >
                 {currency}0
               </span>
-            </label>
+            </label> */}
             <Button
               style={{
                 backgroundColor: "rgb(255, 90, 95)",
@@ -261,7 +378,16 @@ export default class Package extends React.Component {
     );
   };
 
-  packageComponent = (offer, key, offerId, categoryName) => {
+  packageComponent = (
+    offer,
+    key,
+    offerId,
+    categoryName,
+    offeringName,
+    categoryId,
+    offeringId,
+    merchantMobile
+  ) => {
     return (
       <Segment key={key}>
         <Button
@@ -271,7 +397,17 @@ export default class Package extends React.Component {
             backgroundColor: "rgb(122, 82, 192)",
             color: "white"
           }}
-          onClick={() => this.show(offer, offerId, categoryName)}
+          onClick={() =>
+            this.show(
+              offer,
+              offerId,
+              categoryName,
+              offeringName,
+              categoryId,
+              offeringId,
+              merchantMobile
+            )
+          }
         >
           Book
         </Button>
@@ -314,7 +450,17 @@ export default class Package extends React.Component {
     );
   };
 
-  eventPackageComponent = (inside, packages, key, offerId, categoryName) => {
+  eventPackageComponent = (
+    inside,
+    packages,
+    key,
+    offerId,
+    categoryName,
+    offeringName,
+    categoryId,
+    offeringId,
+    merchantMobile
+  ) => {
     return (
       <Segment key={key}>
         <Button
@@ -324,7 +470,17 @@ export default class Package extends React.Component {
             backgroundColor: "rgb(122, 82, 192)",
             color: "white"
           }}
-          onClick={() => this.show(inside, offerId, categoryName)}
+          onClick={() =>
+            this.show(
+              inside,
+              offerId,
+              categoryName,
+              offeringName,
+              categoryId,
+              offeringId,
+              merchantMobile
+            )
+          }
         >
           Book
         </Button>
@@ -365,14 +521,26 @@ export default class Package extends React.Component {
     });
   };
 
-  clickEventDate = (packages, offerId, categoryName) => {
+  clickEventDate = (
+    packages,
+    offerId,
+    categoryName,
+    offeringName,
+    categoryId,
+    offeringId,
+    merchantMobile
+  ) => {
     return packages.Offer_Package_List.map((inside, key) => {
       return this.eventPackageComponent(
         inside,
         packages,
         key,
         offerId,
-        categoryName
+        categoryName,
+        offeringName,
+        categoryId,
+        offeringId,
+        merchantMobile
       );
     });
   };
@@ -432,7 +600,16 @@ export default class Package extends React.Component {
     return stringWeek;
   };
 
-  logicPackage = (offers, status, offerId, categoryName) => {
+  logicPackage = (
+    offers,
+    status,
+    offerId,
+    categoryName,
+    offeringName,
+    categoryId,
+    offeringId,
+    merchantMobile
+  ) => {
     if (status) {
       return offers.map((outside, key) => {
         // Variable
@@ -485,7 +662,16 @@ export default class Package extends React.Component {
       });
     } else {
       return offers.map((offer, key) => {
-        return this.packageComponent(offer, key, offerId, categoryName);
+        return this.packageComponent(
+          offer,
+          key,
+          offerId,
+          categoryName,
+          offeringName,
+          categoryId,
+          offeringId,
+          merchantMobile
+        );
       });
     }
   };
@@ -497,7 +683,10 @@ export default class Package extends React.Component {
     let currencySymbol = undefined;
     let offerId = undefined;
     let categoryName = undefined;
-    let offerningName = undefined;
+    let offeringName = undefined;
+    let merchantMobile = undefined;
+    let categoryId = undefined;
+    let offeringId = undefined;
 
     if (this.props.detailState.apiCall) {
       if (this.props.detailState.which === "new") {
@@ -524,7 +713,14 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.newViewDetail.newViewDetail.offers
             .Offer_Basic_Details.Category_Name;
-          offerningName = "ACTIVITY";
+          offeringName = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offering_Name;
+          categoryId = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Category_Id;
+          offeringId = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offering_Id;
+          merchantMobile = this.props.newViewDetail.newViewDetail.offers
+            .Merchant_Details.Merchant_Mobile;
         } else if (
           Object.keys(this.props.newViewDetail.newViewDetail.offers.EVENT)
             .length !== 0
@@ -537,7 +733,14 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.newViewDetail.newViewDetail.offers
             .Offer_Basic_Details.Category_Name;
-          offerningName = "EVENT";
+          offeringName = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offering_Name;
+          categoryId = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Category_Id;
+          offeringId = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offering_Id;
+          merchantMobile = this.props.newViewDetail.newViewDetail.offers
+            .Merchant_Details.Merchant_Mobile;
         } else if (
           Object.keys(this.props.newViewDetail.newViewDetail.offers.GETAWAY)
             .length !== 0
@@ -550,7 +753,14 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.newViewDetail.newViewDetail.offers
             .Offer_Basic_Details.Category_Name;
-          offerningName = "GETAWAY";
+          offeringName = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offering_Name;
+          categoryId = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Category_Id;
+          offeringId = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offering_Id;
+          merchantMobile = this.props.newViewDetail.newViewDetail.offers
+            .Merchant_Details.Merchant_Mobile;
         } else if (
           Object.keys(this.props.newViewDetail.newViewDetail.offers.SALOON)
             .length !== 0
@@ -563,7 +773,14 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.newViewDetail.newViewDetail.offers
             .Offer_Basic_Details.Category_Name;
-          offerningName = "SALOON";
+          offeringName = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offering_Name;
+          categoryId = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Category_Id;
+          offeringId = this.props.newViewDetail.newViewDetail.offers
+            .Offer_Basic_Details.Offering_Id;
+          merchantMobile = this.props.newViewDetail.newViewDetail.offers
+            .Merchant_Details.Merchant_Mobile;
         } else {
           return <div />;
         }
@@ -586,7 +803,15 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.history.location.state.offerData.data
             .Offer_Basic_Details.Category_Name;
-          offerningName = "ACTIVITY";
+
+          offeringName = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Offering_Name;
+          categoryId = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Category_Id;
+          offeringId = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Offering_Id;
+          merchantMobile = this.props.history.location.state.offerData.data
+            .Merchant_Details.Merchant_Mobile;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.EVENT)
             .length !== 0
@@ -600,7 +825,15 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.history.location.state.offerData.data
             .Offer_Basic_Details.Category_Name;
-          offerningName = "EVENT";
+
+          offeringName = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Offering_Name;
+          categoryId = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Category_Id;
+          offeringId = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Offering_Id;
+          merchantMobile = this.props.history.location.state.offerData.data
+            .Merchant_Details.Merchant_Mobile;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.GETAWAY)
             .length !== 0
@@ -613,7 +846,15 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offer_Id;
           categoryName = this.props.history.location.state.offerData.data
             .Offer_Basic_Details.Category_Name;
-          offerningName = "GETAWAY";
+
+          offeringName = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Offering_Name;
+          categoryId = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Category_Id;
+          offeringId = this.props.history.location.state.offerData.data
+            .Offer_Basic_Details.Offering_Id;
+          merchantMobile = this.props.history.location.state.offerData.data
+            .Merchant_Details.Merchant_Mobile;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.SALOON)
             .length !== 0
@@ -630,7 +871,15 @@ export default class Package extends React.Component {
               .Offer_Basic_Details.Offer_Id;
             categoryName = this.props.history.location.state.offerData.data
               .Offer_Basic_Details.Category_Name;
-            offerningName = "SALOON";
+
+            offeringName = this.props.history.location.state.offerData.data
+              .Offer_Basic_Details.Offering_Name;
+            categoryId = this.props.history.location.state.offerData.data
+              .Offer_Basic_Details.Category_Id;
+            offeringId = this.props.history.location.state.offerData.data
+              .Offer_Basic_Details.Offering_Id;
+            merchantMobile = this.props.history.location.state.offerData.data
+              .Merchant_Details.Merchant_Mobile;
           } else {
             return <div />;
           }
@@ -652,11 +901,28 @@ export default class Package extends React.Component {
         </div>
 
         <Segment>
-          {this.logicPackage(offer, status, offerId, categoryName)}
+          {this.logicPackage(
+            offer,
+            status,
+            offerId,
+            categoryName,
+            offeringName,
+            categoryId,
+            offeringId,
+            merchantMobile
+          )}
           {door
-            ? this.clickEventDate(packageList, offerId, categoryName)
+            ? this.clickEventDate(
+                packageList,
+                offerId,
+                categoryName,
+                offeringName,
+                categoryId,
+                offeringId,
+                merchantMobile
+              )
             : null}
-          {open ? this.packageModel(currencySymbol) : null}
+          {open ? this.packageModel(currencySymbol, categoryName) : null}
         </Segment>
       </div>
     );

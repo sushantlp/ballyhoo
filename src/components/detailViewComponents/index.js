@@ -19,7 +19,8 @@ export default class DetailView extends React.Component {
     this.state = {
       apiCall: false,
       which: undefined,
-      bookingDateSlection: undefined
+      bookingDateSlection: undefined,
+      bookingDetail: []
     };
   }
 
@@ -59,6 +60,12 @@ export default class DetailView extends React.Component {
     });
   };
 
+  // updateBookingDetail = data => {
+  //   this.setState({
+  //     bookingDetail: data
+  //   });
+  // };
+
   render() {
     return (
       <div>
@@ -81,11 +88,12 @@ export default class DetailView extends React.Component {
                   detailState={this.state}
                   newViewDetail={this.props.newViewDetail}
                   oldViewDetail={this.props.oldViewDetail}
+                  // updateBookingDetail={this.updateBookingDetail}
                 />
               </Grid.Column>
 
               <Grid.Column width={2}>
-                <Sticky enabled={true} top={50} bottomBoundary={2100}>
+                <Sticky enabled={true} top={50} bottomBoundary={1700}>
                   <Book
                     history={this.props.history}
                     detailState={this.state}
