@@ -40,7 +40,7 @@ export default class Package extends React.Component {
       offeringId,
       merchantMobile
     );
-    console.log(newList);
+    // console.log(newList);
     this.setState({
       open: true,
       priceList: newList
@@ -100,11 +100,14 @@ export default class Package extends React.Component {
 
   createBookingDetail = (bookingPriceListIndex, calculatePrice) => {
     console.log(bookingPriceListIndex);
+    console.log("Hello");
+    console.log(this.props.detailState.bookingDetail);
     let obj = {};
     let obj1 = {};
     let obj2 = {};
     let arr = [];
     let arr1 = [];
+    let copyBookingDetail = this.props.detailState.bookingDetail;
 
     if (_.isEmpty(this.props.detailState.bookingDetail)) {
       obj.offer_id = this.state.priceList.offer_id;
@@ -128,15 +131,76 @@ export default class Package extends React.Component {
       arr1.push(obj1);
       obj.packageList = arr1;
     } else {
-      for (let i = 0; i <= obj.packageList.length; i++) {
-        if (this.state.priceList.Package_Id === obj.packageList[i].package_id) {
+      for (let i = 0; i < copyBookingDetail.packageList.length; i++) {
+        let find = false;
+
+        for (let l = 0; l < copyBookingDetail.packageList.length; l++) {
+          if (
+            copyBookingDetail.packageList[l].package_id ===
+            this.state.priceList.Package_Id
+          ) {
+            find = true;
+          }
+        }
+
+        if (find) {
+          for (
+            let j = 0;
+            j < copyBookingDetail.packageList[i].priceList.length;
+            j++
+          ) {
+            if (
+              copyBookingDetail.packageList[i].priceList[j].price_id !==
+              bookingPriceListIndex.Price_Id
+            ) {
+              obj2.price = calculatePrice;
+              obj2.quantity = bookingPriceListIndex.quantity;
+              obj2.price_id = bookingPriceListIndex.Price_Id;
+              obj2.price_caption = bookingPriceListIndex.Price_Caption;
+
+              copyBookingDetail.packageList[i].priceList[j].push(obj2);
+            } else {
+              if (
+                bookingPriceListIndex.quantity !==
+                copyBookingDetail.packageList[i].priceList[j].quantity
+              ) {
+                copyBookingDetail.packageList[i].priceList[j].quantity =
+                  bookingPriceListIndex.quantity;
+              }
+            }
+          }
         } else {
           obj1.package_caption = this.state.priceList.Package_Caption;
           obj1.package_id = this.state.priceList.Package_Id;
 
-          for (let i = 0; i <= obj.packageList.priceList.length; i++) {}
+          for (
+            let j = 0;
+            j < copyBookingDetail.packageList[i].priceList.length;
+            j++
+          ) {
+            if (
+              copyBookingDetail.packageList[i].priceList[j].price_id !==
+              bookingPriceListIndex.Price_Id
+            ) {
+              obj2.price = calculatePrice;
+              obj2.quantity = bookingPriceListIndex.quantity;
+              obj2.price_id = bookingPriceListIndex.Price_Id;
+              obj2.price_caption = bookingPriceListIndex.Price_Caption;
+
+              arr.push(obj2);
+            }
+          }
+
+          obj1.priceList = arr;
+          copyBookingDetail.packageList.push(obj1);
         }
       }
+    }
+
+    if (_.isEmpty(obj)) {
+      this.props.updateBookingDetail(copyBookingDetail);
+    } else {
+      this.props.updateBookingDetail(obj);
     }
   };
   packageModel = (currencySymbol, categoryName) => {
