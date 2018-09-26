@@ -40,7 +40,7 @@ export default class Package extends React.Component {
       offeringId,
       merchantMobile
     );
-    // console.log(newList);
+
     this.setState({
       open: true,
       priceList: newList
@@ -81,11 +81,15 @@ export default class Package extends React.Component {
           ) {
             this.state.priceList.Package_Price_List[index].quantity =
               this.state.priceList.Package_Price_List[index].quantity + 1;
+
+            this.addBookingDetail(bookingPriceListIndex, calculatePrice);
           }
         } else {
           if (this.state.priceList.Package_Price_List[index].quantity >= 0) {
             this.state.priceList.Package_Price_List[index].quantity =
               this.state.priceList.Package_Price_List[index].quantity - 1;
+
+            this.minusBookingDetail(bookingPriceListIndex, calculatePrice);
           }
         }
 
@@ -94,14 +98,38 @@ export default class Package extends React.Component {
         });
       }
     });
-
-    this.createBookingDetail(bookingPriceListIndex, calculatePrice);
   };
 
-  createBookingDetail = (bookingPriceListIndex, calculatePrice) => {
-    console.log(bookingPriceListIndex);
-    console.log("Hello");
-    console.log(this.props.detailState.bookingDetail);
+  minusBookingDetail = (bookingPriceListIndex, calculatePrice) => {
+    let copyBookingDetail = this.props.detailState.bookingDetail;
+
+    for (let i = 0; i < copyBookingDetail.packageList.length; i++) {
+      for (
+        let j = 0;
+        j < copyBookingDetail.packageList[i].priceList.length;
+        j++
+      ) {
+        if (
+          copyBookingDetail.packageList[i].priceList[j].price_id ===
+          bookingPriceListIndex.Price_Id
+        ) {
+          if (bookingPriceListIndex.quantity === 0) {
+            copyBookingDetail.packageList[i].priceList.splice(j, 1);
+
+            // if (copyBookingDetail.packageList[i].priceList.length === 0) {
+            //   copyBookingDetail.packageList.splice(i, 1);
+            // }
+          } else {
+            copyBookingDetail.packageList[i].priceList[j].quantity =
+              bookingPriceListIndex.quantity;
+          }
+        }
+      }
+    }
+
+    this.props.updateBookingDetail(copyBookingDetail);
+  };
+  addBookingDetail = (bookingPriceListIndex, calculatePrice) => {
     let obj = {};
     let obj1 = {};
     let obj2 = {};
@@ -134,6 +162,7 @@ export default class Package extends React.Component {
       for (let i = 0; i < copyBookingDetail.packageList.length; i++) {
         let find = false;
 
+        // Checking
         for (let l = 0; l < copyBookingDetail.packageList.length; l++) {
           if (
             copyBookingDetail.packageList[l].package_id ===
@@ -149,16 +178,34 @@ export default class Package extends React.Component {
             j < copyBookingDetail.packageList[i].priceList.length;
             j++
           ) {
-            if (
-              copyBookingDetail.packageList[i].priceList[j].price_id !==
-              bookingPriceListIndex.Price_Id
-            ) {
-              obj2.price = calculatePrice;
-              obj2.quantity = bookingPriceListIndex.quantity;
-              obj2.price_id = bookingPriceListIndex.Price_Id;
-              obj2.price_caption = bookingPriceListIndex.Price_Caption;
+            let childFind = true;
 
-              copyBookingDetail.packageList[i].priceList[j].push(obj2);
+            // Checking
+            for (
+              let k = 0;
+              k < copyBookingDetail.packageList[i].priceList.length;
+              k++
+            ) {
+              if (
+                copyBookingDetail.packageList[i].priceList[k].price_id ===
+                bookingPriceListIndex.Price_Id
+              ) {
+                childFind = false;
+              }
+            }
+
+            if (childFind) {
+              if (
+                this.state.priceList.Package_Id ===
+                copyBookingDetail.packageList[i].Package_Id
+              ) {
+                obj2.price = calculatePrice;
+                obj2.quantity = bookingPriceListIndex.quantity;
+                obj2.price_id = bookingPriceListIndex.Price_Id;
+                obj2.price_caption = bookingPriceListIndex.Price_Caption;
+
+                copyBookingDetail.packageList[i].priceList.push(obj2);
+              }
             } else {
               if (
                 bookingPriceListIndex.quantity !==
@@ -173,23 +220,24 @@ export default class Package extends React.Component {
           obj1.package_caption = this.state.priceList.Package_Caption;
           obj1.package_id = this.state.priceList.Package_Id;
 
-          for (
-            let j = 0;
-            j < copyBookingDetail.packageList[i].priceList.length;
-            j++
-          ) {
-            if (
-              copyBookingDetail.packageList[i].priceList[j].price_id !==
-              bookingPriceListIndex.Price_Id
-            ) {
-              obj2.price = calculatePrice;
-              obj2.quantity = bookingPriceListIndex.quantity;
-              obj2.price_id = bookingPriceListIndex.Price_Id;
-              obj2.price_caption = bookingPriceListIndex.Price_Caption;
+          console.log("Hello2");
+          // for (
+          //   let j = 0;
+          //   j < copyBookingDetail.packageList[i].priceList.length;
+          //   j++
+          // ) {
+          //   if (
+          //     copyBookingDetail.packageList[i].priceList[j].price_id !==
+          //     bookingPriceListIndex.Price_Id
+          //   ) {
+          obj2.price = calculatePrice;
+          obj2.quantity = bookingPriceListIndex.quantity;
+          obj2.price_id = bookingPriceListIndex.Price_Id;
+          obj2.price_caption = bookingPriceListIndex.Price_Caption;
 
-              arr.push(obj2);
-            }
-          }
+          arr.push(obj2);
+          //   }
+          // }
 
           obj1.priceList = arr;
           copyBookingDetail.packageList.push(obj1);
