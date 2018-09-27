@@ -247,17 +247,31 @@ export default class Package extends React.Component {
               }
             } else {
               if (
-                bookingPriceListIndex.quantity !==
-                copyBookingDetail.packageList[i].priceList[j].quantity
+                bookingPriceListIndex.Price_Id ===
+                copyBookingDetail.packageList[i].priceList[j].price_id
               ) {
-                copyBookingDetail.packageList[i].priceList[j].quantity =
-                  bookingPriceListIndex.quantity;
+                if (
+                  bookingPriceListIndex.quantity !==
+                  copyBookingDetail.packageList[i].priceList[j].quantity
+                ) {
+                  copyBookingDetail.packageList[i].priceList[j].quantity =
+                    bookingPriceListIndex.quantity;
+                }
               }
             }
           }
         } else {
           obj1.package_caption = this.state.priceList.Package_Caption;
           obj1.package_id = this.state.priceList.Package_Id;
+
+          obj2.price = calculatePrice;
+          obj2.quantity = bookingPriceListIndex.quantity;
+          obj2.price_id = bookingPriceListIndex.Price_Id;
+          obj2.price_caption = bookingPriceListIndex.Price_Caption;
+
+          arr.push(obj2);
+          obj1.priceList = arr;
+          copyBookingDetail.packageList.push(obj1);
 
           // for (
           //   let j = 0;
@@ -268,17 +282,9 @@ export default class Package extends React.Component {
           //     copyBookingDetail.packageList[i].priceList[j].price_id !==
           //     bookingPriceListIndex.Price_Id
           //   ) {
-          obj2.price = calculatePrice;
-          obj2.quantity = bookingPriceListIndex.quantity;
-          obj2.price_id = bookingPriceListIndex.Price_Id;
-          obj2.price_caption = bookingPriceListIndex.Price_Caption;
 
-          arr.push(obj2);
           //   }
           // }
-
-          obj1.priceList = arr;
-          copyBookingDetail.packageList.push(obj1);
         }
       }
     }
