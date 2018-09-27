@@ -60,6 +60,7 @@ export default class DetailView extends React.Component {
     });
   };
 
+  // update Booking Detail
   updateBookingDetail = data => {
     this.setState({
       bookingDetail: data
@@ -103,6 +104,7 @@ export default class DetailView extends React.Component {
                     registerSuccess={this.props.registerSuccess}
                     registerFailure={this.props.registerFailure}
                     updateBookingDate={this.updateBookingDate}
+                    updateBookingDetail={this.updateBookingDetail}
                   />
                 </Sticky>
               </Grid.Column>

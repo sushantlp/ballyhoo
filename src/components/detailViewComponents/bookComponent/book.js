@@ -87,7 +87,7 @@ export default class Book extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state !== nextState) {
+    if (this.state !== nextState || this.props !== nextProps) {
       return true;
     } else {
       return false;
@@ -549,10 +549,9 @@ export default class Book extends React.Component {
         }
 
         status = true;
-        console.log(obj);
       }
     }
-
+    console.log(this.props.detailState.bookingDetail);
     const dec = parseInt(hex, 16);
 
     return (
@@ -568,6 +567,13 @@ export default class Book extends React.Component {
           )}
 
           <Button
+            disabled={
+              status
+                ? Object.keys(this.props.detailState.bookingDetail).length > 0
+                  ? false
+                  : true
+                : false
+            }
             style={{
               backgroundColor: "#FF5A5F",
               color: "white",

@@ -56,6 +56,8 @@ export default class Package extends React.Component {
     offeringId,
     merchantMobile
   ) => {
+    const copyBookingDetail = this.props.detailState.bookingDetail;
+
     list.offer_id = offerId;
     list.category_name = categoryName;
     list.offering_name = offeringName;
@@ -63,7 +65,40 @@ export default class Package extends React.Component {
     list.offering_id = offeringId;
     list.merchant_mobile = merchantMobile;
     list.Package_Price_List.map((obj, key) => {
-      obj.quantity = 0;
+      if (copyBookingDetail.hasOwnProperty("packageList")) {
+        if (copyBookingDetail.packageList.length > 0) {
+          let find = false;
+          let quantity = 0;
+          for (let i = 0; i < copyBookingDetail.packageList.length; i++) {
+            if (copyBookingDetail.packageList[i].priceList.length > 0) {
+              for (
+                let j = 0;
+                j < copyBookingDetail.packageList[i].priceList.length;
+                j++
+              ) {
+                if (
+                  obj.Price_Id ===
+                  copyBookingDetail.packageList[i].priceList[j].price_id
+                ) {
+                  quantity =
+                    copyBookingDetail.packageList[i].priceList[j].quantity;
+                  find = true;
+                }
+              }
+            }
+          }
+
+          if (find) {
+            obj.quantity = quantity;
+          } else {
+            obj.quantity = 0;
+          }
+        } else {
+          obj.quantity = 0;
+        }
+      } else {
+        obj.quantity = 0;
+      }
     });
 
     return list;
@@ -129,6 +164,7 @@ export default class Package extends React.Component {
 
     this.props.updateBookingDetail(copyBookingDetail);
   };
+
   addBookingDetail = (bookingPriceListIndex, calculatePrice) => {
     let obj = {};
     let obj1 = {};
@@ -197,11 +233,14 @@ export default class Package extends React.Component {
             if (childFind) {
               if (
                 this.state.priceList.Package_Id ===
-                copyBookingDetail.packageList[i].Package_Id
+                copyBookingDetail.packageList[i].package_id
               ) {
                 obj2.price = calculatePrice;
+
                 obj2.quantity = bookingPriceListIndex.quantity;
+
                 obj2.price_id = bookingPriceListIndex.Price_Id;
+
                 obj2.price_caption = bookingPriceListIndex.Price_Caption;
 
                 copyBookingDetail.packageList[i].priceList.push(obj2);
@@ -220,7 +259,6 @@ export default class Package extends React.Component {
           obj1.package_caption = this.state.priceList.Package_Caption;
           obj1.package_id = this.state.priceList.Package_Id;
 
-          console.log("Hello2");
           // for (
           //   let j = 0;
           //   j < copyBookingDetail.packageList[i].priceList.length;
@@ -488,8 +526,9 @@ export default class Package extends React.Component {
                 marginRight: "180px"
               }}
               disabled={proceed ? false : true}
+              onClick={this.close}
             >
-              Procced
+              Book
             </Button>
           </Modal.Actions>
         </Modal>
