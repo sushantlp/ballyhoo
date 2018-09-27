@@ -64,6 +64,7 @@ export default class Package extends React.Component {
     list.category_id = categoryId;
     list.offering_id = offeringId;
     list.merchant_mobile = merchantMobile;
+
     list.Package_Price_List.map((obj, key) => {
       if (copyBookingDetail.hasOwnProperty("packageList")) {
         if (copyBookingDetail.packageList.length > 0) {
@@ -106,7 +107,13 @@ export default class Package extends React.Component {
 
   close = () => this.setState({ open: false });
 
-  intitalizeQuantity = (index, flag, bookingPriceListIndex, calculatePrice) => {
+  intitalizeQuantity = (
+    index,
+    flag,
+    bookingPriceListIndex,
+    calculatePrice,
+    currency
+  ) => {
     this.state.priceList.Package_Price_List.map((price, key) => {
       if (key === index) {
         if (flag) {
@@ -117,7 +124,12 @@ export default class Package extends React.Component {
             this.state.priceList.Package_Price_List[index].quantity =
               this.state.priceList.Package_Price_List[index].quantity + 1;
 
-            this.addBookingDetail(bookingPriceListIndex, calculatePrice);
+            this.addBookingDetail(
+              bookingPriceListIndex,
+              calculatePrice,
+              currency,
+              this.state.priceList.Package_Price_List[index].Available
+            );
           }
         } else {
           if (this.state.priceList.Package_Price_List[index].quantity >= 0) {
@@ -165,7 +177,12 @@ export default class Package extends React.Component {
     this.props.updateBookingDetail(copyBookingDetail);
   };
 
-  addBookingDetail = (bookingPriceListIndex, calculatePrice) => {
+  addBookingDetail = (
+    bookingPriceListIndex,
+    calculatePrice,
+    currency,
+    available
+  ) => {
     let obj = {};
     let obj1 = {};
     let obj2 = {};
@@ -180,10 +197,13 @@ export default class Package extends React.Component {
       obj.offering_name = this.state.priceList.offering_name;
       obj.merchant_mobile = this.state.priceList.merchant_mobile;
       obj.category_id = this.state.priceList.category_id;
+      obj.currency_symbol = currency;
 
       obj1.package_caption = this.state.priceList.Package_Caption;
       obj1.package_id = this.state.priceList.Package_Id;
 
+      obj2.available = available;
+      obj2.totalAmount = 0;
       obj2.price = calculatePrice;
       obj2.quantity = bookingPriceListIndex.quantity;
       obj2.price_id = bookingPriceListIndex.Price_Id;
@@ -235,12 +255,11 @@ export default class Package extends React.Component {
                 this.state.priceList.Package_Id ===
                 copyBookingDetail.packageList[i].package_id
               ) {
+                obj2.totalAmount = 0;
+                obj2.available = available;
                 obj2.price = calculatePrice;
-
                 obj2.quantity = bookingPriceListIndex.quantity;
-
                 obj2.price_id = bookingPriceListIndex.Price_Id;
-
                 obj2.price_caption = bookingPriceListIndex.Price_Caption;
 
                 copyBookingDetail.packageList[i].priceList.push(obj2);
@@ -264,6 +283,8 @@ export default class Package extends React.Component {
           obj1.package_caption = this.state.priceList.Package_Caption;
           obj1.package_id = this.state.priceList.Package_Id;
 
+          obj2.totalAmount = 0;
+          obj2.available = available;
           obj2.price = calculatePrice;
           obj2.quantity = bookingPriceListIndex.quantity;
           obj2.price_id = bookingPriceListIndex.Price_Id;
@@ -375,7 +396,13 @@ export default class Package extends React.Component {
                         display: priceList.quantity !== 0 ? "none" : "inline"
                       }}
                       onClick={() =>
-                        this.intitalizeQuantity(key, true, priceList, price)
+                        this.intitalizeQuantity(
+                          key,
+                          true,
+                          priceList,
+                          price,
+                          currency
+                        )
                       }
                     >
                       ADD
@@ -393,10 +420,17 @@ export default class Package extends React.Component {
                         style={{
                           color: "rgb(43, 0, 119)",
                           fontSize: "20px",
-                          display: priceList.quantity !== 0 ? "inline" : "none"
+                          display: priceList.quantity !== 0 ? "inline" : "none",
+                          cursor: "pointer"
                         }}
                         onClick={() =>
-                          this.intitalizeQuantity(key, false, priceList, price)
+                          this.intitalizeQuantity(
+                            key,
+                            false,
+                            priceList,
+                            price,
+                            currency
+                          )
                         }
                       />
                       <label
@@ -419,10 +453,17 @@ export default class Package extends React.Component {
                         style={{
                           color: "rgb(43, 0, 119)",
                           fontSize: "20px",
-                          display: priceList.quantity !== 0 ? "inline" : "none"
+                          display: priceList.quantity !== 0 ? "inline" : "none",
+                          cursor: "pointer"
                         }}
                         onClick={() =>
-                          this.intitalizeQuantity(key, true, priceList, price)
+                          this.intitalizeQuantity(
+                            key,
+                            true,
+                            priceList,
+                            price,
+                            currency
+                          )
                         }
                       />
                     </span>
@@ -534,7 +575,7 @@ export default class Package extends React.Component {
               disabled={proceed ? false : true}
               onClick={this.close}
             >
-              Book
+              Proceed
             </Button>
           </Modal.Actions>
         </Modal>

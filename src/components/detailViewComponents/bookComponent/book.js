@@ -133,6 +133,37 @@ export default class Book extends React.Component {
     }
   }
 
+  intitalizeCartQuantity = (priceId, available, quantity, bool) => {
+    const copyBookingDetail = this.props.detailState.bookingDetail;
+
+    if (Object.keys(copyBookingDetail) > 0) {
+      for (let i = 0; i < copyBookingDetail.packageList.length; i++) {
+        for (let j = 0; j < copyBookingDetail.packageList[i].priceList; j++) {
+          if (
+            priceId === copyBookingDetail.packageList[i].priceList[j].price_id
+          ) {
+            if (bool) {
+              if (quantity < available) {
+                copyBookingDetail.packageList[i].priceList[j].quantity =
+                  copyBookingDetail.packageList[i].priceList[j].quantity + 1;
+              }
+            } else {
+              if (quantity === 1) {
+                copyBookingDetail.packageList[i].priceList.splice(j, 1);
+              } else {
+                copyBookingDetail.packageList[i].priceList[j].quantity =
+                  copyBookingDetail.packageList[i].priceList[j].quantity - 1;
+              }
+            }
+          }
+        }
+      }
+
+      console.log(copyBookingDetail);
+      this.props.updateBookingDetail(copyBookingDetail);
+    }
+  };
+
   intitalizeQuantity = (flag, limit) => {
     if (flag) {
       if (this.state.quantity <= limit) {
@@ -445,6 +476,142 @@ export default class Book extends React.Component {
     }
   };
 
+  cartItemDisplay = (packages, currencySymbol, key) => {
+    return (
+      <div key={key}>
+        <h3
+          style={{
+            fontWeight: "500",
+            color: "rgb(122, 82, 192)",
+            margin: "0px",
+            display: packages.priceList.length > 0 ? "inline" : "none"
+          }}
+        >
+          {packages.package_caption}
+        </h3>
+
+        {packages.priceList.map((price, key) => {
+          let totalAmount = 0;
+          if (price.quantity === 1) {
+            totalAmount = price.price;
+          } else {
+            totalAmount = price.quantity * price.price;
+          }
+          return (
+            <Segment key={key} style={{ marginBottom: "10px" }}>
+              <span
+                style={{
+                  display: "inline",
+                  float: "right"
+                }}
+              >
+                <Icon
+                  name="minus circle"
+                  style={{
+                    color: "rgb(43, 0, 119)",
+                    fontSize: "18px",
+                    display: "inline",
+                    cursor: "pointer"
+                  }}
+                  onClick={() =>
+                    this.intitalizeCartQuantity(
+                      price.price_id,
+                      price.available,
+                      price.quantity,
+                      false
+                    )
+                  }
+                />
+                <label
+                  style={{
+                    fontSize: "16px",
+                    paddingLeft: "5px",
+                    paddingRight: "7px",
+                    display: "inline"
+                  }}
+                >
+                  {price.quantity}
+                </label>
+                <Icon
+                  name="plus circle"
+                  style={{
+                    color: "rgb(43, 0, 119)",
+                    fontSize: "18px",
+                    display: "inline",
+                    cursor: "pointer"
+                  }}
+                  onClick={() =>
+                    this.intitalizeCartQuantity(
+                      price.price_id,
+                      price.available,
+                      price.quantity,
+                      true
+                    )
+                  }
+                />
+              </span>
+
+              <h4
+                style={{
+                  fontWeight: "500",
+                  color: "#ff695e",
+                  display: "inline",
+                  marginRight: "70px"
+                }}
+              >
+                {price.price_caption}
+              </h4>
+
+              <span
+                style={{
+                  color: "rgba(0,0,0,.6)",
+                  fontSize: "16px",
+                  fontWeight: "bold"
+                }}
+              >
+                {currencySymbol}
+              </span>
+
+              <label
+                style={{
+                  color: "rgba(0,0,0,.6)",
+                  fontSize: "16px",
+                  fontWeight: "bold"
+                }}
+              >
+                {totalAmount}
+              </label>
+              <div />
+              <span
+                style={{
+                  color: "rgba(0,0,0,.6)",
+                  fontSize: "11px"
+                }}
+              >
+                {currencySymbol}
+              </span>
+
+              <label
+                style={{
+                  color: "rgba(0,0,0,.6)",
+                  fontSize: "11px"
+                }}
+              >
+                {price.price} per head
+              </label>
+            </Segment>
+          );
+        })}
+      </div>
+    );
+  };
+
+  cartItemLogic = item => {
+    return item.packageList.map((packages, key) => {
+      return this.cartItemDisplay(packages, item.currency_symbol, key);
+    });
+  };
+
   render() {
     let obj = {};
     let hex = 0;
@@ -566,6 +733,28 @@ export default class Book extends React.Component {
             endDate
           )}
 
+          <Divider
+            style={{
+              display:
+                Object.keys(this.props.detailState.bookingDetail).length > 0
+                  ? "block"
+                  : "none"
+            }}
+          />
+
+          {Object.keys(this.props.detailState.bookingDetail).length > 0
+            ? this.cartItemLogic(this.props.detailState.bookingDetail)
+            : null}
+
+          <Divider
+            style={{
+              display:
+                Object.keys(this.props.detailState.bookingDetail).length > 0
+                  ? "block"
+                  : "none"
+            }}
+          />
+
           <Button
             disabled={
               status
@@ -599,15 +788,6 @@ export default class Book extends React.Component {
           >
             You won’t be charged yet
           </p>
-
-          <Divider
-            style={{
-              display:
-                this.props.detailState.bookingDetail.length > 0
-                  ? "intial"
-                  : "none"
-            }}
-          />
         </Segment>
       </div>
     );
