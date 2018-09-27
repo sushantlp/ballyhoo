@@ -136,32 +136,33 @@ export default class Book extends React.Component {
   intitalizeCartQuantity = (priceId, available, quantity, bool) => {
     const copyBookingDetail = this.props.detailState.bookingDetail;
 
-    if (Object.keys(copyBookingDetail) > 0) {
-      for (let i = 0; i < copyBookingDetail.packageList.length; i++) {
-        for (let j = 0; j < copyBookingDetail.packageList[i].priceList; j++) {
-          if (
-            priceId === copyBookingDetail.packageList[i].priceList[j].price_id
-          ) {
-            if (bool) {
-              if (quantity < available) {
-                copyBookingDetail.packageList[i].priceList[j].quantity =
-                  copyBookingDetail.packageList[i].priceList[j].quantity + 1;
-              }
+    for (let i = 0; i < copyBookingDetail.packageList.length; i++) {
+      for (
+        let j = 0;
+        j < copyBookingDetail.packageList[i].priceList.length;
+        j++
+      ) {
+        if (
+          priceId === copyBookingDetail.packageList[i].priceList[j].price_id
+        ) {
+          if (bool) {
+            if (quantity < available) {
+              copyBookingDetail.packageList[i].priceList[j].quantity =
+                copyBookingDetail.packageList[i].priceList[j].quantity + 1;
+            }
+          } else {
+            if (quantity === 1) {
+              copyBookingDetail.packageList[i].priceList.splice(j, 1);
             } else {
-              if (quantity === 1) {
-                copyBookingDetail.packageList[i].priceList.splice(j, 1);
-              } else {
-                copyBookingDetail.packageList[i].priceList[j].quantity =
-                  copyBookingDetail.packageList[i].priceList[j].quantity - 1;
-              }
+              copyBookingDetail.packageList[i].priceList[j].quantity =
+                copyBookingDetail.packageList[i].priceList[j].quantity - 1;
             }
           }
         }
       }
-
-      console.log(copyBookingDetail);
-      this.props.updateBookingDetail(copyBookingDetail);
     }
+
+    this.props.updateBookingDetail(copyBookingDetail);
   };
 
   intitalizeQuantity = (flag, limit) => {
@@ -479,6 +480,7 @@ export default class Book extends React.Component {
   cartItemDisplay = (packages, currencySymbol, key) => {
     return (
       <div key={key}>
+        <Divider />
         <h3
           style={{
             fontWeight: "500",
@@ -602,16 +604,33 @@ export default class Book extends React.Component {
             </Segment>
           );
         })}
+
+        <Divider />
       </div>
     );
   };
 
   cartItemLogic = item => {
     return item.packageList.map((packages, key) => {
-      return this.cartItemDisplay(packages, item.currency_symbol, key);
+      if (packages.priceList.length > 0) {
+        return this.cartItemDisplay(packages, item.currency_symbol, key);
+      }
     });
   };
 
+  checkBookingDetailLength = item => {
+    if (item.hasOwnProperty("packageList")) {
+      for (let i = 0; i < item.packageList.length; i++) {
+        if (item.packageList[i].priceList.length > 0) {
+          return false;
+        }
+      }
+
+      return true;
+    } else {
+      return true;
+    }
+  };
   render() {
     let obj = {};
     let hex = 0;
@@ -675,7 +694,6 @@ export default class Book extends React.Component {
         }
 
         limit = obj.DISCOUNT.OrderLimit;
-        console.log(obj);
       }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
@@ -718,8 +736,12 @@ export default class Book extends React.Component {
         status = true;
       }
     }
-    console.log(this.props.detailState.bookingDetail);
+
     const dec = parseInt(hex, 16);
+
+    const bookingStatus = this.checkBookingDetailLength(
+      this.props.detailState.bookingDetail
+    );
 
     return (
       <div>
@@ -733,36 +755,12 @@ export default class Book extends React.Component {
             endDate
           )}
 
-          <Divider
-            style={{
-              display:
-                Object.keys(this.props.detailState.bookingDetail).length > 0
-                  ? "block"
-                  : "none"
-            }}
-          />
-
-          {Object.keys(this.props.detailState.bookingDetail).length > 0
-            ? this.cartItemLogic(this.props.detailState.bookingDetail)
-            : null}
-
-          <Divider
-            style={{
-              display:
-                Object.keys(this.props.detailState.bookingDetail).length > 0
-                  ? "block"
-                  : "none"
-            }}
-          />
+          {bookingStatus
+            ? null
+            : this.cartItemLogic(this.props.detailState.bookingDetail)}
 
           <Button
-            disabled={
-              status
-                ? Object.keys(this.props.detailState.bookingDetail).length > 0
-                  ? false
-                  : true
-                : false
-            }
+            disabled={status ? bookingStatus : false}
             style={{
               backgroundColor: "#FF5A5F",
               color: "white",
