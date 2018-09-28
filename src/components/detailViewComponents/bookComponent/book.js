@@ -3,6 +3,7 @@ import React from "react";
 import moment from "moment-timezone";
 import _ from "lodash";
 
+import SweetAlert from "sweetalert2-react";
 import { DateInput } from "semantic-ui-calendar-react";
 // import TimePicker from "react-times";
 
@@ -32,7 +33,11 @@ export default class Book extends React.Component {
       focused: false,
       quantity: 1,
       bookingPrice: 0,
-      initialPrice: 0
+      initialPrice: 0,
+      alert: false,
+      tempDate: moment()
+        .tz("Asia/Kolkata")
+        .format("DD-MM-YYYY")
     };
     this.props.updateBookingDate(this.state.date);
   }
@@ -77,11 +82,6 @@ export default class Book extends React.Component {
               .ActualPrice
           );
         }
-      } else {
-        // this.bookingDateState(
-        //   this.props.history.location.state.offerData.data.Offer_Basic_Details
-        //     .Offer_Min_Price
-        // );
       }
     }
   }
@@ -125,11 +125,6 @@ export default class Book extends React.Component {
           newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice
         );
       }
-    } else {
-      // this.bookingDateState(
-      //   newProps.oldViewDetail.oldViewDetail.offer.Offer_Basic_Details
-      //     .Offer_Min_Price
-      // );
     }
   }
 
@@ -212,12 +207,55 @@ export default class Book extends React.Component {
   }
 
   // Old Date Update
-  oldDateHandleChange = (event, data) => {
-    this.setState({
-      date: data.value
-    });
+  oldDateHandleChange = (event, data, object, status) => {
+    if (status) {
+      // if (Object.keys(object.ACTIVITY).length !== 0) {
+      const bookingStatus = this.checkBookingDetailLength(
+        this.props.detailState.bookingDetail
+      );
 
-    this.props.updateBookingDate(data.value);
+      if (bookingStatus) {
+        this.setState({
+          date: data.value
+        });
+
+        this.props.updateBookingDate(data.value);
+      } else {
+        this.setState({
+          alert: true,
+          tempDate: data.value
+        });
+      }
+      // } else {
+      //   this.setState({
+      //     date: data.value
+      //   });
+
+      //   this.props.updateBookingDate(data.value);
+      // }
+    } else {
+      this.setState({
+        date: data.value
+      });
+
+      this.props.updateBookingDate(data.value);
+    }
+  };
+
+  updateActivityDate = status => {
+    if (status) {
+      this.setState({
+        date: this.state.tempDate,
+        alert: false
+      });
+
+      this.props.updateBookingDate(this.state.tempDate);
+      this.props.updateBookingDetail({});
+    } else {
+      this.setState({
+        alert: false
+      });
+    }
   };
 
   oldBookingComponent = (limit, calendar, currencySymbol, object) => {
@@ -320,7 +358,9 @@ export default class Book extends React.Component {
             placeholder="Date"
             value={this.state.date}
             iconPosition="left"
-            onChange={this.oldDateHandleChange}
+            onChange={(event, data) =>
+              this.oldDateHandleChange(event, data, object, false)
+            }
           />
         </span>
 
@@ -340,7 +380,9 @@ export default class Book extends React.Component {
             placeholder="Date"
             value={object.EVENTS.event_date}
             iconPosition="left"
-            onChange={this.oldDateHandleChange}
+            onChange={(event, data) =>
+              this.oldDateHandleChange(event, data, object, false)
+            }
           />
         </span>
 
@@ -357,7 +399,7 @@ export default class Book extends React.Component {
     );
   };
 
-  newBookingComponent = (limit, calendar, currencySymbol, object, endDate) => {
+  newBookingComponent = (object, endDate) => {
     return (
       <div>
         <label
@@ -369,7 +411,7 @@ export default class Book extends React.Component {
         >
           Book Now
         </label>
-        <Divider style={{}} />
+        <Divider />
 
         <label
           style={{
@@ -392,7 +434,9 @@ export default class Book extends React.Component {
             placeholder="Date"
             value={this.state.date}
             iconPosition="left"
-            onChange={this.oldDateHandleChange}
+            onChange={(event, data) =>
+              this.oldDateHandleChange(event, data, object, true)
+            }
             minDate={this.state.minDate}
             maxDate={endDate}
           />
@@ -409,7 +453,9 @@ export default class Book extends React.Component {
             placeholder="Date"
             value={this.state.date}
             iconPosition="left"
-            onChange={this.oldDateHandleChange}
+            onChange={(event, data) =>
+              this.oldDateHandleChange(event, data, object, true)
+            }
           />
         </span>
       </div>
@@ -418,13 +464,7 @@ export default class Book extends React.Component {
 
   bookingLogic = (limit, calendar, currencySymbol, obj, status, endDate) => {
     if (status) {
-      return this.newBookingComponent(
-        limit,
-        calendar,
-        currencySymbol,
-        obj,
-        endDate
-      );
+      return this.newBookingComponent(obj, endDate);
     } else {
       return this.oldBookingComponent(limit, calendar, currencySymbol, obj);
     }
@@ -477,7 +517,7 @@ export default class Book extends React.Component {
     }
   };
 
-  cartItemDisplay = (packages, currencySymbol, key) => {
+  cartItemDisplay = (packages, currencySymbol, finalAmount, key) => {
     return (
       <div key={key}>
         <Divider />
@@ -499,6 +539,7 @@ export default class Book extends React.Component {
           } else {
             totalAmount = price.quantity * price.price;
           }
+
           return (
             <Segment key={key} style={{ marginBottom: "10px" }}>
               <span
@@ -557,8 +598,7 @@ export default class Book extends React.Component {
                 style={{
                   fontWeight: "500",
                   color: "#ff695e",
-                  display: "inline",
-                  marginRight: "70px"
+                  display: "inline"
                 }}
               >
                 {price.price_caption}
@@ -566,23 +606,29 @@ export default class Book extends React.Component {
 
               <span
                 style={{
-                  color: "rgba(0,0,0,.6)",
-                  fontSize: "16px",
-                  fontWeight: "bold"
+                  position: "absolute",
+                  left: "150px"
                 }}
               >
-                {currencySymbol}
-              </span>
+                <label
+                  style={{
+                    color: "rgba(0,0,0,.6)",
+                    fontSize: "16px"
+                  }}
+                >
+                  {currencySymbol}
+                </label>
 
-              <label
-                style={{
-                  color: "rgba(0,0,0,.6)",
-                  fontSize: "16px",
-                  fontWeight: "bold"
-                }}
-              >
-                {totalAmount}
-              </label>
+                <label
+                  style={{
+                    color: "rgba(0,0,0,.6)",
+                    fontSize: "16px",
+                    fontWeight: "bold"
+                  }}
+                >
+                  {totalAmount}
+                </label>
+              </span>
               <div />
               <span
                 style={{
@@ -606,16 +652,64 @@ export default class Book extends React.Component {
         })}
 
         <Divider />
+
+        <label
+          style={{
+            color: "rgba(0,0,0,.6)",
+            fontSize: "20px",
+            fontWeight: "bold"
+          }}
+        >
+          Total :
+        </label>
+
+        <span
+          style={{
+            color: "rgba(0,0,0,.6)",
+            fontSize: "22px",
+            marginLeft: "10px",
+            fontWeight: "bold"
+          }}
+        >
+          {currencySymbol}
+        </span>
+
+        <label
+          style={{
+            color: "rgba(0,0,0,.6)",
+            fontSize: "22px",
+            fontWeight: "bold"
+          }}
+        >
+          {finalAmount}
+        </label>
       </div>
     );
   };
 
   cartItemLogic = item => {
+    const finalAmount = this.calculateFinalAmount(item);
     return item.packageList.map((packages, key) => {
       if (packages.priceList.length > 0) {
-        return this.cartItemDisplay(packages, item.currency_symbol, key);
+        return this.cartItemDisplay(
+          packages,
+          item.currency_symbol,
+          finalAmount,
+          key
+        );
       }
     });
+  };
+
+  calculateFinalAmount = item => {
+    let finalAmount = 0;
+    item.packageList.map((packages, key) => {
+      packages.priceList.map((price, key) => {
+        finalAmount = price.price * price.quantity + finalAmount;
+      });
+    });
+
+    return finalAmount;
   };
 
   checkBookingDetailLength = item => {
@@ -787,6 +881,19 @@ export default class Book extends React.Component {
             You won’t be charged yet
           </p>
         </Segment>
+
+        {this.state.alert ? (
+          <SweetAlert
+            show={true}
+            title="Ballyhoo"
+            imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+            text="They are still items in your cart. changing date will be clear your cart."
+            showCancelButton
+            onConfirm={() => this.updateActivityDate(true)}
+            onCancel={() => this.updateActivityDate(false)}
+            onClose={() => this.updateActivityDate(false)}
+          />
+        ) : null}
       </div>
     );
   }

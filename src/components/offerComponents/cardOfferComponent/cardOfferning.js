@@ -95,7 +95,7 @@ export default class Trending extends React.Component {
         } else if (Object.keys(nextProps.categoryFilter).length !== 0) {
           this.readCategoryIndex(
             nextProps.categoryFilter,
-            this.props.match.params.offering
+            this.props.match.params.collection
           );
         } else {
           console.log("Check");
@@ -181,7 +181,7 @@ export default class Trending extends React.Component {
     );
 
     this.setState({ cityId: cityIndex.c_key, localityId: localityIndex.l_key });
-    if (this.props.match.params.hasOwnProperty("offering")) {
+    if (this.props.match.params.hasOwnProperty("collection")) {
       this.props.callCategoryFilter(cityIndex.c_key);
     } else if (this.props.match.params.hasOwnProperty("discover")) {
       this.props.callDiscoverFilter();
@@ -1017,7 +1017,11 @@ export default class Trending extends React.Component {
 
   // Back History
   backHistory = () => {
-    this.props.history.go(-1);
+    if (document.referrer == "") {
+      window.close();
+    } else {
+      this.props.history.go(-1);
+    }
   };
 
   render() {
