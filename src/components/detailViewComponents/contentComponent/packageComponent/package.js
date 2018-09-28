@@ -112,7 +112,8 @@ export default class Package extends React.Component {
     flag,
     bookingPriceListIndex,
     calculatePrice,
-    currency
+    currency,
+    discountPrice
   ) => {
     this.state.priceList.Package_Price_List.map((price, key) => {
       if (key === index) {
@@ -128,7 +129,8 @@ export default class Package extends React.Component {
               bookingPriceListIndex,
               calculatePrice,
               currency,
-              this.state.priceList.Package_Price_List[index].Available
+              this.state.priceList.Package_Price_List[index].Available,
+              discountPrice
             );
           }
         } else {
@@ -162,10 +164,6 @@ export default class Package extends React.Component {
         ) {
           if (bookingPriceListIndex.quantity === 0) {
             copyBookingDetail.packageList[i].priceList.splice(j, 1);
-
-            // if (copyBookingDetail.packageList[i].priceList.length === 0) {
-            //   copyBookingDetail.packageList.splice(i, 1);
-            // }
           } else {
             copyBookingDetail.packageList[i].priceList[j].quantity =
               bookingPriceListIndex.quantity;
@@ -181,7 +179,8 @@ export default class Package extends React.Component {
     bookingPriceListIndex,
     calculatePrice,
     currency,
-    available
+    available,
+    discountPrice
   ) => {
     let obj = {};
     let obj1 = {};
@@ -203,8 +202,12 @@ export default class Package extends React.Component {
       obj1.package_id = this.state.priceList.Package_Id;
 
       obj2.available = available;
-      obj2.totalAmount = 0;
-      obj2.price = calculatePrice;
+
+      if (discountPrice !== undefined) {
+        obj2.price = discountPrice;
+      } else {
+        obj2.price = calculatePrice;
+      }
       obj2.quantity = bookingPriceListIndex.quantity;
       obj2.price_id = bookingPriceListIndex.Price_Id;
       obj2.price_caption = bookingPriceListIndex.Price_Caption;
@@ -255,9 +258,13 @@ export default class Package extends React.Component {
                 this.state.priceList.Package_Id ===
                 copyBookingDetail.packageList[i].package_id
               ) {
-                obj2.totalAmount = 0;
                 obj2.available = available;
-                obj2.price = calculatePrice;
+
+                if (discountPrice !== undefined) {
+                  obj2.price = discountPrice;
+                } else {
+                  obj2.price = calculatePrice;
+                }
                 obj2.quantity = bookingPriceListIndex.quantity;
                 obj2.price_id = bookingPriceListIndex.Price_Id;
                 obj2.price_caption = bookingPriceListIndex.Price_Caption;
@@ -283,9 +290,12 @@ export default class Package extends React.Component {
           obj1.package_caption = this.state.priceList.Package_Caption;
           obj1.package_id = this.state.priceList.Package_Id;
 
-          obj2.totalAmount = 0;
           obj2.available = available;
-          obj2.price = calculatePrice;
+          if (discountPrice !== undefined) {
+            obj2.price = discountPrice;
+          } else {
+            obj2.price = calculatePrice;
+          }
           obj2.quantity = bookingPriceListIndex.quantity;
           obj2.price_id = bookingPriceListIndex.Price_Id;
           obj2.price_caption = bookingPriceListIndex.Price_Caption;
@@ -293,19 +303,6 @@ export default class Package extends React.Component {
           arr.push(obj2);
           obj1.priceList = arr;
           copyBookingDetail.packageList.push(obj1);
-
-          // for (
-          //   let j = 0;
-          //   j < copyBookingDetail.packageList[i].priceList.length;
-          //   j++
-          // ) {
-          //   if (
-          //     copyBookingDetail.packageList[i].priceList[j].price_id !==
-          //     bookingPriceListIndex.Price_Id
-          //   ) {
-
-          //   }
-          // }
         }
       }
     }
@@ -401,7 +398,8 @@ export default class Package extends React.Component {
                           true,
                           priceList,
                           price,
-                          currency
+                          currency,
+                          discountPrice
                         )
                       }
                     >
@@ -429,7 +427,8 @@ export default class Package extends React.Component {
                             false,
                             priceList,
                             price,
-                            currency
+                            currency,
+                            discountPrice
                           )
                         }
                       />
@@ -462,7 +461,8 @@ export default class Package extends React.Component {
                             true,
                             priceList,
                             price,
-                            currency
+                            currency,
+                            discountPrice
                           )
                         }
                       />
@@ -545,22 +545,6 @@ export default class Package extends React.Component {
             </Modal.Description>
           </Modal.Content>
           <Modal.Actions>
-            {/* <label
-              style={{
-                fontSize: "23px",
-                marginRight: "80px"
-              }}
-            >
-              Total
-              <span
-                style={{
-                  fontSize: "23px",
-                  marginLeft: "10px"
-                }}
-              >
-                {currency}0
-              </span>
-            </label> */}
             <Button
               style={{
                 backgroundColor: "rgb(255, 90, 95)",

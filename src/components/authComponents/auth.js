@@ -60,10 +60,7 @@ export default class Auth extends React.Component {
   }
 
   componentWillReceiveProps(nextProp) {
-    if (
-      this.props.registerNewUser.registerNewUser !==
-      nextProp.registerNewUser.registerNewUser
-    ) {
+    if (this.props.registerNewUser !== nextProp.registerNewUser) {
       if (nextProp.registerNewUser.registerNewUser) {
         this.setState({
           sweetAlert: true,
@@ -82,9 +79,7 @@ export default class Auth extends React.Component {
           emailButton: false
         });
       }
-    } else if (
-      this.props.verifyOtp.verifyOtp !== nextProp.verifyOtp.verifyOtp
-    ) {
+    } else if (this.props.verifyOtp !== nextProp.verifyOtp) {
       if (nextProp.verifyOtp.verifyOtp) {
         this.callUserDetailApi();
       } else {
@@ -142,7 +137,12 @@ export default class Auth extends React.Component {
     }
   };
 
-  goCheckoutRoute = () => {};
+  goCheckoutRoute = () => {
+    const object = this.props.location.state.checkoutData;
+    this.props.history.push("/web/checkout", {
+      checkoutData: object
+    });
+  };
 
   callUserDetailApi = () => {
     const mobileString = this.state.userMobileCode.toString();
@@ -317,7 +317,7 @@ export default class Auth extends React.Component {
         </h1>
 
         {this.state.errorMessage ? (
-          <Container text>
+          <Container text style={{ marginBottom: "10px" }}>
             <Message errorText={this.state.errorText} />
           </Container>
         ) : null}
@@ -366,6 +366,7 @@ export default class Auth extends React.Component {
             postUpdateUserRecord={this.props.postUpdateUserRecord}
             updateUserRecord={this.props.updateUserRecord}
             BALLY_KEY={BALLY_KEY}
+            goCheckoutRoute={this.goCheckoutRoute}
           />
         ) : null}
       </Container>

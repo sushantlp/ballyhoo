@@ -2,9 +2,9 @@ import axios from "axios";
 import getQueryString from "./paramParser";
 
 // Base Url
-//const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
+const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
 
-const host = "https://ballyhoo.today/";
+//const host = "https://ballyhoo.today/";
 
 export default {
   cityLocalityApi: () => {
@@ -279,19 +279,6 @@ export default {
     gender,
     token
   ) => {
-    // axios
-    //   .post(`${host}api/v4/web/user/profile?`, {
-    //     mobile: mobile,
-    //     first_name: firstName,
-    //     last_name: lastName,
-    //     email: email,
-    //     birth: birth,
-    //     gender: gender
-    //   })
-    //   .then(res => {
-    //     console.log(res);
-    //     console.log(res.data);
-    //   });
     const header = {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
@@ -312,7 +299,7 @@ export default {
           }),
         {
           method: "POST"
-          //credentials: "same-origin",
+
           // headers: new Headers(header)
         }
       )
@@ -385,11 +372,7 @@ export default {
             razorpayPaymentId: razorpayPaymentId
           }),
         {
-          method: "POST",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "POST"
         }
       ).then(response => {
         response.json().then(fnbRazorpay => resolve(fnbRazorpay));
@@ -408,11 +391,7 @@ export default {
             mobile: mobile
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "post"
         }
       ).then(response => {
         response.json().then(fnbWallet => resolve(fnbWallet));
@@ -443,11 +422,7 @@ export default {
             mid: mid
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "post"
         }
       ).then(response => {
         response.json().then(fnbPaytm => resolve(fnbPaytm));
@@ -476,11 +451,7 @@ export default {
             reservation_date: reservationDate
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "post"
         }
       ).then(response => {
         response.json().then(fnbVenue => resolve(fnbVenue));
@@ -514,11 +485,7 @@ export default {
             item_details: itemDetail
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "post"
         }
       ).then(response => {
         response.json().then(deliveryRazorpay => resolve(deliveryRazorpay));
@@ -549,11 +516,7 @@ export default {
             item_details: itemDetail
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "post"
         }
       ).then(response => {
         response.json().then(deliveryWallet => resolve(deliveryWallet));
@@ -590,11 +553,7 @@ export default {
             item_details: itemDetail
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "post"
         }
       ).then(response => {
         response.json().then(deliveryPaytm => resolve(deliveryPaytm));
@@ -625,11 +584,7 @@ export default {
             item_details: itemDetail
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "post"
         }
       ).then(response => {
         response.json().then(deliveryVenue => resolve(deliveryVenue));
@@ -658,11 +613,7 @@ export default {
             order_item_list: orderItemList
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "post"
         }
       ).then(response => {
         response
@@ -691,11 +642,7 @@ export default {
             order_item_list: orderItemList
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "post"
         }
       ).then(response => {
         response.json().then(newCategoryWallet => resolve(newCategoryWallet));
@@ -728,11 +675,7 @@ export default {
             order_item_list: orderItemList
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "post"
         }
       ).then(response => {
         response.json().then(newCategoryPaytm => resolve(newCategoryPaytm));
@@ -759,11 +702,7 @@ export default {
             order_item_list: orderItemList
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "post"
         }
       ).then(response => {
         response.json().then(newCategoryVenue => resolve(newCategoryVenue));
@@ -781,11 +720,7 @@ export default {
             booking_at: bookingAt
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "post"
         }
       ).then(response => {
         response.json().then(saloonReservation => resolve(saloonReservation));

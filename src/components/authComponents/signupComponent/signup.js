@@ -15,8 +15,8 @@ export default class Signup extends React.Component {
       lastName: false,
       dob: false,
       gender: false,
-      otpLoading: false,
-      otpButton: false,
+      signupLoading: false,
+      signupButton: false,
 
       userDob: "",
       userFirstName: "",
@@ -67,8 +67,30 @@ export default class Signup extends React.Component {
         });
       }
     }
+  }
 
-    console.log(this.props.updateUserRecord);
+  componentWillReceiveProps(nextProp) {
+    if (
+      this.props.updateUserRecord.signal !== nextProp.updateUserRecord.signal
+    ) {
+      if (nextProp.updateUserRecord.signal) {
+        this.props.goCheckoutRoute();
+      } else {
+        // State Update
+
+        this.setState({
+          firstName: false,
+          lastName: false,
+          dob: false,
+          gender: false,
+          signupLoading: false,
+          signupButton: false
+        });
+
+        // Call Error Message
+        this.props.errorMessage(true, nextProp.updateUserRecord.msg);
+      }
+    }
   }
 
   // First Name Update
@@ -135,8 +157,8 @@ export default class Signup extends React.Component {
         lastName: true,
         dob: true,
         gender: true,
-        otpLoading: true,
-        otpButton: true
+        signupLoading: true,
+        signupButton: true
       });
 
       // Call Error Message
@@ -272,8 +294,8 @@ export default class Signup extends React.Component {
           />
         </div>
         <Button
-          disabled={this.state.otpButton}
-          loading={this.state.otpLoading}
+          disabled={this.state.signupButton}
+          loading={this.state.signupLoading}
           style={{
             backgroundColor: "#FF5A5F",
             color: "white",

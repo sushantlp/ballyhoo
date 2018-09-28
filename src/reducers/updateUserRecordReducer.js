@@ -1,7 +1,8 @@
 import { actionType } from "../actions/updateUserRecordAction";
 
 const initialState = {
-  updateUserRecord: {}
+  signal: {},
+  msg: {}
 };
 
 export function updateUserRecord(state = initialState, action) {
@@ -10,12 +11,16 @@ export function updateUserRecord(state = initialState, action) {
       if (action.updateUserRecord.hasOwnProperty("error")) {
         return {
           ...state,
-          updateUserRecord: {}
+
+          signal: false,
+          msg: action.updateUserRecord.error.ballyhoo
         };
       } else {
         return {
           ...state,
-          updateUserRecord: action.updateUserRecord
+
+          signal: true,
+          msg: action.updateUserRecord.message.ballyhoo
         };
       }
     default:

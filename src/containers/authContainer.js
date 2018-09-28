@@ -18,8 +18,7 @@ function mapStateToProps(state) {
     registerNewUser: state.registerNewUser,
     updateUserRecord: state.updateUserRecord,
     userRecord: state.userRecord,
-    verifyOtp: state.verifyOtp,
-    updateUserRecord: state.updateUserRecord
+    verifyOtp: state.verifyOtp
   };
 }
 

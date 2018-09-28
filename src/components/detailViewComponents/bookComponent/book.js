@@ -474,13 +474,16 @@ export default class Book extends React.Component {
     let newObject = {};
     if (status) {
       newObject = {
-        detailObject: object,
-        detailFlag: status
+        detailObject: this.props.detailState.bookingDetail,
+        categoryFlag: "NEW",
+        detailBookingPrice: this.calculateFinalAmount(
+          this.props.detailState.bookingDetail
+        )
       };
     } else {
       newObject = {
         detailObject: object,
-        detailFlag: status,
+        categoryFlag: "OLD",
         detailBookingPrice: this.state.bookingPrice,
         detailQuantity: this.state.quantity
       };
