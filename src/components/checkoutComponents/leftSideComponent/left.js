@@ -3,9 +3,9 @@ import _ from "lodash";
 
 import { Segment, Button } from "semantic-ui-react/dist/commonjs";
 
-import classes from "./static/css/summary.css";
+import classes from "./static/css/left.css";
 
-export default class Summary extends React.Component {
+export default class Left extends React.Component {
   constructor(props) {
     super(props);
   }
