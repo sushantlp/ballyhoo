@@ -520,10 +520,9 @@ export default class Book extends React.Component {
     }
   };
 
-  cartItemDisplay = (packages, currencySymbol, finalAmount, key) => {
+  cartItemDisplay = (packages, currencySymbol, key) => {
     return (
       <div key={key}>
-        <Divider />
         <h3
           style={{
             fontWeight: "500",
@@ -653,51 +652,17 @@ export default class Book extends React.Component {
             </Segment>
           );
         })}
-
-        <Divider />
-
-        <label
-          style={{
-            color: "rgba(0,0,0,.6)",
-            fontSize: "20px",
-            fontWeight: "bold"
-          }}
-        >
-          Total :
-        </label>
-
-        <span
-          style={{
-            color: "rgba(0,0,0,.6)",
-            fontSize: "22px",
-            marginLeft: "10px",
-            fontWeight: "bold"
-          }}
-        >
-          {currencySymbol}
-        </span>
-
-        <label
-          style={{
-            color: "rgba(0,0,0,.6)",
-            fontSize: "22px",
-            fontWeight: "bold"
-          }}
-        >
-          {finalAmount}
-        </label>
       </div>
     );
   };
 
   cartItemLogic = item => {
-    const finalAmount = this.calculateFinalAmount(item);
     return item.packageList.map((packages, key) => {
       if (packages.priceList.length > 0) {
         return this.cartItemDisplay(
           packages,
           item.currency_symbol,
-          finalAmount,
+
           key
         );
       }
@@ -735,6 +700,7 @@ export default class Book extends React.Component {
     let limit = 0;
     let status = false;
     let endDate = "";
+    let finalAmount = 0;
 
     if (this.props.detailState.apiCall) {
       if (this.props.detailState.which === "new") {
@@ -840,6 +806,11 @@ export default class Book extends React.Component {
       this.props.detailState.bookingDetail
     );
 
+    if (!bookingStatus) {
+      finalAmount = this.calculateFinalAmount(
+        this.props.detailState.bookingDetail
+      );
+    }
     return (
       <div>
         <Segment style={{ width: "400px" }}>
@@ -852,10 +823,47 @@ export default class Book extends React.Component {
             endDate
           )}
 
+          <Divider style={{ display: finalAmount === 0 ? "none" : "block" }} />
           {bookingStatus
             ? null
             : this.cartItemLogic(this.props.detailState.bookingDetail)}
 
+          <Divider style={{ display: finalAmount === 0 ? "none" : "block" }} />
+          <label
+            style={{
+              color: "rgba(0,0,0,.6)",
+              fontSize: "20px",
+              fontWeight: "bold",
+              display: finalAmount === 0 ? "none" : "inline"
+            }}
+          >
+            Total :
+          </label>
+
+          <span
+            style={{
+              color: "rgba(0,0,0,.6)",
+              fontSize: "22px",
+              marginLeft: "10px",
+              fontWeight: "bold",
+              display: finalAmount === 0 ? "none" : "inline"
+            }}
+          >
+            {String.fromCharCode(dec)}
+          </span>
+
+          <label
+            style={{
+              color: "rgba(0,0,0,.6)",
+              fontSize: "22px",
+              fontWeight: "bold",
+              display: finalAmount === 0 ? "none" : "inline"
+            }}
+          >
+            {finalAmount}
+          </label>
+
+          <Divider style={{ display: finalAmount === 0 ? "none" : "block" }} />
           <Button
             disabled={status ? bookingStatus : false}
             style={{
