@@ -11,14 +11,12 @@ export function updateUserRecord(state = initialState, action) {
       if (action.updateUserRecord.hasOwnProperty("error")) {
         return {
           ...state,
-
           signal: false,
           msg: action.updateUserRecord.error.ballyhoo
         };
       } else {
         return {
           ...state,
-
           signal: true,
           msg: action.updateUserRecord.message.ballyhoo
         };

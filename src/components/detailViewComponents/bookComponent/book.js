@@ -551,7 +551,7 @@ export default class Book extends React.Component {
                 }}
               >
                 <Icon
-                  name="minus circle"
+                  name="minus square outline"
                   style={{
                     color: "rgb(43, 0, 119)",
                     fontSize: "18px",
@@ -578,7 +578,7 @@ export default class Book extends React.Component {
                   {price.quantity}
                 </label>
                 <Icon
-                  name="plus circle"
+                  name="plus square outline"
                   style={{
                     color: "rgb(43, 0, 119)",
                     fontSize: "18px",
@@ -659,12 +659,7 @@ export default class Book extends React.Component {
   cartItemLogic = item => {
     return item.packageList.map((packages, key) => {
       if (packages.priceList.length > 0) {
-        return this.cartItemDisplay(
-          packages,
-          item.currency_symbol,
-
-          key
-        );
+        return this.cartItemDisplay(packages, item.currency_symbol, key);
       }
     });
   };

@@ -414,7 +414,7 @@ export default class Package extends React.Component {
                     >
                       <Icon
                         disabled={priceList.quantity === 1 ? true : false}
-                        name="minus circle"
+                        name="minus square outline"
                         style={{
                           color: "rgb(43, 0, 119)",
                           fontSize: "20px",
@@ -448,7 +448,7 @@ export default class Package extends React.Component {
                             ? false
                             : true
                         }
-                        name="plus circle"
+                        name="plus square outline"
                         style={{
                           color: "rgb(43, 0, 119)",
                           fontSize: "20px",

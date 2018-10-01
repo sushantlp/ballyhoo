@@ -1,7 +1,9 @@
 import { actionType } from "../actions/otherAdditionalChargeAction";
 
 const initialState = {
-  otherAdditionalCharge: {}
+  charge: {},
+  status: false,
+  msg: ""
 };
 
 export function otherAdditionalCharge(state = initialState, action) {
@@ -10,12 +12,16 @@ export function otherAdditionalCharge(state = initialState, action) {
       if (action.otherAdditionalCharge.hasOwnProperty("message")) {
         return {
           ...state,
-          otherAdditionalCharge: action.otherAdditionalCharge
+          charge: action.otherAdditionalCharge.message.ballyhoo,
+          status: true,
+          msg: "successful"
         };
       } else {
         return {
           ...state,
-          otherAdditionalCharge: {}
+          charge: {},
+          status: false,
+          msg: action.otherAdditionalCharge.error.ballyhoo
         };
       }
     default:

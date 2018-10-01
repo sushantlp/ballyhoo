@@ -16,13 +16,20 @@ import { postNewCategoryWallet } from "../actions/newCategoryWalletAction";
 import { postNewCategoryVenue } from "../actions/newCategoryVenueAction";
 import { postSaloonReservation } from "../actions/saloonReservationAction";
 
+import { getDeliveryAdditionalCharge } from "../actions/deliveryAdditionalChargeAction";
+import { getOtherAdditionalCharge } from "../actions/otherAdditionalChargeAction";
+
 function mapStateToProps(state) {
   return {
     paymentMode: state.paymentMode,
+    deliveryAdditionalCharge: state.deliveryAdditionalCharge,
+    otherAdditionalCharge: state.otherAdditionalCharge,
+
     fnbRazorpay: state.fnbRazorpay,
     fnbPaytm: state.fnbPaytm,
     fnbWallet: state.fnbWallet,
     fnbVenue: state.fnbVenue,
+
     newCategoryRazorpay: state.newCategoryRazorpay,
     newCategoryPaytm: state.newCategoryPaytm,
     newCategoryWallet: state.newCategoryWallet,
@@ -36,10 +43,14 @@ export default withRouter(
     mapStateToProps,
     {
       getPaymentMode: getPaymentMode,
+      getDeliveryAdditionalCharge: getDeliveryAdditionalCharge,
+      getOtherAdditionalCharge: getOtherAdditionalCharge,
+
       postFnbRazorpay: postFnbRazorpay,
       postFnbPaytm: postFnbPaytm,
       postFnbWallet: postFnbWallet,
       postFnbVenue: postFnbVenue,
+
       postNewCategoryRazorpay: postNewCategoryRazorpay,
       postNewCategoryPaytm: postNewCategoryPaytm,
       postNewCategoryWallet: postNewCategoryWallet,

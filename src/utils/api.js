@@ -2,9 +2,9 @@ import axios from "axios";
 import getQueryString from "./paramParser";
 
 // Base Url
-//const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
+const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
 
-const host = "https://ballyhoo.today/";
+//const host = "https://ballyhoo.today/";
 
 export default {
   cityLocalityApi: () => {
@@ -218,10 +218,7 @@ export default {
             amount: amount
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token
-          })
+          method: "GET"
         }
       ).then(response => {
         response
@@ -239,11 +236,7 @@ export default {
             mobile: merchantMobile
           }),
         {
-          method: "post",
-          headers: new Headers({
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          })
+          method: "GET"
         }
       ).then(response => {
         response
@@ -391,7 +384,7 @@ export default {
             mobile: mobile
           }),
         {
-          method: "post"
+          method: "POST"
         }
       ).then(response => {
         response.json().then(fnbWallet => resolve(fnbWallet));
@@ -422,7 +415,7 @@ export default {
             mid: mid
           }),
         {
-          method: "post"
+          method: "POST"
         }
       ).then(response => {
         response.json().then(fnbPaytm => resolve(fnbPaytm));
@@ -451,7 +444,7 @@ export default {
             reservation_date: reservationDate
           }),
         {
-          method: "post"
+          method: "POST"
         }
       ).then(response => {
         response.json().then(fnbVenue => resolve(fnbVenue));
@@ -485,7 +478,7 @@ export default {
             item_details: itemDetail
           }),
         {
-          method: "post"
+          method: "POST"
         }
       ).then(response => {
         response.json().then(deliveryRazorpay => resolve(deliveryRazorpay));
@@ -516,7 +509,7 @@ export default {
             item_details: itemDetail
           }),
         {
-          method: "post"
+          method: "POST"
         }
       ).then(response => {
         response.json().then(deliveryWallet => resolve(deliveryWallet));
@@ -553,7 +546,7 @@ export default {
             item_details: itemDetail
           }),
         {
-          method: "post"
+          method: "POST"
         }
       ).then(response => {
         response.json().then(deliveryPaytm => resolve(deliveryPaytm));
@@ -584,7 +577,7 @@ export default {
             item_details: itemDetail
           }),
         {
-          method: "post"
+          method: "POST"
         }
       ).then(response => {
         response.json().then(deliveryVenue => resolve(deliveryVenue));
@@ -613,7 +606,7 @@ export default {
             order_item_list: orderItemList
           }),
         {
-          method: "post"
+          method: "POST"
         }
       ).then(response => {
         response
@@ -642,7 +635,7 @@ export default {
             order_item_list: orderItemList
           }),
         {
-          method: "post"
+          method: "POST"
         }
       ).then(response => {
         response.json().then(newCategoryWallet => resolve(newCategoryWallet));
@@ -675,7 +668,7 @@ export default {
             order_item_list: orderItemList
           }),
         {
-          method: "post"
+          method: "POST"
         }
       ).then(response => {
         response.json().then(newCategoryPaytm => resolve(newCategoryPaytm));
@@ -702,7 +695,7 @@ export default {
             order_item_list: orderItemList
           }),
         {
-          method: "post"
+          method: "POST"
         }
       ).then(response => {
         response.json().then(newCategoryVenue => resolve(newCategoryVenue));
@@ -720,7 +713,7 @@ export default {
             booking_at: bookingAt
           }),
         {
-          method: "post"
+          method: "POST"
         }
       ).then(response => {
         response.json().then(saloonReservation => resolve(saloonReservation));
