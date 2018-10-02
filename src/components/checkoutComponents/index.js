@@ -84,7 +84,7 @@ export default class Initial extends React.Component {
                 />
               </Grid.Column>
               <Grid.Column width={2}>
-                <Sticky enabled={true} top={50} bottomBoundary={1400}>
+                <Sticky enabled={true} top={50} bottomBoundary={500}>
                   <Left
                     history={this.props.history}
                     parentState={this.state}
