@@ -17,6 +17,38 @@ export const USER_DATA = "User_Data";
 export const BALLY_KEY = "Bally_Key";
 export const EMAIL_REG = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
+export const PAYMENT_MODE = [
+  {
+    key: 1,
+    text: "Online payment",
+    value: "Online payment",
+    image: {
+      src:
+        "https://d1a3f4spazzrp4.cloudfront.net/superfine/assets/uber-payment-icons/payment-cash.svg"
+    }
+  },
+  {
+    key: 2,
+    text: "Ballyhoo wallet",
+    value: "Ballyhoo wallet"
+    // image: {
+    //   avatar: true,
+    //   src:
+    //     "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_24/v1538400149/ballyhoo/EMAIL/paytm_wcxbwf.webp"
+    // }
+  },
+  {
+    key: 3,
+    text: "Pay at venue",
+    value: "Pay at venue"
+    // image: {
+    //   avatar: true,
+    //   src:
+    //     "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_24/v1538400149/ballyhoo/EMAIL/paytm_wcxbwf.webp"
+    // }
+  }
+];
+
 export const COUNTRY_CODE = [
   { name: "Afghanistan", dial_code: "+93", code: "AF" },
   { name: "Åland Islands", dial_code: "+358", code: "AX" },

@@ -5,7 +5,7 @@ import _ from "lodash";
 
 import SweetAlert from "sweetalert2-react";
 import { DateInput } from "semantic-ui-calendar-react";
-// import TimePicker from "react-times";
+
 
 // import { SingleDatePicker } from "react-dates";
 
@@ -386,15 +386,7 @@ export default class Book extends React.Component {
           />
         </span>
 
-        {/* <div style={{ display: calendar ? "inline" : "none" }}>
-          <TimePicker
-            time={this.state.time}
-            withoutIcon={true}
-            timeMode="12"
-            timezone="Asia/Kolkata"
-            onTimeChange={this.onTimeChange.bind(this)}
-          />
-        </div> */}
+     
       </div>
     );
   };

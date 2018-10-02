@@ -321,6 +321,7 @@ export default class Trending extends React.Component {
   ) => {
     return (
       <Card
+      raised={true}
         className={classes.OfferningCard}
         key={key}
         style={{ cursor: "pointer" }}

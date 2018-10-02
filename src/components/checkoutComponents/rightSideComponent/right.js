@@ -16,7 +16,11 @@ export default class Right extends React.Component {
           parentState={this.props.parentState}
           history={this.props.history}
         />
-        {/* <LocationComponent/>*/}
+        <br />
+        <LocationComponent
+          parentState={this.props.parentState}
+          history={this.props.history}
+        />
         <br />
         <PaymentComponent
           parentState={this.props.parentState}
