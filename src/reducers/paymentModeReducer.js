@@ -2,7 +2,7 @@ import { actionType } from "../actions/paymentModeAction";
 
 const initialState = {
   paymentMode: {},
-  status: false,
+  status: "START",
   msg: ""
 };
 
@@ -13,14 +13,14 @@ export function paymentMode(state = initialState, action) {
         return {
           ...state,
           paymentMode: action.paymentMode.message.ballyhoo,
-          status: true,
+          status: "SUCCESS",
           msg: "successful"
         };
       } else {
         return {
           ...state,
           paymentMode: {},
-          status: false,
+          status: "FAIL",
           msg: action.paymentMode.error.ballyhoo
         };
       }

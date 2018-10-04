@@ -11,6 +11,10 @@ export default class Location extends React.Component {
   }
 
   render() {
+    if (!this.props.parentState.delivery) {
+      return <div />;
+    }
+
     return (
       <div>
         <Segment.Group>
@@ -82,11 +86,7 @@ export default class Location extends React.Component {
                       border: "1px solid #60b246",
                       color: "#60b246",
                       background: "#fff",
-                      //   padding: "9px 0",
-                      //   color: "#fff",
                       textTransform: "uppercase",
-
-                      // border: "0",
                       cursor: "pointer",
                       width: "130px",
                       height: "34px",
@@ -106,6 +106,10 @@ export default class Location extends React.Component {
             </Card.Group>
           </Segment>
         </Segment.Group>
+
+        <br />
+        <br />
+        <br />
       </div>
     );
   }

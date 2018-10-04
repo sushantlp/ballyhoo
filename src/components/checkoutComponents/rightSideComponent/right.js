@@ -16,16 +16,24 @@ export default class Right extends React.Component {
           parentState={this.props.parentState}
           history={this.props.history}
         />
-        <br />
+
         <LocationComponent
           parentState={this.props.parentState}
           history={this.props.history}
         />
-        <br />
+
         <PaymentComponent
           parentState={this.props.parentState}
           history={this.props.history}
           paymentMode={this.props.paymentMode}
+          onChangePayment={this.props.onChangePayment}
+          updatePromoLabelState={this.props.updatePromoLabelState}
+          errorMessage={this.props.errorMessage}
+          promoCode={this.props.promoCode}
+          verifyPromoCode={this.props.verifyPromoCode}
+          getDeliveryAdditionalCharge={this.props.getDeliveryAdditionalCharge}
+          getOtherAdditionalCharge={this.props.getOtherAdditionalCharge}
+          changeStatePromoValue={this.props.changeStatePromoValue}
         />
       </div>
     );

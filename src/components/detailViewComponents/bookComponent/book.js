@@ -6,7 +6,6 @@ import _ from "lodash";
 import SweetAlert from "sweetalert2-react";
 import { DateInput } from "semantic-ui-calendar-react";
 
-
 // import { SingleDatePicker } from "react-dates";
 
 import {
@@ -199,13 +198,6 @@ export default class Book extends React.Component {
     }
   };
 
-  onTimeChange(timeObject) {
-    const time =
-      timeObject.hour + ":" + timeObject.minute + " " + timeObject.meridiem;
-
-    this.setState({ time: time });
-  }
-
   // Old Date Update
   oldDateHandleChange = (event, data, object, status) => {
     if (status) {
@@ -385,8 +377,6 @@ export default class Book extends React.Component {
             }
           />
         </span>
-
-     
       </div>
     );
   };

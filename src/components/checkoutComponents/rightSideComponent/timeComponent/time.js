@@ -12,12 +12,37 @@ export default class Time extends React.Component {
     };
   }
 
+  onTimeChange(timeObject) {
+    const time =
+      timeObject.hour + ":" + timeObject.minute + " " + timeObject.meridiem;
+
+    this.setState({ time: time });
+  }
+
   render() {
+    let headerName = "Delivery Time";
+    if (!this.props.parentState.delivery) {
+      if (this.props.parentState.oldCategory) {
+        const object = this.props.history.location.state.checkoutData;
+
+        if (
+          object.detailObject.Offering === "Happy Hours" ||
+          object.detailObject.Offering === "Walk-In Service"
+        ) {
+          headerName = "Time";
+        } else {
+          return <div />;
+        }
+      } else {
+        headerName = "Time";
+      }
+    }
+
     return (
       <div>
         <Segment.Group>
           <Segment>
-            <label style={{ fontSize: "20px" }}>Delivery Time</label>
+            <label style={{ fontSize: "20px" }}>{headerName}</label>
           </Segment>
 
           <Segment>
@@ -26,11 +51,15 @@ export default class Time extends React.Component {
                 time={this.state.time}
                 timeMode="12"
                 timezone="Asia/Kolkata"
-                //   onTimeChange={this.onTimeChange.bind(this)}
+                onTimeChange={this.onTimeChange.bind(this)}
               />
             </div>
           </Segment>
         </Segment.Group>
+
+        <br />
+        <br />
+        <br />
       </div>
     );
   }

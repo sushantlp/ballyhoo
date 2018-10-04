@@ -24,28 +24,26 @@ export const PAYMENT_MODE = [
     value: "Online payment",
     image: {
       src:
-        "https://d1a3f4spazzrp4.cloudfront.net/superfine/assets/uber-payment-icons/payment-cash.svg"
+        "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_29,w_60/v1538561011/ballyhoo/EMAIL/razorpay.jpg"
     }
   },
   {
     key: 2,
     text: "Ballyhoo wallet",
-    value: "Ballyhoo wallet"
-    // image: {
-    //   avatar: true,
-    //   src:
-    //     "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_24/v1538400149/ballyhoo/EMAIL/paytm_wcxbwf.webp"
-    // }
+    value: "Ballyhoo wallet",
+    image: {
+      src:
+        "https://res.cloudinary.com/dp67gawk6/image/upload/v1538557631/ballyhoo/EMAIL/ballyhoo-wallet.jpg"
+    }
   },
   {
     key: 3,
     text: "Pay at venue",
-    value: "Pay at venue"
-    // image: {
-    //   avatar: true,
-    //   src:
-    //     "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_24,w_24/v1538400149/ballyhoo/EMAIL/paytm_wcxbwf.webp"
-    // }
+    value: "Pay at venue",
+    image: {
+      src:
+        "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_29,w_60/v1538557643/ballyhoo/EMAIL/ballyhoo-pay-venue.jpg"
+    }
   }
 ];
 

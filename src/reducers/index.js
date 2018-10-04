@@ -46,6 +46,7 @@ import { newCategoryVenue } from "./newCategoryVenueReducer";
 import { saloonReservation } from "./saloonReservationReducer";
 
 import { authentication } from "./authenticationReducer";
+import { promoCode } from "./promoCodeReducer";
 
 export default combineReducers({
   cityLocality,
@@ -82,5 +83,6 @@ export default combineReducers({
   newCategoryPaytm,
   newCategoryVenue,
   saloonReservation,
-  authentication
+  authentication,
+  promoCode
 });

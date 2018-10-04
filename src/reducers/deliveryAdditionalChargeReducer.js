@@ -2,7 +2,7 @@ import { actionType } from "../actions/deliveryAdditionalChargeAction";
 
 const initialState = {
   charge: {},
-  status: false,
+  status: "START",
   msg: ""
 };
 
@@ -13,14 +13,14 @@ export function deliveryAdditionalCharge(state = initialState, action) {
         return {
           ...state,
           charge: action.deliveryAdditionalCharge.message.ballyhoo,
-          status: true,
+          status: "SUCCESS",
           msg: "successful"
         };
       } else {
         return {
           ...state,
           charge: {},
-          status: false,
+          status: "FAIL",
           msg: action.deliveryAdditionalCharge.error.ballyhoo
         };
       }

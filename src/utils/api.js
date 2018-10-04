@@ -719,5 +719,35 @@ export default {
         response.json().then(saloonReservation => resolve(saloonReservation));
       });
     });
+  },
+
+  verifyPromoCodeApi: (
+    mobile,
+    offerId,
+    amount,
+    quantity,
+    promoCode,
+    offeringId,
+    token
+  ) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v6/customer/apply/promocode?" +
+          getQueryString({
+            mobile: mobile,
+            offer_id: offerId,
+            amount: amount,
+            quantity: quantity,
+            promo_code: promoCode,
+            offering_id: offeringId
+          }),
+        {
+          method: "POST"
+        }
+      ).then(response => {
+        response.json().then(promoCode => resolve(promoCode));
+      });
+    });
   }
 };

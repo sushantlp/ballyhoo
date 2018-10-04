@@ -19,6 +19,8 @@ import { postSaloonReservation } from "../actions/saloonReservationAction";
 import { getDeliveryAdditionalCharge } from "../actions/deliveryAdditionalChargeAction";
 import { getOtherAdditionalCharge } from "../actions/otherAdditionalChargeAction";
 
+import { verifyPromoCode } from "../actions/promoCodeAction";
+
 function mapStateToProps(state) {
   return {
     paymentMode: state.paymentMode,
@@ -34,7 +36,9 @@ function mapStateToProps(state) {
     newCategoryPaytm: state.newCategoryPaytm,
     newCategoryWallet: state.newCategoryWallet,
     newCategoryVenue: state.newCategoryVenue,
-    saloonReservation: state.saloonReservation
+    saloonReservation: state.saloonReservation,
+
+    promoCode: state.promoCode
   };
 }
 
@@ -55,7 +59,9 @@ export default withRouter(
       postNewCategoryPaytm: postNewCategoryPaytm,
       postNewCategoryWallet: postNewCategoryWallet,
       postNewCategoryVenue: postNewCategoryVenue,
-      postSaloonReservation: postSaloonReservation
+      postSaloonReservation: postSaloonReservation,
+
+      verifyPromoCode: verifyPromoCode
     }
   )(CheckComponent)
 );
