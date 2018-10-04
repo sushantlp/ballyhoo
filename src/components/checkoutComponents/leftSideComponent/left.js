@@ -16,6 +16,16 @@ export default class Left extends React.Component {
   }
 
   render() {
+    if (this.props.parentState.delivery) {
+      if (this.props.deliveryAdditionalCharge.status === "START") {
+        return <Segment style={{ width: "400px", height: "400px" }} />;
+      }
+    } else {
+      if (this.props.otherAdditionalCharge.status === "START") {
+        return <Segment style={{ width: "400px", height: "400px" }} />;
+      }
+    }
+
     return (
       <div>
         <Segment style={{ width: "400px" }}>

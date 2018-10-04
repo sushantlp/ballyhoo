@@ -132,29 +132,30 @@ export default class Initial extends React.Component {
     });
   };
 
-  razorpayGatewayCall = key => {
+  razorpayGatewayCall = (amount, merchantBName, userEmail, userMobile) => {
     const options = {
       key: this.state.razorpay,
-      amount: "2000", // 2000 paise = INR 20
-      name: "Merchant Name",
+      amount: amount, // 2000 paise = INR 20
+      name: merchantBName,
       description: "Purchase Description",
       image: "/your_logo.png",
       handler: function(response) {
         alert(response.razorpay_payment_id);
       },
       prefill: {
-        name: "Harshil Mathur",
-        email: "harshil@razorpay.com"
+        // name: userName,
+        email: userEmail,
+        mobile: userMobile
       },
       notes: {
-        address: "Hello World"
+        address: ""
       },
       theme: {
         color: "#F37254"
       }
     };
 
-    var rzp = new window.Razorpay(options);
+    const rzp = new window.Razorpay(options);
     rzp.open();
   };
 
@@ -207,6 +208,7 @@ export default class Initial extends React.Component {
                     }
                     otherAdditionalCharge={this.props.otherAdditionalCharge}
                     errorMessage={this.errorMessage}
+                    razorpayGatewayCall={this.razorpayGatewayCall}
                   />
                 </Sticky>
               </Grid.Column>
