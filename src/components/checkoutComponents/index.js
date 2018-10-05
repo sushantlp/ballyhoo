@@ -19,11 +19,11 @@ export default class Initial extends React.Component {
       oldCategory: false,
       newCategory: false,
       paymentOption: "Online payment",
-      promoLabelFlag: true,
       errorMessage: false,
       errorText: "",
       key: {},
       userData: {},
+      promoLabelFlag: true,
       promoDiscountValue: {},
       promoApply: false,
       promoType: ""
@@ -99,11 +99,13 @@ export default class Initial extends React.Component {
 
   onChangePayment = (event, data) => {
     if (data.value === "Online payment") {
+      console.log("Online");
       this.setState({
         paymentOption: data.value,
         promoLabelFlag: true
       });
     } else {
+      console.log("Wallet");
       this.setState({
         paymentOption: data.value,
         promoLabelFlag: false

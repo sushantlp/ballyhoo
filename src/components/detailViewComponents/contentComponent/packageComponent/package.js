@@ -29,7 +29,8 @@ export default class Package extends React.Component {
     offeringName,
     categoryId,
     offeringId,
-    merchantMobile
+    merchantMobile,
+    merchantBname
   ) => {
     const newList = this.addQuantiyParam(
       list,
@@ -38,7 +39,8 @@ export default class Package extends React.Component {
       offeringName,
       categoryId,
       offeringId,
-      merchantMobile
+      merchantMobile,
+      merchantBname
     );
 
     this.setState({
@@ -54,7 +56,8 @@ export default class Package extends React.Component {
     offeringName,
     categoryId,
     offeringId,
-    merchantMobile
+    merchantMobile,
+    merchantBname
   ) => {
     const copyBookingDetail = this.props.detailState.bookingDetail;
 
@@ -64,6 +67,7 @@ export default class Package extends React.Component {
     list.category_id = categoryId;
     list.offering_id = offeringId;
     list.merchant_mobile = merchantMobile;
+    list.merchant_bname = merchantBname;
 
     list.Package_Price_List.map((obj, key) => {
       if (copyBookingDetail.hasOwnProperty("packageList")) {
@@ -195,6 +199,7 @@ export default class Package extends React.Component {
       obj.category_name = this.state.priceList.category_name;
       obj.offering_name = this.state.priceList.offering_name;
       obj.merchant_mobile = this.state.priceList.merchant_mobile;
+      obj.merchant_bname = this.state.priceList.merchant_bname;
       obj.category_id = this.state.priceList.category_id;
       obj.currency_symbol = currency;
 
@@ -575,7 +580,8 @@ export default class Package extends React.Component {
     offeringName,
     categoryId,
     offeringId,
-    merchantMobile
+    merchantMobile,
+    merchantBname
   ) => {
     return (
       <Segment key={key}>
@@ -594,7 +600,8 @@ export default class Package extends React.Component {
               offeringName,
               categoryId,
               offeringId,
-              merchantMobile
+              merchantMobile,
+              merchantBname
             )
           }
         >
@@ -648,7 +655,8 @@ export default class Package extends React.Component {
     offeringName,
     categoryId,
     offeringId,
-    merchantMobile
+    merchantMobile,
+    merchantBname
   ) => {
     return (
       <Segment key={key}>
@@ -667,7 +675,8 @@ export default class Package extends React.Component {
               offeringName,
               categoryId,
               offeringId,
-              merchantMobile
+              merchantMobile,
+              merchantBname
             )
           }
         >
@@ -717,7 +726,8 @@ export default class Package extends React.Component {
     offeringName,
     categoryId,
     offeringId,
-    merchantMobile
+    merchantMobile,
+    merchantBname
   ) => {
     return packages.Offer_Package_List.map((inside, key) => {
       return this.eventPackageComponent(
@@ -729,7 +739,8 @@ export default class Package extends React.Component {
         offeringName,
         categoryId,
         offeringId,
-        merchantMobile
+        merchantMobile,
+        merchantBname
       );
     });
   };
@@ -797,7 +808,8 @@ export default class Package extends React.Component {
     offeringName,
     categoryId,
     offeringId,
-    merchantMobile
+    merchantMobile,
+    merchantBname
   ) => {
     if (status) {
       return offers.map((outside, key) => {
@@ -859,7 +871,8 @@ export default class Package extends React.Component {
           offeringName,
           categoryId,
           offeringId,
-          merchantMobile
+          merchantMobile,
+          merchantBname
         );
       });
     }
@@ -876,6 +889,7 @@ export default class Package extends React.Component {
     let merchantMobile = undefined;
     let categoryId = undefined;
     let offeringId = undefined;
+    let merchantBname = undefined;
 
     if (this.props.detailState.apiCall) {
       if (this.props.detailState.which === "new") {
@@ -910,6 +924,8 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offering_Id;
           merchantMobile = this.props.newViewDetail.newViewDetail.offers
             .Merchant_Details.Merchant_Mobile;
+          merchantBname = this.props.newViewDetail.newViewDetail.offers
+            .Merchant_Details.Merchant_Bname;
         } else if (
           Object.keys(this.props.newViewDetail.newViewDetail.offers.EVENT)
             .length !== 0
@@ -930,6 +946,8 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offering_Id;
           merchantMobile = this.props.newViewDetail.newViewDetail.offers
             .Merchant_Details.Merchant_Mobile;
+          merchantBname = this.props.newViewDetail.newViewDetail.offers
+            .Merchant_Details.Merchant_Bname;
         } else if (
           Object.keys(this.props.newViewDetail.newViewDetail.offers.GETAWAY)
             .length !== 0
@@ -950,6 +968,8 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offering_Id;
           merchantMobile = this.props.newViewDetail.newViewDetail.offers
             .Merchant_Details.Merchant_Mobile;
+          merchantBname = this.props.newViewDetail.newViewDetail.offers
+            .Merchant_Details.Merchant_Bname;
         } else if (
           Object.keys(this.props.newViewDetail.newViewDetail.offers.SALOON)
             .length !== 0
@@ -970,6 +990,8 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offering_Id;
           merchantMobile = this.props.newViewDetail.newViewDetail.offers
             .Merchant_Details.Merchant_Mobile;
+          merchantBname = this.props.newViewDetail.newViewDetail.offers
+            .Merchant_Details.Merchant_Bname;
         } else {
           return <div />;
         }
@@ -1001,6 +1023,8 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offering_Id;
           merchantMobile = this.props.history.location.state.offerData.data
             .Merchant_Details.Merchant_Mobile;
+          merchantBname = this.props.history.location.state.offerData.data
+            .Merchant_Details.Merchant_Bname;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.EVENT)
             .length !== 0
@@ -1023,6 +1047,8 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offering_Id;
           merchantMobile = this.props.history.location.state.offerData.data
             .Merchant_Details.Merchant_Mobile;
+          merchantBname = this.props.history.location.state.offerData.data
+            .Merchant_Details.Merchant_Bname;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.GETAWAY)
             .length !== 0
@@ -1044,6 +1070,8 @@ export default class Package extends React.Component {
             .Offer_Basic_Details.Offering_Id;
           merchantMobile = this.props.history.location.state.offerData.data
             .Merchant_Details.Merchant_Mobile;
+          merchantBname = this.props.history.location.state.offerData.data
+            .Merchant_Details.Merchant_Bname;
         } else if (
           Object.keys(this.props.history.location.state.offerData.data.SALOON)
             .length !== 0
@@ -1069,6 +1097,8 @@ export default class Package extends React.Component {
               .Offer_Basic_Details.Offering_Id;
             merchantMobile = this.props.history.location.state.offerData.data
               .Merchant_Details.Merchant_Mobile;
+            merchantBname = this.props.history.location.state.offerData.data
+              .Merchant_Details.Merchant_Bname;
           } else {
             return <div />;
           }
@@ -1098,7 +1128,8 @@ export default class Package extends React.Component {
             offeringName,
             categoryId,
             offeringId,
-            merchantMobile
+            merchantMobile,
+            merchantBname
           )}
           {door
             ? this.clickEventDate(
@@ -1108,7 +1139,8 @@ export default class Package extends React.Component {
                 offeringName,
                 categoryId,
                 offeringId,
-                merchantMobile
+                merchantMobile,
+                merchantBname
               )
             : null}
           {open ? this.packageModel(currencySymbol, categoryName) : null}

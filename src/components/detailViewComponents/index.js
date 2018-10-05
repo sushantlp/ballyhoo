@@ -60,7 +60,7 @@ export default class DetailView extends React.Component {
     });
   };
 
-  // update Booking Detail
+  // Update Booking Detail
   updateBookingDetail = data => {
     this.setState({
       bookingDetail: data

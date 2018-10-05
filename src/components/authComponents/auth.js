@@ -155,9 +155,10 @@ export default class Auth extends React.Component {
     // Success Action
     this.props.registerSuccess(true);
 
+    console.log(mobile);
     // User Data Object
     const userData = {
-      userMobile: this.state.userMobile,
+      userMobile: mobile,
       userEmail: this.state.userEmail
     };
 

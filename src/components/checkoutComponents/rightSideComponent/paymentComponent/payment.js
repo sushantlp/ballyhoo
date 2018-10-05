@@ -152,6 +152,7 @@ export default class Payment extends React.Component {
           options={paymentMode}
           onChange={(event, data) => this.props.onChangePayment(event, data)}
           defaultValue={this.props.parentState.paymentOption}
+          disabled={this.state.promoApply}
         />
 
         <label

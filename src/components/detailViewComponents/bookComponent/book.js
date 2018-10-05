@@ -452,12 +452,13 @@ export default class Book extends React.Component {
     }
   };
 
-  checkoutLogic = (object, status) => {
+  checkoutLogic = (object, currencySymbol, status) => {
     let newObject = {};
     if (status) {
       newObject = {
         detailObject: this.props.detailState.bookingDetail,
         categoryFlag: "NEW",
+        currencySymbol: currencySymbol,
         detailBookingPrice: this.calculateFinalAmount(
           this.props.detailState.bookingDetail
         )
@@ -466,6 +467,7 @@ export default class Book extends React.Component {
       newObject = {
         detailObject: object,
         categoryFlag: "OLD",
+        currencySymbol: currencySymbol,
         detailBookingPrice: this.state.bookingPrice,
         detailQuantity: this.state.quantity
       };
@@ -855,7 +857,9 @@ export default class Book extends React.Component {
               marginLeft: "24px",
               marginRight: "24px"
             }}
-            onClick={() => this.checkoutLogic(obj, status)}
+            onClick={() =>
+              this.checkoutLogic(obj, String.fromCharCode(dec), status)
+            }
           >
             Procced
           </Button>
