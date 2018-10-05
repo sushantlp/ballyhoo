@@ -57,7 +57,7 @@ export default class Left extends React.Component {
     );
   };
 
-  secondHalfQuantityComponent = () => {
+  secondHalfQuantityComponent = (quantity, categoryType) => {
     return (
       <span
         style={{
@@ -82,7 +82,7 @@ export default class Left extends React.Component {
             display: "inline"
           }}
         >
-          2
+          {quantity}
         </label>
         <Icon
           name="plus square outline"
@@ -97,7 +97,13 @@ export default class Left extends React.Component {
     );
   };
 
-  secondHalfComponent = promoApply => {
+  oldSecondHalfComponent = (
+    offeringTitle,
+    price,
+    currencySymbol,
+    quantity,
+    promoApply
+  ) => {
     return (
       <div>
         <label
@@ -105,10 +111,10 @@ export default class Left extends React.Component {
             fontSize: "20px"
           }}
         >
-          Lunch Buffet
+          {offeringTitle}
         </label>
 
-        {promoApply ? null : this.secondHalfQuantityComponent()}
+        {promoApply ? null : this.secondHalfQuantityComponent(quantity, "OLD")}
         <span
           style={{
             float: "right"
@@ -119,7 +125,8 @@ export default class Left extends React.Component {
               fontSize: "20px"
             }}
           >
-            $200
+            {currencySymbol}
+            {price}
           </label>
         </span>
       </div>
@@ -143,13 +150,14 @@ export default class Left extends React.Component {
             float: "right"
           }}
         >
-          {currencySymbol} {Subtotal}
+          {currencySymbol}
+          {Subtotal}
         </label>
       </div>
     );
   };
 
-  fourthHalfPromoCodeDisplay = () => {
+  fourthHalfPromoCodeDisplay = (promoDiscountValue, currencySymbol) => {
     return (
       <div
         style={{
@@ -166,7 +174,8 @@ export default class Left extends React.Component {
             float: "right"
           }}
         >
-          $200
+          {currencySymbol}
+          {promoDiscountValue.discount_value}
         </label>
 
         <span
@@ -181,9 +190,10 @@ export default class Left extends React.Component {
       </div>
     );
   };
-  fourthHalfAdditionalCharge = () => {
+  fourthHalfAdditionalCharge = (name, value, type, currencySymbol, key) => {
     return (
       <div
+        key={key}
         style={{
           color: "rgba(0,0,0,.6)",
           fontSize: "14px",
@@ -191,18 +201,31 @@ export default class Left extends React.Component {
           justifyContent: "space-between"
         }}
       >
-        <label>Service Charge</label>
+        <label>{name}</label>
+
+        <span
+          style={{
+            display: type === 2 ? "inline" : "none",
+            color: "rgba(0,0,0,.6)",
+            fontSize: "14px",
+            float: "right"
+          }}
+        >
+          &#x25;
+        </span>
 
         <label
           style={{
             float: "right"
           }}
         >
-          $50
+          {type === 1 ? currencySymbol : null}
+          {value}
         </label>
 
         <span
           style={{
+            display: type === 1 ? "inline" : "none",
             color: "rgba(241,19,58,1)",
             fontSize: "14px",
             float: "right"
@@ -214,7 +237,7 @@ export default class Left extends React.Component {
     );
   };
 
-  fourthHalfTotalAmount = () => {
+  fourthHalfTotalAmount = (grandTotal, currencySymbol) => {
     return (
       <div
         style={{
@@ -232,36 +255,77 @@ export default class Left extends React.Component {
             float: "right"
           }}
         >
-          $269
+          {currencySymbol}
+          {grandTotal}
         </label>
       </div>
     );
   };
 
-  fourthHalfComponent = (promoApply, promoType) => {
+  fourthHalfComponent = (
+    charge,
+    promoApply,
+    promoType,
+    currencySymbol,
+    promoDiscountValue
+  ) => {
     return (
       <div>
         {promoApply
           ? promoType === "CASH_DISCOUNT"
-            ? this.fourthHalfPromoCodeDisplay()
+            ? this.fourthHalfPromoCodeDisplay(
+                promoDiscountValue,
+                currencySymbol
+              )
             : null
           : null}
-        {this.fourthHalfAdditionalCharge()}
+
+        {charge.charges.map((item, key) => {
+          return this.fourthHalfAdditionalCharge(
+            item.name,
+            item.value,
+            item.type,
+            currencySymbol,
+            key
+          );
+        })}
         <Divider />
-        {this.fourthHalfTotalAmount()}
+        {this.fourthHalfTotalAmount(charge.grand_total, currencySymbol)}
       </div>
     );
   };
+
   render() {
     let merchantBname = undefined;
+    let charge = {};
 
     if (this.props.parentState.delivery) {
       if (this.props.deliveryAdditionalCharge.status === "START") {
         return <Segment style={{ width: "400px", height: "400px" }} />;
+      } else {
+        if (this.props.deliveryAdditionalCharge.status === "SUCCESS") {
+          charge = this.props.deliveryAdditionalCharge.charge;
+        } else {
+          // Call Error Message
+          this.props.errorMessage(
+            true,
+            this.props.deliveryAdditionalCharge.msg
+          );
+          return <Segment style={{ width: "400px", height: "400px" }} />;
+        }
       }
     } else {
       if (this.props.otherAdditionalCharge.status === "START") {
         return <Segment style={{ width: "400px", height: "400px" }} />;
+      } else {
+        if (this.props.otherAdditionalCharge.status === "SUCCESS") {
+          charge = this.props.otherAdditionalCharge.charge;
+        } else {
+          // Call Error Message
+          this.props.errorMessage(true, this.props.otherAdditionalCharge.msg);
+
+          return <Segment style={{ width: "400px", height: "400px" }} />;
+        }
       }
     }
 
@@ -280,7 +344,17 @@ export default class Left extends React.Component {
         <Segment style={{ width: "400px" }}>
           {this.firstHalfComponent(merchantBname)}
           <Divider />
-          {this.secondHalfComponent(this.props.parentState.promoApply)}
+          {this.props.parentState.oldCategory
+            ? this.oldSecondHalfComponent(
+                this.props.history.location.state.checkoutData.detailObject
+                  .offering_title,
+                this.props.history.location.state.checkoutData
+                  .detailBookingPrice,
+                this.props.history.location.state.checkoutData.currencySymbol,
+                this.props.history.location.state.checkoutData.detailQuantity,
+                this.props.parentState.promoApply
+              )
+            : null}
           <Divider />
           {this.thirdHalfComponent(
             this.props.history.location.state.checkoutData.detailBookingPrice,
@@ -288,8 +362,11 @@ export default class Left extends React.Component {
           )}
           <Divider />
           {this.fourthHalfComponent(
+            charge,
             this.props.parentState.promoApply,
-            this.props.parentState.promoType
+            this.props.parentState.promoType,
+            this.props.history.location.state.checkoutData.currencySymbol,
+            this.props.parentState.promoDiscountValue
           )}
         </Segment>
       </div>
