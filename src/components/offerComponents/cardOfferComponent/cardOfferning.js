@@ -321,7 +321,7 @@ export default class Trending extends React.Component {
   ) => {
     return (
       <Card
-      raised={true}
+        raised={true}
         className={classes.OfferningCard}
         key={key}
         style={{ cursor: "pointer" }}
@@ -1021,7 +1021,7 @@ export default class Trending extends React.Component {
     // if (document.referrer == "") {
     //   window.close();
     // } else {
-      this.props.history.go(-1);
+    this.props.history.go(-1);
     // }
   };
 
@@ -1054,7 +1054,7 @@ export default class Trending extends React.Component {
               <SweetAlert
                 show={true}
                 title="Ballyhoo"
-                imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                imageUrl="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_50/v1539007601/ballyhoo/EMAIL/ballyhoo_black.png"
                 text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                 onConfirm={() => this.backHistory()}
               />
@@ -1083,7 +1083,7 @@ export default class Trending extends React.Component {
               <SweetAlert
                 show={true}
                 title="Ballyhoo"
-                imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                imageUrl="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_50/v1539007601/ballyhoo/EMAIL/ballyhoo_black.png"
                 text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                 onConfirm={() => this.backHistory()}
               />
@@ -1115,7 +1115,7 @@ export default class Trending extends React.Component {
               <SweetAlert
                 show={true}
                 title="Ballyhoo"
-                imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                imageUrl="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_50/v1539007601/ballyhoo/EMAIL/ballyhoo_black.png"
                 text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                 onConfirm={() => this.backHistory()}
               />
@@ -1144,7 +1144,7 @@ export default class Trending extends React.Component {
               <SweetAlert
                 show={true}
                 title="Ballyhoo"
-                imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+                imageUrl="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_50/v1539007601/ballyhoo/EMAIL/ballyhoo_black.png"
                 text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
                 onConfirm={() => this.backHistory()}
               />
@@ -1174,7 +1174,7 @@ export default class Trending extends React.Component {
             <SweetAlert
               show={true}
               title="Ballyhoo"
-              imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+              imageUrl="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_50/v1539007601/ballyhoo/EMAIL/ballyhoo_black.png"
               text="Gosh! seems like all the offers are gone already! Please try in few hours to explore new ones"
               onConfirm={() => this.backHistory()}
             />
@@ -1224,7 +1224,7 @@ export default class Trending extends React.Component {
           <SweetAlert
             show={true}
             title="Ballyhoo"
-            imageUrl="http://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_30/v1503906380/ballyhoo/EMAIL/logo.png"
+            imageUrl="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_50/v1539007601/ballyhoo/EMAIL/ballyhoo_black.png"
             html="Please download the Ballyhoo App for Ios <a href= https://itunes.apple.com/in/app/ballyhoo-food-drinks-offers/id1138306421?mt=8>App Store</a> for Android <a href= https://play.google.com/store/apps/details?id=com.sense.today.ballyhoo>Play Store</a>"
             onConfirm={() => this.logicClickButton(false)}
           />

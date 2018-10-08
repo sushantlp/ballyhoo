@@ -150,7 +150,8 @@ export default class Initial extends React.Component {
       amount: amount, // 2000 paise = INR 20
       name: merchantBName,
       description: "Purchase Description",
-      image: "/your_logo.png",
+      image:
+        "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_50/v1539007601/ballyhoo/EMAIL/ballyhoo_black.png",
       handler: function(response) {
         alert(response.razorpay_payment_id);
       },
