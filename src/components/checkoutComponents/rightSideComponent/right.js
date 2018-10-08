@@ -15,6 +15,7 @@ export default class Right extends React.Component {
         <TimeComponent
           parentState={this.props.parentState}
           history={this.props.history}
+          updateTime={this.props.updateTime}
         />
 
         <LocationComponent

@@ -208,6 +208,7 @@ export default class Left extends React.Component {
             marginLeft: "24px",
             marginRight: "24px"
           }}
+          onClick={() => this.props.placeOrderButtonClick()}
         >
           Place Order
         </Button>

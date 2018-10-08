@@ -17,6 +17,8 @@ export default class Time extends React.Component {
       timeObject.hour + ":" + timeObject.minute + " " + timeObject.meridiem;
 
     this.setState({ time: time });
+
+    this.props.updateTime(time);
   }
 
   render() {

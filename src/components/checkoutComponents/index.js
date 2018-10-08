@@ -32,7 +32,9 @@ export default class Initial extends React.Component {
       finalQuantity: 0,
       finalGrandTotal: 0,
       finalCharge: {},
-      newBookingState: {}
+      newBookingState: {},
+
+      time: {}
     };
   }
 
@@ -198,6 +200,17 @@ export default class Initial extends React.Component {
       newBookingState: data
     });
   };
+
+  updateTime = time => {
+    this.setState({
+      time
+    });
+  };
+
+  placeOrderButtonClick = () => {
+    console.log(this.state);
+  };
+
   render() {
     return (
       <div>
@@ -235,6 +248,7 @@ export default class Initial extends React.Component {
                   }
                   getOtherAdditionalCharge={this.props.getOtherAdditionalCharge}
                   changeStatePromoValue={this.changeStatePromoValue}
+                  updateTime={this.updateTime}
                 />
               </Grid.Column>
               <Grid.Column width={2}>
@@ -253,6 +267,7 @@ export default class Initial extends React.Component {
                     updateFinalGrandTotal={this.updateFinalGrandTotal}
                     updateFinalCharge={this.updateFinalCharge}
                     updateNewBookingState={this.updateNewBookingState}
+                    placeOrderButtonClick={this.placeOrderButtonClick}
                   />
                 </Sticky>
               </Grid.Column>
