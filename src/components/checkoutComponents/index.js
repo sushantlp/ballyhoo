@@ -26,7 +26,13 @@ export default class Initial extends React.Component {
       promoLabelFlag: true,
       promoDiscountValue: {},
       promoApply: false,
-      promoType: ""
+      promoType: "",
+
+      finalPrice: 0,
+      finalQuantity: 0,
+      finalGrandTotal: 0,
+      finalCharge: {},
+      newBookingState: {}
     };
   }
 
@@ -58,7 +64,9 @@ export default class Initial extends React.Component {
           this.setState({
             oldCategory: true,
             key: JSON.parse(key),
-            userData: JSON.parse(userData)
+            userData: JSON.parse(userData),
+            finalPrice: object.detailBookingPrice,
+            finalQuantity: object.detailQuantity
           });
 
           // Get Additional Charge
@@ -77,7 +85,9 @@ export default class Initial extends React.Component {
         this.setState({
           newCategory: true,
           key: JSON.parse(key),
-          userData: JSON.parse(userData)
+          userData: JSON.parse(userData),
+          newBookingState: this.props.location.state.checkoutData.detailObject,
+          finalPrice: object.detailBookingPrice
         });
 
         // Get Additional Charge
@@ -99,13 +109,11 @@ export default class Initial extends React.Component {
 
   onChangePayment = (event, data) => {
     if (data.value === "Online payment") {
-      console.log("Online");
       this.setState({
         paymentOption: data.value,
         promoLabelFlag: true
       });
     } else {
-      console.log("Wallet");
       this.setState({
         paymentOption: data.value,
         promoLabelFlag: false
@@ -161,6 +169,35 @@ export default class Initial extends React.Component {
     rzp.open();
   };
 
+  updateFinalPrice = price => {
+    this.setState({
+      finalPrice: price
+    });
+  };
+
+  updateFinalQuantity = quantity => {
+    this.setState({
+      finalQuantity: quantity
+    });
+  };
+
+  updateFinalGrandTotal = grandTotal => {
+    this.setState({
+      finalGrandTotal: grandTotal
+    });
+  };
+
+  updateFinalCharge = charge => {
+    this.setState({
+      finalCharge: charge
+    });
+  };
+
+  updateNewBookingState = data => {
+    this.setState({
+      newBookingState: data
+    });
+  };
   render() {
     return (
       <div>
@@ -211,6 +248,11 @@ export default class Initial extends React.Component {
                     otherAdditionalCharge={this.props.otherAdditionalCharge}
                     errorMessage={this.errorMessage}
                     razorpayGatewayCall={this.razorpayGatewayCall}
+                    updateFinalPrice={this.updateFinalPrice}
+                    updateFinalQuantity={this.updateFinalQuantity}
+                    updateFinalGrandTotal={this.updateFinalGrandTotal}
+                    updateFinalCharge={this.updateFinalCharge}
+                    updateNewBookingState={this.updateNewBookingState}
                   />
                 </Sticky>
               </Grid.Column>

@@ -1018,11 +1018,11 @@ export default class Trending extends React.Component {
 
   // Back History
   backHistory = () => {
-    if (document.referrer == "") {
-      window.close();
-    } else {
+    // if (document.referrer == "") {
+    //   window.close();
+    // } else {
       this.props.history.go(-1);
-    }
+    // }
   };
 
   render() {

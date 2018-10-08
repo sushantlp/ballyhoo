@@ -124,17 +124,22 @@ export default class Payment extends React.Component {
       this.props.verifyPromoCode(
         this.props.parentState.userData.userMobile,
         object.detailObject.offer_id,
-        object.detailBookingPrice,
+        this.props.parentState.finalPrice,
         1,
         this.state.promoCode,
         object.detailObject.offering_id,
         this.props.parentState.key.token
       );
     } else {
+      let price = object.detailBookingPrice;
+      if (this.props.parentState.finalQuantity !== 0) {
+        price =
+          object.detailBookingPrice * this.props.parentState.finalQuantity;
+      }
       this.props.verifyPromoCode(
         this.props.parentState.userData.userMobile,
         object.detailObject.id,
-        object.detailBookingPrice,
+        price,
         object.detailQuantity,
         this.state.promoCode,
         object.detailObject.Offering_Id,
