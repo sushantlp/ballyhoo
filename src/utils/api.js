@@ -279,23 +279,19 @@ export default {
     };
 
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v4/web/user/profile?" +
-          getQueryString({
-            mobile: mobile,
-            first_name: firstName,
-            last_name: lastName,
-            email: email,
-            birth: birth,
-            gender: gender
-          }),
-        {
-          method: "POST"
+      fetch(host + "api/v4/web/user/profile", {
+        method: "POST",
+        body: JSON.stringify({
+          mobile: mobile,
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          birth: birth,
+          gender: gender
+        })
 
-          // headers: new Headers(header)
-        }
-      )
+        // headers: new Headers(header)
+      })
         .then(response => {
           response
             .json()
@@ -321,17 +317,13 @@ export default {
   },
   verifyOtpApi: (mobile, code) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v3/generic/otp/verify?" +
-          getQueryString({
-            mobile: mobile,
-            code: code
-          }),
-        {
-          method: "POST"
-        }
-      )
+      fetch(host + "api/v3/generic/otp/verify", {
+        method: "POST",
+        body: JSON.stringify({
+          mobile: mobile,
+          code: code
+        })
+      })
         .then(response => {
           response
             .json()
@@ -352,41 +344,33 @@ export default {
     token
   ) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v6/customer/deal/payment?" +
-          getQueryString({
-            dealid: dealId,
-            quantity: quantity,
-            amount: amount,
-            mobile: mobile,
-            time: time,
-            reservationDate: reservationDate,
-            razorpayPaymentId: razorpayPaymentId
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v6/customer/deal/payment", {
+        method: "POST",
+        body: JSON.stringify({
+          dealid: dealId,
+          quantity: quantity,
+          amount: amount,
+          mobile: mobile,
+          time: time,
+          reservationDate: reservationDate,
+          razorpayPaymentId: razorpayPaymentId
+        })
+      }).then(response => {
         response.json().then(fnbRazorpay => resolve(fnbRazorpay));
       });
     });
   },
   fnbWalletApi: (dealId, quantity, amount, mobile, token) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v6/customer/deal/pointredeem?" +
-          getQueryString({
-            dealid: dealId,
-            quantity: quantity,
-            amount: amount,
-            mobile: mobile
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v6/customer/deal/pointredeem", {
+        method: "POST",
+        body: JSON.stringify({
+          dealid: dealId,
+          quantity: quantity,
+          amount: amount,
+          mobile: mobile
+        })
+      }).then(response => {
         response.json().then(fnbWallet => resolve(fnbWallet));
       });
     });
@@ -402,22 +386,18 @@ export default {
     token
   ) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v6/paytm /verify/paytm/transaction?" +
-          getQueryString({
-            deal_id: dealId,
-            order_id: orderId,
-            quantity: quantity,
-            mobile: mobile,
-            amount: amount,
-            hash: hash,
-            mid: mid
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v6/paytm /verify/paytm/transaction", {
+        method: "POST",
+        body: JSON.stringify({
+          deal_id: dealId,
+          order_id: orderId,
+          quantity: quantity,
+          mobile: mobile,
+          amount: amount,
+          hash: hash,
+          mid: mid
+        })
+      }).then(response => {
         response.json().then(fnbPaytm => resolve(fnbPaytm));
       });
     });
@@ -432,21 +412,17 @@ export default {
     token
   ) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v5/customer/deal/pav/payment?" +
-          getQueryString({
-            mobile: mobile,
-            deal_id: dealId,
-            amount: amount,
-            quantity: quantity,
-            time: time,
-            reservation_date: reservationDate
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v5/customer/deal/pav/payment", {
+        method: "POST",
+        body: JSON.stringify({
+          mobile: mobile,
+          deal_id: dealId,
+          amount: amount,
+          quantity: quantity,
+          time: time,
+          reservation_date: reservationDate
+        })
+      }).then(response => {
         response.json().then(fnbVenue => resolve(fnbVenue));
       });
     });
@@ -464,23 +440,19 @@ export default {
     token
   ) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v5/customer/deal/delivery/payment?" +
-          getQueryString({
-            mobile: mobile,
-            deal_id: dealId,
-            amount: amount,
-            delivery_date: deliveryDate,
-            delivery_time: deliveryTime,
-            razorpay_payment_id: razorpayPaymentId,
-            customer_details: customerDetail,
-            item_details: itemDetail
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v5/customer/deal/delivery/payment", {
+        method: "POST",
+        body: JSON.stringify({
+          mobile: mobile,
+          deal_id: dealId,
+          amount: amount,
+          delivery_date: deliveryDate,
+          delivery_time: deliveryTime,
+          razorpay_payment_id: razorpayPaymentId,
+          customer_details: customerDetail,
+          item_details: itemDetail
+        })
+      }).then(response => {
         response.json().then(deliveryRazorpay => resolve(deliveryRazorpay));
       });
     });
@@ -496,22 +468,18 @@ export default {
     token
   ) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v5/customer/deal/delivery/pointredeem?" +
-          getQueryString({
-            mobile: mobile,
-            deal_id: dealId,
-            amount: amount,
-            delivery_date: deliveryDate,
-            delivery_time: deliveryTime,
-            customer_details: customerDetail,
-            item_details: itemDetail
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v5/customer/deal/delivery/pointredeem", {
+        method: "POST",
+        body: JSON.stringify({
+          mobile: mobile,
+          deal_id: dealId,
+          amount: amount,
+          delivery_date: deliveryDate,
+          delivery_time: deliveryTime,
+          customer_details: customerDetail,
+          item_details: itemDetail
+        })
+      }).then(response => {
         response.json().then(deliveryWallet => resolve(deliveryWallet));
       });
     });
@@ -530,25 +498,21 @@ export default {
     token
   ) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v5/customer/delivery/capturepaytmresponse?" +
-          getQueryString({
-            mobile: mobile,
-            deal_id: dealId,
-            order_id: orderId,
-            hash: hash,
-            mid: mid,
-            amount: amount,
-            delivery_date: deliveryDate,
-            delivery_time: deliveryTime,
-            customer_details: customerDetail,
-            item_details: itemDetail
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v5/customer/delivery/capturepaytmresponse", {
+        method: "POST",
+        body: JSON.stringify({
+          mobile: mobile,
+          deal_id: dealId,
+          order_id: orderId,
+          hash: hash,
+          mid: mid,
+          amount: amount,
+          delivery_date: deliveryDate,
+          delivery_time: deliveryTime,
+          customer_details: customerDetail,
+          item_details: itemDetail
+        })
+      }).then(response => {
         response.json().then(deliveryPaytm => resolve(deliveryPaytm));
       });
     });
@@ -564,22 +528,18 @@ export default {
     token
   ) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v5/customer/deal/delivery/cashorder?" +
-          getQueryString({
-            mobile: mobile,
-            deal_id: dealId,
-            amount: amount,
-            delivery_date: deliveryDate,
-            delivery_time: deliveryTime,
-            customer_details: customerDetail,
-            item_details: itemDetail
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v5/customer/deal/delivery/cashorder", {
+        method: "POST",
+        body: JSON.stringify({
+          mobile: mobile,
+          deal_id: dealId,
+          amount: amount,
+          delivery_date: deliveryDate,
+          delivery_time: deliveryTime,
+          customer_details: customerDetail,
+          item_details: itemDetail
+        })
+      }).then(response => {
         response.json().then(deliveryVenue => resolve(deliveryVenue));
       });
     });
@@ -595,6 +555,9 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v6/customer/other/category/razor/purchase", {
+        // headers: {
+        //   "Content-Type": "application/json"
+        // },
         method: "POST",
         body: JSON.stringify({
           offer_id: offerId,
@@ -620,20 +583,16 @@ export default {
     token
   ) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v6/customer/other/category/wallet/purchase?" +
-          getQueryString({
-            offer_id: offerId,
-            mobile: mobile,
-            amount: amount,
-            booking_at: bookingAt,
-            order_item_list: orderItemList
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v6/customer/other/category/wallet/purchase", {
+        method: "POST",
+        body: JSON.stringify({
+          offer_id: offerId,
+          mobile: mobile,
+          amount: amount,
+          booking_at: bookingAt,
+          order_item_list: orderItemList
+        })
+      }).then(response => {
         response.json().then(newCategoryWallet => resolve(newCategoryWallet));
       });
     });
@@ -650,23 +609,19 @@ export default {
     token
   ) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v6/customer/other/category/paytm/purchase?" +
-          getQueryString({
-            offer_id: offerId,
-            order_id: orderId,
-            mid: mid,
-            hash: hash,
-            mobile: mobile,
-            amount: amount,
-            booking_at: bookingAt,
-            order_item_list: orderItemList
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v6/customer/other/category/paytm/purchase", {
+        method: "POST",
+        body: JSON.stringify({
+          offer_id: offerId,
+          order_id: orderId,
+          mid: mid,
+          hash: hash,
+          mobile: mobile,
+          amount: amount,
+          booking_at: bookingAt,
+          order_item_list: orderItemList
+        })
+      }).then(response => {
         response.json().then(newCategoryPaytm => resolve(newCategoryPaytm));
       });
     });
@@ -680,38 +635,30 @@ export default {
     token
   ) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v6/customer/other/category/pav/purchase?" +
-          getQueryString({
-            offer_id: offerId,
-            mobile: mobile,
-            amount: amount,
-            booking_at: bookingAt,
-            order_item_list: orderItemList
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v6/customer/other/category/pav/purchase", {
+        method: "POST",
+        body: JSON.stringify({
+          offer_id: offerId,
+          mobile: mobile,
+          amount: amount,
+          booking_at: bookingAt,
+          order_item_list: orderItemList
+        })
+      }).then(response => {
         response.json().then(newCategoryVenue => resolve(newCategoryVenue));
       });
     });
   },
   saloonReservationApi: (offerId, mobile, bookingAt, token) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v6/customer/other/category/online/reserve?" +
-          getQueryString({
-            offer_id: offerId,
-            mobile: mobile,
-            booking_at: bookingAt
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v6/customer/other/category/online/reserve", {
+        method: "POST",
+        body: JSON.stringify({
+          offer_id: offerId,
+          mobile: mobile,
+          booking_at: bookingAt
+        })
+      }).then(response => {
         response.json().then(saloonReservation => resolve(saloonReservation));
       });
     });
@@ -727,21 +674,17 @@ export default {
     token
   ) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v6/customer/apply/promocode?" +
-          getQueryString({
-            mobile: mobile,
-            offer_id: offerId,
-            amount: amount,
-            quantity: quantity,
-            promo_code: promoCode,
-            offering_id: offeringId
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v6/customer/apply/promocode", {
+        method: "POST",
+        body: JSON.stringify({
+          mobile: mobile,
+          offer_id: offerId,
+          amount: amount,
+          quantity: quantity,
+          promo_code: promoCode,
+          offering_id: offeringId
+        })
+      }).then(response => {
         response.json().then(promoCode => resolve(promoCode));
       });
     });

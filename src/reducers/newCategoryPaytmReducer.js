@@ -1,7 +1,9 @@
 import { actionType } from "../actions/newCategoryPaytmAction";
 
 const initialState = {
-  newCategoryPaytm: {}
+  newCategoryPaytm: {},
+  status: "START",
+  msg: ""
 };
 
 export function newCategoryPaytm(state = initialState, action) {
@@ -10,12 +12,16 @@ export function newCategoryPaytm(state = initialState, action) {
       if (action.newCategoryPaytm.hasOwnProperty("error")) {
         return {
           ...state,
-          newCategoryPaytm: {}
+          newCategoryPaytm: {},
+          status: "FAIL",
+          msg: action.newCategoryPaytm.error.ballyhoo
         };
       } else {
         return {
           ...state,
-          newCategoryPaytm: action.newCategoryPaytm
+          newCategoryPaytm: action.newCategoryPaytm,
+          status: "SUCCESS",
+          msg: "successful"
         };
       }
     default:

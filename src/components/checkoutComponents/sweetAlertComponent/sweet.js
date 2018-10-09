@@ -5,9 +5,9 @@ const Sweet = props => {
   return (
     <SweetAlert
       show={true}
+      type={props.flag}
       title="Ballyhoo"
-      imageUrl="https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_50/v1539007601/ballyhoo/EMAIL/ballyhoo_black.png"
-      text="We will be sending the otp to the mentioned email."
+      text={props.message}
       onConfirm={() => props.sweetAlertButtonClick()}
     />
   );

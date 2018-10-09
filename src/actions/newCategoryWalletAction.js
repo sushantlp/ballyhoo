@@ -9,11 +9,19 @@ export function postNewCategoryWallet(
   mobile,
   amount,
   bookingAt,
-  orderItemList
+  orderItemList,
+  token
 ) {
   return dispatch => {
     api
-      .newCategoryWalletApi(offerId, mobile, amount, bookingAt, orderItemList)
+      .newCategoryWalletApi(
+        offerId,
+        mobile,
+        amount,
+        bookingAt,
+        orderItemList,
+        token
+      )
       .then(newCategoryWallet =>
         dispatch({ type: actionType.newCategoryWallet, newCategoryWallet })
       );

@@ -45,9 +45,6 @@ export default class Left extends React.Component {
           );
         }
       }
-      if (this.props.newCategoryRazorpay !== nextProp.newCategoryRazorpay) {
-        console.log(nextProp.newCategoryRazorpay);
-      }
     }
   }
 
@@ -197,6 +194,8 @@ export default class Left extends React.Component {
           </label>
         </div>
         <Button
+          disabled={this.props.parentState.placeOrderButtonDisabled}
+          loading={this.props.parentState.placeOrderButtonLoading}
           style={{
             backgroundColor: "#FF5A5F",
             color: "white",

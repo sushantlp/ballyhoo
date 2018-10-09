@@ -1,7 +1,9 @@
 import { actionType } from "../actions/newCategoryVenueAction";
 
 const initialState = {
-  newCategoryVenue: {}
+  newCategoryVenue: {},
+  status: "START",
+  msg: "successful"
 };
 
 export function newCategoryVenue(state = initialState, action) {
@@ -10,12 +12,16 @@ export function newCategoryVenue(state = initialState, action) {
       if (action.newCategoryVenue.hasOwnProperty("error")) {
         return {
           ...state,
-          newCategoryVenue: {}
+          newCategoryVenue: {},
+          status: "FAIL",
+          msg: action.newCategoryVenue.error.ballyhoo
         };
       } else {
         return {
           ...state,
-          newCategoryVenue: action.newCategoryVenue
+          newCategoryVenue: action.newCategoryVenue,
+          status: "SUCCESS",
+          msg: "successful"
         };
       }
     default:

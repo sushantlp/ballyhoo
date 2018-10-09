@@ -6,6 +6,7 @@ import Right from "./rightSideComponent/right";
 import Header from "../header/header";
 import Footer from "../footer/footer";
 import Message from "../authComponents/messageComponent/message";
+import Sweet from "./sweetAlertComponent/sweet";
 
 import { Container, Grid } from "semantic-ui-react/dist/commonjs";
 
@@ -34,7 +35,14 @@ export default class Initial extends React.Component {
       finalCharge: {},
       newBookingState: {},
 
-      time: {}
+      time: {},
+      sweetText: "",
+      sweetAlert: false,
+      sweetMsg: "",
+      sweetFlag: "success",
+
+      placeOrderButtonLoading: false,
+      placeOrderButtonDisabled: false
     };
   }
 
@@ -108,6 +116,69 @@ export default class Initial extends React.Component {
       this.props.history.push("/web");
     }
   }
+
+  componentWillReceiveProps(nextProp) {
+    if (
+      this.props.newCategoryRazorpay !== nextProp.newCategoryRazorpay &&
+      nextProp.newCategoryRazorpay.status !== "START"
+    ) {
+      this.updatePlaceOrderButton(false, false);
+      if (nextProp.newCategoryRazorpay.status === "FAIL") {
+        this.sweetAlert(
+          true,
+          nextProp.newCategoryRazorpay.msg,
+          nextProp.newCategoryRazorpay.status,
+          "error"
+        );
+      } else {
+        this.sweetAlert(
+          true,
+          nextProp.newCategoryRazorpay.msg,
+          nextProp.newCategoryRazorpay.status,
+          "success"
+        );
+      }
+    } else if (
+      this.props.newCategoryWallet !== nextProp.newCategoryWallet &&
+      nextProp.newCategoryWallet.status !== "START"
+    ) {
+      this.updatePlaceOrderButton(false, false);
+
+      if (nextProp.newCategoryWallet.status === "FAIL") {
+        this.sweetAlert(
+          true,
+          nextProp.newCategoryWallet.msg,
+          nextProp.newCategoryWallet.status,
+          "error"
+        );
+      } else {
+        this.sweetAlert(
+          true,
+          nextProp.newCategoryWallet.msg,
+          nextProp.newCategoryWallet.status,
+          "success"
+        );
+      }
+    }
+  }
+
+  sweetAlert = (flag, text, msg, log) => {
+    this.setState({
+      sweetAlert: flag,
+      sweetText: text,
+      sweetMsg: msg,
+      sweetFlag: log
+    });
+  };
+
+  sweetAlertButtonClick = () => {
+    if (this.state.sweetMsg === "FAIL") {
+      this.sweetAlert(false, "", "");
+    } else {
+      this.sweetAlert(false, "", "");
+      this.props.history.push(`/web/`);
+    }
+  };
 
   onChangePayment = (event, data) => {
     if (data.value === "Online payment") {
@@ -220,10 +291,17 @@ export default class Initial extends React.Component {
     });
   };
 
+  updatePlaceOrderButton = (loading, disabled) => {
+    this.setState({
+      placeOrderButtonDisabled: disabled,
+      placeOrderButtonLoading: loading
+    });
+  };
+
   placeOrderButtonClick = () => {
     console.log(this.props);
     console.log(this.state);
-
+    this.updatePlaceOrderButton(true, true);
     if (this.state.newCategory) {
       this.newApiCallLogic();
     } else {
@@ -246,12 +324,36 @@ export default class Initial extends React.Component {
         "NEW",
         this.newOnlinePaymentLogic
       );
+    } else if (this.state.paymentOption === "Ballyhoo wallet") {
+      this.newBallyhooWalletPaymentLogic();
+    } else if (this.state.paymentOption === "Pay at venue") {
+      this.newPayAtVenueLogic();
+    } else {
+      console.log("Wrong payment");
     }
   };
+
+  newBallyhooWalletPaymentLogic = () => {
+    const json = this.getUsedJson(this.state.newBookingState.packageList);
+    const dateTime =
+      this.state.newBookingState.bookingDate + " " + this.state.time;
+
+    this.props.postNewCategoryWallet(
+      this.state.newBookingState.offer_id,
+      this.state.userData.userMobile,
+      this.state.finalGrandTotal,
+      dateTime,
+      json,
+      this.state.key.token
+    );
+  };
+
+  newPayAtVenueLogic = () => {};
 
   newOnlinePaymentLogic = razorpayPaymentId => {
     const paisa = this.state.finalGrandTotal * 100;
     const json = this.getUsedJson(this.state.newBookingState.packageList);
+
     const dateTime =
       this.state.newBookingState.bookingDate + " " + this.state.time;
 
@@ -291,6 +393,14 @@ export default class Initial extends React.Component {
           <Container text style={{ marginBottom: "10px", marginTop: "30px" }}>
             <Message errorText={this.state.errorText} />
           </Container>
+        ) : null}
+
+        {this.state.sweetAlert ? (
+          <Sweet
+            sweetAlertButtonClick={this.sweetAlertButtonClick}
+            message={this.state.sweetText}
+            flag={this.state.sweetFlag}
+          />
         ) : null}
 
         <Container style={{ marginTop: "10px" }}>

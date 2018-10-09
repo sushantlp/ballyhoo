@@ -1,7 +1,9 @@
 import { actionType } from "../actions/newCategoryWalletAction";
 
 const initialState = {
-  newCategoryWallet: {}
+  newCategoryWallet: {},
+  status: "START",
+  msg: ""
 };
 
 export function newCategoryWallet(state = initialState, action) {
@@ -10,12 +12,16 @@ export function newCategoryWallet(state = initialState, action) {
       if (action.newCategoryWallet.hasOwnProperty("error")) {
         return {
           ...state,
-          newCategoryWallet: {}
+          newCategoryWallet: {},
+          status: "FAIL",
+          msg: action.newCategoryWallet.error.ballyhoo
         };
       } else {
         return {
           ...state,
-          newCategoryWallet: action.newCategoryWallet
+          newCategoryWallet: action.newCategoryWallet,
+          status: "SUCCESS",
+          msg: "successful"
         };
       }
     default:

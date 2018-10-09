@@ -10,7 +10,8 @@ export function postNewCategoryRazorpay(
   amount,
   paymentId,
   bookingAt,
-  orderItemList
+  orderItemList,
+  token
 ) {
   return dispatch => {
     api
@@ -20,7 +21,8 @@ export function postNewCategoryRazorpay(
         amount,
         paymentId,
         bookingAt,
-        orderItemList
+        orderItemList,
+        token
       )
       .then(newCategoryRazorpay =>
         dispatch({ type: actionType.newCategoryRazorpay, newCategoryRazorpay })
