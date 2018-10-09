@@ -2,9 +2,9 @@ import axios from "axios";
 import getQueryString from "./paramParser";
 
 // Base Url
-const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
+//const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
 
-//const host = "https://ballyhoo.today/";
+const host = "https://ballyhoo.today/";
 
 export default {
   cityLocalityApi: () => {
@@ -280,6 +280,7 @@ export default {
 
     return new Promise((resolve, reject) => {
       fetch(host + "api/v4/web/user/profile", {
+        headers: new Headers(header),
         method: "POST",
         body: JSON.stringify({
           mobile: mobile,
@@ -289,8 +290,6 @@ export default {
           birth: birth,
           gender: gender
         })
-
-        // headers: new Headers(header)
       })
         .then(response => {
           response
@@ -318,6 +317,9 @@ export default {
   verifyOtpApi: (mobile, code) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v3/generic/otp/verify", {
+        headers: {
+          "Content-Type": "application/json"
+        },
         method: "POST",
         body: JSON.stringify({
           mobile: mobile,
@@ -345,6 +347,10 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v6/customer/deal/payment", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           dealid: dealId,
@@ -363,6 +369,11 @@ export default {
   fnbWalletApi: (dealId, quantity, amount, mobile, token) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v6/customer/deal/pointredeem", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+
         method: "POST",
         body: JSON.stringify({
           dealid: dealId,
@@ -387,6 +398,10 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v6/paytm /verify/paytm/transaction", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           deal_id: dealId,
@@ -413,6 +428,10 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v5/customer/deal/pav/payment", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           mobile: mobile,
@@ -441,6 +460,10 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v5/customer/deal/delivery/payment", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           mobile: mobile,
@@ -469,6 +492,10 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v5/customer/deal/delivery/pointredeem", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           mobile: mobile,
@@ -499,6 +526,10 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v5/customer/delivery/capturepaytmresponse", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           mobile: mobile,
@@ -529,6 +560,10 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v5/customer/deal/delivery/cashorder", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           mobile: mobile,
@@ -555,9 +590,10 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v6/customer/other/category/razor/purchase", {
-        // headers: {
-        //   "Content-Type": "application/json"
-        // },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           offer_id: offerId,
@@ -584,6 +620,10 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v6/customer/other/category/wallet/purchase", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           offer_id: offerId,
@@ -610,6 +650,10 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v6/customer/other/category/paytm/purchase", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           offer_id: offerId,
@@ -636,6 +680,10 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v6/customer/other/category/pav/purchase", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           offer_id: offerId,
@@ -652,6 +700,10 @@ export default {
   saloonReservationApi: (offerId, mobile, bookingAt, token) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v6/customer/other/category/online/reserve", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           offer_id: offerId,
@@ -675,6 +727,10 @@ export default {
   ) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v6/customer/apply/promocode", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           mobile: mobile,

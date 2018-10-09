@@ -453,7 +453,7 @@ export default class Initial extends React.Component {
     );
   };
 
-  oldPayAtVenueLogic = () => {
+  oldPayAtVenueLogic = razorpayPaymentId => {
     const object = this.props.location.state.checkoutData;
 
     this.props.postFnbRazorpay(
