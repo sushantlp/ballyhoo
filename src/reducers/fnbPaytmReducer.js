@@ -1,7 +1,9 @@
 import { actionType } from "../actions/fnbPaytmAction";
 
 const initialState = {
-  fnbPaytm: {}
+  fnbPaytm: {},
+  status: "START",
+  msg: ""
 };
 
 export function fnbPaytm(state = initialState, action) {
@@ -10,12 +12,16 @@ export function fnbPaytm(state = initialState, action) {
       if (action.fnbPaytm.hasOwnProperty("error")) {
         return {
           ...state,
-          fnbPaytm: {}
+          fnbPaytm: {},
+          status: "FAIL",
+          msg: action.fnbPaytm.error.ballyhoo
         };
       } else {
         return {
           ...state,
-          fnbPaytm: action.fnbPaytm
+          fnbPaytm: action.fnbPaytm,
+          status: "SUCCESS",
+          msg: "successful"
         };
       }
     default:

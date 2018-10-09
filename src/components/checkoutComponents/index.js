@@ -159,6 +159,90 @@ export default class Initial extends React.Component {
           "success"
         );
       }
+    } else if (
+      this.props.newCategoryVenue !== nextProp.newCategoryVenue &&
+      nextProp.newCategoryVenue.status !== "START"
+    ) {
+      this.updatePlaceOrderButton(false, false);
+
+      if (nextProp.newCategoryVenue.status === "FAIL") {
+        this.sweetAlert(
+          true,
+          nextProp.newCategoryVenue.msg,
+          nextProp.newCategoryVenue.status,
+          "error"
+        );
+      } else {
+        this.sweetAlert(
+          true,
+          nextProp.newCategoryVenue.msg,
+          nextProp.newCategoryVenue.status,
+          "success"
+        );
+      }
+    } else if (
+      this.props.fnbRazorpay !== nextProp.fnbRazorpay &&
+      nextProp.fnbRazorpay.status !== "START"
+    ) {
+      this.updatePlaceOrderButton(false, false);
+
+      if (nextProp.fnbRazorpay.status === "FAIL") {
+        this.sweetAlert(
+          true,
+          nextProp.fnbRazorpay.msg,
+          nextProp.fnbRazorpay.status,
+          "error"
+        );
+      } else {
+        this.sweetAlert(
+          true,
+          nextProp.fnbRazorpay.msg,
+          nextProp.fnbRazorpay.status,
+          "success"
+        );
+      }
+    } else if (
+      this.props.fnbWallet !== nextProp.fnbWallet &&
+      nextProp.fnbWallet.status !== "START"
+    ) {
+      this.updatePlaceOrderButton(false, false);
+
+      if (nextProp.fnbWallet.status === "FAIL") {
+        this.sweetAlert(
+          true,
+          nextProp.fnbWallet.msg,
+          nextProp.fnbWallet.status,
+          "error"
+        );
+      } else {
+        this.sweetAlert(
+          true,
+          nextProp.fnbWallet.msg,
+          nextProp.fnbWallet.status,
+          "success"
+        );
+      }
+    } else if (
+      this.props.fnbVenue !== nextProp.fnbVenue &&
+      nextProp.fnbVenue.status !== "START"
+    ) {
+      this.updatePlaceOrderButton(false, false);
+
+      if (nextProp.fnbVenue.status === "FAIL") {
+        this.sweetAlert(
+          true,
+          nextProp.fnbVenue.msg,
+          nextProp.fnbVenue.status,
+          "error"
+        );
+      } else {
+        this.sweetAlert(
+          true,
+          nextProp.fnbVenue.msg,
+          nextProp.fnbVenue.status,
+          "success"
+        );
+      }
     }
   }
 
@@ -222,7 +306,8 @@ export default class Initial extends React.Component {
     userMobile,
     flag,
     newOnlinePaymentLogic,
-    oldOnlinePaymentLogic
+    oldOnlinePaymentLogic,
+    updatePlaceOrderButton
   ) => {
     const options = {
       key: this.state.key.razorpay,
@@ -236,6 +321,11 @@ export default class Initial extends React.Component {
           newOnlinePaymentLogic(response.razorpay_payment_id);
         } else {
           oldOnlinePaymentLogic(response.razorpay_payment_id);
+        }
+      },
+      modal: {
+        ondismiss: function() {
+          updatePlaceOrderButton(false, false);
         }
       },
       prefill: {
@@ -313,6 +403,71 @@ export default class Initial extends React.Component {
     }
   };
 
+  oldApiCallLogic = () => {
+    if (this.state.paymentOption === "Online payment") {
+      const paisa = this.state.finalGrandTotal * 100;
+      this.razorpayGatewayCall(
+        paisa,
+        this.state.newBookingState.merchant_bname,
+        this.state.userData.userEmail,
+        this.state.userData.userMobile,
+        "OLD",
+        this.newOnlinePaymentLogic,
+        this.oldOnlinePaymentLogic,
+        this.updatePlaceOrderButton
+      );
+    } else if (this.state.paymentOption === "Ballyhoo wallet") {
+      this.oldBallyhooWalletPaymentLogic();
+    } else if (this.state.paymentOption === "Pay at venue") {
+      this.oldPayAtVenueLogic();
+    } else {
+      console.log("Old wrong payment");
+    }
+  };
+
+  oldOnlinePaymentLogic = razorpayPaymentId => {
+    const paisa = this.state.finalGrandTotal * 100;
+    const object = this.props.location.state.checkoutData;
+
+    this.props.postFnbRazorpay(
+      object.detailObject.id,
+      object.detailQuantity,
+      paisa,
+      this.state.userData.userMobile,
+      this.state.time,
+      this.state.newBookingState.bookingDate,
+      razorpayPaymentId,
+      this.state.key.token
+    );
+  };
+
+  oldBallyhooWalletPaymentLogic = () => {
+    const object = this.props.location.state.checkoutData;
+
+    this.props.postFnbWallet(
+      object.detailObject.id,
+      object.detailQuantity,
+      this.state.finalGrandTotal,
+      this.state.userData.userMobile,
+      this.state.key.token
+    );
+  };
+
+  oldPayAtVenueLogic = () => {
+    const object = this.props.location.state.checkoutData;
+
+    this.props.postFnbRazorpay(
+      object.detailObject.id,
+      object.detailQuantity,
+      this.state.finalGrandTotal,
+      this.state.userData.userMobile,
+      this.state.time,
+      this.state.newBookingState.bookingDate,
+      razorpayPaymentId,
+      this.state.key.token
+    );
+  };
+
   newApiCallLogic = () => {
     if (this.state.paymentOption === "Online payment") {
       const paisa = this.state.finalGrandTotal * 100;
@@ -322,21 +477,29 @@ export default class Initial extends React.Component {
         this.state.userData.userEmail,
         this.state.userData.userMobile,
         "NEW",
-        this.newOnlinePaymentLogic
+        this.newOnlinePaymentLogic,
+        this.oldOnlinePaymentLogic,
+        this.updatePlaceOrderButton
       );
     } else if (this.state.paymentOption === "Ballyhoo wallet") {
       this.newBallyhooWalletPaymentLogic();
     } else if (this.state.paymentOption === "Pay at venue") {
       this.newPayAtVenueLogic();
     } else {
-      console.log("Wrong payment");
+      console.log("New wrong payment");
     }
   };
 
   newBallyhooWalletPaymentLogic = () => {
     const json = this.getUsedJson(this.state.newBookingState.packageList);
-    const dateTime =
-      this.state.newBookingState.bookingDate + " " + this.state.time;
+    let dateTime = "";
+    if (this.state.newBookingState.category_name === "EVENTS") {
+      dateTime = null;
+    } else if (this.state.newBookingState.category_name === "ESCAPES") {
+      dateTime = this.state.newBookingState.bookingDate;
+    } else {
+      dateTime = this.state.newBookingState.bookingDate + " " + this.state.time;
+    }
 
     this.props.postNewCategoryWallet(
       this.state.newBookingState.offer_id,
@@ -348,14 +511,38 @@ export default class Initial extends React.Component {
     );
   };
 
-  newPayAtVenueLogic = () => {};
+  newPayAtVenueLogic = () => {
+    const json = this.getUsedJson(this.state.newBookingState.packageList);
+    let dateTime = "";
+    if (this.state.newBookingState.category_name === "EVENTS") {
+      dateTime = null;
+    } else if (this.state.newBookingState.category_name === "ESCAPES") {
+      dateTime = this.state.newBookingState.bookingDate;
+    } else {
+      dateTime = this.state.newBookingState.bookingDate + " " + this.state.time;
+    }
+
+    this.props.postNewCategoryVenue(
+      this.state.newBookingState.offer_id,
+      this.state.userData.userMobile,
+      this.state.finalGrandTotal,
+      dateTime,
+      json,
+      this.state.key.token
+    );
+  };
 
   newOnlinePaymentLogic = razorpayPaymentId => {
     const paisa = this.state.finalGrandTotal * 100;
     const json = this.getUsedJson(this.state.newBookingState.packageList);
-
-    const dateTime =
-      this.state.newBookingState.bookingDate + " " + this.state.time;
+    let dateTime = "";
+    if (this.state.newBookingState.category_name === "EVENTS") {
+      dateTime = null;
+    } else if (this.state.newBookingState.category_name === "ESCAPES") {
+      dateTime = this.state.newBookingState.bookingDate;
+    } else {
+      dateTime = this.state.newBookingState.bookingDate + " " + this.state.time;
+    }
 
     this.props.postNewCategoryRazorpay(
       this.state.newBookingState.offer_id,

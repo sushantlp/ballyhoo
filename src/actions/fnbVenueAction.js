@@ -10,11 +10,20 @@ export function postFnbVenue(
   amount,
   quantity,
   time,
-  reservationDate
+  reservationDate,
+  token
 ) {
   return dispatch => {
     api
-      .fnbVenueApi(mobile, dealId, amount, quantity, time, reservationDate)
+      .fnbVenueApi(
+        mobile,
+        dealId,
+        amount,
+        quantity,
+        time,
+        reservationDate,
+        token
+      )
       .then(fnbVenue => dispatch({ type: actionType.fnbVenue, fnbVenue }));
   };
 }

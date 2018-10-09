@@ -1,7 +1,9 @@
 import { actionType } from "../actions/fnbWalletAction";
 
 const initialState = {
-  fnbWallet: {}
+  fnbWallet: {},
+  status: "START",
+  msg: ""
 };
 
 export function fnbWallet(state = initialState, action) {
@@ -10,12 +12,16 @@ export function fnbWallet(state = initialState, action) {
       if (action.fnbWallet.hasOwnProperty("error")) {
         return {
           ...state,
-          fnbWallet: {}
+          fnbWallet: {},
+          status: "FAIL",
+          msg: action.fnbWallet.error.ballyhoo
         };
       } else {
         return {
           ...state,
-          fnbWallet: action.fnbWallet
+          fnbWallet: action.fnbWallet,
+          status: "SUCCESS",
+          msg: "successful"
         };
       }
     default:

@@ -9,11 +9,19 @@ export function postNewCategoryVenue(
   mobile,
   amount,
   bookingAt,
-  orderItemList
+  orderItemList,
+  token
 ) {
   return dispatch => {
     api
-      .newCategoryVenueApi(offerId, mobile, amount, bookingAt, orderItemList)
+      .newCategoryVenueApi(
+        offerId,
+        mobile,
+        amount,
+        bookingAt,
+        orderItemList,
+        token
+      )
       .then(newCategoryVenue =>
         dispatch({ type: actionType.newCategoryVenue, newCategoryVenue })
       );

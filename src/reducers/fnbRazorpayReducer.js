@@ -1,7 +1,9 @@
 import { actionType } from "../actions/fnbRazorpayAction";
 
 const initialState = {
-  fnbRazorpay: {}
+  fnbRazorpay: {},
+  status: "START",
+  msg: ""
 };
 
 export function fnbRazorpay(state = initialState, action) {
@@ -10,12 +12,16 @@ export function fnbRazorpay(state = initialState, action) {
       if (action.fnbRazorpay.hasOwnProperty("error")) {
         return {
           ...state,
-          fnbRazorpay: {}
+          fnbRazorpay: {},
+          status: "FAIL",
+          msg: action.fnbRazorpay.error.ballyhoo
         };
       } else {
         return {
           ...state,
-          fnbRazorpay: action.fnbRazorpay
+          fnbRazorpay: action.fnbRazorpay,
+          status: "SUCCESS",
+          msg: "successful"
         };
       }
     default:

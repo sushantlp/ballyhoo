@@ -1,7 +1,9 @@
 import { actionType } from "../actions/fnbVenueAction";
 
 const initialState = {
-  fnbVenue: {}
+  fnbVenue: {},
+  status: "START",
+  msg: ""
 };
 
 export function fnbVenue(state = initialState, action) {
@@ -10,12 +12,17 @@ export function fnbVenue(state = initialState, action) {
       if (action.fnbVenue.hasOwnProperty("error")) {
         return {
           ...state,
-          fnbVenue: {}
+          fnbVenue: {},
+          status: "FAIL",
+          msg: action.fnbVenue.error.ballyhoo
+          
         };
       } else {
         return {
           ...state,
-          fnbVenue: action.fnbVenue
+          fnbVenue: action.fnbVenue,
+          status: "SUCCESS",
+          msg: "successful"
         };
       }
     default:

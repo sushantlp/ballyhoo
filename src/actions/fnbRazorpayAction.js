@@ -11,7 +11,8 @@ export function postFnbRazorpay(
   mobile,
   time,
   reservationDate,
-  razorpayPaymentId
+  razorpayPaymentId,
+  token
 ) {
   return dispatch => {
     api
@@ -22,7 +23,8 @@ export function postFnbRazorpay(
         mobile,
         time,
         reservationDate,
-        razorpayPaymentId
+        razorpayPaymentId,
+        token
       )
       .then(fnbRazorpay =>
         dispatch({ type: actionType.fnbRazorpay, fnbRazorpay })
