@@ -8,8 +8,11 @@ export default class Time extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: moment().format("HH:mm A")
+      time: moment().format("HH:mm:ss")
     };
+  }
+  componentDidMount() {
+    this.props.updateTime(this.state.time);
   }
 
   onTimeChange(timeObject) {

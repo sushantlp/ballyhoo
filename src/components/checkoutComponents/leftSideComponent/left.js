@@ -45,6 +45,9 @@ export default class Left extends React.Component {
           );
         }
       }
+      if (this.props.newCategoryRazorpay !== nextProp.newCategoryRazorpay) {
+        console.log(nextProp.newCategoryRazorpay);
+      }
     }
   }
 
@@ -419,7 +422,6 @@ export default class Left extends React.Component {
   };
 
   thirdHalfComponent = (subtotal, currencySymbol) => {
-    console.log(subtotal);
     return (
       <div
         style={{
@@ -615,7 +617,7 @@ export default class Left extends React.Component {
         }
       }
     }
-    console.log(this.props);
+
     if (this.props.parentState.oldCategory) {
       merchantBname = this.props.history.location.state.checkoutData
         .detailObject.MERCHANT.Business;

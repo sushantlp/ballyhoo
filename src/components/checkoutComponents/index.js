@@ -144,21 +144,33 @@ export default class Initial extends React.Component {
     });
   };
 
-  razorpayGatewayCall = (amount, merchantBName, userEmail, userMobile) => {
+  razorpayGatewayCall = (
+    amount,
+    merchantBName,
+    userEmail,
+    userMobile,
+    flag,
+    newOnlinePaymentLogic,
+    oldOnlinePaymentLogic
+  ) => {
     const options = {
-      key: this.state.razorpay,
+      key: this.state.key.razorpay,
       amount: amount, // 2000 paise = INR 20
       name: merchantBName,
       description: "Purchase Description",
       image:
         "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,w_50/v1539007601/ballyhoo/EMAIL/ballyhoo_black.png",
       handler: function(response) {
-        alert(response.razorpay_payment_id);
+        if (flag === "NEW") {
+          newOnlinePaymentLogic(response.razorpay_payment_id);
+        } else {
+          oldOnlinePaymentLogic(response.razorpay_payment_id);
+        }
       },
       prefill: {
         // name: userName,
         email: userEmail,
-        mobile: userMobile
+        contact: userMobile
       },
       notes: {
         address: ""
@@ -209,7 +221,65 @@ export default class Initial extends React.Component {
   };
 
   placeOrderButtonClick = () => {
+    console.log(this.props);
     console.log(this.state);
+
+    if (this.state.newCategory) {
+      this.newApiCallLogic();
+    } else {
+      if (this.state.delivery) {
+        this.deliveryApiCallLogic();
+      } else {
+        this.oldApiCallLogic();
+      }
+    }
+  };
+
+  newApiCallLogic = () => {
+    if (this.state.paymentOption === "Online payment") {
+      const paisa = this.state.finalGrandTotal * 100;
+      this.razorpayGatewayCall(
+        paisa,
+        this.state.newBookingState.merchant_bname,
+        this.state.userData.userEmail,
+        this.state.userData.userMobile,
+        "NEW",
+        this.newOnlinePaymentLogic
+      );
+    }
+  };
+
+  newOnlinePaymentLogic = razorpayPaymentId => {
+    const paisa = this.state.finalGrandTotal * 100;
+    const json = this.getUsedJson(this.state.newBookingState.packageList);
+    const dateTime =
+      this.state.newBookingState.bookingDate + " " + this.state.time;
+
+    this.props.postNewCategoryRazorpay(
+      this.state.newBookingState.offer_id,
+      this.state.userData.userMobile,
+      paisa,
+      razorpayPaymentId,
+      dateTime,
+      json,
+      this.state.key.token
+    );
+  };
+
+  getUsedJson = packageList => {
+    let arr = [];
+    for (let i = 0; i < packageList.length; i++) {
+      for (let j = 0; j < packageList[i].priceList.length; j++) {
+        // Object
+        let obj = {};
+        obj.item_id = packageList[i].priceList[j].price_id;
+        obj.quantity = packageList[i].priceList[j].quantity;
+
+        arr.push(obj);
+      }
+    }
+
+    return arr;
   };
 
   render() {

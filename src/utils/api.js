@@ -594,21 +594,17 @@ export default {
     token
   ) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v6/customer/other/category/razor/purchase?" +
-          getQueryString({
-            offer_id: offerId,
-            mobile: mobile,
-            amount: amount,
-            payment_id: paymentId,
-            booking_at: bookingAt,
-            order_item_list: orderItemList
-          }),
-        {
-          method: "POST"
-        }
-      ).then(response => {
+      fetch(host + "api/v6/customer/other/category/razor/purchase", {
+        method: "POST",
+        body: JSON.stringify({
+          offer_id: offerId,
+          mobile: mobile,
+          amount: amount,
+          payment_id: paymentId,
+          booking_at: bookingAt,
+          order_item_list: orderItemList
+        })
+      }).then(response => {
         response
           .json()
           .then(newCategoryRazorpay => resolve(newCategoryRazorpay));

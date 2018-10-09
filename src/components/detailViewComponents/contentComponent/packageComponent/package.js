@@ -202,6 +202,7 @@ export default class Package extends React.Component {
       obj.merchant_bname = this.state.priceList.merchant_bname;
       obj.category_id = this.state.priceList.category_id;
       obj.currency_symbol = currency;
+      obj.bookingDate = this.props.detailState.bookingDateSlection;
 
       obj1.package_caption = this.state.priceList.Package_Caption;
       obj1.package_id = this.state.priceList.Package_Id;

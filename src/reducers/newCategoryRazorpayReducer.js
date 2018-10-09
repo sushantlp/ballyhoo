@@ -1,7 +1,9 @@
 import { actionType } from "../actions/newCategoryRazorpayAction";
 
 const initialState = {
-  newCategoryRazorpay: {}
+  newCategoryRazorpay: {},
+  status: "START",
+  msg: ""
 };
 
 export function newCategoryRazorpay(state = initialState, action) {
@@ -10,12 +12,16 @@ export function newCategoryRazorpay(state = initialState, action) {
       if (action.newCategoryRazorpay.hasOwnProperty("error")) {
         return {
           ...state,
-          newCategoryRazorpay: {}
+          newCategoryRazorpay: {},
+          status: "FAIL",
+          msg: action.newCategoryRazorpay.error.ballyhoo
         };
       } else {
         return {
           ...state,
-          newCategoryRazorpay: action.newCategoryRazorpay
+          newCategoryRazorpay: action.newCategoryRazorpay,
+          status: "SUCCESS",
+          msg: "successful"
         };
       }
     default:
