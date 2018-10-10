@@ -189,7 +189,7 @@ export default class Trending extends React.Component {
 
         <Button
           size="large"
-          color="violet"
+          color="black"
           loading={loading}
           disabled={this.props.facebookEvent.end === 1 ? true : false}
           onClick={() => this.loadingStart()}

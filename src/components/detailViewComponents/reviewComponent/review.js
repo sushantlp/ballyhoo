@@ -149,7 +149,7 @@ export default class Review extends React.Component {
             disabled={Object.keys(hide).length <= MAX_ITEMS ? true : false}
             size="large"
             basic
-            color="violet"
+            color="black"
             style={{
               marginTop: "1em",
               marginBottom: "1em",

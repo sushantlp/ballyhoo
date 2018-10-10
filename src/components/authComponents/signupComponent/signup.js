@@ -166,10 +166,10 @@ export default class Signup extends React.Component {
 
       // Update User Record
       this.props.postUpdateUserRecord(
-        this.props.userRecord.Customer_Mobile,
+        this.props.userMobile,
         this.state.userFirstName,
         this.state.userLastName,
-        this.props.userRecord.Customer_Email,
+        this.props.userEmail,
         this.state.userDob,
         this.state.userGender,
         ballyKey.token
@@ -221,11 +221,7 @@ export default class Signup extends React.Component {
             marginBottom: "20px"
           }}
           placeholder="Email..."
-          value={
-            this.props.userRecord.Customer_Email === null
-              ? ""
-              : this.props.userRecord.Customer_Email
-          }
+          value={this.props.userEmail}
         />
 
         <Input
@@ -239,11 +235,7 @@ export default class Signup extends React.Component {
             marginBottom: "20px"
           }}
           placeholder="Mobile..."
-          value={
-            this.props.userRecord.Customer_Mobile === null
-              ? ""
-              : this.props.userRecord.Customer_Mobile
-          }
+          value={this.props.userMobile}
         />
 
         <DateInput

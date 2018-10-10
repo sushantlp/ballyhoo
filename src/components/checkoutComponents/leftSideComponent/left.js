@@ -358,7 +358,7 @@ export default class Left extends React.Component {
         <h4
           style={{
             fontWeight: "500",
-            color: "rgb(122, 82, 192)",
+            color: "rgb(39, 37, 37)",
             margin: "0px",
             display: priceList.length > 0 ? "inline" : "none"
           }}

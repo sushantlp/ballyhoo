@@ -24,7 +24,7 @@ export default class Header extends React.Component {
         <h2
           style={{
             fontWeight: "500",
-            color: "rgb(122, 82, 192)",
+            color: "rgb(255, 90, 95)",
             margin: "0px"
           }}
         >

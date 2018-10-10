@@ -28,7 +28,7 @@ const Mobile = props => {
             defaultValue={"+91"}
             style={{
               paddingTop: "18px",
-              backgroundColor: "#7a52c0",
+              backgroundColor: "rgb(39, 37, 37)",
               color: "white"
             }}
           />

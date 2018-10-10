@@ -514,7 +514,7 @@ export default class Book extends React.Component {
         <h3
           style={{
             fontWeight: "500",
-            color: "rgb(122, 82, 192)",
+            color: "rgb(39, 37, 37)",
             margin: "0px",
             display: packages.priceList.length > 0 ? "inline" : "none"
           }}
@@ -541,7 +541,7 @@ export default class Book extends React.Component {
                 <Icon
                   name="minus square outline"
                   style={{
-                    color: "rgb(43, 0, 119)",
+                    color: "rgba(0,0,0,.6)",
                     fontSize: "18px",
                     display: "inline",
                     cursor: "pointer"
@@ -568,7 +568,7 @@ export default class Book extends React.Component {
                 <Icon
                   name="plus square outline"
                   style={{
-                    color: "rgb(43, 0, 119)",
+                    color: "rgba(0,0,0,.6)",
                     fontSize: "18px",
                     display: "inline",
                     cursor: "pointer"

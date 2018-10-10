@@ -393,7 +393,7 @@ export default class Package extends React.Component {
                     <Button
                       size="small"
                       basic
-                      color="violet"
+                      color="black"
                       style={{
                         float: "right",
                         display: priceList.quantity !== 0 ? "none" : "inline"
@@ -422,7 +422,7 @@ export default class Package extends React.Component {
                         disabled={priceList.quantity === 1 ? true : false}
                         name="minus square outline"
                         style={{
-                          color: "rgb(43, 0, 119)",
+                          color: "rgba(0,0,0,.6)",
                           fontSize: "20px",
                           display: priceList.quantity !== 0 ? "inline" : "none",
                           cursor: "pointer"
@@ -456,7 +456,7 @@ export default class Package extends React.Component {
                         }
                         name="plus square outline"
                         style={{
-                          color: "rgb(43, 0, 119)",
+                          color: "rgba(0,0,0,.6)",
                           fontSize: "20px",
                           display: priceList.quantity !== 0 ? "inline" : "none",
                           cursor: "pointer"
@@ -590,7 +590,7 @@ export default class Package extends React.Component {
           size="small"
           style={{
             float: "right",
-            backgroundColor: "rgb(122, 82, 192)",
+            backgroundColor: "rgb(39, 37, 37)",
             color: "white"
           }}
           onClick={() =>

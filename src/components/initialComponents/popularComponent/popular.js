@@ -116,7 +116,7 @@ export default class Popular extends React.Component {
           }
           size="large"
           basic
-          color="violet"
+          color="black"
           style={{
             marginTop: "1.5em",
             marginBottom: "1.5em",

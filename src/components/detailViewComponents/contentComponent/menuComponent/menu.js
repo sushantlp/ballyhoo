@@ -19,7 +19,6 @@ export default class Menu extends React.Component {
 
   // Add quantity parameter
   addQuantiyParam = list => {
-    console.log(list);
     // list.menu_category.map((obj, key) => {
     //   obj.item.map((lists, keys) => {
     //     lists.quantity = 0;
@@ -291,7 +290,7 @@ export default class Menu extends React.Component {
             disabled={Object.keys(hide).length <= MAX_ITEMS ? true : false}
             size="large"
             basic
-            color="violet"
+            color="black"
             style={{
               marginTop: "1em",
               marginBottom: "1em",

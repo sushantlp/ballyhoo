@@ -136,7 +136,7 @@ export default class Trending extends React.Component {
           disabled={Object.keys(hide).length <= MAX_ITEMS ? true : false}
           size="large"
           basic
-          color="violet"
+          color="black"
           style={{
             marginTop: "1.5em",
             marginBottom: "1.5em",

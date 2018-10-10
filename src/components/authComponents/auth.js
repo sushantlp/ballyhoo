@@ -307,7 +307,7 @@ export default class Auth extends React.Component {
       <Container>
         <h1
           style={{
-            color: "#7a52c0",
+            color: "rgb(39, 37, 37)",
             textAlign: "center",
             fontSize: "35px",
             paddingTop: "70px",
@@ -368,6 +368,8 @@ export default class Auth extends React.Component {
             updateUserRecord={this.props.updateUserRecord}
             BALLY_KEY={BALLY_KEY}
             goCheckoutRoute={this.goCheckoutRoute}
+            userMobile={this.state.userMobile}
+            userEmail={this.state.userEmail}
           />
         ) : null}
       </Container>

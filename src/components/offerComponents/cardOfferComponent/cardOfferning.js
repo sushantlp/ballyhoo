@@ -1208,7 +1208,7 @@ export default class Trending extends React.Component {
 
         <Button
           size="large"
-          color="violet"
+          color="black"
           loading={loading}
           disabled={this.state.level >= 4 ? true : click_disabled}
           onClick={() => this.loadingStart(level + 1)}
