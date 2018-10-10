@@ -322,7 +322,7 @@ export default class Initial extends React.Component {
         if (flag === "NEW") {
           newOnlinePaymentLogic(response.razorpay_payment_id);
         } else {
-          oldOnlinePaymentLogic(response.razorpay_payment_id);
+          oldOnlinePaymentLogic(response.razorpay_payment_id, false);
         }
       },
       modal: {
@@ -390,15 +390,19 @@ export default class Initial extends React.Component {
     });
   };
 
-  placeOrderButtonClick = () => {
+  placeOrderButtonClick = reserve => {
     this.updatePlaceOrderButton(true, true);
-    if (this.state.newCategory) {
-      this.newApiCallLogic();
+    if (reserve) {
+      this.oldOnlinePaymentLogic(null, reserve);
     } else {
-      if (this.state.delivery) {
-        this.deliveryApiCallLogic();
+      if (this.state.newCategory) {
+        this.newApiCallLogic();
       } else {
-        this.oldApiCallLogic();
+        if (this.state.delivery) {
+          this.deliveryApiCallLogic();
+        } else {
+          this.oldApiCallLogic();
+        }
       }
     }
   };
@@ -425,8 +429,11 @@ export default class Initial extends React.Component {
     }
   };
 
-  oldOnlinePaymentLogic = razorpayPaymentId => {
-    const paisa = this.state.finalGrandTotal * 100;
+  oldOnlinePaymentLogic = (razorpayPaymentId, reserve) => {
+    let paisa = 0;
+    if (!reserve) {
+      paisa = this.state.finalGrandTotal * 100;
+    }
     const object = this.props.location.state.checkoutData;
 
     this.props.postFnbRazorpay(
