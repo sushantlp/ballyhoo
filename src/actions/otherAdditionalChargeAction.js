@@ -4,9 +4,9 @@ export const actionType = {
   otherAdditionalCharge: "OTHER_ADDITIONAL_CHARGE"
 };
 
-export function getOtherAdditionalCharge(amount) {
+export function getOtherAdditionalCharge(amount, token) {
   return dispatch => {
-    api.otherAdditionalChargeApi(amount).then(otherAdditionalCharge =>
+    api.otherAdditionalChargeApi(amount, token).then(otherAdditionalCharge =>
       dispatch({
         type: actionType.otherAdditionalCharge,
         otherAdditionalCharge

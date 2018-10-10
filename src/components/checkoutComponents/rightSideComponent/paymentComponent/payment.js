@@ -63,6 +63,8 @@ export default class Payment extends React.Component {
           );
         }
       }
+    } else {
+      return false;
     }
   }
 

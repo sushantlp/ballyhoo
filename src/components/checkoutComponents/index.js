@@ -55,6 +55,7 @@ export default class Initial extends React.Component {
       // Get Session Storage Data
       const userData = sessionStorage.getItem(USER_DATA);
       const key = sessionStorage.getItem(BALLY_KEY);
+      const jwt = JSON.parse(key);
 
       if (object.categoryFlag === "OLD") {
         if (object.detailObject.Offering === "Delivery Only") {
@@ -68,7 +69,7 @@ export default class Initial extends React.Component {
           // Get Delivery Additional Charge
           this.props.getDeliveryAdditionalCharge(
             object.detailBookingPrice,
-            this.state.key.token
+            jwt.token
           );
         } else {
           this.setState({
@@ -83,13 +84,13 @@ export default class Initial extends React.Component {
             // Get Additional Charge
             this.props.getOtherAdditionalCharge(
               object.detailBookingPrice,
-              this.state.key.token
+              jwt.token
             );
 
             // Check Payment Mode Active
             this.props.getPaymentMode(
               object.detailObject.MERCHANT.Contact,
-              this.state.key.token
+              jwt.token
             );
           }
         }
@@ -105,13 +106,13 @@ export default class Initial extends React.Component {
         // Get Additional Charge
         this.props.getOtherAdditionalCharge(
           object.detailBookingPrice,
-          this.state.key.token
+          jwt.token
         );
 
         // Check Payment Mode Active
         this.props.getPaymentMode(
           object.detailObject.merchant_mobile,
-          this.state.key.token
+          jwt.token
         );
       }
     } else {
@@ -245,6 +246,8 @@ export default class Initial extends React.Component {
           "success"
         );
       }
+    } else {
+      return false;
     }
   }
 

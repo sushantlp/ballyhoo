@@ -210,6 +210,8 @@ export default {
     });
   },
   otherAdditionalChargeApi: (amount, token) => {
+    let headers = { "Content-Type": "application/json" };
+    headers["Authorization"] = `Bearer ${token}`;
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -218,7 +220,7 @@ export default {
             amount: amount
           }),
         {
-          method: "GET"
+          headers
         }
       ).then(response => {
         response
@@ -228,6 +230,8 @@ export default {
     });
   },
   deliveryAdditionalChargeApi: (merchantMobile, token) => {
+    let headers = { "Content-Type": "application/json" };
+    headers["Authorization"] = `Bearer ${token}`;
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -236,7 +240,7 @@ export default {
             mobile: merchantMobile
           }),
         {
-          method: "GET"
+          headers
         }
       ).then(response => {
         response
@@ -316,24 +320,16 @@ export default {
   },
   verifyOtpApi: (mobile, code) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v3/generic/otp/verify?" +
-          getQueryString({
-            mobile: mobile,
-            code: code
-          }),
-        {
-          // headers: {
-          //   "Content-Type": "application/json"
-          // },
-          method: "POST"
-          // body: JSON.stringify({
-          //   mobile: mobile,
-          //   code: code
-          // })
-        }
-      )
+      fetch(host + "api/v3/generic/otp/verify", {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+          mobile: mobile,
+          code: code
+        })
+      })
         .then(response => {
           response
             .json()
