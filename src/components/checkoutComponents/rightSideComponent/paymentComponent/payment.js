@@ -246,6 +246,14 @@ export default class Payment extends React.Component {
   };
 
   render() {
+    if (this.props.parentState.oldCategory) {
+      if (
+        this.props.history.location.state.checkoutData.detailBookingPrice === 0
+      ) {
+        return <div style={{ height: "130px" }} />;
+      }
+    }
+
     if (this.props.paymentMode.status === "START") {
       return <div />;
     }

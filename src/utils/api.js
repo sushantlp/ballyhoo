@@ -2,9 +2,9 @@ import axios from "axios";
 import getQueryString from "./paramParser";
 
 // Base Url
-//const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
+const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
 
-const host = "https://ballyhoo.today/";
+//const host = "https://ballyhoo.today/";
 
 export default {
   cityLocalityApi: () => {
@@ -316,16 +316,24 @@ export default {
   },
   verifyOtpApi: (mobile, code) => {
     return new Promise((resolve, reject) => {
-      fetch(host + "api/v3/generic/otp/verify", {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify({
-          mobile: mobile,
-          code: code
-        })
-      })
+      fetch(
+        host +
+          "api/v3/generic/otp/verify?" +
+          getQueryString({
+            mobile: mobile,
+            code: code
+          }),
+        {
+          // headers: {
+          //   "Content-Type": "application/json"
+          // },
+          method: "POST"
+          // body: JSON.stringify({
+          //   mobile: mobile,
+          //   code: code
+          // })
+        }
+      )
         .then(response => {
           response
             .json()

@@ -171,7 +171,7 @@ export default class Left extends React.Component {
     return finalAmount;
   };
 
-  firstHalfComponent = merchantBname => {
+  firstHalfComponent = (merchantBname, reserve) => {
     return (
       <div>
         <label
@@ -210,18 +210,19 @@ export default class Left extends React.Component {
           }}
           onClick={() => this.props.placeOrderButtonClick()}
         >
-          Place Order
+          {reserve ? "Reserve" : "Place Order"}
         </Button>
       </div>
     );
   };
 
-  oldSecondHalfQuantityComponent = quantity => {
+  oldSecondHalfQuantityComponent = (quantity, reserve) => {
     return (
       <span
         style={{
-          position: "absolute",
-          left: "190px"
+          position: reserve ? "" : "absolute",
+          left: reserve ? "none" : "190px",
+          float: reserve ? "right" : "none"
         }}
       >
         <Icon
@@ -309,7 +310,8 @@ export default class Left extends React.Component {
     price,
     currencySymbol,
     quantity,
-    promoApply
+    promoApply,
+    reserve
   ) => {
     return (
       <div>
@@ -321,15 +323,19 @@ export default class Left extends React.Component {
           {offeringTitle}
         </label>
 
-        {promoApply ? null : this.oldSecondHalfQuantityComponent(quantity)}
+        {promoApply
+          ? null
+          : this.oldSecondHalfQuantityComponent(quantity, reserve)}
         <span
           style={{
-            float: "right"
+            float: "right",
+            display: reserve ? "none" : "inline"
           }}
         >
           <label
             style={{
-              fontSize: "20px"
+              fontSize: "20px",
+              display: reserve ? "none" : "inline"
             }}
           >
             {currencySymbol}
@@ -586,6 +592,7 @@ export default class Left extends React.Component {
   render() {
     let merchantBname = undefined;
     let charge = {};
+    let reserve = false;
 
     if (this.props.parentState.delivery) {
       if (this.props.deliveryAdditionalCharge.status === "START") {
@@ -603,16 +610,28 @@ export default class Left extends React.Component {
         }
       }
     } else {
-      if (this.props.otherAdditionalCharge.status === "START") {
-        return <Segment style={{ width: "400px", height: "400px" }} />;
-      } else {
-        if (this.props.otherAdditionalCharge.status === "SUCCESS") {
-          charge = this.props.otherAdditionalCharge.charge;
-        } else {
-          // Call Error Message
-          this.props.errorMessage(true, this.props.otherAdditionalCharge.msg);
+      console.log(this.props);
 
+      if (this.props.parentState.oldCategory) {
+        if (
+          this.props.history.location.state.checkoutData.detailBookingPrice ===
+          0
+        ) {
+          reserve = true;
+        }
+      }
+      if (!reserve) {
+        if (this.props.otherAdditionalCharge.status === "START") {
           return <Segment style={{ width: "400px", height: "400px" }} />;
+        } else {
+          if (this.props.otherAdditionalCharge.status === "SUCCESS") {
+            charge = this.props.otherAdditionalCharge.charge;
+          } else {
+            // Call Error Message
+            this.props.errorMessage(true, this.props.otherAdditionalCharge.msg);
+
+            return <Segment style={{ width: "400px", height: "400px" }} />;
+          }
         }
       }
     }
@@ -628,7 +647,7 @@ export default class Left extends React.Component {
     return (
       <div>
         <Segment style={{ width: "400px" }}>
-          {this.firstHalfComponent(merchantBname)}
+          {this.firstHalfComponent(merchantBname, reserve)}
           <Divider />
           <Segment style={{ overflow: "auto", maxHeight: 200 }}>
             {this.props.parentState.oldCategory
@@ -638,7 +657,8 @@ export default class Left extends React.Component {
                   this.props.parentState.finalPrice,
                   this.props.history.location.state.checkoutData.currencySymbol,
                   this.props.parentState.finalQuantity,
-                  this.props.parentState.promoApply
+                  this.props.parentState.promoApply,
+                  reserve
                 )
               : this.newSecondHalfLogic(
                   this.props.history.location.state.checkoutData.detailObject
@@ -647,22 +667,26 @@ export default class Left extends React.Component {
                   this.props.parentState.promoApply
                 )}
           </Segment>
-          <Divider />
+          <Divider style={{ display: reserve ? "none" : "block" }} />
 
-          {this.thirdHalfComponent(
-            this.props.parentState.finalPrice,
-            this.props.history.location.state.checkoutData.currencySymbol
-          )}
+          {reserve
+            ? null
+            : this.thirdHalfComponent(
+                this.props.parentState.finalPrice,
+                this.props.history.location.state.checkoutData.currencySymbol
+              )}
 
-          <Divider />
-          {this.fourthHalfComponent(
-            charge,
-            this.props.parentState.promoApply,
-            this.props.parentState.promoType,
-            this.props.history.location.state.checkoutData.currencySymbol,
-            this.props.parentState.promoDiscountValue,
-            this.props.parentState.finalGrandTotal
-          )}
+          <Divider style={{ display: reserve ? "none" : "block" }} />
+          {reserve
+            ? null
+            : this.fourthHalfComponent(
+                charge,
+                this.props.parentState.promoApply,
+                this.props.parentState.promoType,
+                this.props.history.location.state.checkoutData.currencySymbol,
+                this.props.parentState.promoDiscountValue,
+                this.props.parentState.finalGrandTotal
+              )}
         </Segment>
       </div>
     );

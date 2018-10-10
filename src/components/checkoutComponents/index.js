@@ -79,18 +79,20 @@ export default class Initial extends React.Component {
             finalQuantity: object.detailQuantity
           });
 
-          // Get Additional Charge
-          this.props.getOtherAdditionalCharge(
-            object.detailBookingPrice,
-            this.state.key.token
-          );
-        }
+          if (object.detailObject.DISCOUNT.ActualPrice !== 0) {
+            // Get Additional Charge
+            this.props.getOtherAdditionalCharge(
+              object.detailBookingPrice,
+              this.state.key.token
+            );
 
-        // Check Payment Mode Active
-        this.props.getPaymentMode(
-          object.detailObject.MERCHANT.Contact,
-          this.state.key.token
-        );
+            // Check Payment Mode Active
+            this.props.getPaymentMode(
+              object.detailObject.MERCHANT.Contact,
+              this.state.key.token
+            );
+          }
+        }
       } else {
         this.setState({
           newCategory: true,
@@ -389,8 +391,6 @@ export default class Initial extends React.Component {
   };
 
   placeOrderButtonClick = () => {
-    console.log(this.props);
-    console.log(this.state);
     this.updatePlaceOrderButton(true, true);
     if (this.state.newCategory) {
       this.newApiCallLogic();
