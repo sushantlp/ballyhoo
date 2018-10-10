@@ -208,7 +208,7 @@ export default class Left extends React.Component {
             marginLeft: "24px",
             marginRight: "24px"
           }}
-          onClick={() => this.props.placeOrderButtonClick()}
+          onClick={() => this.props.placeOrderButtonClick(reserve)}
         >
           {reserve ? "Reserve" : "Place Order"}
         </Button>

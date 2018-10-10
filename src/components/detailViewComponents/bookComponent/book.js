@@ -93,36 +93,40 @@ export default class Book extends React.Component {
     }
   }
   componentWillReceiveProps(newProps) {
-    if (this.props.detailState.which === "old") {
-      if (newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.Type === "flat") {
-        const discount = parseInt(
-          newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.Value,
-          10
-        );
+    if (this.props.history.location.state !== undefined) {
+      if (this.props.detailState.which === "old") {
         if (
-          newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice !==
-            0 &&
-          discount !== 0
+          newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.Type === "flat"
         ) {
-          const bookingPrice =
-            (newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice *
-              discount) /
-            100;
-          this.bookingDateState(
-            _.round(
-              newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice -
-                bookingPrice
-            )
+          const discount = parseInt(
+            newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.Value,
+            10
           );
+          if (
+            newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice !==
+              0 &&
+            discount !== 0
+          ) {
+            const bookingPrice =
+              (newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice *
+                discount) /
+              100;
+            this.bookingDateState(
+              _.round(
+                newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice -
+                  bookingPrice
+              )
+            );
+          } else {
+            this.bookingDateState(
+              newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice
+            );
+          }
         } else {
           this.bookingDateState(
             newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice
           );
         }
-      } else {
-        this.bookingDateState(
-          newProps.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice
-        );
       }
     }
   }
@@ -680,6 +684,7 @@ export default class Book extends React.Component {
     let status = false;
     let endDate = "";
     let finalAmount = 0;
+    let exipry = false;
 
     if (this.props.detailState.apiCall) {
       if (this.props.detailState.which === "new") {
@@ -696,6 +701,10 @@ export default class Book extends React.Component {
 
         obj = this.props.newViewDetail.newViewDetail.offers;
         hex = obj.Offer_Basic_Details.Currency_Text.replace(REG_HEX, "$1");
+
+        if (obj.Offer_Basic_Details.Offer_State === "Dead") {
+          exipry = true;
+        }
 
         if (Object.keys(obj.ACTIVITY).length !== 0) {
           endDate = obj.ACTIVITY.Offer_Buy_End_Date;
@@ -736,6 +745,10 @@ export default class Book extends React.Component {
         }
 
         limit = obj.DISCOUNT.OrderLimit;
+
+        if (obj.Active.Status === "Dead") {
+          exipry = true;
+        }
       }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
@@ -844,7 +857,7 @@ export default class Book extends React.Component {
 
           <Divider style={{ display: finalAmount === 0 ? "none" : "block" }} />
           <Button
-            disabled={status ? bookingStatus : false}
+            disabled={exipry ? true : status ? bookingStatus : false}
             style={{
               backgroundColor: "#FF5A5F",
               color: "white",
