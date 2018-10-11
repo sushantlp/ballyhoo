@@ -19,12 +19,12 @@ export default class Initial extends React.Component {
       delivery: false,
       oldCategory: false,
       newCategory: false,
-      paymentOption: "Online payment",
+      paymentOption: "",
       errorMessage: false,
       errorText: "",
       key: {},
       userData: {},
-      promoLabelFlag: true,
+      promoLabelFlag: false,
       promoDiscountValue: {},
       promoApply: false,
       promoType: "",
@@ -116,7 +116,7 @@ export default class Initial extends React.Component {
         );
       }
     } else {
-      this.props.history.push("/web");
+      this.props.history.push("/web/");
     }
   }
 
@@ -281,6 +281,13 @@ export default class Initial extends React.Component {
         promoLabelFlag: false
       });
     }
+  };
+
+  updateDefaultPaymentOption = payment => {
+    console.log(payment);
+    this.setState({
+      paymentOption: payment
+    });
   };
 
   updatePromoLabelState = () => {
@@ -627,6 +634,7 @@ export default class Initial extends React.Component {
                   getOtherAdditionalCharge={this.props.getOtherAdditionalCharge}
                   changeStatePromoValue={this.changeStatePromoValue}
                   updateTime={this.updateTime}
+                  updateDefaultPaymentOption={this.updateDefaultPaymentOption}
                 />
               </Grid.Column>
               <Grid.Column width={2}>

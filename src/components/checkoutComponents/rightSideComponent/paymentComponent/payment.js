@@ -63,8 +63,6 @@ export default class Payment extends React.Component {
           );
         }
       }
-    } else {
-      return false;
     }
   }
 
@@ -150,7 +148,7 @@ export default class Payment extends React.Component {
     }
   };
 
-  paymentComponent = paymentMode => {
+  paymentComponent = (paymentMode, defaultPaymentOption) => {
     return (
       <Segment>
         <Dropdown
@@ -158,8 +156,9 @@ export default class Payment extends React.Component {
           selection
           options={paymentMode}
           onChange={(event, data) => this.props.onChangePayment(event, data)}
-          defaultValue={this.props.parentState.paymentOption}
+          // defaultValue={this.props.parentState.paymentOption}
           disabled={this.state.promoApply}
+          placeholder="Please select payment option"
         />
 
         <label
@@ -223,20 +222,27 @@ export default class Payment extends React.Component {
     );
   };
 
-  paymentLogic = (payAtVenue, online) => {
+  paymentLogic = (payAtVenue, online, wallet) => {
     let paymentMode = PAYMENT_MODE;
+    let defaultPaymentOption = "Online payment";
 
     if (!payAtVenue) {
-      paymentMode = paymentMode.filter(
-        mode => mode.value !== "Online payment" && "Ballyhoo wallet"
-      );
-    }
-
-    if (!online) {
       paymentMode = paymentMode.filter(mode => mode.value !== "Pay at venue");
     }
 
-    return this.paymentComponent(paymentMode);
+    if (!online) {
+      paymentMode = paymentMode.filter(mode => mode.value !== "Online payment");
+      defaultPaymentOption = "Pay at venue";
+    }
+
+    if (!wallet) {
+      paymentMode = paymentMode.filter(
+        mode => mode.value !== "Ballyhoo wallet"
+      );
+      defaultPaymentOption = "Pay at venue";
+    }
+
+    return this.paymentComponent(paymentMode, defaultPaymentOption);
   };
 
   render() {
@@ -255,30 +261,20 @@ export default class Payment extends React.Component {
     // Variable
     let payAtVenue = true;
     let online = true;
+    let wallet = true;
 
     if (this.props.paymentMode.status === "SUCCESS") {
       if (this.props.paymentMode.paymentMode.system_generated_account === 1) {
         online = false;
-
-        console.log(
-          this.props.paymentMode.paymentMode.system_generated_account + "SYstem"
-        );
+        wallet = false;
       } else {
         if (this.props.paymentMode.paymentMode.online_payment === 0) {
           online = false;
-
-          console.log(
-            this.props.paymentMode.paymentMode.system_generated_account +
-              "ONLINE"
-          );
+          wallet = false;
         }
 
         if (this.props.paymentMode.paymentMode.pay_at_venue === 0) {
           payAtVenue = false;
-          console.log(
-            this.props.paymentMode.paymentMode.system_generated_account +
-              "VENUE"
-          );
         }
       }
     }
@@ -290,7 +286,7 @@ export default class Payment extends React.Component {
             <label style={{ fontSize: "20px" }}>Payment</label>
           </Segment>
 
-          {this.paymentLogic(payAtVenue, online)}
+          {this.paymentLogic(payAtVenue, online, wallet)}
         </Segment.Group>
       </div>
     );

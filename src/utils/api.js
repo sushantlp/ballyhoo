@@ -210,8 +210,6 @@ export default {
     });
   },
   otherAdditionalChargeApi: (amount, token) => {
-    let headers = { "Content-Type": "application/json" };
-    headers["Authorization"] = `Bearer ${token}`;
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -220,7 +218,10 @@ export default {
             amount: amount
           }),
         {
-          headers
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          }
         }
       ).then(response => {
         response
@@ -230,8 +231,8 @@ export default {
     });
   },
   deliveryAdditionalChargeApi: (merchantMobile, token) => {
-    let headers = { "Content-Type": "application/json" };
-    headers["Authorization"] = `Bearer ${token}`;
+    // let headers = { "Content-Type": "application/json" };
+    // headers["Authorization"] = `Bearer ${token}`;
     return new Promise((resolve, reject) => {
       fetch(
         host +
@@ -240,7 +241,10 @@ export default {
             mobile: merchantMobile
           }),
         {
-          headers
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          }
         }
       ).then(response => {
         response
@@ -276,15 +280,12 @@ export default {
     gender,
     token
   ) => {
-    const header = {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`
-    };
-
     return new Promise((resolve, reject) => {
       fetch(host + "api/v4/web/user/profile", {
-        headers: new Headers(header),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         method: "POST",
         body: JSON.stringify({
           mobile: mobile,
@@ -308,7 +309,7 @@ export default {
     return new Promise((resolve, reject) => {
       fetch(
         host +
-          "api/v7/customer/newuser?" +
+          "api/v4/web/signup?" +
           getQueryString({
             mobile: mobile,
             email: email

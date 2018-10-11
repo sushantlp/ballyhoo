@@ -35,6 +35,7 @@ export default class Right extends React.Component {
           getDeliveryAdditionalCharge={this.props.getDeliveryAdditionalCharge}
           getOtherAdditionalCharge={this.props.getOtherAdditionalCharge}
           changeStatePromoValue={this.props.changeStatePromoValue}
+          updateDefaultPaymentOption={this.props.updateDefaultPaymentOption}
         />
       </div>
     );

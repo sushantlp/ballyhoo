@@ -39,6 +39,7 @@ export default class Auth extends React.Component {
       userEmail: "",
       userOtp: "",
       userMobileCode: "+91",
+      userConcatMobile: "",
 
       mobileButton: true,
       mobileInput: false,
@@ -56,7 +57,11 @@ export default class Auth extends React.Component {
   }
 
   componentWillMount() {
-    this.createCountryCode(COUNTRY_CODE);
+    if (this.props.history.location.state !== undefined) {
+      this.createCountryCode(COUNTRY_CODE);
+    } else {
+      this.props.history.push("/web/");
+    }
   }
 
   componentWillReceiveProps(nextProp) {
@@ -155,7 +160,6 @@ export default class Auth extends React.Component {
     // Success Action
     this.props.registerSuccess(true);
 
-    console.log(mobile);
     // User Data Object
     const userData = {
       userMobile: mobile,
@@ -239,6 +243,10 @@ export default class Auth extends React.Component {
     const mobileSlice = mobileString.slice(1);
     const mobile = mobileSlice + this.state.userMobile;
     this.props.postVerifyOtp(mobile, this.state.userOtp);
+
+    this.setState({
+      userConcatMobile: mobile
+    });
   };
 
   sweetAlertButtonClick = () => {
@@ -368,7 +376,7 @@ export default class Auth extends React.Component {
             updateUserRecord={this.props.updateUserRecord}
             BALLY_KEY={BALLY_KEY}
             goCheckoutRoute={this.goCheckoutRoute}
-            userMobile={this.state.userMobile}
+            userMobile={this.state.userConcatMobile}
             userEmail={this.state.userEmail}
           />
         ) : null}
