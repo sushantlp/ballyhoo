@@ -284,7 +284,7 @@ export default class Initial extends React.Component {
   };
 
   updateDefaultPaymentOption = payment => {
-    console.log(payment);
+  
     this.setState({
       paymentOption: payment
     });

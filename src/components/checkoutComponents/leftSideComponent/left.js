@@ -195,9 +195,11 @@ export default class Left extends React.Component {
         </div>
         <Button
           disabled={
-            this.props.parentState.paymentOption === ""
-              ? true
-              : this.props.parentState.placeOrderButtonDisabled
+            reserve
+              ? false
+              : this.props.parentState.paymentOption === ""
+                ? true
+                : this.props.parentState.placeOrderButtonDisabled
           }
           loading={this.props.parentState.placeOrderButtonLoading}
           style={{
@@ -614,8 +616,6 @@ export default class Left extends React.Component {
         }
       }
     } else {
-      console.log(this.props);
-
       if (this.props.parentState.oldCategory) {
         if (
           this.props.history.location.state.checkoutData.detailBookingPrice ===

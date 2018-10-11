@@ -12,7 +12,16 @@ export default class Time extends React.Component {
     };
   }
   componentDidMount() {
-    this.props.updateTime(this.state.time);
+    if (this.props.parentState.oldCategory) {
+      const object = this.props.history.location.state.checkoutData;
+      if (object.detailObject.Offering === "Event") {
+        this.props.updateTime(object.detailObject.EVENTS.event_start_time);
+      } else {
+        this.props.updateTime(this.state.time);
+      }
+    } else {
+      this.props.updateTime(this.state.time);
+    }
   }
 
   onTimeChange(timeObject) {
@@ -26,6 +35,7 @@ export default class Time extends React.Component {
 
   render() {
     let headerName = "Delivery Time";
+    let timeDisabled = false;
     if (!this.props.parentState.delivery) {
       if (this.props.parentState.oldCategory) {
         const object = this.props.history.location.state.checkoutData;
@@ -36,7 +46,8 @@ export default class Time extends React.Component {
         ) {
           headerName = "Time";
         } else {
-          return <div />;
+          // return <div />;
+          timeDisabled = true;
         }
       } else {
         headerName = "Time";
@@ -50,13 +61,14 @@ export default class Time extends React.Component {
             <label style={{ fontSize: "20px" }}>{headerName}</label>
           </Segment>
 
-          <Segment>
+          <Segment disabled={timeDisabled}>
             <div style={{ width: "300px" }}>
               <TimePicker
                 time={this.state.time}
                 timeMode="12"
                 timezone="Asia/Kolkata"
                 onTimeChange={this.onTimeChange.bind(this)}
+                disabled={timeDisabled}
               />
             </div>
           </Segment>
