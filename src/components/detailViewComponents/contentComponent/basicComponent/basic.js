@@ -616,9 +616,11 @@ export default class Basic extends React.Component {
               this.props.history.location.state.offerData.data.DISCOUNT
                 .ActualPrice - discountPrice
             );
-            discount = discount + "%" + " OFF";
+            // discount = discount + "%" + " OFF";
+            discount = `${discount}% OFF`;
           } else if (discount !== 0) {
-            discount = discount + "%" + " OFF";
+            // discount = discount + "%" + " OFF";
+            discount = `${discount}% OFF`;
           }
         } else if (
           this.props.history.location.state.offerData.data.DISCOUNT.Type ===
@@ -683,8 +685,6 @@ export default class Basic extends React.Component {
             .event_end_time;
         }
 
-        // const REG_HEX = /&#x([a-fA-F0-9]+);/;
-
         const hex = this.props.history.location.state.offerData.data.currency_text.replace(
           REG_HEX,
           "$1"
@@ -733,9 +733,11 @@ export default class Basic extends React.Component {
             this.props.history.location.state.offerData.data.Offer_Basic_Details
               .Offer_Min_Price - discountPrice
           );
-          discount = discount + "%" + " OFF";
+          // discount = discount + "%" + " OFF";
+          discount = `${discount}% OFF`;
         } else if (discount !== 0) {
-          discount = discount + "%" + " OFF";
+          // discount = discount + "%" + " OFF";
+          discount = `${discount}% OFF`;
         }
 
         const hex = this.props.history.location.state.offerData.data.Offer_Basic_Details.Currency_Text.replace(
@@ -779,7 +781,7 @@ export default class Basic extends React.Component {
           );
           let month = date.format("M");
           let day = date.format("D");
-          const year = date.format("YYYY");
+          // const year = date.format("YYYY");
           let stringMonth = undefined;
           month = parseInt(month, 10);
           if (month === 1) {
@@ -813,14 +815,21 @@ export default class Basic extends React.Component {
               .Offer_Date_List.length > 1
           ) {
             if (day.toString().length === 1) {
-              day = "0" + day;
+              // day = "0" + day;
+
+              day = `0 ${day}`;
             }
-            calendar = stringMonth + " " + day + " " + "Onwards";
+            // calendar = stringMonth + " " + day + " " + "Onwards";
+
+            calendar = `${stringMonth} ${day} Onwards`;
           } else {
             if (day.toString().length === 1) {
-              day = "0" + day;
+              // day = "0" + day;
+              day = `0 ${day}`;
             }
-            calendar = stringMonth + " " + day;
+            // calendar = stringMonth + " " + day;
+
+            calendar = `${stringMonth} ${day}`;
           }
         }
         return this.newBasicComponent(
@@ -865,12 +874,12 @@ export default class Basic extends React.Component {
             this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
               .Offer_Min_Price - discountPrice
           );
-          discount = discount + "%" + " OFF";
+          // discount = discount + "%" + " OFF";
+          discount = `${discount}% OFF`;
         } else if (discount !== 0) {
-          discount = discount + "%" + " OFF";
+          // discount = discount + "%" + " OFF";
+          discount = `${discount}% OFF`;
         }
-
-        // const REG_HEX = /&#x([a-fA-F0-9]+);/;
 
         const hex = this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details.Currency_Text.replace(
           REG_HEX,
@@ -949,7 +958,9 @@ export default class Basic extends React.Component {
             if (day.toString().length === 1) {
               day = "0" + day;
             }
-            calendar = stringMonth + " " + day + " " + "Onwards";
+            // calendar = stringMonth + " " + day + " " + "Onwards";
+
+            calendar = `${stringMonth} ${day} Onwards`;
           } else {
             if (day.toString().length === 1) {
               day = "0" + day;
@@ -1002,9 +1013,12 @@ export default class Basic extends React.Component {
               this.props.oldViewDetail.oldViewDetail.deal.DISCOUNT.ActualPrice -
                 discountPrice
             );
-            discount = discount + "%" + " OFF";
+            // discount = discount + "%" + " OFF";
+
+            discount = `${discount}% OFF`;
           } else if (discount !== 0) {
-            discount = discount + "%" + " OFF";
+            // discount = discount + "%" + " OFF";
+            discount = `${discount}% OFF`;
           }
         } else if (
           this.props.oldViewDetail.oldViewDetail.deal.DISCOUNT.Type ===

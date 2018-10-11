@@ -5,10 +5,6 @@ import PaymentComponent from "./paymentComponent/payment";
 import LocationComponent from "./locationComponent/location";
 
 export default class Right extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div>

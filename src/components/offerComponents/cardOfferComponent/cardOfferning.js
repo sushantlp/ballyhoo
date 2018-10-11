@@ -9,9 +9,7 @@ import {
   Image,
   Label,
   Icon,
-  Button,
-  Breadcrumb,
-  Segment
+  Button
 } from "semantic-ui-react/dist/commonjs";
 
 import CardLoader from "../../loaderComponents/cardLoader";
@@ -592,9 +590,9 @@ export default class Trending extends React.Component {
         if (obj.DISCOUNT.ActualPrice !== 0 && discount !== 0) {
           discountPrice = (obj.DISCOUNT.ActualPrice * discount) / 100;
           discountPrice = _.round(obj.DISCOUNT.ActualPrice - discountPrice);
-          discount = discount + "%" + " OFF";
+          discount = `${discount}% OFF`;
         } else if (discount !== 0) {
-          discount = discount + "%" + " OFF";
+          discount = `${discount}% OFF`;
         }
       } else if (obj.DISCOUNT.Type === "combo1,1") {
         discount = "1 + 1";
@@ -766,7 +764,7 @@ export default class Trending extends React.Component {
         const date = moment(obj.EVENT.Offer_Start_Date, "YYYY/MM/DD");
         let month = date.format("M");
         let day = date.format("D");
-        const year = date.format("YYYY");
+        // const year = date.format("YYYY");
         let stringMonth = undefined;
         month = parseInt(month, 10);
         if (month === 1) {
@@ -797,12 +795,15 @@ export default class Trending extends React.Component {
 
         if (obj.EVENT.Offer_Date_List.length > 1) {
           if (day.toString().length === 1) {
-            day = "0" + day;
+            // day = "0" + day;
+            day = `0 ${day}`;
           }
-          calendar = stringMonth + " " + day + " " + "Onwards";
+          // calendar = stringMonth + " " + day + " " + "Onwards";
+          calendar = `${stringMonth} ${day} Onwards`;
         } else {
           if (day.toString().length === 1) {
-            day = "0" + day;
+            // day = "0" + day;
+            day = `0 ${day}`;
           }
           calendar = stringMonth + " " + day;
         }
@@ -838,7 +839,7 @@ export default class Trending extends React.Component {
             "https://res.cloudinary.com/dp67gawk6/image/upload/c_scale,h_26,w_20/v1532592222/ballyhoo/EMAIL/female-face03.png";
         }
       } else {
-        return;
+        return null;
       }
 
       // Discount
@@ -846,9 +847,12 @@ export default class Trending extends React.Component {
       if (obj.Offer_Basic_Details.Offer_Min_Price !== 0 && discount !== 0) {
         discountPrice =
           (obj.Offer_Basic_Details.Offer_Min_Price * discount) / 100;
-        discount = discount + "%" + " OFF";
+        // discount = discount + "%" + " OFF";
+
+        discount = `${discount}% OFF`;
       } else if (discount !== 0) {
-        discount = discount + "%" + " OFF";
+        // discount = discount + "%" + " OFF";
+        discount = `${discount}% OFF`;
       }
 
       const priceStatus = obj.Offer_Basic_Details.Offer_Min_Price === 0 ? 0 : 1;

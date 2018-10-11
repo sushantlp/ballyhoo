@@ -9,9 +9,9 @@ import {
 } from "semantic-ui-react/dist/commonjs";
 
 export default class Left extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentWillReceiveProps(nextProp) {
     if (this.props.parentState.delivery) {

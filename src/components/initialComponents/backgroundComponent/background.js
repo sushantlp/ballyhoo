@@ -1,9 +1,7 @@
 import React from "react";
 import _ from "lodash";
-// import Swal from "sweetalert2";
-import SweetAlert from "sweetalert2-react";
 
-// import "sweetalert/dist/sweetalert.css";
+import SweetAlert from "sweetalert2-react";
 
 import {
   Container,

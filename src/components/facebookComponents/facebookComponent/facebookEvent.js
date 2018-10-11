@@ -138,6 +138,8 @@ export default class Trending extends React.Component {
           obj.target_url,
           obj.content
         );
+      } else {
+        return null;
       }
     });
   };

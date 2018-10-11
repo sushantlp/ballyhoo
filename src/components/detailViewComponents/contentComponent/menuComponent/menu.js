@@ -66,11 +66,17 @@ export default class Menu extends React.Component {
 
       if (status) {
         if (items[i].item_type === 1) {
-          obj.description =
-            currencySymbol + items[i].price + " " + "Vegetarian";
+          // obj.description =
+          //   currencySymbol + items[i].price + " " + "Vegetarian";
+
+          obj.description = `${currencySymbol} ${items[i].price} Vegetarian`;
         } else {
-          obj.description =
-            currencySymbol + items[i].price + " " + "Non-Vegetarian";
+          // obj.description =
+          //   currencySymbol + items[i].price + " " + "Non-Vegetarian";
+
+          obj.description = `${currencySymbol} ${
+            items[i].price
+          } Non-Vegetarian`;
         }
       } else {
         obj.description = currencySymbol + items[i].price;

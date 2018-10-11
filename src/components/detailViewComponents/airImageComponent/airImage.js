@@ -3,7 +3,6 @@ import _ from "lodash";
 
 import { Image } from "semantic-ui-react/dist/commonjs";
 
-import classes from "./static/css/airImage.css";
 import AirImageLoader from "../../loaderComponents/airImageLoader";
 
 export default class ImageSlider extends React.Component {

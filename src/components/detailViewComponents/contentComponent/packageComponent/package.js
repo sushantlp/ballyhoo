@@ -842,7 +842,7 @@ export default class Package extends React.Component {
           endMonth = parseInt(endMonth, 10);
           endWeek = parseInt(endWeek, 10);
 
-          const endStringMonth = this.getMonth(endMonth);
+          // const endStringMonth = this.getMonth(endMonth);
           const EndStringWeek = this.getWeek(endWeek);
 
           stringWeek = stringWeek + "-" + EndStringWeek;
@@ -880,7 +880,7 @@ export default class Package extends React.Component {
   };
 
   render() {
-    const { door, packageList, open, dimmer } = this.state;
+    const { door, packageList, open } = this.state;
     let offer = [];
     let status = false;
     let currencySymbol = undefined;

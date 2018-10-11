@@ -7,8 +7,6 @@ import {
   Button
 } from "semantic-ui-react/dist/commonjs";
 
-import classes from "./static/css/payment.css";
-
 import { PAYMENT_MODE } from "../../../../constants";
 
 export default class Payment extends React.Component {

@@ -3,8 +3,6 @@ import _ from "lodash";
 
 import { Label, Icon } from "semantic-ui-react/dist/commonjs";
 
-import classes from "./static/css/header.css";
-
 export default class Header extends React.Component {
   headerComponent = (rating, offering, businessName) => {
     return (

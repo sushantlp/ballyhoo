@@ -1,5 +1,5 @@
 import React from "react";
-import Truncate from "react-truncate";
+// import Truncate from "react-truncate";
 
 import Header from "./headerComponent/header";
 import Basic from "./basicComponent/basic";

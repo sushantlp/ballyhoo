@@ -2,8 +2,6 @@ import React from "react";
 
 import { Segment, Button, Card } from "semantic-ui-react/dist/commonjs";
 
-import classes from "./static/css/location.css";
-
 export default class Location extends React.Component {
   constructor(props) {
     super(props);
