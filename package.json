@@ -7,7 +7,6 @@
     "url": "https://github.com/sushantlp/ballyhoo.git"
   },
   "dependencies": {
-    "airbnb-js-shims": "^2.1.1",
     "autoprefixer": "7.1.6",
     "axios": "^0.18.0",
     "babel-core": "6.26.0",
