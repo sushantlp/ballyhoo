@@ -2,7 +2,7 @@ import React from "react";
 import TimePicker from "react-times";
 import moment from "moment-timezone";
 
-import { Segment, Button } from "semantic-ui-react/dist/commonjs";
+import { Segment } from "semantic-ui-react/dist/commonjs";
 
 export default class Time extends React.Component {
   constructor(props) {
@@ -12,16 +12,7 @@ export default class Time extends React.Component {
     };
   }
   componentDidMount() {
-    if (this.props.parentState.oldCategory) {
-      const object = this.props.history.location.state.checkoutData;
-      if (object.detailObject.Offering === "Event") {
-        this.props.updateTime(object.detailObject.EVENTS.event_start_time);
-      } else {
-        this.props.updateTime(this.state.time);
-      }
-    } else {
-      this.props.updateTime(this.state.time);
-    }
+    this.props.updateTime(this.state.time);
   }
 
   onTimeChange(timeObject) {
@@ -36,18 +27,21 @@ export default class Time extends React.Component {
   render() {
     let headerName = "Delivery Time";
     let timeDisabled = false;
+    let time = this.state.time;
+
     if (!this.props.parentState.delivery) {
       if (this.props.parentState.oldCategory) {
         const object = this.props.history.location.state.checkoutData;
-
         if (
           object.detailObject.Offering === "Happy Hours" ||
           object.detailObject.Offering === "Walk-In Service"
         ) {
           headerName = "Time";
         } else {
-          // return <div />;
           timeDisabled = true;
+          headerName = "Time";
+          // time = moment(object.detailObject.EVENTS.event_start_time,"HH:mm:ss");
+          time = object.detailObject.EVENTS.event_start_time;
         }
       } else {
         headerName = "Time";
@@ -61,10 +55,10 @@ export default class Time extends React.Component {
             <label style={{ fontSize: "20px" }}>{headerName}</label>
           </Segment>
 
-          <Segment disabled={timeDisabled}>
+          <Segment>
             <div style={{ width: "300px" }}>
               <TimePicker
-                time={this.state.time}
+                time={time}
                 timeMode="12"
                 timezone="Asia/Kolkata"
                 onTimeChange={this.onTimeChange.bind(this)}

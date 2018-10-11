@@ -3,7 +3,7 @@
   "name": "BALLYHOO - Discover. Eat. Trend. Escape.",
   "icons": [
     {
-      "src": "./favicon.ico",
+      "src": "https://res.cloudinary.com/dp67gawk6/image/upload/v1539253045/ballyhoo/EMAIL/favicon.jpg",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
