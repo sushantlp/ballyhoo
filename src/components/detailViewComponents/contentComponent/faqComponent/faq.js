@@ -47,36 +47,38 @@ export default class Inclusion extends React.Component {
           return <div />;
         }
       } else {
-        if (
-          this.props.oldViewDetail.oldViewDetail === null ||
-          this.props.oldViewDetail.oldViewDetail === undefined
-        ) {
-          return <div />;
-        }
+        return <div />;
+        // if (
+        //   this.props.oldViewDetail.oldViewDetail === null ||
+        //   this.props.oldViewDetail.oldViewDetail === undefined
+        // ) {
+        //   return <div />;
+        // }
 
-        if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
-          return <div />;
-        }
+        // if (_.isEmpty(this.props.oldViewDetail.oldViewDetail)) {
+        //   return <div />;
+        // }
 
-        if (
-          this.props.oldViewDetail.oldViewDetail.deal.Inclusion === null ||
-          this.props.oldViewDetail.oldViewDetail.deal.Inclusion === ""
-        ) {
-          return <div />;
-        } else {
-          faq = this.props.oldViewDetail.oldViewDetail.deal.Inclusion;
-        }
+        // if (
+        //   this.props.oldViewDetail.oldViewDetail.deal.Inclusion === null ||
+        //   this.props.oldViewDetail.oldViewDetail.deal.Inclusion === ""
+        // ) {
+        //   return <div />;
+        // } else {
+        //   faq = this.props.oldViewDetail.oldViewDetail.deal.Inclusion;
+        // }
       }
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
-        if (
-          this.props.history.location.state.offerData.data.Inclusion === null ||
-          this.props.history.location.state.offerData.data.Inclusion === ""
-        ) {
-          return <div />;
-        } else {
-          faq = this.props.history.location.state.offerData.data.Inclusion;
-        }
+        return <div />;
+        // if (
+        //   this.props.history.location.state.offerData.data.Inclusion === null ||
+        //   this.props.history.location.state.offerData.data.Inclusion === ""
+        // ) {
+        //   return <div />;
+        // } else {
+        //   faq = this.props.history.location.state.offerData.data.Inclusion;
+        // }
       } else {
         if (
           Object.keys(this.props.history.location.state.offerData.data.ACTIVITY)
