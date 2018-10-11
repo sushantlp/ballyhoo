@@ -2,9 +2,9 @@ import axios from "axios";
 import getQueryString from "./paramParser";
 
 // Base Url
-const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
+//const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
 
-//const host = "https://ballyhoo.today/";
+const host = "https://ballyhoo.today/";
 
 export default {
   cityLocalityApi: () => {
@@ -167,7 +167,6 @@ export default {
       });
     });
   },
-
   newViewDetailApi: offerId => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -307,14 +306,16 @@ export default {
   },
   registerNewUserApi: (mobile, email) => {
     return new Promise((resolve, reject) => {
-      fetch(
-        host +
-          "api/v4/web/signup?" +
-          getQueryString({
-            mobile: mobile,
-            email: email
-          })
-      ).then(response => {
+      fetch(host + "api/v4/web/signup", {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+          mobile: mobile,
+          email: email
+        })
+      }).then(response => {
         response.json().then(registerNewUser => resolve(registerNewUser));
       });
     });

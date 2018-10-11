@@ -1,12 +1,10 @@
 import React from "react";
-// import "react-dates/initialize";
+
 import moment from "moment-timezone";
 import _ from "lodash";
 
 import SweetAlert from "sweetalert2-react";
 import { DateInput } from "semantic-ui-calendar-react";
-
-// import { SingleDatePicker } from "react-dates";
 
 import {
   Segment,

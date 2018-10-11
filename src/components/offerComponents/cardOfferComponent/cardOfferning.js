@@ -399,7 +399,7 @@ export default class Trending extends React.Component {
           <Card.Header
             style={{
               fontWeight: "500",
-              color: "#7a52c0"
+              color: "rgb(255, 90, 95)"
             }}
           >
             {businessName}
@@ -486,7 +486,7 @@ export default class Trending extends React.Component {
             style={{
               marginLeft: actualPrice === 0 ? "0em" : "1.5em",
               fontSize: "15px",
-              color: "rgba(0,0,0,.68)",
+              color: "rgb(39, 37, 37)",
               display: discountPrice === 0 ? "none" : "intial"
             }}
           >
@@ -498,7 +498,8 @@ export default class Trending extends React.Component {
               style={{
                 fontWeight: "bold",
                 fontSize: "15px",
-                paddingLeft: "1px"
+                paddingLeft: "1px",
+                color: "rgb(39, 37, 37)"
               }}
             >
               {discountPrice}
