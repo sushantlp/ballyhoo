@@ -650,6 +650,8 @@ export default class Book extends React.Component {
     });
   };
 
+  saloonCartItemLogic = item => {};
+
   calculateFinalAmount = item => {
     let finalAmount = 0;
     item.packageList.map((packages, key) => {
@@ -683,6 +685,7 @@ export default class Book extends React.Component {
     let endDate = "";
     let finalAmount = 0;
     let exipry = false;
+    let appointment = false;
 
     if (this.props.detailState.apiCall) {
       if (this.props.detailState.which === "new") {
@@ -713,6 +716,7 @@ export default class Book extends React.Component {
         } else if (Object.keys(obj.SALOON).length !== 0) {
           if (obj.Offer_Basic_Details.Offering_Name === "Appointment") {
             endDate = null;
+            appointment = true;
           } else {
             endDate = moment(obj.SALOON.Offer_Buy_End_Date)
               .tz("Asia/Kolkata")
@@ -777,6 +781,7 @@ export default class Book extends React.Component {
         } else if (Object.keys(obj.SALOON).length !== 0) {
           if (obj.Offer_Basic_Details.Offering_Name === "Appointment") {
             endDate = null;
+            appointment = true;
           } else {
             endDate = moment(obj.SALOON.Offer_Buy_End_Date)
               .tz("Asia/Kolkata")
@@ -801,6 +806,8 @@ export default class Book extends React.Component {
         this.props.detailState.bookingDetail
       );
     }
+
+    // console.log(this.props);
     return (
       <div>
         <Segment style={{ width: "400px" }}>
@@ -814,9 +821,29 @@ export default class Book extends React.Component {
           )}
 
           <Divider style={{ display: finalAmount === 0 ? "none" : "block" }} />
-          {bookingStatus
-            ? null
-            : this.cartItemLogic(this.props.detailState.bookingDetail)}
+          <Segment
+            style={{
+              overflow: "auto",
+              maxHeight: 200,
+              display: bookingStatus ? "none" : "block"
+            }}
+          >
+            {bookingStatus
+              ? null
+              : this.cartItemLogic(this.props.detailState.bookingDetail)}
+          </Segment>
+
+          <Segment
+            style={{
+              overflow: "auto",
+              maxHeight: 200,
+              display: appointment ? "block" : "none"
+            }}
+          >
+            {appointment
+              ? this.saloonCartItemLogic(this.props.detailState.bookingDetail)
+              : null}
+          </Segment>
 
           <Divider style={{ display: finalAmount === 0 ? "none" : "block" }} />
           <label

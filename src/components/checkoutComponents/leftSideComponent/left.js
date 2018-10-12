@@ -160,7 +160,9 @@ export default class Left extends React.Component {
 
     this.props.updateNewBookingState(copyBookingDetail);
 
-    this.props.history.push(`/web/`);
+    if (finalPrice === 0) {
+      this.props.history.push(`/web/`);
+    }
   };
 
   calculateNewCategoryAmount = copyBookingDetail => {

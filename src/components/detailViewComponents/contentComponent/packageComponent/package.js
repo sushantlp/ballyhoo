@@ -1109,7 +1109,12 @@ export default class Package extends React.Component {
       }
     }
 
-    if (offer === "" || offer === undefined || offer === null) {
+    if (
+      offer === "" ||
+      offer === undefined ||
+      offer === null ||
+      offer.length < 1
+    ) {
       return <div />;
     }
 

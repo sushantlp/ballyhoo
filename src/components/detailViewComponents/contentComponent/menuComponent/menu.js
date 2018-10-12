@@ -18,19 +18,123 @@ export default class Menu extends React.Component {
   }
 
   // Add quantity parameter
-  addQuantiyParam = list => {
-    // list.menu_category.map((obj, key) => {
-    //   obj.item.map((lists, keys) => {
-    //     lists.quantity = 0;
-    //   });
-    // });
+  addQuantiyParam = (key, items, kaunHai, obj) => {
+    // console.log(key);
+    // console.log(items);
+    // console.log(kaunHai);
+    // console.log(obj);
 
-    this.setState({
-      menuList: list
-    });
+    const copyBookingDetail = this.props.detailState.bookingDetail;
+    console.log(copyBookingDetail);
+
+    if (copyBookingDetail.length === 0) {
+      let list = {};
+      if (kaunHai === "SALOON") {
+        list.offer_id = obj.data.Offer_Basic_Details.Offer_Id;
+        list.category_name = obj.data.Offer_Basic_Details.Category_Name;
+        list.offering_name = obj.data.Offer_Basic_Details.Offering_Name;
+        list.category_id = obj.data.Offer_Basic_Details.Category_Id;
+        list.offering_id = obj.data.Offer_Basic_Details.Offering_Id;
+        list.merchant_mobile = obj.data.Merchant_Details.Merchant_Mobile;
+        list.merchant_bname = obj.data.Merchant_Details.Merchant_Bname;
+        list.menu_list = this.addSelectedMenu(key, items, copyBookingDetail);
+
+        this.props.updateBookingDetail(list);
+      } else {
+      }
+    } else {
+      copyBookingDetail.menu_list = this.addSelectedMenu(
+        key,
+        items,
+        copyBookingDetail
+      );
+
+      this.props.updateBookingDetail(copyBookingDetail);
+    }
   };
 
-  deliveryMenuComponent = (menuTitle, categoryTitle, items, object, key) => {
+  addSelectedMenu = (key, items, bookingDetail) => {
+    let arr = [];
+    let obj = {};
+
+    let categoryIndex = 0;
+    let findCategory = false;
+    let findItem = false;
+
+    if (bookingDetail.hasOwnProperty("menu_list")) {
+      if (bookingDetail.menu_list.length > 0) {
+        for (let j = 0; j < bookingDetail.menu_list.length; j++) {
+          if (
+            bookingDetail.menu_list[j].menu_category_id === items.category_id
+          ) {
+            findCategory = true;
+            categoryIndex = j;
+            break;
+          }
+        }
+
+        if (findCategory) {
+          for (
+            let j = 0;
+            j < bookingDetail.menu_list[categoryIndex].item_list.length;
+            j++
+          ) {
+            console.log("Hello")
+            if (
+              bookingDetail.menu_list[categoryIndex].item_list[j] ===
+              items.category_id
+            ) {
+              findItem = true;
+              break;
+            }
+          }
+        }
+      }
+    }
+    if (findCategory) {
+      if (!findItem) {
+        obj.item_list = this.addMenuItem(
+          items.item,
+          key,
+          bookingDetail.menu_list[categoryIndex].item_list
+        );
+        arr.push(obj);
+      } else {
+        console.log("FINd");
+        // arr = bookingDetail.menu_list[categoryIndex].item_list;
+      }
+    } else {
+      obj.menu_category_id = items.category_id;
+      obj.menu_category_title = items.category_title;
+      obj.item_list = this.addMenuItem(items.item, key, []);
+
+      arr.push(obj);
+    }
+
+    return arr;
+  };
+
+  addMenuItem = (items, id, existingItem) => {
+    let arr = existingItem;
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].item_id === id) {
+        let obj = {};
+        obj.item_id = items[i].item_id;
+        obj.item_name = items[i].item_name;
+        obj.description = items[i].description;
+        obj.additional_charge = items[i].additional_charge;
+        obj.quantity = 1;
+        obj.price = Number(items[i].price);
+        arr.push(obj);
+        break;
+      }
+    }
+
+    return arr;
+  };
+
+  deliveryMenuComponent = (menuTitle, categoryTitle, item, key) => {
     return (
       <div key={key}>
         <h3
@@ -43,27 +147,22 @@ export default class Menu extends React.Component {
           {categoryTitle}
         </h3>
         <br />
-        <Card.Group
-          items={items}
-          style={{ cursor: "pointer" }}
-          onClick={() => this.addQuantiyParam(object)}
-        />
+        <Card.Group items={item} style={{ cursor: "pointer" }} />
         <br />
       </div>
     );
   };
 
-  menuItem = (items, currencySymbol, status) => {
+  menuItem = (items, currencySymbol, status, menus, kaunHai, data) => {
     let item = [];
-
     for (let i = 0; i < items.length; i++) {
       // Block Variable
       let obj = {};
       obj.key = items[i].item_id;
       obj.header = items[i].item_name;
-
       obj.meta = items[i].description;
-
+      obj.onClick = e =>
+        this.addQuantiyParam(items[i].item_id, menus, kaunHai, data);
       if (status) {
         if (items[i].item_type === 1) {
           // obj.description =
@@ -87,7 +186,7 @@ export default class Menu extends React.Component {
     return item;
   };
 
-  deliveryLoop = (menus, currencySymbol, status) => {
+  deliveryLoop = (menus, currencySymbol, status, obj) => {
     const REG_HEX = /&#x([a-fA-F0-9]+);/;
     const hex = currencySymbol.replace(REG_HEX, "$1");
     const dec = parseInt(hex, 16);
@@ -97,20 +196,23 @@ export default class Menu extends React.Component {
         const items = this.menuItem(
           category.item,
           String.fromCharCode(dec),
-          status
+          status,
+          category,
+          "DELIVERY",
+          obj
         );
         return this.deliveryMenuComponent(
           menu.menu_title,
           category.category_title,
           items,
-          category,
+
           category.category_id
         );
       });
     });
   };
 
-  saloonLoop = (menus, currencySymbol, status) => {
+  saloonLoop = (menus, currencySymbol, status, obj) => {
     const REG_HEX = /&#x([a-fA-F0-9]+);/;
     const hex = currencySymbol.replace(REG_HEX, "$1");
     const dec = parseInt(hex, 16);
@@ -119,29 +221,26 @@ export default class Menu extends React.Component {
       const items = this.menuItem(
         category.item,
         String.fromCharCode(dec),
-        status
+        status,
+        category,
+        "SALOON",
+        obj
       );
       return this.deliveryMenuComponent(
         menus.menu_title,
         category.category_title,
         items,
-        category,
+
         category.category_id
       );
     });
   };
 
-  logicMenuData = (menus, status, currencySymbol) => {
+  logicMenuData = (menus, status, currencySymbol, obj) => {
     if (status) {
-      // Add quantity parameter
-      // this.addQuantiyParam(menus[0]);
-
-      return this.deliveryLoop(menus, currencySymbol, status);
+      return this.deliveryLoop(menus, currencySymbol, status, obj);
     } else {
-      // Add quantity parameter
-      // this.addQuantiyParam(menus);
-
-      return this.saloonLoop(menus, currencySymbol, status);
+      return this.saloonLoop(menus, currencySymbol, status, obj);
     }
   };
 
@@ -176,6 +275,8 @@ export default class Menu extends React.Component {
     let status = false;
     let currencySymbol = undefined;
     let hide = [];
+    let obj = {};
+
     if (this.props.detailState.apiCall) {
       if (this.props.detailState.which === "new") {
         if (
@@ -202,6 +303,7 @@ export default class Menu extends React.Component {
             .Offer_Basic_Details.Currency_Text;
           hide = this.props.newViewDetail.newViewDetail.offers.SALOON
             .Offer_Menu_List.menu_category;
+          obj = this.props.newViewDetail.newViewDetail.offers;
         } else {
           return <div />;
         }
@@ -230,6 +332,7 @@ export default class Menu extends React.Component {
             .currency_text;
           hide = this.props.oldViewDetail.oldViewDetail.deal.MENU[0]
             .menu_category;
+          obj = this.props.oldViewDetail.oldViewDetail.deal;
         }
       }
     } else {
@@ -247,6 +350,7 @@ export default class Menu extends React.Component {
             .currency_text;
           hide = this.props.history.location.state.offerData.data.MENU[0]
             .menu_category;
+          obj = this.props.history.location.state.offerData;
         }
       } else {
         if (
@@ -263,6 +367,7 @@ export default class Menu extends React.Component {
             .Offer_Basic_Details.Currency_Text;
           hide = this.props.history.location.state.offerData.data.SALOON
             .Offer_Menu_List.menu_category;
+          obj = this.props.history.location.state.offerData;
         } else {
           return <div />;
         }
@@ -288,7 +393,8 @@ export default class Menu extends React.Component {
           {this.logicMenuData(
             this.sliceMenu(menus, status),
             status,
-            currencySymbol
+            currencySymbol,
+            obj
           )}
 
           <Button
