@@ -9,10 +9,6 @@ import {
 } from "semantic-ui-react/dist/commonjs";
 
 export default class Left extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
   componentWillReceiveProps(nextProp) {
     if (this.props.parentState.delivery) {
       if (
@@ -71,6 +67,19 @@ export default class Left extends React.Component {
     } else {
       const quantity = this.props.parentState.finalQuantity - 1;
       if (quantity === 0) {
+        this.props.updateFinalQuantity(quantity);
+        this.props.updateFinalPrice(
+          this.props.parentState.finalPrice -
+            this.props.history.location.state.checkoutData.detailBookingPrice
+        );
+
+        this.calculateAdditionalCharge(
+          this.props.parentState.finalPrice -
+            this.props.history.location.state.checkoutData.detailBookingPrice,
+          this.props.parentState.finalCharge
+        );
+        console.log(this.props);
+        this.props.history.push("/web/");
       } else {
         this.props.updateFinalQuantity(quantity);
         this.props.updateFinalPrice(
@@ -150,6 +159,8 @@ export default class Left extends React.Component {
     this.props.updateFinalPrice(finalPrice);
 
     this.props.updateNewBookingState(copyBookingDetail);
+
+    this.props.history.push(`/web/`);
   };
 
   calculateNewCategoryAmount = copyBookingDetail => {
