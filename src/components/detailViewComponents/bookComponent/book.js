@@ -516,20 +516,39 @@ export default class Book extends React.Component {
 
     if (status) {
       let bookingPrice = 0;
-
+      let list = {};
+      let copyDetail = [];
       if (appointment) {
-        bookingPrice = this.calculateFinalAmount(
-          this.props.detailState.bookingDetail,
-          false
-        );
+        if (this.props.detailState.bookingDetail.length === 0) {
+          list.offer_id = object.Offer_Basic_Details.Offer_Id;
+          list.category_name = object.Offer_Basic_Details.Category_Name;
+          list.offering_name = object.Offer_Basic_Details.Offering_Name;
+          list.category_id = object.Offer_Basic_Details.Category_Id;
+          list.offering_id = object.Offer_Basic_Details.Offering_Id;
+          list.merchant_mobile = object.Merchant_Details.Merchant_Mobile;
+          list.merchant_bname = object.Merchant_Details.Merchant_Bname;
+          list.currency_symbol = currencySymbol;
+          list.menu_list = [];
+
+          copyDetail = list;
+        } else {
+          bookingPrice = this.calculateFinalAmount(
+            this.props.detailState.bookingDetail,
+            false
+          );
+
+          copyDetail = this.props.detailState.bookingDetail;
+        }
       } else {
         bookingPrice = this.calculateFinalAmount(
           this.props.detailState.bookingDetail,
           true
         );
+
+        copyDetail = this.props.detailState.bookingDetail;
       }
       newObject = {
-        detailObject: this.props.detailState.bookingDetail,
+        detailObject: copyDetail,
         categoryFlag: "NEW",
         currencySymbol: currencySymbol,
         detailBookingPrice: bookingPrice

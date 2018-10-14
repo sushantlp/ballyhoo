@@ -17,6 +17,8 @@ export default class Initial extends React.Component {
     super(props);
     this.state = {
       delivery: false,
+      saloonAppoint: false,
+
       oldCategory: false,
       newCategory: false,
       paymentOption: "",
@@ -94,25 +96,33 @@ export default class Initial extends React.Component {
           }
         }
       } else {
+        let appoint = this.state.saloonAppoint;
+        if (object.detailObject.Offering === "Appointment") {
+          appoint = true;
+        }
+
         this.setState({
           newCategory: true,
           key: JSON.parse(key),
           userData: JSON.parse(userData),
-          newBookingState: this.props.location.state.checkoutData.detailObject,
-          finalPrice: object.detailBookingPrice
+          newBookingState: object.detailObject,
+          finalPrice: object.detailBookingPrice,
+          saloonAppoint: appoint
         });
 
-        // Get Additional Charge
-        this.props.getOtherAdditionalCharge(
-          object.detailBookingPrice,
-          jwt.token
-        );
+        if (object.detailBookingPrice !== 0) {
+          // Get Additional Charge
+          this.props.getOtherAdditionalCharge(
+            object.detailBookingPrice,
+            jwt.token
+          );
 
-        // Check Payment Mode Active
-        this.props.getPaymentMode(
-          object.detailObject.merchant_mobile,
-          jwt.token
-        );
+          // Check Payment Mode Active
+          this.props.getPaymentMode(
+            object.detailObject.merchant_mobile,
+            jwt.token
+          );
+        }
       }
     } else {
       this.props.history.push("/web/");

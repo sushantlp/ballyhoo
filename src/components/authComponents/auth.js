@@ -57,6 +57,7 @@ export default class Auth extends React.Component {
   }
 
   componentWillMount() {
+    console.log(this.props);
     if (this.props.history.location.state !== undefined) {
       this.createCountryCode(COUNTRY_CODE);
     } else {

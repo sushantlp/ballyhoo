@@ -16,11 +16,11 @@ export default class Menu extends React.Component {
       menuList: []
     };
   }
-
+ 
   // Add quantity parameter
   addQuantiyParam = (key, items, kaunHai, obj, currencySymbol) => {
     const copyBookingDetail = this.props.detailState.bookingDetail;
-
+    
     if (copyBookingDetail.length === 0) {
       let list = {};
       if (kaunHai === "SALOON") {
@@ -241,7 +241,6 @@ export default class Menu extends React.Component {
         menus.menu_title,
         category.category_title,
         items,
-
         category.category_id
       );
     });
