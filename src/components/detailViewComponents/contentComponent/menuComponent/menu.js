@@ -18,14 +18,8 @@ export default class Menu extends React.Component {
   }
 
   // Add quantity parameter
-  addQuantiyParam = (key, items, kaunHai, obj) => {
-    // console.log(key);
-    // console.log(items);
-    // console.log(kaunHai);
-    // console.log(obj);
-
+  addQuantiyParam = (key, items, kaunHai, obj, currencySymbol) => {
     const copyBookingDetail = this.props.detailState.bookingDetail;
-    console.log(copyBookingDetail);
 
     if (copyBookingDetail.length === 0) {
       let list = {};
@@ -37,7 +31,8 @@ export default class Menu extends React.Component {
         list.offering_id = obj.data.Offer_Basic_Details.Offering_Id;
         list.merchant_mobile = obj.data.Merchant_Details.Merchant_Mobile;
         list.merchant_bname = obj.data.Merchant_Details.Merchant_Bname;
-        list.menu_list = this.addSelectedMenu(key, items, copyBookingDetail);
+        list.currency_symbol = currencySymbol;
+        list.menu_list = this.addSelectedMenu(key, items, list);
 
         this.props.updateBookingDetail(list);
       } else {
@@ -60,8 +55,11 @@ export default class Menu extends React.Component {
     let categoryIndex = 0;
     let findCategory = false;
     let findItem = false;
+    let menuListExist = false;
 
     if (bookingDetail.hasOwnProperty("menu_list")) {
+      menuListExist = true;
+
       if (bookingDetail.menu_list.length > 0) {
         for (let j = 0; j < bookingDetail.menu_list.length; j++) {
           if (
@@ -79,10 +77,9 @@ export default class Menu extends React.Component {
             j < bookingDetail.menu_list[categoryIndex].item_list.length;
             j++
           ) {
-            console.log("Hello")
             if (
-              bookingDetail.menu_list[categoryIndex].item_list[j] ===
-              items.category_id
+              bookingDetail.menu_list[categoryIndex].item_list[j].item_id ===
+              key
             ) {
               findItem = true;
               break;
@@ -93,22 +90,30 @@ export default class Menu extends React.Component {
     }
     if (findCategory) {
       if (!findItem) {
-        obj.item_list = this.addMenuItem(
+        bookingDetail.menu_list[categoryIndex].item_list = this.addMenuItem(
           items.item,
           key,
           bookingDetail.menu_list[categoryIndex].item_list
         );
-        arr.push(obj);
+        arr = bookingDetail.menu_list;
       } else {
-        console.log("FINd");
-        // arr = bookingDetail.menu_list[categoryIndex].item_list;
+        arr = bookingDetail.menu_list;
       }
     } else {
-      obj.menu_category_id = items.category_id;
-      obj.menu_category_title = items.category_title;
-      obj.item_list = this.addMenuItem(items.item, key, []);
+      if (menuListExist) {
+        obj.menu_category_id = items.category_id;
+        obj.menu_category_title = items.category_title;
+        obj.item_list = this.addMenuItem(items.item, key, []);
 
-      arr.push(obj);
+        bookingDetail.menu_list.push(obj);
+        arr = bookingDetail.menu_list;
+      } else {
+        obj.menu_category_id = items.category_id;
+        obj.menu_category_title = items.category_title;
+        obj.item_list = this.addMenuItem(items.item, key, []);
+
+        arr.push(obj);
+      }
     }
 
     return arr;
@@ -162,7 +167,13 @@ export default class Menu extends React.Component {
       obj.header = items[i].item_name;
       obj.meta = items[i].description;
       obj.onClick = e =>
-        this.addQuantiyParam(items[i].item_id, menus, kaunHai, data);
+        this.addQuantiyParam(
+          items[i].item_id,
+          menus,
+          kaunHai,
+          data,
+          currencySymbol
+        );
       if (status) {
         if (items[i].item_type === 1) {
           // obj.description =

@@ -201,12 +201,21 @@ export default class Book extends React.Component {
   };
 
   // Old Date Update
-  oldDateHandleChange = (event, data, object, status) => {
+  oldDateHandleChange = (event, data, object, status, appointment) => {
     if (status) {
       // if (Object.keys(object.ACTIVITY).length !== 0) {
-      const bookingStatus = this.checkBookingDetailLength(
-        this.props.detailState.bookingDetail
-      );
+      let bookingStatus = true;
+      if (appointment) {
+        bookingStatus = this.checkBookingDetailLength(
+          this.props.detailState.bookingDetail,
+          false
+        );
+      } else {
+        bookingStatus = this.checkBookingDetailLength(
+          this.props.detailState.bookingDetail,
+          true
+        );
+      }
 
       if (bookingStatus) {
         this.setState({
@@ -252,7 +261,13 @@ export default class Book extends React.Component {
     }
   };
 
-  oldBookingComponent = (limit, calendar, currencySymbol, object) => {
+  oldBookingComponent = (
+    limit,
+    calendar,
+    currencySymbol,
+    object,
+    appointment
+  ) => {
     return (
       <div>
         <span
@@ -353,7 +368,7 @@ export default class Book extends React.Component {
             value={this.state.date}
             iconPosition="left"
             onChange={(event, data) =>
-              this.oldDateHandleChange(event, data, object, false)
+              this.oldDateHandleChange(event, data, object, false, appointment)
             }
           />
         </span>
@@ -375,7 +390,7 @@ export default class Book extends React.Component {
             value={object.EVENTS.event_date}
             iconPosition="left"
             onChange={(event, data) =>
-              this.oldDateHandleChange(event, data, object, false)
+              this.oldDateHandleChange(event, data, object, false, appointment)
             }
           />
         </span>
@@ -383,7 +398,7 @@ export default class Book extends React.Component {
     );
   };
 
-  newBookingComponent = (object, endDate) => {
+  newBookingComponent = (object, endDate, appointment) => {
     return (
       <div>
         <label
@@ -419,7 +434,7 @@ export default class Book extends React.Component {
             value={this.state.date}
             iconPosition="left"
             onChange={(event, data) =>
-              this.oldDateHandleChange(event, data, object, true)
+              this.oldDateHandleChange(event, data, object, true, appointment)
             }
             minDate={this.state.minDate}
             maxDate={endDate}
@@ -438,7 +453,7 @@ export default class Book extends React.Component {
             value={this.state.date}
             iconPosition="left"
             onChange={(event, data) =>
-              this.oldDateHandleChange(event, data, object, true)
+              this.oldDateHandleChange(event, data, object, true, appointment)
             }
           />
         </span>
@@ -446,24 +461,44 @@ export default class Book extends React.Component {
     );
   };
 
-  bookingLogic = (limit, calendar, currencySymbol, obj, status, endDate) => {
+  bookingLogic = (
+    limit,
+    calendar,
+    currencySymbol,
+    obj,
+    status,
+    endDate,
+    appointment
+  ) => {
     if (status) {
-      return this.newBookingComponent(obj, endDate);
+      return this.newBookingComponent(obj, endDate, appointment);
     } else {
-      return this.oldBookingComponent(limit, calendar, currencySymbol, obj);
+      return this.oldBookingComponent(
+        limit,
+        calendar,
+        currencySymbol,
+        obj,
+        appointment
+      );
     }
   };
 
-  checkoutLogic = (object, currencySymbol, status) => {
+  checkoutLogic = (object, currencySymbol, status, appointment) => {
     let newObject = {};
+
     if (status) {
+      let bookingPrice = 0;
+
+      if (appointment) {
+        this.calculateFinalAmount(this.props.detailState.bookingDetail, false);
+      } else {
+        this.calculateFinalAmount(this.props.detailState.bookingDetail, true);
+      }
       newObject = {
         detailObject: this.props.detailState.bookingDetail,
         categoryFlag: "NEW",
         currencySymbol: currencySymbol,
-        detailBookingPrice: this.calculateFinalAmount(
-          this.props.detailState.bookingDetail
-        )
+        detailBookingPrice: appointment
       };
     } else {
       newObject = {
@@ -642,6 +677,117 @@ export default class Book extends React.Component {
     );
   };
 
+  menuCartItemDisplay = (menus, currencySymbol, key) => {
+    return (
+      <div key={key}>
+        <h4
+          style={{
+            fontWeight: "500",
+            color: "rgb(39, 37, 37)",
+            margin: "0px",
+            display: menus.item_list.length > 0 ? "inline" : "none"
+          }}
+        >
+          {menus.menu_category_title}
+        </h4>
+
+        {menus.item_list.map((item, key) => {
+          let totalAmount = 0;
+          if (item.quantity === 1) {
+            totalAmount = item.price;
+          } else {
+            totalAmount = item.quantity * item.price;
+          }
+
+          return (
+            <Segment key={key} style={{ marginBottom: "10px" }}>
+              <span
+                style={{
+                  display: "inline",
+                  float: "right"
+                }}
+              >
+                <Icon
+                  name="minus square outline"
+                  style={{
+                    color: "rgba(0,0,0,.6)",
+                    fontSize: "18px",
+                    display: "inline",
+                    cursor: "pointer"
+                  }}
+                  onClick={() =>
+                    this.intitalizeCartQuantity(
+                      item.price_id,
+                      item.available,
+                      item.quantity,
+                      false
+                    )
+                  }
+                />
+                <label
+                  style={{
+                    fontSize: "16px",
+                    paddingLeft: "5px",
+                    paddingRight: "7px",
+                    display: "inline"
+                  }}
+                >
+                  {item.quantity}
+                </label>
+                <Icon
+                  name="plus square outline"
+                  style={{
+                    color: "rgba(0,0,0,.6)",
+                    fontSize: "18px",
+                    display: "inline",
+                    cursor: "pointer"
+                  }}
+                  onClick={() =>
+                    this.intitalizeCartQuantity(
+                      item.price_id,
+                      item.available,
+                      item.quantity,
+                      true
+                    )
+                  }
+                />
+              </span>
+
+              <h4
+                style={{
+                  fontWeight: "500",
+                  color: "#ff695e",
+                  display: "inline"
+                }}
+              >
+                {item.item_name}
+              </h4>
+
+              <span
+                style={{
+                  position: "absolute",
+                  left: "170px"
+                }}
+              >
+                <label
+                  style={{
+                    color: "rgba(0,0,0,.6)",
+                    fontSize: "16px",
+                    fontWeight: "bold"
+                  }}
+                >
+                  {currencySymbol}
+                  {totalAmount}
+                </label>
+              </span>
+              <div />
+            </Segment>
+          );
+        })}
+      </div>
+    );
+  };
+
   cartItemLogic = item => {
     return item.packageList.map((packages, key) => {
       if (packages.priceList.length > 0) {
@@ -650,30 +796,58 @@ export default class Book extends React.Component {
     });
   };
 
-  saloonCartItemLogic = item => {};
-
-  calculateFinalAmount = item => {
-    let finalAmount = 0;
-    item.packageList.map((packages, key) => {
-      packages.priceList.map((price, key) => {
-        finalAmount = price.price * price.quantity + finalAmount;
-      });
+  menuCartItemLogic = item => {
+    return item.menu_list.map((menus, key) => {
+      if (menus.item_list.length > 0) {
+        return this.menuCartItemDisplay(menus, item.currency_symbol, key);
+      }
     });
+  };
+
+  calculateFinalAmount = (item, status) => {
+    let finalAmount = 0;
+    if (status) {
+      item.packageList.map((packages, key) => {
+        packages.priceList.map((price, key) => {
+          finalAmount = price.price * price.quantity + finalAmount;
+        });
+      });
+    } else {
+      item.menu_list.map((menus, key) => {
+        menus.item_list.map((price, key) => {
+          finalAmount = price.price * price.quantity + finalAmount;
+        });
+      });
+    }
 
     return finalAmount;
   };
 
-  checkBookingDetailLength = item => {
-    if (item.hasOwnProperty("packageList")) {
-      for (let i = 0; i < item.packageList.length; i++) {
-        if (item.packageList[i].priceList.length > 0) {
-          return false;
+  checkBookingDetailLength = (item, status) => {
+    if (status) {
+      if (item.hasOwnProperty("packageList")) {
+        for (let i = 0; i < item.packageList.length; i++) {
+          if (item.packageList[i].priceList.length > 0) {
+            return false;
+          }
         }
-      }
 
-      return true;
+        return true;
+      } else {
+        return true;
+      }
     } else {
-      return true;
+      if (item.hasOwnProperty("menu_list")) {
+        for (let i = 0; i < item.menu_list.length; i++) {
+          if (item.menu_list[i].item_list.length > 0) {
+            return false;
+          }
+        }
+
+        return true;
+      } else {
+        return true;
+      }
     }
   };
   render() {
@@ -686,6 +860,7 @@ export default class Book extends React.Component {
     let finalAmount = 0;
     let exipry = false;
     let appointment = false;
+    let bookingStatus = false;
 
     if (this.props.detailState.apiCall) {
       if (this.props.detailState.which === "new") {
@@ -797,17 +972,34 @@ export default class Book extends React.Component {
 
     const dec = parseInt(hex, 16);
 
-    const bookingStatus = this.checkBookingDetailLength(
-      this.props.detailState.bookingDetail
-    );
-
-    if (!bookingStatus) {
-      finalAmount = this.calculateFinalAmount(
-        this.props.detailState.bookingDetail
+    if (appointment) {
+      bookingStatus = this.checkBookingDetailLength(
+        this.props.detailState.bookingDetail,
+        false
       );
+
+      if (!bookingStatus) {
+        finalAmount = this.calculateFinalAmount(
+          this.props.detailState.bookingDetail,
+          false
+        );
+      }
+    } else {
+      bookingStatus = this.checkBookingDetailLength(
+        this.props.detailState.bookingDetail,
+        true
+      );
+
+      if (!bookingStatus) {
+        finalAmount = this.calculateFinalAmount(
+          this.props.detailState.bookingDetail,
+          true
+        );
+      }
     }
 
-    // console.log(this.props);
+    console.log(this.props);
+
     return (
       <div>
         <Segment style={{ width: "400px" }}>
@@ -817,7 +1009,8 @@ export default class Book extends React.Component {
             String.fromCharCode(dec),
             obj,
             status,
-            endDate
+            endDate,
+            appointment
           )}
 
           <Divider style={{ display: finalAmount === 0 ? "none" : "block" }} />
@@ -825,23 +1018,27 @@ export default class Book extends React.Component {
             style={{
               overflow: "auto",
               maxHeight: 200,
-              display: bookingStatus ? "none" : "block"
+              display: appointment ? "none" : bookingStatus ? "none" : "block"
             }}
           >
-            {bookingStatus
+            {appointment
               ? null
-              : this.cartItemLogic(this.props.detailState.bookingDetail)}
+              : bookingStatus
+                ? null
+                : this.cartItemLogic(this.props.detailState.bookingDetail)}
           </Segment>
 
           <Segment
             style={{
               overflow: "auto",
               maxHeight: 200,
-              display: appointment ? "block" : "none"
+              display: appointment ? (bookingStatus ? "none" : "block") : "none"
             }}
           >
             {appointment
-              ? this.saloonCartItemLogic(this.props.detailState.bookingDetail)
+              ? bookingStatus
+                ? null
+                : this.menuCartItemLogic(this.props.detailState.bookingDetail)
               : null}
           </Segment>
 
@@ -896,7 +1093,12 @@ export default class Book extends React.Component {
               marginRight: "24px"
             }}
             onClick={() =>
-              this.checkoutLogic(obj, String.fromCharCode(dec), status)
+              this.checkoutLogic(
+                obj,
+                String.fromCharCode(dec),
+                status,
+                appointment
+              )
             }
           >
             Procced
