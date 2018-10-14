@@ -48,7 +48,6 @@ export default class Initial extends React.Component {
 
   componentWillMount() {
     window.scrollTo(0, 0);
-    console.log(this.props);
     if (this.props.history.location.state !== undefined) {
       const object = this.props.location.state.checkoutData;
 

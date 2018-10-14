@@ -161,6 +161,34 @@ export default class Book extends React.Component {
     this.props.updateBookingDetail(copyBookingDetail);
   };
 
+  menuIntitalizeCartQuantity = (priceId, quantity, bool) => {
+    const copyBookingDetail = this.props.detailState.bookingDetail;
+
+    for (let i = 0; i < copyBookingDetail.menu_list.length; i++) {
+      for (
+        let j = 0;
+        j < copyBookingDetail.menu_list[i].item_list.length;
+        j++
+      ) {
+        if (priceId === copyBookingDetail.menu_list[i].item_list[j].price_id) {
+          if (bool) {
+            copyBookingDetail.menu_list[i].item_list[j].quantity =
+              copyBookingDetail.menu_list[i].item_list[j].quantity + 1;
+          } else {
+            if (quantity === 1) {
+              copyBookingDetail.menu_list[i].item_list.splice(j, 1);
+            } else {
+              copyBookingDetail.menu_list[i].item_list[j].quantity =
+                copyBookingDetail.menu_list[i].item_list[j].quantity - 1;
+            }
+          }
+        }
+      }
+    }
+
+    this.props.updateBookingDetail(copyBookingDetail);
+  };
+
   intitalizeQuantity = (flag, limit) => {
     if (flag) {
       if (this.state.quantity <= limit) {
@@ -490,15 +518,21 @@ export default class Book extends React.Component {
       let bookingPrice = 0;
 
       if (appointment) {
-        this.calculateFinalAmount(this.props.detailState.bookingDetail, false);
+        bookingPrice = this.calculateFinalAmount(
+          this.props.detailState.bookingDetail,
+          false
+        );
       } else {
-        this.calculateFinalAmount(this.props.detailState.bookingDetail, true);
+        bookingPrice = this.calculateFinalAmount(
+          this.props.detailState.bookingDetail,
+          true
+        );
       }
       newObject = {
         detailObject: this.props.detailState.bookingDetail,
         categoryFlag: "NEW",
         currencySymbol: currencySymbol,
-        detailBookingPrice: appointment
+        detailBookingPrice: bookingPrice
       };
     } else {
       newObject = {
@@ -711,14 +745,13 @@ export default class Book extends React.Component {
                   name="minus square outline"
                   style={{
                     color: "rgba(0,0,0,.6)",
-                    fontSize: "18px",
+                    fontSize: "17px",
                     display: "inline",
                     cursor: "pointer"
                   }}
                   onClick={() =>
-                    this.intitalizeCartQuantity(
+                    this.menuIntitalizeCartQuantity(
                       item.price_id,
-                      item.available,
                       item.quantity,
                       false
                     )
@@ -726,7 +759,7 @@ export default class Book extends React.Component {
                 />
                 <label
                   style={{
-                    fontSize: "16px",
+                    fontSize: "15px",
                     paddingLeft: "5px",
                     paddingRight: "7px",
                     display: "inline"
@@ -738,14 +771,13 @@ export default class Book extends React.Component {
                   name="plus square outline"
                   style={{
                     color: "rgba(0,0,0,.6)",
-                    fontSize: "18px",
+                    fontSize: "17px",
                     display: "inline",
                     cursor: "pointer"
                   }}
                   onClick={() =>
-                    this.intitalizeCartQuantity(
+                    this.menuIntitalizeCartQuantity(
                       item.price_id,
-                      item.available,
                       item.quantity,
                       true
                     )
@@ -753,26 +785,27 @@ export default class Book extends React.Component {
                 />
               </span>
 
-              <h4
+              <h5
                 style={{
                   fontWeight: "500",
                   color: "#ff695e",
-                  display: "inline"
+                  display: "inline",
+                  fontSize: "12.5px"
                 }}
               >
                 {item.item_name}
-              </h4>
+              </h5>
 
               <span
                 style={{
                   position: "absolute",
-                  left: "170px"
+                  left: "200px"
                 }}
               >
                 <label
                   style={{
                     color: "rgba(0,0,0,.6)",
-                    fontSize: "16px",
+                    fontSize: "14px",
                     fontWeight: "bold"
                   }}
                 >
@@ -1079,7 +1112,15 @@ export default class Book extends React.Component {
 
           <Divider style={{ display: finalAmount === 0 ? "none" : "block" }} />
           <Button
-            disabled={exipry ? true : status ? bookingStatus : false}
+            disabled={
+              exipry
+                ? true
+                : status
+                  ? appointment
+                    ? false
+                    : bookingStatus
+                  : false
+            }
             style={{
               backgroundColor: "#FF5A5F",
               color: "white",
