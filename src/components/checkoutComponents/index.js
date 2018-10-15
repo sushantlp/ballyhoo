@@ -48,6 +48,46 @@ export default class Initial extends React.Component {
     };
   }
 
+  componentWillUnmount() {
+    console.log(this.timer);
+    if (this.timer !== undefined) {
+      clearInterval(this.timer);
+    }
+  }
+
+  async componentDidMount() {
+    try {
+      // Get Session Storage Data
+      const userData = sessionStorage.getItem(USER_DATA);
+      const key = sessionStorage.getItem(BALLY_KEY);
+      sessionStorage.removeItem(BALLY_KEY);
+      let object = {};
+      if (userData === null) {
+        this.props.history.push("/web/");
+      } else {
+        this.timer = setInterval(async () => {
+          const data = JSON.parse(userData);
+          const keyValue = JSON.parse(key);
+          const res = await fetch(
+            `https://ballyhoo.today/web/token?mobile=${data.userMobile}`
+          );
+          const jwt = await res.json();
+
+          object = {
+            razorpay: keyValue.razorpay,
+            role: jwt.Role,
+            token: jwt.Token
+          };
+
+          // Store in Session Storage
+          sessionStorage.setItem(BALLY_KEY, JSON.stringify(object));
+        }, 1200000);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   componentWillMount() {
     window.scrollTo(0, 0);
     if (this.props.history.location.state !== undefined) {

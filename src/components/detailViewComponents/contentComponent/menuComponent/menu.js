@@ -16,11 +16,11 @@ export default class Menu extends React.Component {
       menuList: []
     };
   }
- 
+
   // Add quantity parameter
   addQuantiyParam = (key, items, kaunHai, obj, currencySymbol) => {
     const copyBookingDetail = this.props.detailState.bookingDetail;
-    
+
     if (copyBookingDetail.length === 0) {
       let list = {};
       if (kaunHai === "SALOON") {
@@ -32,6 +32,7 @@ export default class Menu extends React.Component {
         list.merchant_mobile = obj.data.Merchant_Details.Merchant_Mobile;
         list.merchant_bname = obj.data.Merchant_Details.Merchant_Bname;
         list.currency_symbol = currencySymbol;
+        list.bookingDate = this.props.detailState.bookingDateSlection;
         list.menu_list = this.addSelectedMenu(key, items, list);
 
         this.props.updateBookingDetail(list);

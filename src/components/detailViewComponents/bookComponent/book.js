@@ -528,6 +528,7 @@ export default class Book extends React.Component {
           list.merchant_mobile = object.Merchant_Details.Merchant_Mobile;
           list.merchant_bname = object.Merchant_Details.Merchant_Bname;
           list.currency_symbol = currencySymbol;
+          list.bookingDate = this.props.detailState.bookingDateSlection;
           list.menu_list = [];
 
           copyDetail = list;
