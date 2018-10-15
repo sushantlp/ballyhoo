@@ -58,6 +58,10 @@ export default class Initial extends React.Component {
       const key = sessionStorage.getItem(BALLY_KEY);
       const jwt = JSON.parse(key);
 
+      if (jwt === null) {
+        this.props.history.push("/web/");
+      }
+
       if (object.categoryFlag === "OLD") {
         if (object.detailObject.Offering === "Delivery Only") {
           this.setState({
@@ -100,7 +104,7 @@ export default class Initial extends React.Component {
         if (object.detailObject.category_name === "SALOON & SPA") {
           saloon = true;
         }
-        console.log(object.detailObject);
+
         this.setState({
           newCategory: true,
           key: JSON.parse(key),

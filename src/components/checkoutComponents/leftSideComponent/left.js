@@ -78,7 +78,7 @@ export default class Left extends React.Component {
             this.props.history.location.state.checkoutData.detailBookingPrice,
           this.props.parentState.finalCharge
         );
-        console.log(this.props);
+
         this.props.history.push("/web/");
       } else {
         this.props.updateFinalQuantity(quantity);
@@ -372,7 +372,7 @@ export default class Left extends React.Component {
       <span
         style={{
           position: "absolute",
-          left: "150px"
+          left: "200px"
         }}
       >
         <Icon
@@ -531,7 +531,7 @@ export default class Left extends React.Component {
   ) => {
     return (
       <div key={key}>
-        <h5
+        <h4
           style={{
             fontWeight: "500",
             color: "rgb(39, 37, 37)",
@@ -540,7 +540,7 @@ export default class Left extends React.Component {
           }}
         >
           {menuCategoryTitle}
-        </h5>
+        </h4>
 
         {itemList.map((item, key) => {
           let totalAmount = 0;
@@ -554,7 +554,7 @@ export default class Left extends React.Component {
             <Segment key={key} style={{ marginBottom: "10px" }}>
               <label
                 style={{
-                  fontSize: "18px"
+                  fontSize: "12.5px"
                 }}
               >
                 {item.item_name}
@@ -573,7 +573,7 @@ export default class Left extends React.Component {
               >
                 <label
                   style={{
-                    fontSize: "18px"
+                    fontSize: "14px"
                   }}
                 >
                   {currencySymbol}
@@ -808,14 +808,11 @@ export default class Left extends React.Component {
           reserve = true;
         }
       } else {
-        console.log("Saloon");
-        console.log(this.props.parentState.saloon);
         if (this.props.parentState.saloon) {
           if (
             this.props.history.location.state.checkoutData
               .detailBookingPrice === 0
           ) {
-            console.log("Inside");
             reserve = true;
             saloonAppoint = true;
           }
@@ -848,10 +845,18 @@ export default class Left extends React.Component {
     console.log(this.props);
     return (
       <div>
-        <Segment style={{ width: "400px" }}>
+        <Segment
+          style={{ width: "400px", marginBottom: saloonAppoint ? "100px" : "" }}
+        >
           {this.firstHalfComponent(merchantBname, reserve, saloonAppoint)}
-          <Divider />
-          <Segment style={{ overflow: "auto", maxHeight: 200 }}>
+          <Divider style={{ display: saloonAppoint ? "none" : "block" }} />
+          <Segment
+            style={{
+              overflow: "auto",
+              maxHeight: 200,
+              display: saloonAppoint ? "none" : "block"
+            }}
+          >
             {this.props.parentState.oldCategory
               ? this.oldSecondHalfComponent(
                   this.props.history.location.state.checkoutData.detailObject
