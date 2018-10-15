@@ -149,7 +149,7 @@ export default class Left extends React.Component {
       }
     }
 
-    const finalPrice = this.calculateNewCategoryAmount(copyBookingDetail);
+    const finalPrice = this.calculateNewCategoryAmount(copyBookingDetail, true);
 
     this.calculateAdditionalCharge(
       finalPrice,
@@ -190,7 +190,10 @@ export default class Left extends React.Component {
       }
     }
 
-    const finalPrice = this.calculateNewCategoryAmount(copyBookingDetail);
+    const finalPrice = this.calculateNewCategoryAmount(
+      copyBookingDetail,
+      false
+    );
 
     this.calculateAdditionalCharge(
       finalPrice,
@@ -206,22 +209,36 @@ export default class Left extends React.Component {
     }
   };
 
-  calculateNewCategoryAmount = copyBookingDetail => {
+  calculateNewCategoryAmount = (copyBookingDetail, status) => {
     let finalAmount = 0;
 
-    for (let i = 0; i < copyBookingDetail.packageList.length; i++) {
-      for (
-        let j = 0;
-        j < copyBookingDetail.packageList[i].priceList.length;
-        j++
-      ) {
-        finalAmount =
-          finalAmount +
-          copyBookingDetail.packageList[i].priceList[j].price *
-            copyBookingDetail.packageList[i].priceList[j].quantity;
+    if (status) {
+      for (let i = 0; i < copyBookingDetail.packageList.length; i++) {
+        for (
+          let j = 0;
+          j < copyBookingDetail.packageList[i].priceList.length;
+          j++
+        ) {
+          finalAmount =
+            finalAmount +
+            copyBookingDetail.packageList[i].priceList[j].price *
+              copyBookingDetail.packageList[i].priceList[j].quantity;
+        }
+      }
+    } else {
+      for (let i = 0; i < copyBookingDetail.menu_list.length; i++) {
+        for (
+          let j = 0;
+          j < copyBookingDetail.menu_list[i].item_list.length;
+          j++
+        ) {
+          finalAmount =
+            finalAmount +
+            copyBookingDetail.menu_list[i].item_list[j].price *
+              copyBookingDetail.menu_list[i].item_list[j].quantity;
+        }
       }
     }
-
     return finalAmount;
   };
 
@@ -601,12 +618,12 @@ export default class Left extends React.Component {
     });
   };
 
-  newSaloonLogic = (object, promoApply) => {
+  newSaloonLogic = (object, promoApply, currencySymbol) => {
     return object.menu_list.map((menuList, key) => {
       return this.newSaloonSecondHalfComponent(
         menuList.menu_category_title,
         menuList.item_list,
-        object.currencySymbol,
+        currencySymbol,
         key,
         promoApply
       );
@@ -842,12 +859,10 @@ export default class Left extends React.Component {
       merchantBname = this.props.history.location.state.checkoutData
         .detailObject.merchant_bname;
     }
-    console.log(this.props);
+
     return (
       <div>
-        <Segment
-          style={{ width: "400px", marginBottom: saloonAppoint ? "100px" : "" }}
-        >
+        <Segment style={{ width: "400px" }}>
           {this.firstHalfComponent(merchantBname, reserve, saloonAppoint)}
           <Divider style={{ display: saloonAppoint ? "none" : "block" }} />
           <Segment
@@ -873,7 +888,9 @@ export default class Left extends React.Component {
                   : this.newSaloonLogic(
                       this.props.history.location.state.checkoutData
                         .detailObject,
-                      this.props.parentState.promoApply
+                      this.props.parentState.promoApply,
+                      this.props.history.location.state.checkoutData
+                        .currencySymbol
                     )
                 : this.newSecondHalfLogic(
                     this.props.history.location.state.checkoutData.detailObject

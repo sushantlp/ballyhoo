@@ -250,6 +250,15 @@ export default class Payment extends React.Component {
       ) {
         return <div style={{ height: "130px" }} />;
       }
+    } else {
+      if (this.props.parentState.saloon) {
+        if (
+          this.props.history.location.state.checkoutData.detailBookingPrice ===
+          0
+        ) {
+          return <div style={{ height: "130px" }} />;
+        }
+      }
     }
 
     if (this.props.paymentMode.status === "START") {

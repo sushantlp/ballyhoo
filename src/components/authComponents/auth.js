@@ -119,16 +119,14 @@ export default class Auth extends React.Component {
           errorMessage: true,
           errorText: nextProp.resendOtp.msg,
           otpInput: false,
-          otpLoading: false,
-          otpButton: false
+          otpLoading: false
         });
       } else {
         // State Update
         this.setState({
           sweetAlert: true,
           otpInput: false,
-          otpLoading: false,
-          otpButton: false
+          otpLoading: false
         });
       }
     }
