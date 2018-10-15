@@ -255,6 +255,27 @@ export default class Initial extends React.Component {
           "success"
         );
       }
+    } else if (
+      this.props.saloonReservation !== nextProp.saloonReservation &&
+      nextProp.saloonReservation.status !== "START"
+    ) {
+      this.updatePlaceOrderButton(false, false);
+
+      if (nextProp.saloonReservation.status === "FAIL") {
+        this.sweetAlert(
+          true,
+          nextProp.saloonReservation.msg,
+          nextProp.saloonReservation.status,
+          "error"
+        );
+      } else {
+        this.sweetAlert(
+          true,
+          nextProp.saloonReservation.msg,
+          nextProp.saloonReservation.status,
+          "success"
+        );
+      }
     } else {
       return false;
     }
@@ -408,10 +429,14 @@ export default class Initial extends React.Component {
     });
   };
 
-  placeOrderButtonClick = reserve => {
+  placeOrderButtonClick = (reserve, saloonAppoint) => {
     this.updatePlaceOrderButton(true, true);
     if (reserve) {
-      this.oldOnlinePaymentLogic(null, reserve);
+      if (saloonAppoint) {
+        this.saloonAppointmentLogic();
+      } else {
+        this.oldOnlinePaymentLogic(null, reserve);
+      }
     } else {
       if (this.state.newCategory) {
         this.newApiCallLogic();
@@ -516,7 +541,13 @@ export default class Initial extends React.Component {
   };
 
   newBallyhooWalletPaymentLogic = () => {
-    const json = this.getUsedJson(this.state.newBookingState.packageList);
+    let json = {};
+
+    if (this.state.saloonAppoint) {
+      json = this.getSaloonUsedJson(this.state.newBookingState.menu_list);
+    } else {
+      json = this.getUsedJson(this.state.newBookingState.packageList);
+    }
     let dateTime = "";
     if (this.state.newBookingState.category_name === "EVENTS") {
       dateTime = null;
@@ -537,7 +568,12 @@ export default class Initial extends React.Component {
   };
 
   newPayAtVenueLogic = () => {
-    const json = this.getUsedJson(this.state.newBookingState.packageList);
+    let json = {};
+    if (this.state.saloonAppoint) {
+      json = this.getSaloonUsedJson(this.state.newBookingState.menu_list);
+    } else {
+      json = this.getUsedJson(this.state.newBookingState.packageList);
+    }
     let dateTime = "";
     if (this.state.newBookingState.category_name === "EVENTS") {
       dateTime = null;
@@ -559,7 +595,13 @@ export default class Initial extends React.Component {
 
   newOnlinePaymentLogic = razorpayPaymentId => {
     const paisa = this.state.finalGrandTotal * 100;
-    const json = this.getUsedJson(this.state.newBookingState.packageList);
+
+    let json = {};
+    if (this.state.saloonAppoint) {
+      json = this.getSaloonUsedJson(this.state.newBookingState.menu_list);
+    } else {
+      json = this.getUsedJson(this.state.newBookingState.packageList);
+    }
     let dateTime = "";
     if (this.state.newBookingState.category_name === "EVENTS") {
       dateTime = null;
@@ -580,6 +622,18 @@ export default class Initial extends React.Component {
     );
   };
 
+  saloonAppointmentLogic = () => {
+    const dateTime =
+      this.state.newBookingState.bookingDate + " " + this.state.time;
+
+    this.props.postSaloonReservation(
+      this.state.newBookingState.offer_id,
+      this.state.userData.userMobile,
+      dateTime,
+      this.state.key.token
+    );
+  };
+
   getUsedJson = packageList => {
     let arr = [];
     for (let i = 0; i < packageList.length; i++) {
@@ -588,6 +642,22 @@ export default class Initial extends React.Component {
         let obj = {};
         obj.item_id = packageList[i].priceList[j].price_id;
         obj.quantity = packageList[i].priceList[j].quantity;
+
+        arr.push(obj);
+      }
+    }
+
+    return arr;
+  };
+
+  getSaloonUsedJson = menuList => {
+    let arr = [];
+    for (let i = 0; i < menuList.length; i++) {
+      for (let j = 0; j < menuList[i].item_list.length; j++) {
+        // Object
+        let obj = {};
+        obj.item_id = menuList[i].item_list[j].item_id;
+        obj.quantity = menuList[i].item_list[j].quantity;
 
         arr.push(obj);
       }

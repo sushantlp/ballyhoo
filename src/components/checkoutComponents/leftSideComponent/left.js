@@ -165,6 +165,47 @@ export default class Left extends React.Component {
     }
   };
 
+  newSaloonIntitalizeQuantity = (status, itemId, quantity) => {
+    const copyBookingDetail = this.props.parentState.newBookingState;
+
+    for (let i = 0; i < copyBookingDetail.menu_list.length; i++) {
+      for (
+        let j = 0;
+        j < copyBookingDetail.menu_list[i].item_list.length;
+        j++
+      ) {
+        if (itemId === copyBookingDetail.menu_list[i].item_list[j].item_id) {
+          if (status) {
+            copyBookingDetail.menu_list[i].item_list[j].quantity =
+              copyBookingDetail.menu_list[i].item_list[j].quantity + 1;
+          } else {
+            if (quantity === 1) {
+              copyBookingDetail.menu_list[i].item_list.splice(j, 1);
+            } else {
+              copyBookingDetail.menu_list[i].item_list[j].quantity =
+                copyBookingDetail.menu_list[i].item_list[j].quantity - 1;
+            }
+          }
+        }
+      }
+    }
+
+    const finalPrice = this.calculateNewCategoryAmount(copyBookingDetail);
+
+    this.calculateAdditionalCharge(
+      finalPrice,
+      this.props.parentState.finalCharge
+    );
+
+    this.props.updateFinalPrice(finalPrice);
+
+    this.props.updateNewBookingState(copyBookingDetail);
+
+    if (finalPrice === 0) {
+      this.props.history.push(`/web/`);
+    }
+  };
+
   calculateNewCategoryAmount = copyBookingDetail => {
     let finalAmount = 0;
 
@@ -184,7 +225,7 @@ export default class Left extends React.Component {
     return finalAmount;
   };
 
-  firstHalfComponent = (merchantBname, reserve) => {
+  firstHalfComponent = (merchantBname, reserve, saloonAppoint) => {
     return (
       <div>
         <label
@@ -227,7 +268,9 @@ export default class Left extends React.Component {
             marginLeft: "24px",
             marginRight: "24px"
           }}
-          onClick={() => this.props.placeOrderButtonClick(reserve)}
+          onClick={() =>
+            this.props.placeOrderButtonClick(reserve, saloonAppoint)
+          }
         >
           {reserve ? "Reserve" : "Place Order"}
         </Button>
@@ -318,6 +361,52 @@ export default class Left extends React.Component {
           }}
           onClick={() =>
             this.newIntitalizeQuantity(true, priceId, available, quantity)
+          }
+        />
+      </span>
+    );
+  };
+
+  newSaloonSecondHalfQuantityComponent = (quantity, itemId) => {
+    return (
+      <span
+        style={{
+          position: "absolute",
+          left: "150px"
+        }}
+      >
+        <Icon
+          name="minus square outline"
+          style={{
+            color: "rgba(0,0,0,.6)",
+            fontSize: "16px",
+            display: "inline",
+            cursor: "pointer"
+          }}
+          onClick={() =>
+            this.newSaloonIntitalizeQuantity(false, itemId, quantity)
+          }
+        />
+        <label
+          style={{
+            fontSize: "14px",
+            paddingLeft: "5px",
+            paddingRight: "7px",
+            display: "inline"
+          }}
+        >
+          {quantity}
+        </label>
+        <Icon
+          name="plus square outline"
+          style={{
+            color: "rgba(0,0,0,.6)",
+            fontSize: "16px",
+            display: "inline",
+            cursor: "pointer"
+          }}
+          onClick={() =>
+            this.newSaloonIntitalizeQuantity(true, itemId, quantity)
           }
         />
       </span>
@@ -433,12 +522,91 @@ export default class Left extends React.Component {
     );
   };
 
+  newSaloonSecondHalfComponent = (
+    menuCategoryTitle,
+    itemList,
+    currencySymbol,
+    key,
+    promoApply
+  ) => {
+    return (
+      <div key={key}>
+        <h5
+          style={{
+            fontWeight: "500",
+            color: "rgb(39, 37, 37)",
+            margin: "0px",
+            display: itemList.length > 0 ? "inline" : "none"
+          }}
+        >
+          {menuCategoryTitle}
+        </h5>
+
+        {itemList.map((item, key) => {
+          let totalAmount = 0;
+          if (item.quantity === 1) {
+            totalAmount = item.price;
+          } else {
+            totalAmount = item.quantity * item.price;
+          }
+
+          return (
+            <Segment key={key} style={{ marginBottom: "10px" }}>
+              <label
+                style={{
+                  fontSize: "18px"
+                }}
+              >
+                {item.item_name}
+              </label>
+
+              {promoApply
+                ? null
+                : this.newSaloonSecondHalfQuantityComponent(
+                    item.quantity,
+                    item.item_id
+                  )}
+              <span
+                style={{
+                  float: "right"
+                }}
+              >
+                <label
+                  style={{
+                    fontSize: "18px"
+                  }}
+                >
+                  {currencySymbol}
+                  {totalAmount}
+                </label>
+              </span>
+
+              <div />
+            </Segment>
+          );
+        })}
+      </div>
+    );
+  };
+
   newSecondHalfLogic = (packages, currencySymbol, promoApply) => {
     return packages.map((pack, key) => {
       return this.newSecondHalfComponent(
         pack.package_caption,
         pack.priceList,
         currencySymbol,
+        key,
+        promoApply
+      );
+    });
+  };
+
+  newSaloonLogic = (object, promoApply) => {
+    return object.menu_list.map((menuList, key) => {
+      return this.newSaloonSecondHalfComponent(
+        menuList.menu_category_title,
+        menuList.item_list,
+        object.currencySymbol,
         key,
         promoApply
       );
@@ -611,7 +779,9 @@ export default class Left extends React.Component {
   render() {
     let merchantBname = undefined;
     let charge = {};
+    let chargeApply = false;
     let reserve = false;
+    let saloonAppoint = false;
 
     if (this.props.parentState.delivery) {
       if (this.props.deliveryAdditionalCharge.status === "START") {
@@ -619,6 +789,7 @@ export default class Left extends React.Component {
       } else {
         if (this.props.deliveryAdditionalCharge.status === "SUCCESS") {
           charge = this.props.deliveryAdditionalCharge.charge;
+          chargeApply = true;
         } else {
           // Call Error Message
           this.props.errorMessage(
@@ -636,6 +807,16 @@ export default class Left extends React.Component {
         ) {
           reserve = true;
         }
+      } else {
+        if (this.props.parentState.saloonAppoint) {
+          if (
+            this.props.history.location.state.checkoutData
+              .detailBookingPrice === 0
+          ) {
+            reserve = true;
+            saloonAppoint = true;
+          }
+        }
       }
       if (!reserve) {
         if (this.props.otherAdditionalCharge.status === "START") {
@@ -643,6 +824,7 @@ export default class Left extends React.Component {
         } else {
           if (this.props.otherAdditionalCharge.status === "SUCCESS") {
             charge = this.props.otherAdditionalCharge.charge;
+            chargeApply = true;
           } else {
             // Call Error Message
             this.props.errorMessage(true, this.props.otherAdditionalCharge.msg);
@@ -664,7 +846,7 @@ export default class Left extends React.Component {
     return (
       <div>
         <Segment style={{ width: "400px" }}>
-          {this.firstHalfComponent(merchantBname, reserve)}
+          {this.firstHalfComponent(merchantBname, reserve, saloonAppoint)}
           <Divider />
           <Segment style={{ overflow: "auto", maxHeight: 200 }}>
             {this.props.parentState.oldCategory
@@ -677,12 +859,21 @@ export default class Left extends React.Component {
                   this.props.parentState.promoApply,
                   reserve
                 )
-              : this.newSecondHalfLogic(
-                  this.props.history.location.state.checkoutData.detailObject
-                    .packageList,
-                  this.props.history.location.state.checkoutData.currencySymbol,
-                  this.props.parentState.promoApply
-                )}
+              : this.props.parentState.saloonAppoint
+                ? saloonAppoint
+                  ? null
+                  : this.newSaloonLogic(
+                      this.props.history.location.state.checkoutData
+                        .detailObject,
+                      this.props.parentState.promoApply
+                    )
+                : this.newSecondHalfLogic(
+                    this.props.history.location.state.checkoutData.detailObject
+                      .packageList,
+                    this.props.history.location.state.checkoutData
+                      .currencySymbol,
+                    this.props.parentState.promoApply
+                  )}
           </Segment>
           <Divider style={{ display: reserve ? "none" : "block" }} />
 
@@ -693,7 +884,11 @@ export default class Left extends React.Component {
                 this.props.history.location.state.checkoutData.currencySymbol
               )}
 
-          <Divider style={{ display: reserve ? "none" : "block" }} />
+          <Divider
+            style={{
+              display: reserve ? "none" : chargeApply ? "block" : "none"
+            }}
+          />
           {reserve
             ? null
             : this.fourthHalfComponent(

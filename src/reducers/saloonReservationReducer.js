@@ -1,7 +1,9 @@
 import { actionType } from "../actions/saloonReservationAction";
 
 const initialState = {
-  saloonReservation: {}
+  saloonReservation: {},
+  status: "START",
+  msg: ""
 };
 
 export function saloonReservation(state = initialState, action) {
@@ -10,12 +12,16 @@ export function saloonReservation(state = initialState, action) {
       if (action.saloonReservation.hasOwnProperty("error")) {
         return {
           ...state,
-          saloonReservation: {}
+          saloonReservation: {},
+          status: "FAIL",
+          msg: action.saloonReservation.error.ballyhoo
         };
       } else {
         return {
           ...state,
-          saloonReservation: action.saloonReservation
+          saloonReservation: action.saloonReservation,
+          status: "SUCCESS",
+          msg: "successful"
         };
       }
     default:

@@ -161,7 +161,7 @@ export default class Book extends React.Component {
     this.props.updateBookingDetail(copyBookingDetail);
   };
 
-  menuIntitalizeCartQuantity = (priceId, quantity, bool) => {
+  menuIntitalizeCartQuantity = (itemId, quantity, bool) => {
     const copyBookingDetail = this.props.detailState.bookingDetail;
 
     for (let i = 0; i < copyBookingDetail.menu_list.length; i++) {
@@ -170,7 +170,7 @@ export default class Book extends React.Component {
         j < copyBookingDetail.menu_list[i].item_list.length;
         j++
       ) {
-        if (priceId === copyBookingDetail.menu_list[i].item_list[j].price_id) {
+        if (itemId === copyBookingDetail.menu_list[i].item_list[j].item_id) {
           if (bool) {
             copyBookingDetail.menu_list[i].item_list[j].quantity =
               copyBookingDetail.menu_list[i].item_list[j].quantity + 1;
@@ -770,7 +770,7 @@ export default class Book extends React.Component {
                   }}
                   onClick={() =>
                     this.menuIntitalizeCartQuantity(
-                      item.price_id,
+                      item.item_id,
                       item.quantity,
                       false
                     )
@@ -796,7 +796,7 @@ export default class Book extends React.Component {
                   }}
                   onClick={() =>
                     this.menuIntitalizeCartQuantity(
-                      item.price_id,
+                      item.item_id,
                       item.quantity,
                       true
                     )
