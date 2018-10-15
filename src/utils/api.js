@@ -1,9 +1,9 @@
 import getQueryString from "./paramParser";
 
 // Base Url
-//const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
+const host = "https://ballyhoo-ajayballyhoo.c9users.io/";
 
-const host = "https://ballyhoo.today/";
+//const host = "https://ballyhoo.today/";
 
 export default {
   cityLocalityApi: () => {
@@ -303,6 +303,26 @@ export default {
         .catch(error => console.log(error));
     });
   },
+  resendOtpApi: (mobile, type) => {
+    return new Promise((resolve, reject) => {
+      fetch(
+        host +
+          "api/v7/customer/resend/otp?" +
+          getQueryString({
+            mobile: mobile,
+            type: type
+          })
+      )
+        .then(response => {
+          response
+            .json()
+            .then(resendOtp => resolve(resendOtp))
+            .catch(error => console.log(error));
+        })
+        .catch(error => console.log(error));
+    });
+  },
+
   registerNewUserApi: (mobile, email) => {
     return new Promise((resolve, reject) => {
       fetch(host + "api/v4/web/signup", {

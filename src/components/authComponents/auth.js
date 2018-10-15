@@ -110,6 +110,28 @@ export default class Auth extends React.Component {
       if (!_.isEmpty(nextProp.userRecord.userRecord)) {
         this.checkUserData(nextProp.userRecord.userRecord);
       }
+    } else if (
+      this.props.resendOtp !== nextProp.resendOtp &&
+      nextProp.resendOtp.status !== "START"
+    ) {
+      if (nextProp.resendOtp.status === "FAIL") {
+        // State Update
+        this.setState({
+          errorMessage: true,
+          errorText: nextProp.resendOtp.msg,
+          otpInput: false,
+          otpLoading: false,
+          otpButton: false
+        });
+      } else {
+        // State Update
+        this.setState({
+          sweetAlert: true,
+          otpInput: false,
+          otpLoading: false,
+          otpButton: false
+        });
+      }
     }
   }
 
@@ -250,6 +272,24 @@ export default class Auth extends React.Component {
     });
   };
 
+  resendClick = () => {
+    this.setState({
+      otpButton: true,
+      otpInput: true,
+      otpLoading: true
+    });
+
+    const mobileString = this.state.userMobileCode.toString();
+    const mobileSlice = mobileString.slice(1);
+    const mobile = mobileSlice + this.state.userMobile;
+
+    this.props.getResendOtp(mobile, 1);
+
+    this.setState({
+      userConcatMobile: mobile
+    });
+  };
+
   sweetAlertButtonClick = () => {
     this.setState({
       email: false,
@@ -366,6 +406,7 @@ export default class Auth extends React.Component {
             otpInput={this.state.otpInput}
             otpButton={this.state.otpButton}
             otpLoading={this.state.otpLoading}
+            resendClick={this.resendClick}
           />
         ) : null}
 

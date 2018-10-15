@@ -28,6 +28,7 @@ import { userRecord } from "./userRecordReducer";
 import { updateUserRecord } from "./updateUserRecordReducer";
 import { registerNewUser } from "./registerNewUserReducer";
 import { verifyOtp } from "./verifyOtpReducer";
+import { resendOtp } from "./resendOtpReducer";
 
 import { fnbRazorpay } from "./fnbRazorpayReducer";
 import { fnbWallet } from "./fnbWalletReducer";
@@ -70,6 +71,7 @@ export default combineReducers({
   updateUserRecord,
   registerNewUser,
   verifyOtp,
+  resendOtp,
   fnbRazorpay,
   fnbWallet,
   fnbPaytm,

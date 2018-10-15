@@ -42,7 +42,9 @@ const Otp = props => {
         Next
       </Button>
 
-      <p className={classes.Anchor}>Resend otp</p>
+      <p className={classes.Anchor} onClick={() => props.resendClick()}>
+        Resend otp
+      </p>
     </div>
   );
 };
