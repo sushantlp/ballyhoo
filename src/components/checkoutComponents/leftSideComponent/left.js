@@ -808,11 +808,14 @@ export default class Left extends React.Component {
           reserve = true;
         }
       } else {
-        if (this.props.parentState.saloonAppoint) {
+        console.log("Saloon");
+        console.log(this.props.parentState.saloon);
+        if (this.props.parentState.saloon) {
           if (
             this.props.history.location.state.checkoutData
               .detailBookingPrice === 0
           ) {
+            console.log("Inside");
             reserve = true;
             saloonAppoint = true;
           }
@@ -842,7 +845,7 @@ export default class Left extends React.Component {
       merchantBname = this.props.history.location.state.checkoutData
         .detailObject.merchant_bname;
     }
-
+    console.log(this.props);
     return (
       <div>
         <Segment style={{ width: "400px" }}>
@@ -859,7 +862,7 @@ export default class Left extends React.Component {
                   this.props.parentState.promoApply,
                   reserve
                 )
-              : this.props.parentState.saloonAppoint
+              : this.props.parentState.saloon
                 ? saloonAppoint
                   ? null
                   : this.newSaloonLogic(

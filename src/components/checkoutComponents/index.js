@@ -17,7 +17,7 @@ export default class Initial extends React.Component {
     super(props);
     this.state = {
       delivery: false,
-      saloonAppoint: false,
+      saloon: false,
 
       oldCategory: false,
       newCategory: false,
@@ -96,18 +96,18 @@ export default class Initial extends React.Component {
           }
         }
       } else {
-        let appoint = this.state.saloonAppoint;
-        if (object.detailObject.Offering === "Appointment") {
-          appoint = true;
+        let saloon = this.state.saloon;
+        if (object.detailObject.category_name === "SALOON & SPA") {
+          saloon = true;
         }
-
+        console.log(object.detailObject);
         this.setState({
           newCategory: true,
           key: JSON.parse(key),
           userData: JSON.parse(userData),
           newBookingState: object.detailObject,
           finalPrice: object.detailBookingPrice,
-          saloonAppoint: appoint
+          saloon: saloon
         });
 
         if (object.detailBookingPrice !== 0) {
@@ -543,7 +543,7 @@ export default class Initial extends React.Component {
   newBallyhooWalletPaymentLogic = () => {
     let json = {};
 
-    if (this.state.saloonAppoint) {
+    if (this.state.saloon) {
       json = this.getSaloonUsedJson(this.state.newBookingState.menu_list);
     } else {
       json = this.getUsedJson(this.state.newBookingState.packageList);
@@ -569,7 +569,7 @@ export default class Initial extends React.Component {
 
   newPayAtVenueLogic = () => {
     let json = {};
-    if (this.state.saloonAppoint) {
+    if (this.state.saloon) {
       json = this.getSaloonUsedJson(this.state.newBookingState.menu_list);
     } else {
       json = this.getUsedJson(this.state.newBookingState.packageList);
@@ -597,7 +597,7 @@ export default class Initial extends React.Component {
     const paisa = this.state.finalGrandTotal * 100;
 
     let json = {};
-    if (this.state.saloonAppoint) {
+    if (this.state.saloon) {
       json = this.getSaloonUsedJson(this.state.newBookingState.menu_list);
     } else {
       json = this.getUsedJson(this.state.newBookingState.packageList);
