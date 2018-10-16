@@ -66,7 +66,7 @@ export default class Left extends React.Component {
       }
     } else {
       const quantity = this.props.parentState.finalQuantity - 1;
-      if (quantity === 0) {
+      if (quantity < 1) {
         this.props.updateFinalQuantity(quantity);
         this.props.updateFinalPrice(
           this.props.parentState.finalPrice -
