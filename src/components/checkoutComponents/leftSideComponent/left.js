@@ -44,7 +44,7 @@ export default class Left extends React.Component {
     }
   }
 
-  oldIntitalizeQuantity = status => {
+  oldIntitalizeQuantity = (status, reserve) => {
     if (status) {
       if (
         this.props.parentState.finalQuantity <
@@ -53,45 +53,55 @@ export default class Left extends React.Component {
       ) {
         const quantity = this.props.parentState.finalQuantity + 1;
         this.props.updateFinalQuantity(quantity);
-        this.props.updateFinalPrice(
-          this.props.history.location.state.checkoutData.detailBookingPrice *
-            quantity
-        );
 
-        this.calculateAdditionalCharge(
-          this.props.history.location.state.checkoutData.detailBookingPrice *
-            quantity,
-          this.props.parentState.finalCharge
-        );
+        if (!reserve) {
+          this.props.updateFinalPrice(
+            this.props.history.location.state.checkoutData.detailBookingPrice *
+              quantity
+          );
+
+          this.calculateAdditionalCharge(
+            this.props.history.location.state.checkoutData.detailBookingPrice *
+              quantity,
+            this.props.parentState.finalCharge
+          );
+        }
       }
     } else {
       const quantity = this.props.parentState.finalQuantity - 1;
+      console.log(quantity);
       if (quantity < 1) {
+        console.log("IF");
         this.props.updateFinalQuantity(quantity);
-        this.props.updateFinalPrice(
-          this.props.parentState.finalPrice -
-            this.props.history.location.state.checkoutData.detailBookingPrice
-        );
+        if (!reserve) {
+          this.props.updateFinalPrice(
+            this.props.parentState.finalPrice -
+              this.props.history.location.state.checkoutData.detailBookingPrice
+          );
 
-        this.calculateAdditionalCharge(
-          this.props.parentState.finalPrice -
-            this.props.history.location.state.checkoutData.detailBookingPrice,
-          this.props.parentState.finalCharge
-        );
-
+          this.calculateAdditionalCharge(
+            this.props.parentState.finalPrice -
+              this.props.history.location.state.checkoutData.detailBookingPrice,
+            this.props.parentState.finalCharge
+          );
+        }
         this.props.history.push("/web/");
       } else {
+        console.log("ELSE");
         this.props.updateFinalQuantity(quantity);
-        this.props.updateFinalPrice(
-          this.props.parentState.finalPrice -
-            this.props.history.location.state.checkoutData.detailBookingPrice
-        );
 
-        this.calculateAdditionalCharge(
-          this.props.parentState.finalPrice -
-            this.props.history.location.state.checkoutData.detailBookingPrice,
-          this.props.parentState.finalCharge
-        );
+        if (!reserve) {
+          this.props.updateFinalPrice(
+            this.props.parentState.finalPrice -
+              this.props.history.location.state.checkoutData.detailBookingPrice
+          );
+
+          this.calculateAdditionalCharge(
+            this.props.parentState.finalPrice -
+              this.props.history.location.state.checkoutData.detailBookingPrice,
+            this.props.parentState.finalCharge
+          );
+        }
       }
     }
   };
@@ -312,7 +322,7 @@ export default class Left extends React.Component {
             display: "inline",
             cursor: "pointer"
           }}
-          onClick={() => this.oldIntitalizeQuantity(false)}
+          onClick={() => this.oldIntitalizeQuantity(false, reserve)}
         />
         <label
           style={{
@@ -332,7 +342,7 @@ export default class Left extends React.Component {
             display: "inline",
             cursor: "pointer"
           }}
-          onClick={() => this.oldIntitalizeQuantity(true)}
+          onClick={() => this.oldIntitalizeQuantity(true, reserve)}
         />
       </span>
     );
