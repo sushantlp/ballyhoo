@@ -49,7 +49,6 @@ export default class Initial extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log(this.timer);
     if (this.timer !== undefined) {
       clearInterval(this.timer);
     }
@@ -60,29 +59,25 @@ export default class Initial extends React.Component {
       // Get Session Storage Data
       const userData = sessionStorage.getItem(USER_DATA);
       const key = sessionStorage.getItem(BALLY_KEY);
-      console.log("Hello4");
+
       let object = {};
       if (userData === null) {
         this.props.history.push("/web/");
       } else {
-        console.log("Hello3");
         this.timer = setInterval(async () => {
-          console.log("Hello2");
           const data = JSON.parse(userData);
           const keyValue = JSON.parse(key);
           const res = await fetch(
             `https://ballyhoo.today/web/token?mobile=${data.userMobile}`
           );
           const jwt = await res.json();
-          console.log("Hello1");
-          console.log(jwt);
-          console.log("JWT");
+
           object = {
             razorpay: keyValue.razorpay,
             role: jwt.Role,
             token: jwt.Token
           };
-          console.log(object);
+
           // Store in Session Storage
           sessionStorage.removeItem(BALLY_KEY);
           sessionStorage.setItem(BALLY_KEY, JSON.stringify(object));

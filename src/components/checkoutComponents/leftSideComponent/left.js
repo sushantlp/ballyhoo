@@ -69,9 +69,8 @@ export default class Left extends React.Component {
       }
     } else {
       const quantity = this.props.parentState.finalQuantity - 1;
-      console.log(quantity);
+
       if (quantity < 1) {
-        console.log("IF");
         this.props.updateFinalQuantity(quantity);
         if (!reserve) {
           this.props.updateFinalPrice(
@@ -87,7 +86,6 @@ export default class Left extends React.Component {
         }
         this.props.history.push("/web/");
       } else {
-        console.log("ELSE");
         this.props.updateFinalQuantity(quantity);
 
         if (!reserve) {

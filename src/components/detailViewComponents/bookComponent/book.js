@@ -1051,8 +1051,6 @@ export default class Book extends React.Component {
       }
     }
 
-    console.log(this.props);
-
     return (
       <div>
         <Segment style={{ width: "400px" }}>
