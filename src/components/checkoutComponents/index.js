@@ -142,7 +142,9 @@ export default class Initial extends React.Component {
       } else {
         let saloon = this.state.saloon;
         if (object.detailObject.category_name === "SALOON & SPA") {
-          saloon = true;
+          if (object.detailObject.hasOwnProperty("menu_list")) {
+            saloon = true;
+          }
         }
 
         this.setState({

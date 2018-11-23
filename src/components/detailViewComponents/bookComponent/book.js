@@ -1075,8 +1075,8 @@ export default class Book extends React.Component {
             {appointment
               ? null
               : bookingStatus
-                ? null
-                : this.cartItemLogic(this.props.detailState.bookingDetail)}
+              ? null
+              : this.cartItemLogic(this.props.detailState.bookingDetail)}
           </Segment>
 
           <Segment
@@ -1134,10 +1134,10 @@ export default class Book extends React.Component {
               exipry
                 ? true
                 : status
-                  ? appointment
-                    ? false
-                    : bookingStatus
-                  : false
+                ? appointment
+                  ? false
+                  : bookingStatus
+                : false
             }
             style={{
               backgroundColor: "#FF5A5F",

@@ -277,8 +277,8 @@ export default class Left extends React.Component {
             reserve
               ? false
               : this.props.parentState.paymentOption === ""
-                ? true
-                : this.props.parentState.placeOrderButtonDisabled
+              ? true
+              : this.props.parentState.placeOrderButtonDisabled
           }
           loading={this.props.parentState.placeOrderButtonLoading}
           style={{
@@ -843,6 +843,7 @@ export default class Left extends React.Component {
           }
         }
       }
+
       if (!reserve) {
         if (this.props.otherAdditionalCharge.status === "START") {
           return <Segment style={{ width: "400px", height: "400px" }} />;
@@ -891,22 +892,20 @@ export default class Left extends React.Component {
                   reserve
                 )
               : this.props.parentState.saloon
-                ? saloonAppoint
-                  ? null
-                  : this.newSaloonLogic(
-                      this.props.history.location.state.checkoutData
-                        .detailObject,
-                      this.props.parentState.promoApply,
-                      this.props.history.location.state.checkoutData
-                        .currencySymbol
-                    )
-                : this.newSecondHalfLogic(
-                    this.props.history.location.state.checkoutData.detailObject
-                      .packageList,
+              ? saloonAppoint
+                ? null
+                : this.newSaloonLogic(
+                    this.props.history.location.state.checkoutData.detailObject,
+                    this.props.parentState.promoApply,
                     this.props.history.location.state.checkoutData
-                      .currencySymbol,
-                    this.props.parentState.promoApply
-                  )}
+                      .currencySymbol
+                  )
+              : this.newSecondHalfLogic(
+                  this.props.history.location.state.checkoutData.detailObject
+                    .packageList,
+                  this.props.history.location.state.checkoutData.currencySymbol,
+                  this.props.parentState.promoApply
+                )}
           </Segment>
           <Divider style={{ display: reserve ? "none" : "block" }} />
 
