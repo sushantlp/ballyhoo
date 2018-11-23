@@ -68,7 +68,7 @@ export default class Initial extends React.Component {
           const data = JSON.parse(userData);
           const keyValue = JSON.parse(key);
           const res = await fetch(
-            `https://ballyhoo.today/web/token?mobile=${data.userMobile}`
+            `https://ballyhoo.today/api/v4/web/token?mobile=${data.userMobile}`
           );
           const jwt = await res.json();
 
@@ -84,6 +84,7 @@ export default class Initial extends React.Component {
         }, 1200000);
       }
     } catch (e) {
+      console.log("Error")
       console.log(e);
     }
   }
