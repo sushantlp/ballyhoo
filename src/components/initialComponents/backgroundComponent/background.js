@@ -270,7 +270,10 @@ export default class Background extends React.Component {
   };
 
   logicClickOfferning = (event, data) => {
-    const url = data.value.replace(/ /g, "-").toLowerCase();
+    const url = data.value
+      .replace(/ /g, "-")
+      .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "n")
+      .toLowerCase();
 
     const offerIndex = this.readOfferningIndex(data.value, data.options);
 

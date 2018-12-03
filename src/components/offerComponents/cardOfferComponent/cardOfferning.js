@@ -109,7 +109,10 @@ export default class Trending extends React.Component {
           .replace(/-/g, " ")
           .replace(/ /g, "")
           .toLowerCase() ===
-        discoverList[i].title.replace(/ /g, "").toLowerCase()
+        discoverList[i].title
+          .replace(/ /g, "")
+          .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "n")
+          .toLowerCase()
       ) {
         this.setState({
           apiObject: {
@@ -142,7 +145,10 @@ export default class Trending extends React.Component {
           .replace(/-/g, " ")
           .replace(/ /g, "")
           .toLowerCase() ===
-        categoryList[i].title.replace(/ /g, "").toLowerCase()
+        categoryList[i].title
+          .replace(/ /g, "")
+          .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "n")
+          .toLowerCase()
       ) {
         this.setState({
           apiObject: {
@@ -241,8 +247,15 @@ export default class Trending extends React.Component {
     let businessName = undefined;
 
     if (apiType === 1) {
-      category = object.Category.replace(/ /g, "-").toLowerCase();
-      businessName = object.MERCHANT.Business.replace(/ /g, "-").toLowerCase();
+      category = object.Category.replace(/ /g, "-")
+        .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "n")
+        .toLowerCase();
+      businessName = object.MERCHANT.Business.replace(
+        /[&\/\\#,+()$~%.'":*?<>{}]/g,
+        "n"
+      )
+        .replace(/ /g, "-")
+        .toLowerCase();
 
       newObject.data = object;
       newObject.api_type = apiType;
@@ -263,14 +276,12 @@ export default class Trending extends React.Component {
         }
       );
     } else {
-      category = object.Offer_Basic_Details.Category_Name.replace(
-        / /g,
-        "-"
-      ).toLowerCase();
-      businessName = object.Merchant_Details.Merchant_Bname.replace(
-        / /g,
-        "-"
-      ).toLowerCase();
+      category = object.Offer_Basic_Details.Category_Name.replace(/ /g, "-")
+        .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "n")
+        .toLowerCase();
+      businessName = object.Merchant_Details.Merchant_Bname.replace(/ /g, "-")
+        .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "n")
+        .toLowerCase();
 
       newObject.data = object;
       newObject.api_type = apiType;
@@ -512,8 +523,8 @@ export default class Trending extends React.Component {
                 actualPrice === 0 && discountPrice === 0
                   ? "0em"
                   : discountPrice === 0
-                    ? "0em"
-                    : "3em"
+                  ? "0em"
+                  : "3em"
             }}
           >
             {distance}

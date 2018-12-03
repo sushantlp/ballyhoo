@@ -39,7 +39,10 @@ export default class Discover extends React.Component {
     ) {
       let newObject = {};
 
-      const url = object.title.replace(/ /g, "-").toLowerCase();
+      const url = object.title
+        .replace(/ /g, "-")
+        .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "n")
+        .toLowerCase();
 
       const city = this.props.readCityIndex(
         this.props.match.params.city,
