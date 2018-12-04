@@ -37,7 +37,7 @@ export default class DetailView extends React.Component {
         this.props.match.params.category === "escapes" ||
         this.props.match.params.category === "events" ||
         this.props.match.params.category === "activities" ||
-        this.props.match.params.category === "saloon-&-spa"
+        this.props.match.params.category === "saloon-n-spa"
       ) {
         this.props.getNewViewDetail(this.props.match.params.id);
         which = "new";

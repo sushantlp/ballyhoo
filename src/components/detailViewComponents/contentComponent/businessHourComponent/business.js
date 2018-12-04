@@ -14,7 +14,8 @@ export default class Business extends React.Component {
         basic
         style={{
           color: "rgba(0,0,0,.6)",
-          fontSize: "15px"
+          fontSize: "15px",
+          cursor: "default"
         }}
       >
         {hour.Business_Hour + " - " + hour.From_Time + " - " + hour.To_Time}

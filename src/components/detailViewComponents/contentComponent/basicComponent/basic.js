@@ -30,6 +30,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
             display: labelName === undefined ? "none" : "inline"
@@ -59,6 +60,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             marginLeft: "10px",
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
@@ -94,6 +96,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             marginLeft: "10px",
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
@@ -135,6 +138,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
             display: actualPrice === 0 ? "none" : "inline"
@@ -153,6 +157,7 @@ export default class Basic extends React.Component {
           </span>
           <label
             style={{
+              cursor: "default",
               fontSize: "14px",
               paddingLeft: "1px",
               color: "rgba(0,0,0,.68)",
@@ -167,6 +172,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             marginLeft: "10px",
             fontSize: "14px",
             color: "rgba(0,0,0,.6)",
@@ -190,9 +196,9 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             marginLeft: "10px",
             fontSize: "14px",
-
             color: "rgba(0,0,0,.6)",
             display: discountPrice === 0 ? "none" : "inline"
           }}
@@ -256,6 +262,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             fontSize: "14px",
             color: "rgba(0,0,0,.6)",
             display: eventDate === undefined ? "none" : "intial"
@@ -278,6 +285,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             marginLeft: "5px",
             fontSize: "14px",
             color: "rgba(0,0,0,.6)",
@@ -301,6 +309,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             marginLeft: "5px",
             fontSize: "14px",
             color: "rgba(0,0,0,.6)",
@@ -324,6 +333,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             marginLeft: "5px",
             fontSize: "14px",
             color: "rgba(0,0,0,.6)",
@@ -363,6 +373,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
             display: labelName === undefined ? "none" : "inline"
@@ -392,6 +403,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
             display: popularity === 0 ? "none" : "inline",
@@ -429,6 +441,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             color: "rgba(0,0,0,.6)",
             fontSize: "14px",
             display: minimumPrice === 0 ? "none" : "inline"
@@ -437,6 +450,7 @@ export default class Basic extends React.Component {
           Actual-Price :
           <label
             style={{
+              cursor: "default",
               fontSize: "14px",
               paddingLeft: "1px",
               color: "rgba(0,0,0,.68)",
@@ -481,6 +495,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             fontSize: "14px",
             color: "rgba(0,0,0,.6)",
             display: calendar === undefined ? "none" : "inline"
@@ -505,6 +520,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             fontSize: "14px",
             color: "rgba(0,0,0,.6)",
             display: discountPrice === 0 ? "none" : "inline"
@@ -527,6 +543,7 @@ export default class Basic extends React.Component {
           as="a"
           basic
           style={{
+            cursor: "default",
             marginLeft: "20px",
             fontSize: "14px",
             color: "rgba(0,0,0,.6)",
