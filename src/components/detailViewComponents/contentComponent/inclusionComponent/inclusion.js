@@ -8,6 +8,7 @@ import classes from "./static/css/inclusion.css";
 export default class Inclusion extends React.Component {
   render() {
     let inclusion = "";
+    let logicName = "";
     if (this.props.detailState.apiCall) {
       if (this.props.detailState.which === "new") {
         if (
@@ -48,6 +49,8 @@ export default class Inclusion extends React.Component {
         } else {
           return <div />;
         }
+
+        logicName = "ABOUT MERCHANT";
       } else {
         if (
           this.props.oldViewDetail.oldViewDetail === null ||
@@ -69,6 +72,8 @@ export default class Inclusion extends React.Component {
           inclusion = this.props.oldViewDetail.oldViewDetail.deal.Inclusion;
         }
       }
+
+      logicName = "INCLUSIONS";
     } else {
       if (this.props.history.location.state.offerData.api_type === 1) {
         if (
@@ -80,6 +85,8 @@ export default class Inclusion extends React.Component {
           inclusion = this.props.history.location.state.offerData.data
             .Inclusion;
         }
+
+        logicName = "INCLUSIONS";
       } else {
         if (
           Object.keys(this.props.history.location.state.offerData.data.ACTIVITY)
@@ -108,6 +115,8 @@ export default class Inclusion extends React.Component {
         } else {
           return <div />;
         }
+
+        logicName = "ABOUT MERCHANT";
       }
     }
 
@@ -118,7 +127,7 @@ export default class Inclusion extends React.Component {
     return (
       <div>
         <div className={classes.HeaderContainer}>
-          <h4 className={classes.HeaderName}>INCLUSIONS</h4>
+          <h4 className={classes.HeaderName}>{logicName}</h4>
           <div className={classes.UnderScore} />
         </div>
         <Segment>
