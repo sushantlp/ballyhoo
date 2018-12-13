@@ -794,7 +794,7 @@ export default class Package extends React.Component {
       stringWeek = "Fri";
     } else if (week === 6) {
       stringWeek = "Sat";
-    } else if (week === 7) {
+    } else if (week === 7 || week === 0) {
       stringWeek = "Sun";
     }
 
@@ -854,6 +854,7 @@ export default class Package extends React.Component {
           days = days + "-" + endDays;
         }
 
+        // console.log(stringWeek)
         return this.eventDateComponent(
           stringWeek,
           days,
