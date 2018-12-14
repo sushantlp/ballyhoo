@@ -387,8 +387,10 @@ export default class Background extends React.Component {
         fluid
         style={{
           width: "auto",
-          height: "500px",
-          backgroundImage: "url(" + require("./static/img/dashboard.png") + ")",
+          height: "590px",
+          backgroundImage:
+            "url('https://res.cloudinary.com/dp67gawk6/image/upload/v1539670597/ballyhoo/BALLYHOO_WEBSITE/1440x600finalpge.jpg')",
+          // backgroundImage: "url(" + require("./static/img/dashboard.png") + ")",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
