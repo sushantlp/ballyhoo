@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import {
-  Container,
   Divider,
   Grid,
   Image,
@@ -17,7 +16,7 @@ import GooglePlay from "./static/img/google-play.png";
 export default class Footer extends React.Component {
   render() {
     return (
-      <Container fluid className={classes.FooterContainer}>
+      <div className={classes.FooterContainer}>
         <Segment
           style={{
             backgroundColor: "#444a62"
@@ -38,14 +37,6 @@ export default class Footer extends React.Component {
                   <List.Item>
                     <Link to="/web/faq">FAQ's</Link>
                   </List.Item>
-
-                  {/* <List.Item
-                    as="a"
-                    href="/merchant"
-                    style={{ color: "#dfdfe7" }}
-                  >
-                    Merchant
-                  </List.Item> */}
                 </List>
               </Grid.Column>
               <Grid.Column floated="right" textAlign="right">
@@ -112,7 +103,7 @@ export default class Footer extends React.Component {
             </Grid.Row>
           </Grid>
         </Segment>
-      </Container>
+      </div>
     );
   }
 }

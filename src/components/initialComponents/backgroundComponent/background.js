@@ -383,8 +383,7 @@ export default class Background extends React.Component {
     const { cityList, localityList, categoryList } = this.state;
 
     return (
-      <Container
-        fluid
+      <div
         style={{
           width: "auto",
           height: "590px",
@@ -406,83 +405,89 @@ export default class Background extends React.Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
+        <Container>
+          <Grid stackable columns="equal">
+            <Grid.Row>
+              <Grid.Column>
+                <Dropdown
+                  placeholder="City"
+                  search
+                  fluid
+                  selection
+                  style={{ height: "3.5em", lineHeight: "2em" }}
+                  options={cityList}
+                  onChange={(event, data) =>
+                    this.logicClickCity(event, data.value)
+                  }
+                  value={this.state.cityValue}
+                  text={this.state.cityValue}
+                  icon={
+                    <Icon
+                      name="marker"
+                      style={{
+                        marginRight: "-3.5vh",
+                        float: "right",
+                        color: "grey"
+                      }}
+                    />
+                  }
+                />
+              </Grid.Column>
+              <Grid.Column>
+                <Dropdown
+                  placeholder="Locality"
+                  search
+                  fluid
+                  style={{ height: "3.5em", lineHeight: "2em" }}
+                  selection
+                  options={localityList}
+                  onChange={(event, data) =>
+                    this.logicClickLocality(event, data.value)
+                  }
+                  value={this.state.localityValue}
+                  text={this.state.localityValue}
+                  icon={
+                    <Icon
+                      name="marker"
+                      style={{
+                        marginRight: "-3.5vh",
+                        float: "right",
+                        color: "grey"
+                      }}
+                    />
+                  }
+                />
+              </Grid.Column>
+              <Grid.Column>
+                <Dropdown
+                  placeholder="Offer"
+                  fluid
+                  selection
+                  style={{ height: "3.5em", lineHeight: "2em" }}
+                  options={categoryList}
+                  onChange={(event, data) =>
+                    this.logicClickOfferning(event, data)
+                  }
+                  icon={
+                    <Icon
+                      position="right"
+                      name="search"
+                      style={{
+                        float: "right",
+                        color: "grey"
+                      }}
+                    />
+                  }
+                />
+              </Grid.Column>
 
-        <Grid divided="vertically">
-          <Grid.Row>
-            <Grid.Column width={2} />
-            <Grid.Column width={3} style={{ paddingLeft: "75px" }}>
-              <Dropdown
-                placeholder="City"
-                search
-                selection
-                options={cityList}
-                onChange={(event, data) =>
-                  this.logicClickCity(event, data.value)
-                }
-                value={this.state.cityValue}
-                text={this.state.cityValue}
-                icon={
-                  <Icon
-                    position="right"
-                    name="marker"
-                    style={{
-                      marginRight: "-11%",
-                      float: "right",
-                      color: "grey"
-                    }}
-                  />
-                }
-              />
-            </Grid.Column>
-            <Grid.Column width={3} style={{ paddingLeft: "45px" }}>
-              <Dropdown
-                placeholder="Locality"
-                search
-                selection
-                options={localityList}
-                onChange={(event, data) =>
-                  this.logicClickLocality(event, data.value)
-                }
-                value={this.state.localityValue}
-                text={this.state.localityValue}
-                icon={
-                  <Icon
-                    position="right"
-                    name="marker"
-                    style={{
-                      marginRight: "-11%",
-                      float: "right",
-                      color: "grey"
-                    }}
-                  />
-                }
-              />
-            </Grid.Column>
-            <Grid.Column width={5}>
-              <Dropdown
-                placeholder="Offer"
-                fluid
-                selection
-                options={categoryList}
-                onChange={(event, data) =>
-                  this.logicClickOfferning(event, data)
-                }
-                icon={
-                  <Icon
-                    position="right"
-                    name="search"
-                    style={{
-                      marginTop: "-13px",
-                      float: "right",
-                      color: "grey"
-                    }}
-                  />
-                }
-              />
-            </Grid.Column>
-            <Grid.Column width={2}>
               <Button
-                style={{ backgroundColor: "rgb(255, 90, 95)", color: "white" }}
+                style={{
+                  backgroundColor: "rgb(255, 90, 95)",
+                  color: "white",
+                  height: "3.5em",
+                  width: "8em"
+                }}
                 onClick={() => this.logicClickButton(true)}
               >
                 Search
@@ -496,10 +501,10 @@ export default class Background extends React.Component {
                   onConfirm={() => this.logicClickButton(false)}
                 />
               ) : null}
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Container>
+            </Grid.Row>
+          </Grid>
+        </Container>
+      </div>
     );
   }
 }

@@ -700,8 +700,9 @@ export default class Package extends React.Component {
             fontSize: "14px"
           }}
         >
-          {moment(packages.Event_Start_Time, ["HH:mm"]).format("h:mm A")}-
-          {moment(packages.Event_End_Time, ["HH:mm"]).format("h:mm A")}
+          {moment(packages.Event_Start_Time, ["HH:mm"]).format("h:mm A")}{" "}
+          Onwards
+          {/* {moment(packages.Event_End_Time, ["HH:mm"]).format("h:mm A")} */}
         </label>
 
         <br />
@@ -933,7 +934,9 @@ export default class Package extends React.Component {
             .length !== 0
         ) {
           offer = this.props.newViewDetail.newViewDetail.offers.EVENT
-            .Offer_Package_List;
+            .Offer_Date_List;
+
+          status = true;
           currencySymbol = this.props.newViewDetail.newViewDetail.offers
             .Offer_Basic_Details.Currency_Text;
           offerId = this.props.newViewDetail.newViewDetail.offers
@@ -1033,6 +1036,7 @@ export default class Package extends React.Component {
         ) {
           offer = this.props.history.location.state.offerData.data.EVENT
             .Offer_Date_List;
+
           currencySymbol = this.props.history.location.state.offerData.data
             .Offer_Basic_Details.Currency_Text;
           status = true;

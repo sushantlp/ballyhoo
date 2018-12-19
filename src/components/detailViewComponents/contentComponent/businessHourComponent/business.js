@@ -44,6 +44,14 @@ export default class Business extends React.Component {
         if (_.isEmpty(this.props.newViewDetail.newViewDetail)) {
           return <div />;
         }
+        console.log(this.props.newViewDetail.newViewDetail);
+
+        if (
+          Object.keys(this.props.newViewDetail.newViewDetail.offers.EVENT)
+            .length !== 0
+        ) {
+          return <div />;
+        }
 
         businessHour = this.props.newViewDetail.newViewDetail.offers
           .Merchant_Details.Merchant_Business_Hours;
@@ -67,6 +75,12 @@ export default class Business extends React.Component {
         businessHour = this.props.history.location.state.offerData.data
           .BUSINESS_HOUR;
       } else {
+        if (
+          Object.keys(this.props.history.location.state.offerData.data.EVENT)
+            .length !== 0
+        ) {
+          return <div />;
+        }
         businessHour = this.props.history.location.state.offerData.data
           .Merchant_Details.Merchant_Business_Hours;
       }
