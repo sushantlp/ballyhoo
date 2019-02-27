@@ -2,7 +2,9 @@ import React from "react";
 import TimePicker from "react-times";
 import moment from "moment-timezone";
 
-import { Segment } from "semantic-ui-react/dist/commonjs";
+import {
+  Segment
+} from "semantic-ui-react/dist/commonjs";
 
 export default class Time extends React.Component {
   constructor(props) {
@@ -15,11 +17,13 @@ export default class Time extends React.Component {
     this.props.updateTime(this.state.time);
   }
 
-  onTimeChange(timeObject) {
-    const time =
-      timeObject.hour + ":" + timeObject.minute + " " + timeObject.meridiem;
+  onTimeChange(time) {
+    // const time =
+    //   timeObject.hour + ":" + timeObject.minute + " " + timeObject.meridiem;
 
-    this.setState({ time: time });
+    this.setState({
+      time: time
+    });
 
     this.props.updateTime(time);
   }
@@ -48,30 +52,55 @@ export default class Time extends React.Component {
       }
     }
 
-    return (
-      <div>
-        <Segment.Group>
-          <Segment>
-            <label style={{ fontSize: "20px" }}>{headerName}</label>
-          </Segment>
+    return ( <
+      div >
+      <
+      Segment.Group >
+      <
+      Segment >
+      <
+      label style = {
+        {
+          fontSize: "20px"
+        }
+      } > {
+        headerName
+      } < /label> < /
+      Segment > <
+      Segment >
+      <
+      div style = {
+        {
+          width: "300px"
+        }
+      } >
+      <
+      TimePicker time = {
+        time
+      }
+      timeMode = "12"
+      timezone = "Asia/Kolkata"
+      onTimeChange = {
+        this.onTimeChange.bind(this)
+      }
+      disabled = {
+        timeDisabled
+      }
+      timeFormat = 'hh:mm:00' /
+      >
+      <
+      /div> < /
+      Segment > <
+      /Segment.Group>
 
-          <Segment>
-            <div style={{ width: "300px" }}>
-              <TimePicker
-                time={time}
-                timeMode="12"
-                timezone="Asia/Kolkata"
-                onTimeChange={this.onTimeChange.bind(this)}
-                disabled={timeDisabled}
-              />
-            </div>
-          </Segment>
-        </Segment.Group>
-
-        <br />
-        <br />
-        <br />
-      </div>
+      <
+      br / >
+      <
+      br / >
+      <
+      br / >
+      <
+      /div>
     );
   }
 }

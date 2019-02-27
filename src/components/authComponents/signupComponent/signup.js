@@ -1,9 +1,19 @@
 import React from "react";
 import _ from "lodash";
 
-import { DateInput } from "semantic-ui-calendar-react";
+import {
+  DateInput
+} from "semantic-ui-calendar-react";
 
-import { Button, Input, Radio } from "semantic-ui-react/dist/commonjs";
+import {
+  Button,
+  Input,
+  Radio
+} from "semantic-ui-react/dist/commonjs";
+
+import {
+  BALLY_KEY
+} from "../../constants.js";
 
 import classes from "./static/css/signup.css";
 
@@ -147,8 +157,7 @@ export default class Signup extends React.Component {
     } else {
       // Store in Session Storage
       const ballyKey = sessionStorage.getItem(
-        this.props.BALLY_KEY,
-        JSON.stringify(ballyKey)
+        BALLY_KEY
       );
 
       // Update State
@@ -178,134 +187,195 @@ export default class Signup extends React.Component {
   };
 
   render() {
-    return (
-      <div>
-        <Input
-          disabled={this.state.firstName}
-          type="text"
-          style={{
-            width: "450px",
-            height: "50px",
-            marginLeft: "320px",
-            marginRight: "320px",
-            marginBottom: "20px"
-          }}
-          placeholder="First-Name..."
-          value={this.state.userFirstName}
-          onChange={(event, data) => this.firstHandleChange(event, data)}
-        />
+    return ( <
+      div >
+      <
+      Input disabled = {
+        this.state.firstName
+      }
+      type = "text"
+      style = {
+        {
+          width: "450px",
+          height: "50px",
+          marginLeft: "320px",
+          marginRight: "320px",
+          marginBottom: "20px"
+        }
+      }
+      placeholder = "First-Name..."
+      value = {
+        this.state.userFirstName
+      }
+      onChange = {
+        (event, data) => this.firstHandleChange(event, data)
+      }
+      />
 
-        <Input
-          disabled={this.state.lastName}
-          type="text"
-          style={{
-            width: "450px",
-            height: "50px",
-            marginLeft: "320px",
-            marginRight: "320px",
-            marginBottom: "20px"
-          }}
-          placeholder="Last-Name..."
-          value={this.state.userLastName}
-          onChange={this.lastHandleChange}
-        />
+      <
+      Input disabled = {
+        this.state.lastName
+      }
+      type = "text"
+      style = {
+        {
+          width: "450px",
+          height: "50px",
+          marginLeft: "320px",
+          marginRight: "320px",
+          marginBottom: "20px"
+        }
+      }
+      placeholder = "Last-Name..."
+      value = {
+        this.state.userLastName
+      }
+      onChange = {
+        this.lastHandleChange
+      }
+      />
 
-        <Input
-          disabled={true}
-          type="text"
-          style={{
-            width: "450px",
-            height: "50px",
-            marginLeft: "320px",
-            marginRight: "320px",
-            marginBottom: "20px"
-          }}
-          placeholder="Email..."
-          value={this.props.userEmail}
-        />
+      <
+      Input disabled = {
+        true
+      }
+      type = "text"
+      style = {
+        {
+          width: "450px",
+          height: "50px",
+          marginLeft: "320px",
+          marginRight: "320px",
+          marginBottom: "20px"
+        }
+      }
+      placeholder = "Email..."
+      value = {
+        this.props.userEmail
+      }
+      />
 
-        <Input
-          disabled={true}
-          type="number"
-          style={{
-            width: "450px",
-            height: "50px",
-            marginLeft: "320px",
-            marginRight: "320px",
-            marginBottom: "20px"
-          }}
-          placeholder="Mobile..."
-          value={this.props.userMobile}
-        />
+      <
+      Input disabled = {
+        true
+      }
+      type = "number"
+      style = {
+        {
+          width: "450px",
+          height: "50px",
+          marginLeft: "320px",
+          marginRight: "320px",
+          marginBottom: "20px"
+        }
+      }
+      placeholder = "Mobile..."
+      value = {
+        this.props.userMobile
+      }
+      />
 
-        <DateInput
-          disabled={this.state.dob}
-          style={{
-            width: "450px",
-            height: "50px",
-            marginLeft: "320px",
-            marginRight: "320px",
-            marginBottom: "20px"
-          }}
-          name="userDob"
-          placeholder="Date"
-          value={this.state.userDob}
-          iconPosition="left"
-          onChange={this.dobHandleChange}
-        />
+      <
+      DateInput disabled = {
+        this.state.dob
+      }
+      style = {
+        {
+          width: "450px",
+          height: "50px",
+          marginLeft: "320px",
+          marginRight: "320px",
+          marginBottom: "20px"
+        }
+      }
+      name = "userDob"
+      placeholder = "Date"
+      value = {
+        this.state.userDob
+      }
+      iconPosition = "left"
+      onChange = {
+        this.dobHandleChange
+      }
+      />
 
-        <div
-          style={{
-            marginLeft: "320px",
-            marginRight: "320px"
-          }}
-        >
-          <label className={classes.L}>Gender : </label>
-          <Radio
-            disabled={this.state.gender}
-            style={{
-              marginLeft: "10px"
-            }}
-            label="Male"
-            name="radioGroup"
-            value="male"
-            checked={this.state.userGender === "male"}
-            onChange={this.genderHandleChange}
-          />
+      <
+      div style = {
+        {
+          marginLeft: "320px",
+          marginRight: "320px"
+        }
+      } >
+      <
+      label className = {
+        classes.L
+      } > Gender: < /label> <
+      Radio disabled = {
+        this.state.gender
+      }
+      style = {
+        {
+          marginLeft: "10px"
+        }
+      }
+      label = "Male"
+      name = "radioGroup"
+      value = "male"
+      checked = {
+        this.state.userGender === "male"
+      }
+      onChange = {
+        this.genderHandleChange
+      }
+      />
 
-          <Radio
-            disabled={this.state.gender}
-            style={{
-              marginLeft: "10px"
-            }}
-            label="Female"
-            name="radioGroup"
-            value="female"
-            checked={this.state.userGender === "female"}
-            onChange={this.genderHandleChange}
-          />
-        </div>
-        <Button
-          disabled={this.state.signupButton}
-          loading={this.state.signupLoading}
-          style={{
-            backgroundColor: "#FF5A5F",
-            color: "white",
-            opacity: "1",
-            width: "450px",
-            height: "50px",
-            fontSize: "20px",
-            fontWeight: "500",
-            marginTop: "30px",
-            marginLeft: "320px",
-            marginRight: "320px",
-            marginBottom: "30px"
-          }}
-          onClick={() => this.otpSignupClick()}
-        >
-          Next
-        </Button>
-      </div>
+      <
+      Radio disabled = {
+        this.state.gender
+      }
+      style = {
+        {
+          marginLeft: "10px"
+        }
+      }
+      label = "Female"
+      name = "radioGroup"
+      value = "female"
+      checked = {
+        this.state.userGender === "female"
+      }
+      onChange = {
+        this.genderHandleChange
+      }
+      /> < /
+      div > <
+      Button disabled = {
+        this.state.signupButton
+      }
+      loading = {
+        this.state.signupLoading
+      }
+      style = {
+        {
+          backgroundColor: "#FF5A5F",
+          color: "white",
+          opacity: "1",
+          width: "450px",
+          height: "50px",
+          fontSize: "20px",
+          fontWeight: "500",
+          marginTop: "30px",
+          marginLeft: "320px",
+          marginRight: "320px",
+          marginBottom: "30px"
+        }
+      }
+      onClick = {
+        () => this.otpSignupClick()
+      } >
+      Next <
+      /Button> < /
+      div >
     );
   }
 }
