@@ -531,7 +531,7 @@ export default class Left extends React.Component {
               >
                 <label
                   style={{
-                    fontSize: "18px"
+                    fontSize: "18px",
                     width: "150px"
                   }}
                 >
