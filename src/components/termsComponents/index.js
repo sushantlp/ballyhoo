@@ -1,4 +1,5 @@
 import React from "react";
+import Helmet, { HelmetProvider } from 'react-helmet-async';
 
 import { Container, Header, Segment } from "semantic-ui-react";
 
@@ -7,7 +8,11 @@ import Footer from "../footer/footer";
 import classes from "./static/css/terms.css";
 
 const TermsOfService = () => (
+  <HelmetProvider>
   <div>
+    <Helmet>
+    <meta name="keywords" content="ballyhoo bengaluru experience online offers lunch dinner wine beer" /> 
+    </Helmet>
     <BallyhooHeader />
     <Container>
       {/* <Header as="h1" textAlign="center" style={{ marginTop: "2%" }}>
@@ -163,6 +168,7 @@ const TermsOfService = () => (
     </Container>
     <Footer />
   </div>
+  </HelmetProvider>
 );
 
 export default TermsOfService;
