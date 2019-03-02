@@ -13,7 +13,7 @@ import {
 
 import {
   BALLY_KEY
-} from "../../constants.js";
+} from "../../../constants.js";
 
 import classes from "./static/css/signup.css";
 

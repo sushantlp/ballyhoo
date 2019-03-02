@@ -1,5 +1,4 @@
 import React from "react";
-
 import Sticky from "react-stickynode";
 import Left from "./leftSideComponent/left";
 import Right from "./rightSideComponent/right";

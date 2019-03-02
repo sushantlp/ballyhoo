@@ -1,4 +1,5 @@
 import React from "react";
+import Helmet, { HelmetProvider } from 'react-helmet-async';
 
 import Header from "../header/header";
 import Footer from "../footer/footer";
@@ -112,53 +113,58 @@ export default class Initial extends React.Component {
 
   render() {
     return (
-      <div>
-        <Header />
-        <Background
-          cityLocality={this.props.cityLocality}
-          categoryFilter={this.props.categoryFilter}
-          defaultCity={this.state.defaultCity}
-          defaultLocality={this.state.defaultLocality}
-          parentCityChange={this.parentCityChange}
-          parentStateChange={this.parentStateChange}
-          history={this.props.history}
-          url={this.state.url}
-          match={this.props.match}
-          readCityIndex={this.readCityIndex}
-          readLocalityIndex={this.readLocalityIndex}
-        />
-        <Category
-          categoryFilter={this.props.categoryFilter}
-          readCityIndex={this.readCityIndex}
-          readLocalityIndex={this.readLocalityIndex}
-          cityLocality={this.props.cityLocality}
-          match={this.props.match}
-          history={this.props.history}
-        />
-        <Discover
-          discoverFilter={this.props.discoverFilter}
-          readCityIndex={this.readCityIndex}
-          readLocalityIndex={this.readLocalityIndex}
-          cityLocality={this.props.cityLocality}
-          match={this.props.match}
-          history={this.props.history}
-        />
-        <Popular popularFilter={this.props.popularFilter} />
-        <Facebook
-          facebookEvent={this.props.facebookEvent}
-          cityName={this.state.cityName}
-          cityId={this.state.defaultCity}
-          history={this.props.history}
-        />
-        <Locality
-          popularLocality={this.props.popularLocality}
-          cityName={this.state.cityName}
-          cityId={this.state.defaultCity}
-          match={this.props.match}
-          history={this.props.history}
-        />
-        <Footer />
-      </div>
+      <HelmetProvider>
+        <div>
+          <Helmet>
+            <meta name="keywords" content="ballyhoo bengaluru experience online offers lunch dinner wine beer" /> 
+          </Helmet>
+          <Header />
+          <Background
+            cityLocality={this.props.cityLocality}
+            categoryFilter={this.props.categoryFilter}
+            defaultCity={this.state.defaultCity}
+            defaultLocality={this.state.defaultLocality}
+            parentCityChange={this.parentCityChange}
+            parentStateChange={this.parentStateChange}
+            history={this.props.history}
+            url={this.state.url}
+            match={this.props.match}
+            readCityIndex={this.readCityIndex}
+            readLocalityIndex={this.readLocalityIndex}
+          />
+          <Category
+            categoryFilter={this.props.categoryFilter}
+            readCityIndex={this.readCityIndex}
+            readLocalityIndex={this.readLocalityIndex}
+            cityLocality={this.props.cityLocality}
+            match={this.props.match}
+            history={this.props.history}
+          />
+          <Discover
+            discoverFilter={this.props.discoverFilter}
+            readCityIndex={this.readCityIndex}
+            readLocalityIndex={this.readLocalityIndex}
+            cityLocality={this.props.cityLocality}
+            match={this.props.match}
+            history={this.props.history}
+          />
+          <Popular popularFilter={this.props.popularFilter} />
+          <Facebook
+            facebookEvent={this.props.facebookEvent}
+            cityName={this.state.cityName}
+            cityId={this.state.defaultCity}
+            history={this.props.history}
+          />
+          <Locality
+            popularLocality={this.props.popularLocality}
+            cityName={this.state.cityName}
+            cityId={this.state.defaultCity}
+            match={this.props.match}
+            history={this.props.history}
+          />
+          <Footer />
+        </div>      
+      </HelmetProvider>
     );
   }
 }
