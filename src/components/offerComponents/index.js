@@ -4,6 +4,9 @@ import Header from "../header/header";
 import Footer from "../footer/footer";
 import Offerning from "./cardOfferComponent/cardOfferning";
 
+import Helmet, { HelmetProvider } from 'react-helmet-async';
+
+
 export default class Initial extends React.Component {
   constructor(props) {
     super(props);
@@ -169,7 +172,12 @@ export default class Initial extends React.Component {
 
   render() {
     return (
+      <HelmetProvider>
       <div>
+        <Helmet>
+        <meta name="keywords" content="ballyhoo bengaluru experience online offers lunch dinner wine beer" /> 
+        </Helmet>
+
         <Header />
         <Offerning
           discoverOldOffer={this.props.discoverOldOffer}
@@ -192,6 +200,7 @@ export default class Initial extends React.Component {
         />
         <Footer />
       </div>
+      </HelmetProvider>
     );
   }
 }
