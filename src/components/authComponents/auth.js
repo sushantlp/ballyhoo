@@ -18,6 +18,7 @@ import Mobile from "./mobileComponent/mobile";
 import Email from "./emailComponent/email";
 import Sweet from "./sweetAlertComponent/sweet";
 import Message from "./messageComponent/message";
+import Helmet, { HelmetProvider } from 'react-helmet-async';
 
 export default class Auth extends React.Component {
   constructor(props) {
@@ -350,7 +351,12 @@ export default class Auth extends React.Component {
 
   render() {
     return (
+      <HelmetProvider>
       <Container>
+        <Helmet>
+          <meta name="keywords" content="ballyhoo bengaluru experience online offers lunch dinner wine beer" /> 
+        </Helmet>
+
         <h1
           style={{
             color: "rgb(39, 37, 37)",
@@ -420,6 +426,7 @@ export default class Auth extends React.Component {
           />
         ) : null}
       </Container>
+      </HelmetProvider>
     );
   }
 }

@@ -13,6 +13,9 @@ import Book from "./bookComponent/book";
 
 import { Container, Grid } from "semantic-ui-react/dist/commonjs";
 
+import Helmet, { HelmetProvider } from 'react-helmet-async';
+
+
 export default class DetailView extends React.Component {
   constructor(props) {
     super(props);
@@ -69,7 +72,11 @@ export default class DetailView extends React.Component {
 
   render() {
     return (
+     <HelmetProvider>
       <div>
+      <Helmet>
+      <meta name="keywords" content="ballyhoo bengaluru experience online offers lunch dinner wine beer cheap" /> 
+      </Helmet>
         <Header />
         <Container fluid>
           <AirImage
@@ -138,6 +145,7 @@ export default class DetailView extends React.Component {
         />
         <Footer />
       </div>
+      </HelmetProvider>
     );
   }
 }

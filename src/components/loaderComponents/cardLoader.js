@@ -1,7 +1,5 @@
 import React from "react";
-
 import { Grid } from "semantic-ui-react/dist/commonjs";
-
 import classes from "./static/css/cardLoader.css";
 
 const CardLoader = props => (
