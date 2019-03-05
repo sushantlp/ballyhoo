@@ -1,1 +1,2 @@
+Sitemap: https://ballyhoo.today/sitemap.xml
 user-agent: *

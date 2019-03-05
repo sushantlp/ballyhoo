@@ -42,10 +42,8 @@ export default class Background extends React.Component {
 
       // Find city
       this.findCity(nextProps);
-
       // Find Locality
       this.findLocality(nextProps);
-
       // Create City List
       this.createCityList(nextProps.cityLocality.city);
     }
@@ -369,7 +367,8 @@ export default class Background extends React.Component {
       this.props.cityLocality === undefined ||
       this.props.categoryFilter === null ||
       this.props.categoryFilter === undefined
-    ) {
+    ) 
+    {
       return <BackgroundLoader />;
     }
 

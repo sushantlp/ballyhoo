@@ -27,10 +27,10 @@ export default class Category extends React.Component {
         onClick={() => this.clickCollectionIndex(obj)}
         // onClick={this.clickCollectionIndex.bind(this, obj)}
       >
-        <div className="ui fluid image">
-          <img src={image} alt={alt} />
-          <span className={classes.CategoryHeader}>{header}</span>
-        </div>
+      <div className="ui fluid image">
+        <img src={image} alt={alt} />
+        <span className={classes.CategoryHeader}>{header}</span>
+      </div>
       </Card>
     );
   };

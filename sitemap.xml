@@ -1,5 +1,42 @@
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	<url>
-		<loc>https://ballyhoo.today/web</loc>
-	</url>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://ballyhoo.today/</loc>
+  <lastmod>2019-03-05T05:30:18+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://ballyhoo.today/web</loc>
+  <lastmod>2019-01-02T13:44:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://ballyhoo.today/faq</loc>
+  <lastmod>2019-03-05T05:30:18+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://ballyhoo.today/terms</loc>
+  <lastmod>2019-03-05T05:30:18+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://ballyhoo.today/privacy</loc>
+  <lastmod>2019-03-05T05:30:18+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://ballyhoo.today/merchant/</loc>
+  <lastmod>2019-02-14T14:01:40+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+
 </urlset>

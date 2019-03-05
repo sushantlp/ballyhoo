@@ -108,12 +108,14 @@ export default class Left extends React.Component {
     let percent = 0;
     let sum = 0;
 
-    finalCharge.map((charge, key) => {
+    finalCharge.map((charge, key) => 
+    {
       if (charge.type === 1) {
         sum = sum + charge.value;
       } else if (charge.type === 2) {
         percent = percent + charge.value;
       }
+      return
     });
 
     if (percent !== 0) {

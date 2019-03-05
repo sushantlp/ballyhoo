@@ -12,11 +12,17 @@ import {
 import classes from "./static/css/footer.css";
 import AppStore from "./static/img/apple-store.png";
 import GooglePlay from "./static/img/google-play.png";
+import Helmet, { HelmetProvider } from 'react-helmet-async';
+
 
 export default class Footer extends React.Component {
   render() {
     return (
+    <HelmetProvider>
       <div className={classes.FooterContainer}>
+          <Helmet>
+            <meta name="keywords" content="ballyhoo bengaluru experience online offers lunch dinner wine beer" /> 
+          </Helmet>
         <Segment
           style={{
             backgroundColor: "#444a62"
@@ -104,6 +110,7 @@ export default class Footer extends React.Component {
           </Grid>
         </Segment>
       </div>
+    </HelmetProvider>
     );
   }
 }

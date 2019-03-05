@@ -75,9 +75,9 @@ export default class DetailView extends React.Component {
      <HelmetProvider>
       <div>
       <Helmet>
-      <meta name="keywords" content="ballyhoo bengaluru experience online offers lunch dinner wine beer cheap" /> 
+        <meta name="keywords" content="ballyhoo bengaluru experience online offers lunch dinner wine beer cheap" /> 
       </Helmet>
-        <Header />
+      <Header />
         <Container fluid>
           <AirImage
             history={this.props.history}
@@ -86,7 +86,6 @@ export default class DetailView extends React.Component {
             oldViewDetail={this.props.oldViewDetail}
           />
         </Container>
-
         <Container style={{ marginTop: "10px" }}>
           <Grid>
             <Grid.Row columns={2}>
@@ -99,7 +98,6 @@ export default class DetailView extends React.Component {
                   updateBookingDetail={this.updateBookingDetail}
                 />
               </Grid.Column>
-
               <Grid.Column width={2}>
                 <Sticky enabled={true} top={50} bottomBoundary={1400}>
                   <Book
@@ -118,7 +116,6 @@ export default class DetailView extends React.Component {
             </Grid.Row>
           </Grid>
         </Container>
-
         <ImageCarousel
           history={this.props.history}
           detailState={this.state}

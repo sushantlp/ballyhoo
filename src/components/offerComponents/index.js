@@ -1,11 +1,8 @@
 import React from "react";
-
 import Header from "../header/header";
 import Footer from "../footer/footer";
 import Offerning from "./cardOfferComponent/cardOfferning";
-
 import Helmet, { HelmetProvider } from 'react-helmet-async';
-
 
 export default class Initial extends React.Component {
   constructor(props) {

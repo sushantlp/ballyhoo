@@ -1,12 +1,8 @@
 import React from "react";
 import _ from "lodash";
-
 import { Container, Card } from "semantic-ui-react/dist/commonjs";
-
 import Lightbox from "lightbox-react";
-
 import classes from "./static/css/imageCarousel.css";
-
 let globalImageArray = [];
 
 export default class ImageCarousel extends React.Component {
@@ -64,7 +60,7 @@ export default class ImageCarousel extends React.Component {
         if (
           _.isEmpty(
             this.props.newViewDetail.newViewDetail.offers.Offer_Basic_Details
-              .Offer_Venue_Images
+            .Offer_Venue_Images
           )
         ) {
           return <div />;
@@ -120,7 +116,7 @@ export default class ImageCarousel extends React.Component {
           <h4 className={classes.HeaderName}>IMAGES</h4>
           <div className={classes.UnderScore} />
         </div>
-
+ 
         <Card.Group
           itemsPerRow={8}
           doubling
