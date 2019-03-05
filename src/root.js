@@ -15,7 +15,6 @@ import DetailView from "./containers/detailViewContainer";
 import Checkout from "./containers/checkoutContainer";
 import Auth from "./containers/authContainer";
 import Nomatch from "./components/noMatch/noMatch"
-
 // Router root
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -51,6 +50,7 @@ const Root = ({ store }) => (
             path="/web/:id/:city/:locality/:category/:merchant"
             component={DetailView}
           />
+          <Redirect from="/" to="/web" />
           <Route component={Nomatch} />
         </Switch>
       </div>
