@@ -21,6 +21,7 @@ const Root = ({ store }) => (
     <BrowserRouter>
       <div>
         <Switch>
+          <Route exact path="/" component={Background} />
           <Route exact path="/web" component={Background} />
           <Route exact path="/web/terms" component={Terms} />
           <Route exact path="/web/privacy" component={Privacy} />
@@ -50,8 +51,7 @@ const Root = ({ store }) => (
             path="/web/:id/:city/:locality/:category/:merchant"
             component={DetailView}
           />
-          <Redirect from="/" to="/web" />
-          <Route component={Nomatch} />
+          <Route path='*' exact={true} component={Nomatch} />
         </Switch>
       </div>
     </BrowserRouter>
