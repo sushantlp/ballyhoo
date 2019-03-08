@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-
 import "./static/css/root.css";
-
 import Background from "./containers/initialContainer";
 import Facebook from "./containers/facebookContainer";
 import Offerning from "./containers/offerContainer";
@@ -14,7 +12,8 @@ import Faq from "./containers/faqContainer";
 import DetailView from "./containers/detailViewContainer";
 import Checkout from "./containers/checkoutContainer";
 import Auth from "./containers/authContainer";
-import Nomatch from "./components/noMatch/noMatch"
+import Nomatch from "./components/noMatch/noMatch";
+
 // Router root
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -51,7 +50,7 @@ const Root = ({ store }) => (
             path="/web/:id/:city/:locality/:category/:merchant"
             component={DetailView}
           />
-          <Route path='*' exact={true} component={Nomatch} />
+          <Route path='*' exact={true} component={Nomatch}/>
         </Switch>
       </div>
     </BrowserRouter>

@@ -28,7 +28,7 @@ export default class Category extends React.Component {
         // onClick={this.clickCollectionIndex.bind(this, obj)}
       >
       <div className="ui fluid image">
-        <img src={image} alt={alt} />
+        <img src={image} alt={this.props.categoryFilter[index].title} />
         <span className={classes.CategoryHeader}>{header}</span>
       </div>
       </Card>
